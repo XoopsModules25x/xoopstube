@@ -1,0 +1,15 @@
+LANGUAGE DIFFERENCES
+=====================
+
+Below are language differences from a version to next version.
+
+Legend :
++ Added
+- Removed
+* Modified
+x renamed
+
+---------------------------------------
+1.05 Final  2012-12-19
+---------------------------------------
+

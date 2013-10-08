@@ -1,0 +1,29 @@
+LIST OF TESTS
+======================
+
+*
+
+USER:
+----------------------
+Submit new video
+check Popular videos
+check Top Rated videos
+check Latest Listings
+
+ADMIN:
+----------------------
+Activate all blocks and switch to Front
+change options for each block
+check all tabs to see if there are any errors
+Tab Admin:
+ - add Category
+ - add Sub Category
+ - add Video
+ - edit
+ - delete
+ - add extra category to video
+ - click on Video link view
+ - click on Category link view
+ - click on Poster link view
+ -
+
