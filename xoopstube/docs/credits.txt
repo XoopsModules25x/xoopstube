@@ -1,0 +1,10 @@
+CREDITS
+==========
+
+XoopsTube has been developed by McDonald (http://members.lycos.nl/mcdonaldsstore/), and was based originally on WF-Links by Catzwolf (John Neill).
+
+In XoopsTube 1.05, we've included code from MyTube, also developed by McDonald, and Mastop Publish (Fernando Santos) for Block Admin
+
+JW FLV Media Player by LongTail Video (Jeroen Wijering)
+
+Icons: famfamfam.com, Crystal Icons
