@@ -17,15 +17,20 @@
  * @version         $Id$
  * @link            http://sourceforge.net/projects/xoops/
  * @since           1.0.6
+ *
+ * @param int    $cid
+ * @param string $permType
+ * @param bool   $redirect
+ *
+ * @return bool
  */
-
 
 function xtubeCheckSearchGroups($cid = 0, $permType = 'XTubeCatPerm', $redirect = false)
 {
     global $xoopsUser;
 
-    $mydirname = basename(dirname(dirname(__FILE__)));
-//    $mydirpath = dirname(dirname(__FILE__));
+    $mydirname = basename(dirname(__DIR__));
+//    $mydirpath = dirname(__DIR__);
 
     $groups        = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
     $gperm_handler = & xoops_gethandler('groupperm');
@@ -42,9 +47,19 @@ function xtubeCheckSearchGroups($cid = 0, $permType = 'XTubeCatPerm', $redirect 
         }
     }
     unset($module);
+
     return true;
 }
 
+/**
+ * @param $queryarray
+ * @param $andor
+ * @param $limit
+ * @param $offset
+ * @param $userid
+ *
+ * @return array
+ */
 function xtubeSearch($queryarray, $andor, $limit, $offset, $userid)
 {
     global $xoopsDB, $xoopsUser;
@@ -56,8 +71,7 @@ function xtubeSearch($queryarray, $andor, $limit, $offset, $userid)
     }
 
     $sql = "SELECT lid, cid, title, submitter, published, description FROM " . $xoopsDB->prefix('xoopstube_videos');
-    $sql .= " WHERE published > 0 AND published <= " . time() . " AND ( expired = 0 OR expired > " . time(
-        ) . ") AND offline = 0 AND cid > 0";
+    $sql .= " WHERE published > 0 AND published <= " . time() . " AND ( expired = 0 OR expired > " . time() . ") AND offline = 0 AND cid > 0";
 
     if ($userid != 0) {
         $sql .= " AND submitter=" . $userid . " ";
@@ -67,7 +81,7 @@ function xtubeSearch($queryarray, $andor, $limit, $offset, $userid)
     // is not an array, we must check if $querryarray is really an array
     if (is_array($queryarray) && $count = count($queryarray)) {
         $sql .= " AND ((title LIKE LOWER('%$queryarray[0]%') OR LOWER(description) LIKE LOWER('%$queryarray[0]%'))";
-        for ($i = 1; $i < $count; $i++) {
+        for ($i = 1; $i < $count; ++$i) {
             $sql .= " $andor ";
             $sql .= "(title LIKE LOWER('%$queryarray[$i]%') OR LOWER(description) LIKE LOWER('%$queryarray[$i]%'))";
         }
@@ -79,17 +93,18 @@ function xtubeSearch($queryarray, $andor, $limit, $offset, $userid)
     $i      = 0;
 
     while ($myrow = $xoopsDB->fetchArray($result)) {
-// Following is commented out because it can cause a conflict with View Account function (userinfo.php)      
+// Following is commented out because it can cause a conflict with View Account function (userinfo.php)
 //        if ( false == xtubeCheckSearchGroups( $myrow['cid'] ) ) {
 //            continue;
 //        }
-        $ret[$i]['image'] = 'images/size2.gif';
+        $ret[$i]['image'] = 'assets/images/size2.gif';
         $ret[$i]['link']  = 'singlevideo.php?cid=' . $myrow['cid'] . '&amp;lid=' . $myrow['lid'];
         $ret[$i]['title'] = $myrow['title'];
         $ret[$i]['time']  = $myrow['published'];
         $ret[$i]['uid']   = $myrow['submitter'];
-        $i++;
+        ++$i;
     }
     unset($_search_check_array);
+
     return $ret;
 }

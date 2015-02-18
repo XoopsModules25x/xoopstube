@@ -18,7 +18,7 @@
  * @since           1.0.6
  */
 
-include_once dirname(__FILE__) . '/admin_header.php';
+include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
 $aboutAdmin = new ModuleAdmin();
@@ -26,4 +26,4 @@ $aboutAdmin = new ModuleAdmin();
 echo $aboutAdmin->addNavigation('about.php');
 echo $aboutAdmin->renderAbout('6KJ7RW5DR3VTJ', false);
 
-include 'admin_footer.php';
+include_once __DIR__ . '/admin_footer.php';

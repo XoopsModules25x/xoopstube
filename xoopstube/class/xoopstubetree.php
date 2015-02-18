@@ -15,12 +15,12 @@
  * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  * @copyright       2001-2013 The XOOPS Project
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @version         $Id: xoopstubetree.php 11722 2013-06-19 16:47:58Z beckmi $
+ * @version         $Id$
  * @link            http://sourceforge.net/projects/xoops/
  * @since           1.0.6
  */
 
-defined('XOOPS_ROOT_PATH') or die('Restricted access');
+// defined('XOOPS_ROOT_PATH') || die('XOOPS Root Path not defined');
 
 /**
  * Abstract base class for forms
@@ -42,15 +42,26 @@ class XoopsTubeTree
 
     //constructor of class XoopsTree
     //sets the names of table, unique id, and parend id
-    public function __construct($table_name, $id_name, $pid_name)
+    /**
+     * @param $tableName
+     * @param $idName
+     * @param $pidName
+     */
+    public function __construct($tableName, $idName, $pidName)
     {
         $this->db = & XoopsDatabaseFactory::getDatabaseConnection();;
-        $this->table = $table_name;
-        $this->id    = $id_name;
-        $this->pid   = $pid_name;
+        $this->table = $tableName;
+        $this->id    = $idName;
+        $this->pid   = $pidName;
     }
 
     // returns an array of first child objects for a given id($sel_id)
+    /**
+     * @param        $sel_id
+     * @param string $order
+     *
+     * @return array
+     */
     public function getFirstChild($sel_id, $order = "")
     {
         $sel_id = intval($sel_id);
@@ -72,6 +83,11 @@ class XoopsTubeTree
     }
 
     // returns an array of all FIRST child ids of a given id($sel_id)
+    /**
+     * @param $sel_id
+     *
+     * @return array
+     */
     public function getFirstChildId($sel_id)
     {
         $sel_id  = intval($sel_id);
@@ -91,6 +107,13 @@ class XoopsTubeTree
     }
 
     //returns an array of ALL child ids for a given id($sel_id)
+    /**
+     * @param        $sel_id
+     * @param string $order
+     * @param array  $idarray
+     *
+     * @return array
+     */
     public function getAllChildId($sel_id, $order = "", $idarray = array())
     {
         $sel_id = intval($sel_id);
@@ -112,6 +135,13 @@ class XoopsTubeTree
     }
 
     //returns an array of ALL parent ids for a given id($sel_id)
+    /**
+     * @param        $sel_id
+     * @param string $order
+     * @param array  $idarray
+     *
+     * @return array
+     */
     public function getAllParentId($sel_id, $order = "", $idarray = array())
     {
         $sel_id = intval($sel_id);
@@ -132,6 +162,13 @@ class XoopsTubeTree
 
     //generates path from the root id to a given id($sel_id)
     // the path is delimetered with "/"
+    /**
+     * @param        $sel_id
+     * @param        $title
+     * @param string $path
+     *
+     * @return string
+     */
     public function getPathFromId($sel_id, $title, $path = "")
     {
         $sel_id = intval($sel_id);
@@ -156,6 +193,14 @@ class XoopsTubeTree
     //makes a nicely ordered selection box
     //$preset_id is used to specify a preselected item
     //set $none to 1 to add a option with value 0
+    /**
+     * @param        $title
+     * @param string $order
+     * @param int    $preset_id
+     * @param int    $none
+     * @param string $sel_name
+     * @param string $onchange
+     */
     public function makeMySelBox($title, $order = "", $preset_id = 0, $none = 0, $sel_name = "", $onchange = "")
     {
         if ($sel_name == "") {
@@ -197,6 +242,14 @@ class XoopsTubeTree
     }
 
     //generates nicely formatted linked path from the root id to a given id
+    /**
+     * @param        $sel_id
+     * @param        $title
+     * @param        $funcURL
+     * @param string $path
+     *
+     * @return string
+     */
     public function getNicePathFromId($sel_id, $title, $funcURL, $path = "")
     {
         $path   = !empty($path) ? "&nbsp;:&nbsp;" . $path : $path;
@@ -220,6 +273,12 @@ class XoopsTubeTree
 
     //generates id path from the root id to a given id
     // the path is delimetered with "/"
+    /**
+     * @param        $sel_id
+     * @param string $path
+     *
+     * @return string
+     */
     public function getIdPathFromId($sel_id, $path = "")
     {
         $sel_id = intval($sel_id);
@@ -242,9 +301,10 @@ class XoopsTubeTree
     /**
      * Enter description here...
      *
-     * @param int    $sel_id
-     * @param string $order
-     * @param array  $parray
+     * @param  int    $sel_id
+     * @param  string $order
+     * @param  array  $parray
+     *
      * @return array
      */
     public function getAllChild($sel_id = 0, $order = "", $parray = array())
@@ -270,10 +330,11 @@ class XoopsTubeTree
     /**
      * Enter description here...
      *
-     * @param int    $sel_id
-     * @param string $order
-     * @param array  $parray
-     * @param string $r_prefix
+     * @param  int    $sel_id
+     * @param  string $order
+     * @param  array  $parray
+     * @param  string $r_prefix
+     *
      * @return array
      */
     public function getChildTreeArray($sel_id = 0, $order = "", $parray = array(), $r_prefix = "")

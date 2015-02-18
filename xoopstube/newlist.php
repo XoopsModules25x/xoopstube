@@ -19,10 +19,9 @@
  * @link            http://sourceforge.net/projects/xoops/
  */
 
+include __DIR__ . '/header.php';
 
-include 'header.php';
-
-$xoopsOption['template_main'] = 'xoopstube_newlistindex.html';
+$xoopsOption['template_main'] = 'xoopstube_newlistindex.tpl';
 include XOOPS_ROOT_PATH . '/header.php';
 
 global $xoopsDB, $xoopsModule, $xoopsModuleConfig;
@@ -38,8 +37,7 @@ if (isset($_GET['newvideoshowdays'])) {
                 redirect_header(
                     'newlist.php?newvideoshowdays=7',
                     5,
-                    _MD_XTUBE_STOPIT . '<br /><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getvar('dirname')
-                    . '/images/icon/security.png" />'
+                    _MD_XOOPSTUBE_STOPIT . '<br /><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getvar('dirname') . '/assets/images/icon/security.png" />'
                 );
                 exit();
             }
@@ -51,15 +49,14 @@ if (isset($_GET['newvideoshowdays'])) {
     $allmonthvideos = 0;
     $allweekvideos  = 0;
     $result         = $xoopsDB->query(
-        'SELECT lid, cid, published, updated FROM ' . $xoopsDB->prefix('xoopstube_videos') . ' WHERE (published >= '
-        . $duration . ' AND published <= ' . $time_cur . ') OR updated >= ' . $duration
+        'SELECT lid, cid, published, updated FROM ' . $xoopsDB->prefix('xoopstube_videos') . ' WHERE (published >= ' . $duration . ' AND published <= ' . $time_cur . ') OR updated >= ' . $duration
         . ' AND (expired = 0 OR expired > ' . $time_cur . ') AND offline = 0'
     );
     while ($myrow = $xoopsDB->fetcharray($result)) {
         $published = ($myrow['updated'] > 0) ? $myrow['updated'] : $myrow['published'];
-        $allmonthvideos++;
+        ++$allmonthvideos;
         if ($published > $duration_week) {
-            $allweekvideos++;
+            ++$allweekvideos;
         }
     }
     $xoopsTpl->assign('allweekvideos', $allweekvideos);
@@ -71,7 +68,7 @@ if (isset($_GET['newvideoshowdays'])) {
     $xoopsTpl->assign('newvideoshowdays', intval($newvideoshowdays));
 
     $dailyvideos = array();
-    for ($i = 0; $i < intval($newvideoshowdays); $i++) {
+    for ($i = 0; $i < intval($newvideoshowdays); ++$i) {
         $key                                 = intval($newvideoshowdays) - $i - 1;
         $time                                = $time_cur - (86400 * $key);
         $dailyvideos[$key]['newvideodayRaw'] = $time;
@@ -84,9 +81,8 @@ if (isset($_GET['newvideoshowdays'])) {
 
 $duration = ($time_cur - (86400 * (intval($newvideoshowdays) - 1)));
 $result   = $xoopsDB->query(
-    'SELECT lid, cid, published, updated FROM ' . $xoopsDB->prefix('xoopstube_videos') . ' WHERE (published > '
-    . $duration . ' AND published <= ' . $time_cur . ') OR (updated >= ' . $duration . ' AND updated <= ' . $time_cur
-    . ') AND (expired = 0 OR expired > ' . $time_cur . ') AND offline = 0'
+    'SELECT lid, cid, published, updated FROM ' . $xoopsDB->prefix('xoopstube_videos') . ' WHERE (published > ' . $duration . ' AND published <= ' . $time_cur . ') OR (updated >= ' . $duration
+    . ' AND updated <= ' . $time_cur . ') AND (expired = 0 OR expired > ' . $time_cur . ') AND offline = 0'
 );
 while ($myrow = $xoopsDB->fetcharray($result)) {
     $published = ($myrow['updated'] > 0) ? $myrow['updated'] : $myrow['published'];
@@ -115,8 +111,7 @@ while ($video_arr = $xoopsDB->fetchArray($result)) {
 
 $xoopsTpl->assign(
     'back',
-    '<a href="javascript:history.go(-1)"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getvar('dirname')
-    . '/images/icon/back.png" /></a>'
+    '<a href="javascript:history.go(-1)"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getvar('dirname') . '/assets/images/icon/back.png" /></a>'
 );
 $xoopsTpl->assign('module_dir', $xoopsModule->getVar('dirname'));
 include XOOPS_ROOT_PATH . '/footer.php';

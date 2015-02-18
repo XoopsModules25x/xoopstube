@@ -19,14 +19,13 @@
  * @version         $Id$
  */
 
-
-require 'header.php';
+require __DIR__ . '/header.php';
 
 $op  = xtubeCleanRequestVars($_REQUEST, 'op', '');
 $lid = xtubeCleanRequestVars($_REQUEST, 'lid', 0);
 $lid = intval($lid);
 
-$buttonn = strtolower(_MD_XTUBE_SUBMITBROKEN);
+$buttonn = strtolower(_MD_XOOPSTUBE_SUBMITBROKEN);
 
 switch (strtolower($op)) {
     case $buttonn:
@@ -44,7 +43,7 @@ switch (strtolower($op)) {
         );
         list ($count) = $xoopsDB->fetchRow($result);
         if ($count > 0) {
-            $ratemessage = _MD_XTUBE_ALREADYREPORTED;
+            $ratemessage = _MD_XOOPSTUBE_ALREADYREPORTED;
             redirect_header('singlevideo.php?cid=' . intval($cid) . '&amp;lid=' . intval($lid), 2, $ratemessage);
             exit();
         } else {
@@ -62,22 +61,22 @@ switch (strtolower($op)) {
                 $xoopsDB->quoteString($title)
             );
             if (!$result = $xoopsDB->query($sql)) {
-                $error[] = _MD_XTUBE_ERROR;
+                $error[] = _MD_XOOPSTUBE_ERROR;
             }
             $newid = $xoopsDB->getInsertId();
 
             // Send notifications
             $tags = array();
             $tags['BROKENREPORTS_URL']
-                                  =
-                XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/admin/main.php?op=listBrokenvideos';
+                                  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/admin/main.php?op=listBrokenvideos';
             $notification_handler = & xoops_gethandler('notification');
             $notification_handler->triggerEvent('global', 0, 'video_broken', $tags);
 
             // Send email to the owner of the linkload stating that it is broken
-            $sql = 'SELECT * FROM ' . $xoopsDB->prefix('xoopstube_videos') . ' WHERE lid=' . intval($lid)
-                   . ' AND published > 0 AND published <= ' . time() . ' AND (expired = 0 OR expired > ' . time(
-                         ) . ')';
+            $sql
+                       =
+                'SELECT * FROM ' . $xoopsDB->prefix('xoopstube_videos') . ' WHERE lid=' . intval($lid) . ' AND published > 0 AND published <= ' . time() . ' AND (expired = 0 OR expired > ' . time()
+                . ')';
             $video_arr = $xoopsDB->fetchArray($xoopsDB->query($sql));
             unset($sql);
 
@@ -87,12 +86,11 @@ switch (strtolower($op)) {
                 $subdate = formatTimestamp($video_arr['date'], $xoopsModuleConfig['dateformat']);
                 $cid     = $video_arr['cid'];
                 $title   = $xtubemyts->htmlSpecialCharsStrip($video_arr['title']);
-                $subject = _MD_XTUBE_BROKENREPORTED;
+                $subject = _MD_XOOPSTUBE_BROKENREPORTED;
 
                 $xoopsMailer = & getMailer();
                 $xoopsMailer->useMail();
-                $template_dir = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/'
-                                . $xoopsConfig['language'] . '/mail_template';
+                $template_dir = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/mail_template';
                 $xoopsMailer->setTemplateDir($template_dir);
                 $xoopsMailer->setTemplate('videobroken_notify.tpl');
                 $xoopsMailer->setToEmails($submit_user->getVar('email'));
@@ -106,13 +104,12 @@ switch (strtolower($op)) {
                 $xoopsMailer->assign("X_SUB_DATE", $subdate);
                 $xoopsMailer->assign(
                     'X_VIDEOLOAD',
-                    XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/singlevideo.php?cid=' . $cid
-                    . '&amp;lid=' . $lid
+                    XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/singlevideo.php?cid=' . $cid . '&amp;lid=' . $lid
                 );
                 $xoopsMailer->setSubject($subject);
-                $message = ($xoopsMailer->send()) ? _MD_XTUBE_BROKENREPORTED : _MD_XTUBE_ERRORSENDEMAIL;
+                $message = ($xoopsMailer->send()) ? _MD_XOOPSTUBE_BROKENREPORTED : _MD_XOOPSTUBE_ERRORSENDEMAIL;
             } else {
-                $message = _MD_XTUBE_ERRORSENDEMAIL;
+                $message = _MD_XOOPSTUBE_ERRORSENDEMAIL;
             }
             redirect_header('singlevideo.php?cid=' . intval($cid) . '&amp;lid=' . intval($lid), 2, $message);
         }
@@ -120,7 +117,7 @@ switch (strtolower($op)) {
 
     default:
 
-        $xoopsOption['template_main'] = 'xoopstube_brokenvideo.html';
+        $xoopsOption['template_main'] = 'xoopstube_brokenvideo.tpl';
         include XOOPS_ROOT_PATH . '/header.php';
 
         $catarray['imageheader'] = xtubeRenderImageHeader();
@@ -144,7 +141,7 @@ switch (strtolower($op)) {
             $xoopsTpl->assign('brokenreport', true);
         } else {
             if (!is_array($video_arr) || empty($video_arr)) {
-                $ratemessage = _MD_XTUBE_THISFILEDOESNOTEXIST;
+                $ratemessage = _MD_XOOPSTUBE_THISFILEDOESNOTEXIST;
                 redirect_header('singlevideo.php?cid=' . intval($cid) . '&amp;lid=' . intval($lid), 0, $ratemessage);
                 exit();
             }
@@ -153,7 +150,7 @@ switch (strtolower($op)) {
             $video['title']   = $xtubemyts->htmlSpecialCharsStrip($video_arr['title']);
             $time             = ($video_arr['published'] > 0) ? $video_arr['published'] : $link_arr['updated'];
             $video['updated'] = xtubeGetTimestamp(formatTimestamp($time, $xoopsModuleConfig['dateformat']));
-            $is_updated       = ($video_arr['updated'] != 0) ? _MD_XTUBE_UPDATEDON : _MD_XTUBE_SUBMITDATE;
+            $is_updated       = ($video_arr['updated'] != 0) ? _MD_XOOPSTUBE_UPDATEDON : _MD_XOOPSTUBE_SUBMITDATE;
 
             $video['publisher'] = XoopsUserUtility::getUnameFromId($video_arr['submitter']);
 

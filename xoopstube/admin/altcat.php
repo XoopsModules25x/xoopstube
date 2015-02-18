@@ -18,13 +18,20 @@
  * @since           1.0.6
  */
 
-include 'admin_header.php';
+include_once __DIR__ . '/admin_header.php';
 
 global $xoopsModuleConfig;
 
 $op  = xtubeCleanRequestVars($_REQUEST, 'op', '');
 $lid = xtubeCleanRequestVars($_REQUEST, 'lid', 0);
 
+/**
+ * @param        $xt
+ * @param        $itemid
+ * @param        $title
+ * @param        $checks
+ * @param string $order
+ */
 function makeTreeCheckTable($xt, $itemid, $title, $checks, $order = '')
 {
     global $xtubemyts;
@@ -32,8 +39,7 @@ function makeTreeCheckTable($xt, $itemid, $title, $checks, $order = '')
     echo '<div style="text-align: left;">';
     echo '<form name="altcat" method="post" action="' . xoops_getenv('PHP_SELF') . '">';
     echo '<table width="100%" callspacing="1" class="outer">';
-    $sql = 'SELECT ' . $xt->id . ', ' . $title . ' FROM ' . $xt->table . ' WHERE ' . $xt->pid . '=0'
-           . ' ORDER BY ' . $title;
+    $sql = 'SELECT ' . $xt->id . ', ' . $title . ' FROM ' . $xt->table . ' WHERE ' . $xt->pid . '=0' . ' ORDER BY ' . $title;
     if ($order != '') {
         $sql .= ' ORDER BY ' . $order;
     }
@@ -93,8 +99,7 @@ switch (strtolower($op)) {
         foreach ($k as $sid) {
             if (preg_match("/cid-([0-9]*)/", $sid, $cid)) {
                 $sql
-                    = 'INSERT INTO ' . $xoopsDB->prefix('xoopstube_altcat') . '(cid, lid) VALUES("' . $cid[1] . '","'
-                      . $lid . '")';
+                    = 'INSERT INTO ' . $xoopsDB->prefix('xoopstube_altcat') . '(cid, lid) VALUES("' . $cid[1] . '","' . $lid . '")';
                 if (!$result = $xoopsDB->query($sql)) {
                     XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
@@ -102,15 +107,15 @@ switch (strtolower($op)) {
                 }
             }
         }
-        redirect_header('index.php', 1, _AM_XTUBE_ALTCAT_CREATED);
+        redirect_header('index.php', 1, _AM_XOOPSTUBE_ALTCAT_CREATED);
         break;
 
     case 'main':
     default:
         xoops_cp_header();
-        //xtubeRenderAdminMenu(_AM_XTUBE_MALTCAT);
-        echo '<fieldset><legend style="font-weight: bold; color: #0A3760;">' . _AM_XTUBE_ALTCAT_MODIFYF . '</legend>
-          <div style="padding: 8px;">' . _AM_XTUBE_ALTCAT_INFOTEXT . '</div>
+        //xtubeRenderAdminMenu(_AM_XOOPSTUBE_MALTCAT);
+        echo '<fieldset><legend style="font-weight: bold; color: #0A3760;">' . _AM_XOOPSTUBE_ALTCAT_MODIFYF . '</legend>
+          <div style="padding: 8px;">' . _AM_XOOPSTUBE_ALTCAT_INFOTEXT . '</div>
           </fieldset>';
 
         echo '<div style="text-align: left;"><h3> ' . $_REQUEST['title'] . ' </h3></div>';

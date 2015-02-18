@@ -16,6 +16,9 @@
  * @version         $Id$
  * @link            http://sourceforge.net/projects/xoops/
  * @since           1.0.6
+ *
+ * @param $videoload_id
+ * @param $total_num
  */
 
 // comment callback functions
@@ -27,6 +30,9 @@ function xtubeUpdateComment($videoload_id, $total_num)
     $db->query($sql);
 }
 
+/**
+ * @param $comment
+ */
 function xtubeApproveComment(&$comment)
 {
     // notification mail here

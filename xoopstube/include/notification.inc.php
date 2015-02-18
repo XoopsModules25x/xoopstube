@@ -16,14 +16,19 @@
  * @version         $Id$
  * @link            http://sourceforge.net/projects/xoops/
  * @since           1.0.6
+ *
+ * @param $category
+ * @param $item_id
+ *
+ * @return null
  */
 
 function xtubeNotifyIteminfo($category, $item_id)
 {
     global $xoopsModule, $xoopsModuleConfig;
 
-    $mydirname = basename(dirname(dirname(__FILE__)));
-//    $mydirpath = dirname(dirname(__FILE__));
+    $mydirname = basename(dirname(__DIR__));
+//    $mydirpath = dirname(__DIR__);
 
     if (empty($xoopsModule) || $xoopsModule->getVar('dirname') != 'xoopstube') {
         $module_handler =& xoops_gethandler('module');
@@ -38,6 +43,7 @@ function xtubeNotifyIteminfo($category, $item_id)
     if ($category == 'global') {
         $item['name'] = '';
         $item['url']  = '';
+
         return $item;
     }
 
@@ -51,6 +57,7 @@ function xtubeNotifyIteminfo($category, $item_id)
         $result_array = $xoopsDB->fetchArray($result);
         $item['name'] = $result_array['title'];
         $item['url']  = XOOPS_URL . '/modules/xoopstube/viewcat.php?cid=' . $item_id;
+
         return $item;
     }
 
@@ -63,9 +70,10 @@ function xtubeNotifyIteminfo($category, $item_id)
         $result_array = $xoopsDB->fetchArray($result);
         $item['name'] = $result_array['title'];
         $item['url']
-                      =
-            XOOPS_URL . '/modules/xoopstube/singlevideo.php?cid=' . $result_array['cid'] . '&amp;lid=' . $item_id;
+                      = XOOPS_URL . '/modules/xoopstube/singlevideo.php?cid=' . $result_array['cid'] . '&amp;lid=' . $item_id;
+
         return $item;
     }
+
     return null;
 }

@@ -19,8 +19,7 @@
  * @since           1.0.6
  */
 
-
-include 'header.php';
+include __DIR__ . '/header.php';
 
 $lid = xtubeCleanRequestVars($_REQUEST, 'lid', 0);
 $cid = xtubeCleanRequestVars($_REQUEST, 'cid', 0);
@@ -29,13 +28,12 @@ $cid = intval($cid);
 
 $sql2 = 'SELECT count(*) FROM ' . $xoopsDB->prefix('xoopstube_videos') . ' a LEFT JOIN ' . $xoopsDB->prefix(
         'xoopstube_altcat'
-    ) . ' b' . ' ON b.lid = a.lid' . ' WHERE a.published > 0 AND a.published <= ' . time()
-        . ' AND (a.expired = 0 OR a.expired > ' . time() . ') AND a.offline = 0' . ' AND (b.cid=a.cid OR (a.cid='
-        . intval($cid) . ' OR b.cid=' . intval($cid) . '))';
+    ) . ' b' . ' ON b.lid = a.lid' . ' WHERE a.published > 0 AND a.published <= ' . time() . ' AND (a.expired = 0 OR a.expired > ' . time() . ') AND a.offline = 0' . ' AND (b.cid=a.cid OR (a.cid='
+    . intval($cid) . ' OR b.cid=' . intval($cid) . '))';
 list($count) = $xoopsDB->fetchRow($xoopsDB->query($sql2));
 
 if (false == xtubeCheckGroups($cid) || $count == 0) {
-    redirect_header('index.php', 1, _MD_XTUBE_MUSTREGFIRST);
+    redirect_header('index.php', 1, _MD_XOOPSTUBE_MUSTREGFIRST);
     exit();
 }
 
@@ -48,11 +46,11 @@ $result    = $xoopsDB->query($sql);
 $video_arr = $xoopsDB->fetchArray($result);
 
 if (!is_array($video_arr)) {
-    redirect_header('index.php', 1, _MD_XTUBE_NOVIDEOLOAD);
+    redirect_header('index.php', 1, _MD_XOOPSTUBE_NOVIDEOLOAD);
     exit();
 }
 
-$xoopsOption['template_main'] = 'xoopstube_singlevideo.html';
+$xoopsOption['template_main'] = 'xoopstube_singlevideo.tpl';
 
 include XOOPS_ROOT_PATH . '/header.php';
 
@@ -69,7 +67,7 @@ $video['vidid']        = $video_arr['vidid'];
 $video['description2'] = $xtubemyts->displayTarea($video_arr['description'], 1, 1, 1, 1, 1);
 
 $mytree     = new XoopstubeTree($xoopsDB->prefix('xoopstube_cat'), 'cid', 'pid');
-$pathstring = '<a href="index.php">' . _MD_XTUBE_MAIN . '</a>&nbsp;:&nbsp;';
+$pathstring = '<a href="index.php">' . _MD_XOOPSTUBE_MAIN . '</a>&nbsp;:&nbsp;';
 $pathstring .= $mytree->getNicePathFromId($cid, 'title', 'viewcat.php?op=');
 $video['path'] = $pathstring;
 // Get video from source
@@ -95,7 +93,7 @@ while ($i < $maxWords - 1 && $i < count($words)) {
     if (isset($words[$i])) {
         $newWords[] = trim($words[$i]);
     }
-    $i++;
+    ++$i;
 }
 $video_meta_description = implode(' ', $newWords);
 
@@ -156,16 +154,15 @@ while ($arr = $xoopsDB->fetchArray($result)) {
 if (isset($xoopsModuleConfig['copyright']) && $xoopsModuleConfig['copyright'] == 1) {
     $xoopsTpl->assign(
         'lang_copyright',
-        '' . $video['publisher'] . ' &#0169; ' . _MD_XTUBE_COPYRIGHT . ' ' . formatTimestamp(time(), 'Y') . ' - '
-        . XOOPS_URL
+        '' . $video['publisher'] . ' &#0169; ' . _MD_XOOPSTUBE_COPYRIGHT . ' ' . formatTimestamp(time(), 'Y') . ' - ' . XOOPS_URL
     );
 }
 
 // Show other videos by submitter
 if (isset($xoopsModuleConfig['othervideos']) && $xoopsModuleConfig['othervideos'] == 1) {
-    $xoopsTpl->assign('other_videos', '<b>' . _MD_XTUBE_OTHERBYUID . '</b>' . $video['submitter'] . '<br />');
+    $xoopsTpl->assign('other_videos', '<b>' . _MD_XOOPSTUBE_OTHERBYUID . '</b>' . $video['submitter'] . '<br />');
 } else {
-    $xoopsTpl->assign('other_videos', '<b>' . _MD_XTUBE_NOOTHERBYUID . '</b>' . $video['submitter'] . '<br />');
+    $xoopsTpl->assign('other_videos', '<b>' . _MD_XOOPSTUBE_NOOTHERBYUID . '</b>' . $video['submitter'] . '<br />');
 }
 
 $video['showsubmitterx'] = $xoopsModuleConfig['showsubmitter'];
@@ -175,8 +172,7 @@ $xoopsTpl->assign('video', $video);
 
 $xoopsTpl->assign(
     'back',
-    '<a href="javascript:history.go(-1)"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getvar('dirname')
-    . '/images/icon/back.png" /></a>'
+    '<a href="javascript:history.go(-1)"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getvar('dirname') . '/assets/images/icon/back.png" /></a>'
 ); // Displays Back button
 $xoopsTpl->assign('module_dir', $xoopsModule->getVar('dirname'));
 

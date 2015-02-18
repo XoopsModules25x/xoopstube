@@ -26,6 +26,9 @@ if (!defined('DEFAULT_PATH')) {
     define('DEFAULT_PATH', XOOPS_UPLOAD_URL . '/blank.gif');
 }
 
+/**
+ * Class XtubeThumbsNails
+ */
 class XtubeThumbsNails
 {
     public $_imgName = 'blank.gif';
@@ -54,9 +57,10 @@ class XtubeThumbsNails
     /**
      * Constructor
      *
-     * @param null $img_name
-     * @param null $img_path
-     * @param null $img_savepath
+     * @param  null $img_name
+     * @param  null $img_path
+     * @param  null $img_savepath
+     *
      * @internal param string $_imgName
      * @internal param string $_img_path
      * @internal param string $_img_savepath
@@ -90,6 +94,7 @@ class XtubeThumbsNails
                 return false;
             }
         }
+
         return null;
     }
 
@@ -97,6 +102,7 @@ class XtubeThumbsNails
      * wfThumbsNails::setUseThumbs()
      *
      * @param  integer $value
+     *
      * @return void
      */
     public function setUseThumbs($value = 1)
@@ -108,6 +114,7 @@ class XtubeThumbsNails
      * XtubeThumbsNails::setImageType()
      *
      * @param  string $value
+     *
      * @return void
      */
     public function setImageType($value = 'gd2')
@@ -123,6 +130,7 @@ class XtubeThumbsNails
      * @param  int $img_quality
      * @param  int $img_update
      * @param  int $img_aspect
+     *
      * @return bool|string
      */
     public function createThumbnail(
@@ -183,16 +191,25 @@ class XtubeThumbsNails
         }
     }
 
+    /**
+     * @param $value
+     */
     public function setImageName($value)
     {
         $this->_imgName = strval(trim($value));
     }
 
+    /**
+     * @param $value
+     */
     public function setImagePath($value)
     {
         $this->_img_path = strval(trim($value));
     }
 
+    /**
+     * @param $value
+     */
     public function setImgSavePath($value)
     {
         $this->_img_savepath = strval(trim($value));
@@ -200,6 +217,9 @@ class XtubeThumbsNails
 
     // ThumbsNails::resizeThumbnail()
     // @return
+    /**
+     * @return bool|string
+     */
     public function resizeThumbnail()
     {
         global $xoopsModuleConfig;
@@ -231,16 +251,16 @@ class XtubeThumbsNails
             case 'im':
                 if (!empty($xoopsModuleConfig['path_magick']) && is_dir($xoopsModuleConfig['path_magick'])) {
                     if (preg_match("#[A-Z]:|\\\\#Ai", __FILE__)) {
-                        $cur_dir     = dirname(__FILE__);
+                        $cur_dir     = __DIR__;
                         $src_file_im = '"' . $cur_dir . '\\' . strtr($this->_source_image, '/', '\\') . '"';
                         $new_file_im = '"' . $cur_dir . '\\' . strtr($this->_save_image, '/', '\\') . '"';
                     } else {
                         $src_file_im = escapeshellarg($this->_source_image);
                         $new_file_im = escapeshellarg($this->_save_image);
                     }
-                    $magick_command = $xoopsModuleConfig['path_magick']
-                                      . '/convert -quality {$xoopsModuleConfig["imagequality"]} -antialias -sample {$newWidth}x{$newHeight} {$src_file_im} +profile "*" '
-                                      . str_replace('\\', '/', $new_file_im) . '';
+                    $magick_command
+                        = $xoopsModuleConfig['path_magick'] . '/convert -quality {$xoopsModuleConfig["imagequality"]} -antialias -sample {$newWidth}x{$newHeight} {$src_file_im} +profile "*" '
+                        . str_replace('\\', '/', $new_file_im) . '';
                     passthru($magick_command);
 
                     return $this->_source_url . "/{$this->_img_savepath}/{$savefile}";
@@ -255,9 +275,9 @@ class XtubeThumbsNails
             default :
 
                 $imageCreateFunction = (function_exists('imagecreatetruecolor')
-                                        && $this->_image_type == 'gd2') ? 'imagecreatetruecolor' : 'imagecreate';
+                    && $this->_image_type == 'gd2') ? 'imagecreatetruecolor' : 'imagecreate';
                 $imageCopyfunction   = (function_exists('ImageCopyResampled')
-                                        && $this->_image_type == 'gd2') ? 'imagecopyresampled' : 'imagecopyresized';
+                    && $this->_image_type == 'gd2') ? 'imagecopyresampled' : 'imagecopyresized';
 
                 switch ($this->_img_info[2]) {
                     case 1:
@@ -346,6 +366,9 @@ class XtubeThumbsNails
 
     // ThumbsNails::checkPaths()
     // @return
+    /**
+     * @return bool
+     */
     public function checkPaths()
     {
         if (file_exists($this->_source_image) || is_readable($this->_source_image)) {
@@ -358,6 +381,9 @@ class XtubeThumbsNails
         return false;
     }
 
+    /**
+     * @return bool
+     */
     public function checkImage()
     {
         $this->_img_info = getimagesize($this->_source_image, $imageinfo);
@@ -371,6 +397,9 @@ class XtubeThumbsNails
     // wfsThumbs::checkGdLibrary()
     // Private function
     // @return false if gd lib not found on the system
+    /**
+     * @return array|bool
+     */
     public function checkGdLibrary()
     {
         if (!extension_loaded('gd')) {
@@ -387,6 +416,9 @@ class XtubeThumbsNails
     // ThumbsNails::useThumbs()
     //
     // @return
+    /**
+     * @return bool
+     */
     public function useThumbs()
     {
         if ($this->_usethumbs) {

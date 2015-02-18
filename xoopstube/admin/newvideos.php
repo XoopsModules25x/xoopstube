@@ -18,7 +18,7 @@
  * @since           1.0.6
  */
 
-include 'admin_header.php';
+include_once __DIR__ . '/admin_header.php';
 
 $op  = xtubeCleanRequestVars($_REQUEST, 'op', '');
 $lid = xtubeCleanRequestVars($_REQUEST, 'lid', '');
@@ -29,8 +29,7 @@ switch (strtolower($op)) {
 
         global $xoopsModule;
         $sql
-            = 'SELECT cid, title, publisher, notifypub FROM ' . $xoopsDB->prefix('xoopstube_videos')
-              . ' WHERE lid=' . $lid;
+            = 'SELECT cid, title, publisher, notifypub FROM ' . $xoopsDB->prefix('xoopstube_videos') . ' WHERE lid=' . $lid;
         if (!$result = $xoopsDB->query($sql)) {
             XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
@@ -47,7 +46,7 @@ switch (strtolower($op)) {
 //            . $publisher . ' WHERE lid=' . $lid
 //        );
 
-        $sql= 'UPDATE ' . $xoopsDB->prefix('xoopstube_videos') . ' SET published=' . $time . ", status=1, publisher='" . $publisher . "' WHERE lid=" . $lid;
+        $sql = 'UPDATE ' . $xoopsDB->prefix('xoopstube_videos') . ' SET published=' . $time . ", status=1, publisher='" . $publisher . "' WHERE lid=" . $lid;
         if (!$result = $xoopsDB->queryF($sql)) {
             XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
@@ -57,8 +56,7 @@ switch (strtolower($op)) {
         $tags               = array();
         $tags['VIDEO_NAME'] = $title;
         $tags['VIDEO_URL']
-                            = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/singlevideo.php?cid=' . $cid
-                              . '&amp;lid=' . $lid;
+                            = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/singlevideo.php?cid=' . $cid . '&amp;lid=' . $lid;
 
         $sql = 'SELECT title FROM ' . $xoopsDB->prefix('xoopstube_cat') . ' WHERE cid=' . $cid;
         if (!$result = $xoopsDB->query($sql)) {
@@ -67,8 +65,7 @@ switch (strtolower($op)) {
             $row                   = $xoopsDB->fetchArray($result);
             $tags['CATEGORY_NAME'] = $row['title'];
             $tags['CATEGORY_URL']
-                                   =
-                XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewcat.php?cid=' . $cid;
+                                   = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewcat.php?cid=' . $cid;
             $notification_handler  = & xoops_gethandler('notification');
             $notification_handler->triggerEvent('global', 0, 'new_video', $tags);
             $notification_handler->triggerEvent('category', $cid, 'new_video', $tags);
@@ -76,7 +73,7 @@ switch (strtolower($op)) {
                 $notification_handler->triggerEvent('video', $lid, 'approve', $tags);
             }
         }
-        redirect_header('main.php', 1, _AM_XTUBE_SUB_NEWFILECREATED);
+        redirect_header('main.php', 1, _AM_XOOPSTUBE_SUB_NEWFILECREATED);
         break;
 
     case 'main':
@@ -95,26 +92,26 @@ switch (strtolower($op)) {
         $new_array_count = $xoopsDB->getRowsNum($xoopsDB->query($sql));
 
         xoops_cp_header();
-        //xtubeRenderAdminMenu( _AM_XTUBE_SUB_SUBMITTEDFILES );
+        $aboutAdmin = new ModuleAdmin();
+        echo $aboutAdmin->addNavigation('newvideos.php');
 
         echo '  <div style="padding:5px; background-color: #EEEEEE; border: 1px solid #D9D9D9;">
-                <span style="font-weight: bold; color: #0A3760;">' . _AM_XTUBE_SUB_FILESWAITINGINFO . '<br /><br /></span>
-                <span style="padding: 12px;">' . _AM_XTUBE_SUB_FILESWAITINGVALIDATION . '<b>' . $new_array_count . '</b><br /><br /><span>
-                <div style="padding: 8px;"><li>&nbsp;&nbsp;' . $xtubeImageArray['approve'] . ' '
-             . _AM_XTUBE_SUB_APPROVEWAITINGFILE . '<br />
-                <li>&nbsp;&nbsp;' . $xtubeImageArray['editimg'] . ' ' . _AM_XTUBE_SUB_EDITWAITINGFILE . '<br />
-                <li>&nbsp;&nbsp;' . $xtubeImageArray['deleteimg'] . ' ' . _AM_XTUBE_SUB_DELETEWAITINGFILE . '</div>
+                <span style="font-weight: bold; color: #0A3760;">' . _AM_XOOPSTUBE_SUB_FILESWAITINGINFO . '<br /><br /></span>
+                <span style="padding: 12px;">' . _AM_XOOPSTUBE_SUB_FILESWAITINGVALIDATION . '<b>' . $new_array_count . '</b><br /><br /><span>
+                <div style="padding: 8px;"><li>&nbsp;&nbsp;' . $xtubeImageArray['approve'] . ' ' . _AM_XOOPSTUBE_SUB_APPROVEWAITINGFILE . '<br />
+                <li>&nbsp;&nbsp;' . $xtubeImageArray['editimg'] . ' ' . _AM_XOOPSTUBE_SUB_EDITWAITINGFILE . '<br />
+                <li>&nbsp;&nbsp;' . $xtubeImageArray['deleteimg'] . ' ' . _AM_XOOPSTUBE_SUB_DELETEWAITINGFILE . '</div>
                 </div><br />
              ';
 
         echo '<table width="100%" cellspacing="1" class="outer">';
         echo '<tr style="text-align: center;">';
-        echo '<th><span style="font-size: small;">' . _AM_XTUBE_MINDEX_ID . '</span></th>';
-        echo '<th style="text-align: left;"><span style="font-size: small;">' . _AM_XTUBE_MINDEX_TITLE . '</span></th>';
-        echo '<th style="text-align: center;"><span style="font-size: small;">' . _AM_XTUBE_VIDSOURCE2 . '</span></th>';
-        echo '<th><span style="font-size: small;">' . _AM_XTUBE_MINDEX_POSTER . '</span></th>';
-        echo '<th><span style="font-size: small;">' . _AM_XTUBE_MINDEX_SUBMITTED . '</span></th>';
-        echo '<th><span style="font-size: small;">' . _AM_XTUBE_MINDEX_ACTION . '</span></th>';
+        echo '<th><span style="font-size: small;">' . _AM_XOOPSTUBE_MINDEX_ID . '</span></th>';
+        echo '<th style="text-align: left;"><span style="font-size: small;">' . _AM_XOOPSTUBE_MINDEX_TITLE . '</span></th>';
+        echo '<th style="text-align: center;"><span style="font-size: small;">' . _AM_XOOPSTUBE_VIDSOURCE2 . '</span></th>';
+        echo '<th><span style="font-size: small;">' . _AM_XOOPSTUBE_MINDEX_POSTER . '</span></th>';
+        echo '<th><span style="font-size: small;">' . _AM_XOOPSTUBE_MINDEX_SUBMITTED . '</span></th>';
+        echo '<th><span style="font-size: small;">' . _AM_XOOPSTUBE_MINDEX_ACTION . '</span></th>';
         echo '</tr>';
         if ($new_array_count > 0) {
             while ($new = $xoopsDB->fetchArray($new_array)) {
@@ -127,35 +124,28 @@ switch (strtolower($op)) {
                 $returnsource = xtubeReturnSource($new['vidsource']);
                 $datetime     = xtubeGetTimestamp(formatTimestamp($new['date'], $xoopsModuleConfig['dateformatadmin']));
 
-                $icon = ($new['published']) ? $approved
-                    : '<a href="newvideos.php?op=approve&amp;lid=' . $lid . '">' . $xtubeImageArray['approve'] . ' </a>';
+                $icon = ($new['published']) ? $approved : '<a href="newvideos.php?op=approve&amp;lid=' . $lid . '">' . $xtubeImageArray['approve'] . ' </a>';
                 $icon .= '<a href="main.php?op=edit&amp;lid=' . $lid . '">' . $xtubeImageArray['editimg'] . ' </a>';
                 $icon .= '<a href="main.php?op=delete&amp;lid=' . $lid . '">' . $xtubeImageArray['deleteimg'] . '</a>';
 
                 echo '<tr>';
-                echo '<td class="head" style="text-align: center;"><span style="font-size: small;">' . $lid
-                     . '</span></td>';
-                echo '<td class="even" nowrap><a href="newvideos.php?op=edit&amp;lid=' . $lid
-                     . '"><span style="font-size: small;">' . $title . '</span></a></td>';
-                echo '<td class="even" style="text-align: center;" nowrap><span style="font-size: small;">'
-                     . $returnsource . '</span></td>';
-                echo '<td class="even" style="text-align: center;" nowrap><span style="font-size: small;">' . $submitter
-                     . '</span></td>';
-                echo '<td class="even" style="text-align: center;"><span style="font-size: small;">' . $datetime
-                     . '</span></td>';
+                echo '<td class="head" style="text-align: center;"><span style="font-size: small;">' . $lid . '</span></td>';
+                echo '<td class="even" nowrap><a href="newvideos.php?op=edit&amp;lid=' . $lid . '"><span style="font-size: small;">' . $title . '</span></a></td>';
+                echo '<td class="even" style="text-align: center;" nowrap><span style="font-size: small;">' . $returnsource . '</span></td>';
+                echo '<td class="even" style="text-align: center;" nowrap><span style="font-size: small;">' . $submitter . '</span></td>';
+                echo '<td class="even" style="text-align: center;"><span style="font-size: small;">' . $datetime . '</span></td>';
                 echo '<td class="even" style="text-align: center;" nowrap>' . $icon . '</td>';
                 echo '</tr>';
             }
         } else {
-            echo '<tr><td style="text-align: center;" class="head" colspan="6">' . _AM_XTUBE_SUB_NOFILESWAITING
-                 . '</td></tr>';
+            echo '<tr><td style="text-align: center;" class="head" colspan="6">' . _AM_XOOPSTUBE_SUB_NOFILESWAITING . '</td></tr>';
         }
         echo '</table>';
 
         include_once XOOPS_ROOT_PATH . '/class/pagenav.php';
-//        $page = ( $new_array_count > $xoopsModuleConfig['admin_perpage'] ) ? _AM_XTUBE_MINDEX_PAGE : '';
+//        $page = ( $new_array_count > $xoopsModuleConfig['admin_perpage'] ) ? _AM_XOOPSTUBE_MINDEX_PAGE : '';
         $pagenav = new XoopsPageNav($new_array_count, $xoopsModuleConfig['admin_perpage'], $start, 'start');
         echo '<div align="right" style="padding: 8px;">' . $pagenav->renderNav() . '</div>';
-        include 'admin_footer.php';
+        include_once __DIR__ . '/admin_footer.php';
         break;
 }

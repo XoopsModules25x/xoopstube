@@ -14,18 +14,40 @@
  * @author          XOOPS Development Team, Irmtfan
  * @copyright       2001-2013 The XOOPS Project
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @version         $Id: common.php 11722 2013-06-19 16:47:58Z beckmi $
+ * @version         $Id$
  * @link            http://sourceforge.net/projects/xoops/
  * @since           1.0.6
  */
 
-defined("XOOPS_ROOT_PATH") or die("XOOPS root path not defined");
+// defined('XOOPS_ROOT_PATH') || die('XOOPS Root Path not defined');
 
-define("XTUBE_DIRNAME", basename(dirname(dirname(__FILE__))));
-define("XTUBE_URL", XOOPS_URL . '/modules/' . XTUBE_DIRNAME);
-define("XTUBE_ADMIN_URL", XTUBE_URL . '/admin');
-define("XTUBE_ROOT_PATH", XOOPS_ROOT_PATH . '/modules/' . XTUBE_DIRNAME);
+define("XOOPSTUBE_DIRNAME", basename(dirname(__DIR__)));
+define("XOOPSTUBE_URL", XOOPS_URL . '/modules/' . XOOPSTUBE_DIRNAME);
+define("XOOPSTUBE_IMAGES_URL", XOOPSTUBE_URL . '/assets/images');
+define("XOOPSTUBE_ADMIN_URL", XOOPSTUBE_URL . '/admin');
+define("XOOPSTUBE_ROOT_PATH", XOOPS_ROOT_PATH . '/modules/' . XOOPSTUBE_DIRNAME);
 
 //xoops_load("xoopsuserutility");
 //xoops_load("XoopsCache");
 //xoops_load("XoopsFile");
+
+xoops_loadLanguage('common', XOOPSTUBE_DIRNAME);
+
+include_once XOOPSTUBE_ROOT_PATH . '/include/functions.php';
+include_once XOOPSTUBE_ROOT_PATH . '/include/constants.php';
+include_once XOOPSTUBE_ROOT_PATH . '/class/session.php';
+include_once XOOPSTUBE_ROOT_PATH . '/class/xoopstube.php';
+//include_once XOOPSTUBE_ROOT_PATH . '/class/request.php';
+//include_once XOOPSTUBE_ROOT_PATH . '/class/breadcrumb.php';
+
+$debug     = false;
+$xoopstube = XoopstubeXoopstube::getInstance($debug);
+
+//This is needed or it will not work in blocks.
+global $xtubeIsAdmin;
+
+// Load only if module is installed
+if (is_object($xoopstube->getModule())) {
+    // Find if the user is admin of the module
+    $xtubeIsAdmin = xtubeUserIsAdmin();
+}

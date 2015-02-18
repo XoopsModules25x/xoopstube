@@ -19,13 +19,12 @@
  * @since           1.0.6
  */
 
-
-include 'header.php';
+include __DIR__ . '/header.php';
 
 $start = xtubeCleanRequestVars($_REQUEST, 'start', 0);
 $start = intval($start);
 
-$xoopsOption['template_main'] = 'xoopstube_index.html';
+$xoopsOption['template_main'] = 'xoopstube_index.tpl';
 include XOOPS_ROOT_PATH . '/header.php';
 
 global $xoopsModuleConfig;
@@ -87,7 +86,7 @@ $catsort = $xoopsModuleConfig['sortcats'];
 $sql     = 'SELECT * FROM ' . $xoopsDB->prefix('xoopstube_cat') . ' WHERE pid=0 ORDER BY ' . $catsort;
 $result  = $xoopsDB->query($sql);
 while ($myrow = $xoopsDB->fetchArray($result)) {
-    $countin++;
+    ++$countin;
     $subtotalvideoload = 0;
     $totalvideoload    = xtubeGetTotalItems($myrow['cid'], 1);
     $indicator         = xtubeIsNewImage($totalvideoload['published']);
@@ -112,10 +111,9 @@ while ($myrow = $xoopsDB->fetchArray($result)) {
                         $subcategories .= '<br />';
                     }
                     $subcategories
-                        .= '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewcat.php?cid='
-                           . $ele['cid'] . '">' . $chtitle . '</a>';
-                    $space++;
-                    $chcount++;
+                        .= '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewcat.php?cid=' . $ele['cid'] . '">' . $chtitle . '</a>';
+                    ++$space;
+                    ++$chcount;
                 }
             }
         }
@@ -151,26 +149,26 @@ while ($myrow = $xoopsDB->fetchArray($result)) {
         $xoopsTpl->append(
             'categories',
             array(
-                 'image'         => XOOPS_URL . "/$imgurl",
-                 'id'            => $myrow['cid'],
-                 'title'         => $title,
-                 'subcategories' => $subcategories,
-                 'totalvideos'   => $totalvideoload['count'],
-                 'width'         => $_width,
-                 'height'        => $_height,
-                 'count'         => $count,
-                 'alttext'       => $myrow['description']
+                'image'         => XOOPS_URL . "/$imgurl",
+                'id'            => $myrow['cid'],
+                'title'         => $title,
+                'subcategories' => $subcategories,
+                'totalvideos'   => $totalvideoload['count'],
+                'width'         => $_width,
+                'height'        => $_height,
+                'count'         => $count,
+                'alttext'       => $myrow['description']
             )
         );
-        $count++;
+        ++$count;
     }
 }
 switch ($total_cat) {
     case '1':
-        $lang_thereare = _MD_XTUBE_THEREIS;
+        $lang_thereare = _MD_XOOPSTUBE_THEREIS;
         break;
     default:
-        $lang_thereare = _MD_XTUBE_THEREARE;
+        $lang_thereare = _MD_XOOPSTUBE_THEREARE;
         break;
 }
 
@@ -193,7 +191,7 @@ if ($lastvideos['lastvideosyn'] == 1 && $lastvideos['lastvideostotal'] > 0) {
     list($count) = $xoopsDB->fetchRow($result);
 
     $count = (($count > $lastvideos['lastvideostotal'])
-              && ($lastvideos['lastvideostotal'] != 0)) ? $lastvideos['lastvideostotal'] : $count;
+        && ($lastvideos['lastvideostotal'] != 0)) ? $lastvideos['lastvideostotal'] : $count;
     $limit = (($start + $xoopsModuleConfig['perpage']) > $count) ? ($count - $start) : $xoopsModuleConfig['perpage'];
 
     $result = $xoopsDB->query(

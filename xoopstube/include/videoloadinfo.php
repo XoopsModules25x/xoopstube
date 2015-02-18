@@ -21,9 +21,9 @@
 
 // $module_video = '';
 
-//include_once '/admin/admin_header.php';
+//include_once __DIR__ . '/admin_header.php';
 
-global $pathIcon16;
+//global $pathIcon16;
 
 $video['id']        = intval($video_arr['lid']);
 $video['cid']       = intval($video_arr['cid']);
@@ -39,13 +39,13 @@ $rating           = round(number_format($video_arr['rating'], 0) / 2);
 $video['rateimg'] = "rate$rating.png";
 unset($rating);
 
-$video['votes'] = ($video_arr['votes'] == 1) ? _MD_XTUBE_ONEVOTE : sprintf(_MD_XTUBE_NUMVOTES, $video_arr['votes']);
-$video['hits']  = sprintf(_MD_XTUBE_VIDEOHITS, intval($video_arr['hits']));
+$video['votes'] = ($video_arr['votes'] == 1) ? _MD_XOOPSTUBE_ONEVOTE : sprintf(_MD_XOOPSTUBE_NUMVOTES, $video_arr['votes']);
+$video['hits']  = sprintf(_MD_XOOPSTUBE_VIDEOHITS, intval($video_arr['hits']));
 $xoopsTpl->assign('lang_dltimes', $video['hits']);
 $publisher           = (isset($video_arr['publisher'])
-                        && !empty($video_arr['publisher'])) ? $xtubemyts->htmlSpecialCharsStrip(
+    && !empty($video_arr['publisher'])) ? $xtubemyts->htmlSpecialCharsStrip(
     $video_arr['publisher']
-) : _MD_XTUBE_NOTSPECIFIED;
+) : _MD_XOOPSTUBE_NOTSPECIFIED;
 $video['title']      = $xtubemyts->htmlSpecialCharsStrip($video_arr['title']);
 $video['vidid']      = $video_arr['vidid'];
 $video['videothumb'] = xtubeGetVideoThumb(
@@ -59,53 +59,49 @@ $video['publisher']  = xtubeGetVideoPublisher($video_arr['vidid'], $video_arr['p
 
 if ($moderate == 0) {
     $time       = ($video_arr['updated'] != 0) ? $video_arr['updated'] : $video_arr['published'];
-    $is_updated = ($video_arr['updated'] != 0) ? _MD_XTUBE_UPDATEDON : _MD_XTUBE_PUBLISHDATE;
+    $is_updated = ($video_arr['updated'] != 0) ? _MD_XOOPSTUBE_UPDATEDON : _MD_XOOPSTUBE_PUBLISHDATE;
     $xoopsTpl->assign('lang_subdate', $is_updated);
 } else {
     $time       = $video_arr['date'];
-    $is_updated = _MD_XTUBE_SUBMITDATE;
+    $is_updated = _MD_XOOPSTUBE_SUBMITDATE;
     $xoopsTpl->assign('lang_subdate', $is_updated);
 }
 
 $video['adminvideo'] = '';
 $video['isadmin']    = ((is_object($xoopsUser) && !empty($xoopsUser))
-                        && $xoopsUser->isAdmin(
+    && $xoopsUser->isAdmin(
         $xoopsModule->mid()
     )) ? true : false;
 if ($video['isadmin'] == true && $moderate == 0) {
     $video['adminvideo']
-        = '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/admin/index.php"><img src="'
-          . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/images/icon/computer.png" alt="'
-          . _MD_XTUBE_ADMINSECTION . '" title="'
-          . _MD_XTUBE_ADMINSECTION . '" style="vertical-align: middle;" /></a>&nbsp;';
+        = '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/admin/index.php"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname')
+        . '/assets/images/icon/computer.png" alt="' . _MD_XOOPSTUBE_ADMINSECTION . '" title="' . _MD_XOOPSTUBE_ADMINSECTION . '" style="vertical-align: middle;" /></a>&nbsp;';
 
     if ($video_arr['vidsource'] == 200) {
         $video['adminvideo']
             .=
-            '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/admin/main.php?op=edit&amp;lid='
-            . $video_arr['lid'] . '"><img src="' . $xoopsModule->getInfo('icons16') . '/edit.png" alt="'
-            . _MD_XTUBE_EDIT . '" title="' . _MD_XTUBE_EDIT . '" style="vertical-align: middle;" /></a>&nbsp;';
+            '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/admin/main.php?op=edit&amp;lid=' . $video_arr['lid'] . '"><img src="' . XOOPS_URL . '/' . $xoopsModule->getInfo(
+                'icons16'
+            ) . '/edit.png" alt="' . _MD_XOOPSTUBE_EDIT . '" title="' . _MD_XOOPSTUBE_EDIT . '" style="vertical-align: middle;" /></a>&nbsp;';
     } else {
         $video['adminvideo']
             .=
-            '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/admin/main.php?op=edit&amp;lid='
-            . $video_arr['lid'] . '"><img src="' . $xoopsModule->getInfo('icons16') . '/edit.png" alt="'
-            . _MD_XTUBE_EDIT . '" title="' . _MD_XTUBE_EDIT . '" style="vertical-align: middle;" /></a>&nbsp;';
+            '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/admin/main.php?op=edit&amp;lid=' . $video_arr['lid'] . '"><img src="' . XOOPS_URL . '/' . $xoopsModule->getInfo(
+                'icons16'
+            ) . '/edit.png" alt="' . _MD_XOOPSTUBE_EDIT . '" title="' . _MD_XOOPSTUBE_EDIT . '" style="vertical-align: middle;" /></a>&nbsp;';
     }
     $video['adminvideo']
         .=
-        '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/admin/main.php?op=delete&amp;lid='
-        . $video_arr['lid'] . '"><img src="' . $xoopsModule->getInfo('icons16') . '/delete.png" alt="'
-        . _MD_XTUBE_DELETE . '" title="' . _MD_XTUBE_DELETE . '" style="vertical-align: middle;" /></a>';
+        '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/admin/main.php?op=delete&amp;lid=' . $video_arr['lid'] . '"><img src="' . XOOPS_URL . '/' . $xoopsModule->getInfo(
+            'icons16'
+        ) . '/delete.png" alt="' . _MD_XOOPSTUBE_DELETE . '" title="' . _MD_XOOPSTUBE_DELETE . '" style="vertical-align: middle;" /></a>';
 } else {
     $video['adminvideo']
-        = '[ <a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/submit.php?op=edit&amp;lid='
-          . $video_arr['lid'] . '&approve=1">' . _MD_XTUBE_APPROVE . '</a> | ';
+        = '[ <a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/submit.php?op=edit&amp;lid=' . $video_arr['lid'] . '&approve=1">' . _MD_XOOPSTUBE_APPROVE . '</a> | ';
     $video['adminvideo']
-        .= '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/submit.php?op=delete&amp;lid='
-           . $video_arr['lid'] . '">' . _MD_XTUBE_DELETE . '</a> ]';
+        .= '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/submit.php?op=delete&amp;lid=' . $video_arr['lid'] . '">' . _MD_XOOPSTUBE_DELETE . '</a> ]';
 }
-$votestring = ($video_arr['votes'] == 1) ? _MD_XTUBE_ONEVOTE : sprintf(_MD_XTUBE_NUMVOTES, $video_arr['votes']);
+$votestring = ($video_arr['votes'] == 1) ? _MD_XOOPSTUBE_ONEVOTE : sprintf(_MD_XOOPSTUBE_NUMVOTES, $video_arr['votes']);
 
 $video['useradminvideo'] = 0;
 if (is_object($xoopsUser) && !empty($xoopsUser)) {
@@ -114,8 +110,7 @@ if (is_object($xoopsUser) && !empty($xoopsUser)) {
         $video['useradminvideo'] = 1;
         if ($xoopsUser->getvar('uid') == $video_arr['submitter']) {
             $video['usermodify']
-                = '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/submit.php?lid='
-                  . $video_arr['lid'] . '"> ' . _MD_XTUBE_MODIFY . '</a> |';
+                = '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/submit.php?lid=' . $video_arr['lid'] . '"> ' . _MD_XOOPSTUBE_MODIFY . '</a> |';
         }
     }
 }
@@ -126,9 +121,9 @@ $video['description'] = xoops_substr($description, 0, $xoopsModuleConfig['totalc
 $video['updated']        = xtubeGetTimestamp(formatTimestamp($time, $xoopsModuleConfig['dateformat']));
 $video['submitter']      = xtubeGetLinkedUserNameFromId($video_arr['submitter']);
 $video['time']           = $video_arr['time'];
-$video['mail_subject']   = rawurlencode(sprintf(_MD_XTUBE_INTFILEFOUND, $xoopsConfig['sitename']));
+$video['mail_subject']   = rawurlencode(sprintf(_MD_XOOPSTUBE_INTFILEFOUND, $xoopsConfig['sitename']));
 $video['mail_body']      = rawurlencode(
-    sprintf(_MD_XTUBE_INTFILEFOUND, $xoopsConfig['sitename']) . ':  ' . XOOPS_URL . '/modules/' . $xoopsModule->getVar(
+    sprintf(_MD_XOOPSTUBE_INTFILEFOUND, $xoopsConfig['sitename']) . ':  ' . XOOPS_URL . '/modules/' . $xoopsModule->getVar(
         'dirname'
     ) . '/singlevideo.php?cid=' . $video_arr['cid'] . '&amp;lid=' . $video_arr['lid']
 );

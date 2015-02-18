@@ -19,8 +19,7 @@
  * @since           1.0.6
  */
 
-
-include '../../mainfile.php';
+include dirname(dirname(__DIR__)) . '/mainfile.php';
 $com_itemid = isset($_GET['com_itemid']) ? intval($_GET['com_itemid']) : 0;
 if ($com_itemid > 0) {
     // Get file title
