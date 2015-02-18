@@ -19,8 +19,7 @@
  * @since           1.0.6
  */
 
-
-include 'header.php';
+include __DIR__ . '/header.php';
 
 global $xtubemyts, $xoTheme;
 
@@ -32,7 +31,7 @@ $ip         = getenv("REMOTE_ADDR");
 $ratinguser = (!is_object($xoopsUser)) ? 0 : $xoopsUser->getVar('uid');
 
 if ($xoopsModuleConfig['showrating'] == 0 || $lid == '') {
-    $ratemessage = _MD_XTUBE_CANTVOTEOWN;
+    $ratemessage = _MD_XOOPSTUBE_CANTVOTEOWN;
     redirect_header('index.php', 4, $ratemessage);
     exit();
 }
@@ -43,7 +42,7 @@ if ($ratinguser != 0) {
     );
     while (list($cid, $ratinguserDB) = $xoopsDB->fetchRow($result)) {
         if ($ratinguserDB == $ratinguser) {
-            $ratemessage = _MD_XTUBE_CANTVOTEOWN;
+            $ratemessage = _MD_XOOPSTUBE_CANTVOTEOWN;
             redirect_header('singlevideo.php?cid=' . intval($cid) . '&amp;lid=' . intval($lid), 4, $ratemessage);
             exit();
         }
@@ -54,7 +53,7 @@ if ($ratinguser != 0) {
     );
     while (list($cid, $ratinguserDB) = $xoopsDB->fetchRow($result)) {
         if ($ratinguserDB == $ratinguser) {
-            $ratemessage = _MD_XTUBE_VOTEONCE;
+            $ratemessage = _MD_XOOPSTUBE_VOTEONCE;
             redirect_header('singlevideo.php?cid=' . intval($cid) . '&amp;lid=' . intval($lid), 4, $ratemessage);
             exit();
         }
@@ -63,12 +62,11 @@ if ($ratinguser != 0) {
     // Check if ANONYMOUS user is trying to vote more than once per day.
     $yesterday = (time() - (86400 * $anonwaitdays));
     $result    = $xoopsDB->query(
-        'SELECT COUNT(*) FROM ' . $xoopsDB->prefix('xoopstube_votedata') . ' WHERE lid=' . intval($lid)
-        . ' AND ratinguser=0 AND ratinghostname=' . $ip . '  AND ratingtimestamp > ' . $yesterday
+        'SELECT COUNT(*) FROM ' . $xoopsDB->prefix('xoopstube_votedata') . ' WHERE lid=' . intval($lid) . ' AND ratinguser=0 AND ratinghostname=' . $ip . '  AND ratingtimestamp > ' . $yesterday
     );
     list($anonvotecount) = $xoopsDB->fetchRow($result);
     if ($anonvotecount >= 1) {
-        $ratemessage = _MD_XTUBE_VOTEONCE;
+        $ratemessage = _MD_XOOPSTUBE_VOTEONCE;
         redirect_header('singlevideo.php?cid=' . intval($cid) . '&amp;lid=' . intval($lid), 4, $ratemessage);
         exit();
     }
@@ -88,7 +86,7 @@ if (!empty($_POST['submit'])) {
     $rating       = intval($rating);
     // Check if Rating is Null
     if ($rating == '--') {
-        $ratemessage = _MD_XTUBE_NORATING;
+        $ratemessage = _MD_XOOPSTUBE_NORATING;
         redirect_header('ratevideo.php?cid=' . intval($cid) . '&amp;lid=' . intval($lid), 4, $ratemessage);
         exit();
     }
@@ -107,16 +105,16 @@ if (!empty($_POST['submit'])) {
         $xoopsDB->quoteString($title)
     );
     if (!$result = $xoopsDB->query($sql)) {
-        $ratemessage = _MD_XTUBE_ERROR;
+        $ratemessage = _MD_XOOPSTUBE_ERROR;
     } else {
         // All is well.  Calculate Score & Add to Summary (for quick retrieval & sorting) to DB.
         xtubeUpdateRating($lid);
-        $ratemessage = _MD_XTUBE_VOTEAPPRE . '<br />' . sprintf(_MD_XTUBE_THANKYOU, $xoopsConfig['sitename']);
+        $ratemessage = _MD_XOOPSTUBE_VOTEAPPRE . '<br />' . sprintf(_MD_XOOPSTUBE_THANKYOU, $xoopsConfig['sitename']);
     }
     redirect_header('singlevideo.php?cid=' . intval($cid) . '&amp;lid=' . intval($lid), 4, $ratemessage);
     exit();
 } else {
-    $xoopsOption['template_main'] = 'xoopstube_ratevideo.html';
+    $xoopsOption['template_main'] = 'xoopstube_ratevideo.tpl';
     include XOOPS_ROOT_PATH . '/header.php';
 
     $catarray['imageheader'] = xtubeRenderImageHeader();
@@ -133,9 +131,9 @@ if (!empty($_POST['submit'])) {
     $xoopsTpl->assign(
         'video',
         array(
-             'id'    => intval($lid),
-             'cid'   => intval($cid),
-             'title' => $xtubemyts->htmlSpecialCharsStrip($title)
+            'id'    => intval($lid),
+            'cid'   => intval($cid),
+            'title' => $xtubemyts->htmlSpecialCharsStrip($title)
         )
     );
 

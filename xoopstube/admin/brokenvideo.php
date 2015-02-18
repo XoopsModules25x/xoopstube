@@ -18,7 +18,7 @@
  * @since           1.0.6
  */
 
-include 'admin_header.php';
+include_once __DIR__ . '/admin_header.php';
 
 global $xtubeImageArray, $xoopsModule, $xoopsDB;
 
@@ -44,7 +44,7 @@ switch (strtolower($op)) {
 
                 return false;
             }
-            $update_mess = _AM_XTUBE_BROKEN_NOWACK;
+            $update_mess = _AM_XOOPSTUBE_BROKEN_NOWACK;
         } elseif (!$ack && !$con) {
             $acknowledged = ($ack == 0) ? 1 : 0;
             $sql          = 'UPDATE ' . $xoopsDB->prefix('xoopstube_broken') . ' SET acknowledged=' . $acknowledged;
@@ -58,7 +58,7 @@ switch (strtolower($op)) {
                 return false;
             }
 
-            $update_mess = _AM_XTUBE_BROKEN_NOWACK;
+            $update_mess = _AM_XOOPSTUBE_BROKEN_NOWACK;
         }
 
         if ($con) {
@@ -73,7 +73,7 @@ switch (strtolower($op)) {
 
                 return false;
             }
-            $update_mess = _AM_XTUBE_BROKEN_NOWCON;
+            $update_mess = _AM_XOOPSTUBE_BROKEN_NOWCON;
         } elseif (!$con) {
             $confirmed = ($con == 0) ? 1 : 0;
             $sql       = 'UPDATE ' . $xoopsDB->prefix('xoopstube_broken') . ' SET confirmed=' . $confirmed;
@@ -86,7 +86,7 @@ switch (strtolower($op)) {
 
                 return false;
             }
-            $update_mess = _AM_XTUBE_BROKEN_NOWCON;
+            $update_mess = _AM_XOOPSTUBE_BROKEN_NOWCON;
         }
         redirect_header('brokenvideo.php?op=default', 1, $update_mess);
         break;
@@ -95,13 +95,13 @@ switch (strtolower($op)) {
         $xoopsDB->queryF('DELETE FROM ' . $xoopsDB->prefix('xoopstube_broken') . ' WHERE lid=' . $lid);
         $xoopsDB->queryF('DELETE FROM ' . $xoopsDB->prefix('xoopstube_videos') . ' WHERE lid=' . $lid);
         $xoopsDB->queryF('DELETE FROM ' . $xoopsDB->prefix('xoopstube_votedata') . ' WHERE lid=' . $lid);
-        redirect_header('brokenvideo.php?op=default', 1, _AM_XTUBE_BROKENFILEDELETED);
+        redirect_header('brokenvideo.php?op=default', 1, _AM_XOOPSTUBE_BROKENFILEDELETED);
         exit();
         break;
 
     case 'ignorebrokenvideos':
         $xoopsDB->queryF('DELETE FROM ' . $xoopsDB->prefix('xoopstube_broken') . ' WHERE lid=' . $lid);
-        redirect_header('brokenvideo.php?op=default', 1, _AM_XTUBE_BROKEN_FILEIGNORED);
+        redirect_header('brokenvideo.php?op=default', 1, _AM_XOOPSTUBE_BROKEN_FILEIGNORED);
         break;
 
     default:
@@ -111,43 +111,42 @@ switch (strtolower($op)) {
         $totalbrokenvideos = $xoopsDB->getRowsNum($result);
 
         xoops_cp_header();
-//        xtubeRenderAdminMenu( _AM_XTUBE_BROKEN_FILE );
+        $aboutAdmin = new ModuleAdmin();
+        echo $aboutAdmin->addNavigation('brokenvideo.php');
 
         echo '
         <fieldset style="border: #E8E8E8 1px solid;">
-            <legend style="display: inline; font-weight: bold; color: #0A3760;">' . _AM_XTUBE_BROKEN_REPORTINFO . '</legend>
-            <div style="padding: 8px;">' . _AM_XTUBE_BROKEN_REPORTSNO . '&nbsp;<b>' . $totalbrokenvideos . '</b><div>
+            <legend style="display: inline; font-weight: bold; color: #0A3760;">' . _AM_XOOPSTUBE_BROKEN_REPORTINFO . '</legend>
+            <div style="padding: 8px;">' . _AM_XOOPSTUBE_BROKEN_REPORTSNO . '&nbsp;<b>' . $totalbrokenvideos . '</b><div>
             <div style="padding-left: 8px;">
            <ul>
-                    <li>' . $xtubeImageArray['ignore'] . '&nbsp;&nbsp;' . _AM_XTUBE_BROKEN_IGNOREDESC . '</li>
-                    <li>' . $xtubeImageArray['editimg'] . '&nbsp;&nbsp;' . _AM_XTUBE_BROKEN_EDITDESC . '</li>
-                    <li>' . $xtubeImageArray['deleteimg'] . '&nbsp;&nbsp;' . _AM_XTUBE_BROKEN_DELETEDESC . '</li>
+                    <li>' . $xtubeImageArray['ignore'] . '&nbsp;&nbsp;' . _AM_XOOPSTUBE_BROKEN_IGNOREDESC . '</li>
+                    <li>' . $xtubeImageArray['editimg'] . '&nbsp;&nbsp;' . _AM_XOOPSTUBE_BROKEN_EDITDESC . '</li>
+                    <li>' . $xtubeImageArray['deleteimg'] . '&nbsp;&nbsp;' . _AM_XOOPSTUBE_BROKEN_DELETEDESC . '</li>
            </ul>
             </div>
         </fieldset>';
 
         echo '<table width="100%" border="0" cellspacing="1" cellpadding="2" class="outer" style="font-size: smaller;">';
         echo '<tr style="text-align: center;">';
-        echo '<th width="3%" style="text-align: center;">' . _AM_XTUBE_BROKEN_ID . '</th>';
-        echo '<th width="35%" style="text-align: left;">' . _AM_XTUBE_BROKEN_TITLE . '</th>';
-        echo '<th>' . _AM_XTUBE_BROKEN_REPORTER . '</th>';
-        echo '<th>' . _AM_XTUBE_BROKEN_FILESUBMITTER . '</th>';
-        echo '<th>' . _AM_XTUBE_BROKEN_DATESUBMITTED . '</th>';
-        echo '<th>' . _AM_XTUBE_BROKEN_ACKNOWLEDGED . '</th>';
-        echo '<th>' . _AM_XTUBE_BROKEN_DCONFIRMED . '</th>';
-        echo '<th style="text-align: center;">' . _AM_XTUBE_BROKEN_ACTION . '</th>';
+        echo '<th width="3%" style="text-align: center;">' . _AM_XOOPSTUBE_BROKEN_ID . '</th>';
+        echo '<th width="35%" style="text-align: left;">' . _AM_XOOPSTUBE_BROKEN_TITLE . '</th>';
+        echo '<th>' . _AM_XOOPSTUBE_BROKEN_REPORTER . '</th>';
+        echo '<th>' . _AM_XOOPSTUBE_BROKEN_FILESUBMITTER . '</th>';
+        echo '<th>' . _AM_XOOPSTUBE_BROKEN_DATESUBMITTED . '</th>';
+        echo '<th>' . _AM_XOOPSTUBE_BROKEN_ACKNOWLEDGED . '</th>';
+        echo '<th>' . _AM_XOOPSTUBE_BROKEN_DCONFIRMED . '</th>';
+        echo '<th style="text-align: center;">' . _AM_XOOPSTUBE_BROKEN_ACTION . '</th>';
         echo '</tr>';
 
         if ($totalbrokenvideos == 0) {
-            echo '<tr style="text-align: center;"><td style="text-align: center;" class="head" colspan="8">'
-                 . _AM_XTUBE_BROKEN_NOFILEMATCH . '</td></tr>';
+            echo '<tr style="text-align: center;"><td style="text-align: center;" class="head" colspan="8">' . _AM_XOOPSTUBE_BROKEN_NOFILEMATCH . '</td></tr>';
         } else {
             while (list($reportid, $lid, $sender, $ip, $date, $confirmed, $acknowledged) = $xoopsDB->fetchRow(
                 $result
             )) {
                 $result2 = $xoopsDB->query(
-                    'SELECT cid, title, vidid, submitter FROM ' . $xoopsDB->prefix('xoopstube_videos') . ' WHERE lid='
-                    . $lid
+                    'SELECT cid, title, vidid, submitter FROM ' . $xoopsDB->prefix('xoopstube_videos') . ' WHERE lid=' . $lid
                 );
                 list($cid, $videoshowname, $vidid, $submitter) = $xoopsDB->fetchRow($result2);
                 $email      = '';
@@ -173,15 +172,13 @@ switch (strtolower($op)) {
 
                 echo '<tr style="text-align: center;">';
                 echo '<td class="head">' . $reportid . '</td>';
-                echo '<td class="even" style="text-align: left;"><a href="' . XOOPS_URL . '/modules/'
-                     . $xoopsModule->getVar('dirname') . '/singlevideo.php?cid=' . $cid . '&amp;lid=' . $lid
-                     . '" target="_blank">' . $videoshowname . '</a></td>';
+                echo '<td class="even" style="text-align: left;"><a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/singlevideo.php?cid=' . $cid . '&amp;lid=' . $lid
+                    . '" target="_blank">' . $videoshowname . '</a></td>';
 
                 if ($email == '') {
                     echo '<td class="even">' . XoopsUserUtility::getUnameFromId($sender) . ' (' . $ip . ')</td>';
                 } else {
-                    echo '<td class="even"><a href="mailto:' . $email . '">' . XoopsUserUtility::getUnameFromId($sender)
-                         . '</a> (' . $ip . ')</td>';
+                    echo '<td class="even"><a href="mailto:' . $email . '">' . XoopsUserUtility::getUnameFromId($sender) . '</a> (' . $ip . ')</td>';
                 }
                 if ($owneremail == '') {
                     echo '<td class="even">' . $ownername . '</td>';
@@ -198,14 +195,12 @@ switch (strtolower($op)) {
                         $confirmed
                     ) . '">' . $con_image . '</a></td>';
                 echo '<td class="even" style="text-align: center;" nowrap>';
-                echo '<a href="brokenvideo.php?op=ignorebrokenvideos&amp;lid=' . $lid . '">' . $xtubeImageArray['ignore']
-                     . '</a>&nbsp;';
+                echo '<a href="brokenvideo.php?op=ignorebrokenvideos&amp;lid=' . $lid . '">' . $xtubeImageArray['ignore'] . '</a>&nbsp;';
                 echo '<a href="main.php?op=edit&amp;lid=' . $lid . '">' . $xtubeImageArray['editimg'] . '</a>&nbsp;';
-                echo '<a href="brokenvideo.php?op=delbrokenvideos&amp;lid=' . $lid . '">' . $xtubeImageArray['deleteimg']
-                     . '</a>';
+                echo '<a href="brokenvideo.php?op=delbrokenvideos&amp;lid=' . $lid . '">' . $xtubeImageArray['deleteimg'] . '</a>';
                 echo '</td></tr>';
             }
         }
         echo '</table>';
 }
-include 'admin_footer.php';
+include_once __DIR__ . '/admin_footer.php';

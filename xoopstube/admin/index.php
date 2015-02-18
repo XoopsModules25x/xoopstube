@@ -18,8 +18,8 @@
  * @since           1.0.6
  */
 
-include_once dirname(__FILE__) . '/admin_header.php';
-//include_once 'admin_header.php';
+include_once __DIR__ . '/admin_header.php';
+//include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
 $indexAdmin = new ModuleAdmin();
@@ -43,20 +43,20 @@ list($totalnewvideos) = $xoopsDB->fetchRow($result3);
 $result4 = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('xoopstube_videos') . ' WHERE published > 0');
 list($totalvideos) = $xoopsDB->fetchRow($result4);
 
-//$xxx='<a href="brokenvideo.php">' . _AM_XTUBE_SBROKENSUBMIT . '</a><b>';
+//$xxx='<a href="brokenvideo.php">' . _AM_XOOPSTUBE_SBROKENSUBMIT . '</a><b>';
 
-$indexAdmin->addInfoBox(_AM_XTUBE_MINDEX_VIDEOSUMMARY);
+$indexAdmin->addInfoBox(_AM_XOOPSTUBE_MINDEX_VIDEOSUMMARY);
 if ($totalcats > 0) {
     $indexAdmin->addInfoBoxLine(
-        _AM_XTUBE_MINDEX_VIDEOSUMMARY,
-        "<infolabel>" . '<a href="category.php">' . _AM_XTUBE_SCATEGORY . '</a><b>' . "</infolabel>",
+        _AM_XOOPSTUBE_MINDEX_VIDEOSUMMARY,
+        "<infolabel>" . '<a href="category.php">' . _AM_XOOPSTUBE_SCATEGORY . '</a><b>' . "</infolabel>",
         $totalcats,
         'Green'
     );
 } else {
     $indexAdmin->addInfoBoxLine(
-        _AM_XTUBE_MINDEX_VIDEOSUMMARY,
-        "<infolabel>" . _AM_XTUBE_SCATEGORY . "</infolabel>",
+        _AM_XOOPSTUBE_MINDEX_VIDEOSUMMARY,
+        "<infolabel>" . _AM_XOOPSTUBE_SCATEGORY . "</infolabel>",
         $totalcats,
         'Green'
     );
@@ -64,15 +64,15 @@ if ($totalcats > 0) {
 
 if ($totalvideos > 0) {
     $indexAdmin->addInfoBoxLine(
-        _AM_XTUBE_MINDEX_VIDEOSUMMARY,
-        "<infolabel>" . '<a href="main.php">' . _AM_XTUBE_SFILES . '</a><b>' . "</infolabel>",
+        _AM_XOOPSTUBE_MINDEX_VIDEOSUMMARY,
+        "<infolabel>" . '<a href="main.php">' . _AM_XOOPSTUBE_SFILES . '</a><b>' . "</infolabel>",
         $totalvideos,
         'Green'
     );
 } else {
     $indexAdmin->addInfoBoxLine(
-        _AM_XTUBE_MINDEX_VIDEOSUMMARY,
-        "<infolabel>" . _AM_XTUBE_SFILES . "</infolabel>",
+        _AM_XOOPSTUBE_MINDEX_VIDEOSUMMARY,
+        "<infolabel>" . _AM_XOOPSTUBE_SFILES . "</infolabel>",
         $totalvideos,
         'Green'
     );
@@ -80,30 +80,30 @@ if ($totalvideos > 0) {
 
 if ($totalnewvideos > 0) {
     $indexAdmin->addInfoBoxLine(
-        _AM_XTUBE_MINDEX_VIDEOSUMMARY,
-        "<infolabel>" . '<a href="newvideos.php">' . _AM_XTUBE_SNEWFILESVAL . '</a><b>' . "</infolabel>",
+        _AM_XOOPSTUBE_MINDEX_VIDEOSUMMARY,
+        "<infolabel>" . '<a href="newvideos.php">' . _AM_XOOPSTUBE_SNEWFILESVAL . '</a><b>' . "</infolabel>",
         $totalnewvideos,
         'Red'
     );
 } else {
     $indexAdmin->addInfoBoxLine(
-        _AM_XTUBE_MINDEX_VIDEOSUMMARY,
-        "<infolabel>" . _AM_XTUBE_SNEWFILESVAL . "</infolabel>",
+        _AM_XOOPSTUBE_MINDEX_VIDEOSUMMARY,
+        "<infolabel>" . _AM_XOOPSTUBE_SNEWFILESVAL . "</infolabel>",
         $totalnewvideos,
         'Red'
     );
 }
 if ($totalmodrequests > 0) {
     $indexAdmin->addInfoBoxLine(
-        _AM_XTUBE_MINDEX_VIDEOSUMMARY,
-        "<infolabel>" . '<a href="modifications.php">' . _AM_XTUBE_SMODREQUEST . '</a><b>' . "</infolabel>",
+        _AM_XOOPSTUBE_MINDEX_VIDEOSUMMARY,
+        "<infolabel>" . '<a href="modifications.php">' . _AM_XOOPSTUBE_SMODREQUEST . '</a><b>' . "</infolabel>",
         $totalmodrequests,
         'Red'
     );
 } else {
     $indexAdmin->addInfoBoxLine(
-        _AM_XTUBE_MINDEX_VIDEOSUMMARY,
-        "<infolabel>" . _AM_XTUBE_SMODREQUEST . "</infolabel>",
+        _AM_XOOPSTUBE_MINDEX_VIDEOSUMMARY,
+        "<infolabel>" . _AM_XOOPSTUBE_SMODREQUEST . "</infolabel>",
         $totalmodrequests,
         'Red'
     );
@@ -111,15 +111,15 @@ if ($totalmodrequests > 0) {
 
 if ($totalbrokenvideos > 0) {
     $indexAdmin->addInfoBoxLine(
-        _AM_XTUBE_MINDEX_VIDEOSUMMARY,
-        "<infolabel>" . '<a href="brokenvideo.php">' . _AM_XTUBE_SBROKENSUBMIT . '</a><b>' . "</infolabel><infotext>",
+        _AM_XOOPSTUBE_MINDEX_VIDEOSUMMARY,
+        "<infolabel>" . '<a href="brokenvideo.php">' . _AM_XOOPSTUBE_SBROKENSUBMIT . '</a><b>' . "</infolabel><infotext>",
         $totalbrokenvideos . "</infotext>",
         'Red'
     );
 } else {
     $indexAdmin->addInfoBoxLine(
-        _AM_XTUBE_MINDEX_VIDEOSUMMARY,
-        "<infolabel>" . _AM_XTUBE_SBROKENSUBMIT . "</infolabel><infotext>",
+        _AM_XOOPSTUBE_MINDEX_VIDEOSUMMARY,
+        "<infolabel>" . _AM_XOOPSTUBE_SBROKENSUBMIT . "</infolabel><infotext>",
         $totalbrokenvideos . "</infotext>",
         'Red'
     );
@@ -128,7 +128,47 @@ if ($totalbrokenvideos > 0) {
 echo $indexAdmin->addNavigation('index.php');
 echo $indexAdmin->renderIndex();
 
-xtube_filechecks();
+//------ check directories ---------------
+include_once dirname(__DIR__) . '/include/directorychecker.php';
 
-include 'admin_footer.php';
-//xoops_cp_footer();
+$indexAdmin->addConfigBoxLine('');
+$redirectFile = $_SERVER['PHP_SELF'];
+
+$languageConstants = array(
+    _AM_XOOPSTUBE_AVAILABLE,
+    _AM_XOOPSTUBE_NOTAVAILABLE,
+    _AM_XOOPSTUBE_CREATETHEDIR,
+    _AM_XOOPSTUBE_NOTWRITABLE,
+    _AM_XOOPSTUBE_SETMPERM,
+    _AM_XOOPSTUBE_DIRCREATED,
+    _AM_XOOPSTUBE_DIRNOTCREATED,
+    _AM_XOOPSTUBE_PERMSET,
+    _AM_XOOPSTUBE_PERMNOTSET
+);
+
+$path = $xoopsModuleConfig['uploaddir'] . '/';
+$indexAdmin->addConfigBoxLine(DirectoryChecker::getDirectoryStatus($path, 0777, $languageConstants, $redirectFile));
+
+$path = XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['screenshots'] . '/';
+$indexAdmin->addConfigBoxLine(DirectoryChecker::getDirectoryStatus($path, 0777, $languageConstants, $redirectFile));
+
+$path = XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['catimage'] . '/';
+$indexAdmin->addConfigBoxLine(DirectoryChecker::getDirectoryStatus($path, 0777, $languageConstants, $redirectFile));
+
+$path = XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['mainimagedir'] . '/';
+$indexAdmin->addConfigBoxLine(DirectoryChecker::getDirectoryStatus($path, 0777, $languageConstants, $redirectFile));
+
+$path = XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['catimage'] . '/';
+$indexAdmin->addConfigBoxLine(DirectoryChecker::getDirectoryStatus($path, 0777, $languageConstants, $redirectFile));
+
+$path = XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['mainimagedir'] . '/';
+$indexAdmin->addConfigBoxLine(DirectoryChecker::getDirectoryStatus($path, 0777, $languageConstants, $redirectFile));
+
+//echo $indexAdmin->addNavigation('index.php');
+//echo $indexAdmin->renderIndex();
+//echo wfd_serverstats();
+//---------------------------
+
+xtubeFileChecks();
+
+include_once __DIR__ . '/admin_footer.php';

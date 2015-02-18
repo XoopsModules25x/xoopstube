@@ -19,8 +19,7 @@
  * @since           1.0.6
  */
 
-
-include 'header.php';
+include __DIR__ . '/header.php';
 
 // Begin Main page Heading etc
 $cid        = xtubeCleanRequestVars($_REQUEST, 'cid', 0);
@@ -36,12 +35,12 @@ $arr     = $mytree->getFirstChild($cid, $catsort);
 
 if (is_array($arr) > 0 && !$list && !$selectdate) {
     if (false == xtubeCheckGroups($cid)) {
-        redirect_header('index.php', 1, _MD_XTUBE_MUSTREGFIRST);
+        redirect_header('index.php', 1, _MD_XOOPSTUBE_MUSTREGFIRST);
         exit();
     }
 }
 
-$xoopsOption['template_main'] = 'xoopstube_viewcat.html';
+$xoopsOption['template_main'] = 'xoopstube_viewcat.tpl';
 
 include XOOPS_ROOT_PATH . '/header.php';
 
@@ -50,8 +49,12 @@ $catarray['letters']     = xtubeGetLetters();
 $catarray['imageheader'] = xtubeRenderImageHeader();
 $xoopsTpl->assign('catarray', $catarray);
 
+$catArray['letters'] = xtubeLettersChoice();
+//$catArray['toolbar'] = xoopstube_toolbar();
+$xoopsTpl->assign('catarray', $catArray);
+
 // Breadcrumb
-$pathstring = '<a href="index.php">' . _MD_XTUBE_MAIN . '</a>&nbsp;:&nbsp;';
+$pathstring = '<a href="index.php">' . _MD_XOOPSTUBE_MAIN . '</a>&nbsp;:&nbsp;';
 $pathstring .= $mytree->getNicePathFromId($cid, 'title', 'viewcat.php?op=');
 $xoopsTpl->assign('category_path', $pathstring);
 $xoopsTpl->assign('category_id', $cid);
@@ -83,11 +86,10 @@ if (is_array($arr) > 0 && !$list && !$selectdate) {
                 }
 
                 $infercategories
-                    .= '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewcat.php?cid='
-                       . $sub_ele['cid'] . '">' . $xtubemyts->htmlSpecialCharsStrip($sub_ele['title']) . '</a> ('
-                       . $hassubitems['count'] . ')';
-                $space++;
-                $chcount++;
+                    .= '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewcat.php?cid=' . $sub_ele['cid'] . '">' . $xtubemyts->htmlSpecialCharsStrip($sub_ele['title'])
+                    . '</a> (' . $hassubitems['count'] . ')';
+                ++$space;
+                ++$chcount;
             }
         }
         $totalvideos = xtubeGetTotalItems($ele['cid']);
@@ -128,18 +130,18 @@ if (is_array($arr) > 0 && !$list && !$selectdate) {
         $xoopsTpl->append(
             'subcategories',
             array(
-                 'title'           => $xtubemyts->htmlSpecialCharsStrip($ele['title']),
-                 'id'              => $ele['cid'],
-                 'image'           => XOOPS_URL . "/$imgurl",
-                 'width'           => $_width,
-                 'height'          => $_height,
-                 'infercategories' => $infercategories,
-                 'totalvideos'     => $totalvideos['count'],
-                 'count'           => $scount,
-                 'alttext'         => $ele['description']
+                'title'           => $xtubemyts->htmlSpecialCharsStrip($ele['title']),
+                'id'              => $ele['cid'],
+                'image'           => XOOPS_URL . "/$imgurl",
+                'width'           => $_width,
+                'height'          => $_height,
+                'infercategories' => $infercategories,
+                'totalvideos'     => $totalvideos['count'],
+                'count'           => $scount,
+                'alttext'         => $ele['description']
             )
         );
-        $scount++;
+        ++$scount;
     }
 }
 
@@ -172,10 +174,7 @@ $xoopsTpl->assign('catarray', $catarray);
 // Extract linkload information from database
 $xoopsTpl->assign('show_categort_title', true);
 
-$orderby = (isset($_REQUEST['orderby'])
-            && !empty($_REQUEST['orderby'])) ? xtubeConvertOrderByIn(
-    htmlspecialchars($_REQUEST['orderby'])
-) : xtubeConvertOrderByIn($xoopsModuleConfig['linkxorder']);
+$orderby = (isset($_REQUEST['orderby']) && !empty($_REQUEST['orderby'])) ? xtubeConvertOrderByIn(htmlspecialchars($_REQUEST['orderby'])) : xtubeConvertOrderByIn($xoopsModuleConfig['linkxorder']);
 
 if ($selectdate) {
 
@@ -187,8 +186,7 @@ if ($selectdate) {
     $stat_end   = mktime(23, 59, 59, $m, $d, $y);
 
     $query
-        = ' WHERE published>=' . $stat_begin . ' AND published<=' . $stat_end . ' AND (expired=0 OR expired>' . time(
-        ) . ') AND offline=0 AND cid>0';
+        = ' WHERE published>=' . $stat_begin . ' AND published<=' . $stat_end . ' AND (expired=0 OR expired>' . time() . ') AND offline=0 AND cid>0';
 
     $sql    = 'SELECT * FROM ' . $xoopsDB->prefix('xoopstube_videos') . $query . ' ORDER BY ' . $orderby;
     $result = $xoopsDB->query($sql, $xoopsModuleConfig['perpage'], $start);
@@ -201,9 +199,7 @@ if ($selectdate) {
 } elseif ($list) {
 
     $query
-        =
-        " WHERE title LIKE '$list%' AND (published>0 AND published<=" . time() . ") AND (expired=0 OR expired>" . time(
-        ) . ") AND offline=0 AND cid>0";
+        = " WHERE title LIKE '$list%' AND (published>0 AND published<=" . time() . ") AND (expired=0 OR expired>" . time() . ") AND offline=0 AND cid>0";
 
     $sql    = 'SELECT * FROM ' . $xoopsDB->prefix('xoopstube_videos') . $query . ' ORDER BY ' . $orderby;
     $result = $xoopsDB->query($sql, $xoopsModuleConfig['perpage'], $start);
@@ -214,8 +210,7 @@ if ($selectdate) {
 
 } else {
 
-    $query = 'WHERE a.published>0 AND a.published<=' . time() . ' AND (a.expired=0 OR a.expired>' . time()
-             . ') AND a.offline=0' . ' AND (b.cid=a.cid OR (a.cid=' . $cid . ' OR b.cid=' . $cid . '))';
+    $query = 'WHERE a.published>0 AND a.published<=' . time() . ' AND (a.expired=0 OR a.expired>' . time() . ') AND a.offline=0' . ' AND (b.cid=a.cid OR (a.cid=' . $cid . ' OR b.cid=' . $cid . '))';
 
     $sql    = 'SELECT DISTINCT a.* FROM ' . $xoopsDB->prefix('xoopstube_videos') . ' a LEFT JOIN ' . $xoopsDB->prefix(
             'xoopstube_altcat'
@@ -250,7 +245,7 @@ if ($count > 0) {
     if ($count > 1 && $cid != 0) {
         $xoopsTpl->assign('show_videos', true);
         $orderbyTrans = xtubeConvertOrderByTrans($orderby);
-        $xoopsTpl->assign('lang_cursortedby', sprintf(_MD_XTUBE_CURSORTBY, xtubeConvertOrderByTrans($orderby)));
+        $xoopsTpl->assign('lang_cursortedby', sprintf(_MD_XOOPSTUBE_CURSORTBY, xtubeConvertOrderByTrans($orderby)));
         $orderby = xtubeConvertOrderByOut($orderby);
     }
 

@@ -20,7 +20,10 @@
 
 // WARNING: ONCE SET DO NOT CHANGE! Improper use will render this module useless and unworkable.
 // Only Change if you know what you are doing.
-$mydirname = basename(dirname(dirname(__FILE__)));
+
+$mydirname = basename(dirname(__DIR__));
+
+//These are names of the current tables
 
 if (!defined('xoopstube_broken')) {
     define('xoopstube_broken', 'xoopstube_broken');

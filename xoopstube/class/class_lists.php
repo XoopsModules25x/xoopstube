@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Module: XoopsTube
  *
@@ -17,7 +18,6 @@
  * @link            http://sourceforge.net/projects/xoops/
  * @since           1.0.6
  */
-
 class FileList
 {
 
@@ -36,10 +36,11 @@ class FileList
     /**
      * fileList::construct()
      *
-     * @param string  $path
-     * @param null    $value
-     * @param string  $selected
-     * @param integer $size
+     * @param  string  $path
+     * @param  null    $value
+     * @param  string  $selected
+     * @param  integer $size
+     *
      * @internal param int $emptySelect
      * @internal param int $type
      * @internal param string $prefix
@@ -57,7 +58,7 @@ class FileList
             if (false === @mkdir("$pathToCheck", 0777)) {
                 XoopsErrorHandler_HandleError(
                     E_USER_WARNING,
-                    $pathToCheck . _AM_XTUBE_DOESNOTEXIST,
+                    $pathToCheck . _AM_XOOPSTUBE_DOESNOTEXIST,
                     __FILE__,
                     __LINE__
                 );
@@ -66,6 +67,7 @@ class FileList
             }
         }
         $this->path = $path;
+
         return true;
     }
 
@@ -73,6 +75,7 @@ class FileList
      * SpotList::setNoSelection()
      *
      * @param  integer $value
+     *
      * @return void
      */
 
@@ -81,21 +84,33 @@ class FileList
         $this->emptySelect = (intval($value) != 1) ? 0 : 1;
     }
 
+    /**
+     * @param int $value
+     */
     public function setNoSelection($value = 0)
     {
         $this->noSelection = (intval($value) != 1) ? 0 : 1;
     }
 
+    /**
+     * @param string $value
+     */
     public function setPrefix($value = '')
     {
         $this->prefix = (strval($value) != '') ? strval($value) : '';
     }
 
+    /**
+     * @param string $value
+     */
     public function setSuffix($value = '')
     {
         $this->suffix = (strval($value) != '') ? strval($value) : '';
     }
 
+    /**
+     * @param string $value
+     */
     public function setListType($value = 'images')
     {
         $this->type = strval(strtolower($value));
@@ -137,27 +152,27 @@ class FileList
             case 'images':
                 $types = '[.gif|.jpg|.png]';
                 if ($this->noSelection) {
-                    $this->filelist[0] = _AM_XTUBE_NOIMAGE;
+                    $this->filelist[0] = _AM_XOOPSTUBE_NOIMAGE;
                 }
                 break;
             case 'media':
                 $types = '[.aac|.flv|.mp3|.mp4|.swf]';
                 if ($this->noSelection) {
-                    $this->filelist[0] = _AM_XTUBE_NOVIDEO;
+                    $this->filelist[0] = _AM_XOOPSTUBE_NOVIDEO;
                 }
                 break;
 
             case 'html':
-                $types = '[.htm|.html|.xhtml|.php|.php3|.phtml|.txt]';
+                $types = '[.htm|.tpl|.html|.xhtml|.php|.php3|.phtml|.txt]';
                 if ($this->noSelection) {
-                    $this->filelist[0] = _AM_XTUBE_NOSELECT;
+                    $this->filelist[0] = _AM_XOOPSTUBE_NOSELECT;
                 }
                 break;
 
             default:
                 $types = '';
                 if ($this->noSelection) {
-                    $this->filelist[0] = _AM_XTUBE_NOFILESELECT;
+                    $this->filelist[0] = _AM_XOOPSTUBE_NOFILESELECT;
                 }
                 break;
         }
@@ -176,7 +191,7 @@ class FileList
                     )
                 ) {
                     if (strtolower($file) == 'blank.gif') {
-                        Continue;
+                        continue;
                     }
                     $file                  = $this->prefix . $file;
                     $this->filelist[$file] = $file;
@@ -190,6 +205,9 @@ class FileList
         return $this->filelist;
     }
 
+    /**
+     * @return null
+     */
     public function value()
     {
         return $this->value;
@@ -200,11 +218,17 @@ class FileList
         return $this->selected;
     }
 
+    /**
+     * @return string
+     */
     public function paths()
     {
         return $this->path;
     }
 
+    /**
+     * @return int
+     */
     public function size()
     {
         return $this->size;

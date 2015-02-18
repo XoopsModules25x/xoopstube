@@ -18,16 +18,16 @@
  * @since           1.0.6
  */
 
-
 /**
  * @param int    $cid
  * @param string $permType
  * @param bool   $redirect
+ *
  * @return bool
  */
 function checkBlockGroups($cid = 0, $permType = 'XTubeCatPerm', $redirect = false)
 {
-    $mydirname = basename(dirname(dirname(__FILE__)));
+    $mydirname = basename(dirname(__DIR__));
     global $xoopsUser;
 
     $groups         = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
@@ -51,11 +51,12 @@ function checkBlockGroups($cid = 0, $permType = 'XTubeCatPerm', $redirect = fals
  * @param int    $cid
  * @param string $permType
  * @param bool   $redirect
+ *
  * @return bool
  */
 function xtubeCheckBlockGroups($cid = 0, $permType = 'XTubeCatPerm', $redirect = false)
 {
-    $mydirname = basename(dirname(dirname(__FILE__)));
+    $mydirname = basename(dirname(__DIR__));
     global $xoopsUser;
 
     $groups        = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
@@ -77,6 +78,7 @@ function xtubeCheckBlockGroups($cid = 0, $permType = 'XTubeCatPerm', $redirect =
  * @param       $bsource
  * @param       $bpicurl
  * @param array $size
+ *
  * @return string
  */
 function getThumbsTopVideoBlock($bvidid, $btitle, $bsource, $bpicurl, $size = array())
@@ -95,9 +97,7 @@ function getThumbsTopVideoBlock($bvidid, $btitle, $bsource, $bpicurl, $size = ar
 // Determine if video source YouTube
     if ($bsource == 0) {
         $thumbb
-            =
-            '<img src="http://img.youtube.com/vi/' . $bvidid . '/default.jpg" title="' . $btitle . '" alt="' . $btitle
-            . '" width="' . $xtubeModuleConfig['shotwidth'] . '" height="'
+            = '<img src="http://img.youtube.com/vi/' . $bvidid . '/default.jpg" title="' . $btitle . '" alt="' . $btitle . '" width="' . $xtubeModuleConfig['shotwidth'] . '" height="'
             . $xtubeModuleConfig['shotheight'] . '"  border="0" />';
     }
     // Determine if video source MetaCafe
@@ -106,40 +106,34 @@ function getThumbsTopVideoBlock($bvidid, $btitle, $bsource, $bpicurl, $size = ar
         $videothumb['metathumb'] = $metaclip;
         $thumbb
                                  =
-            '<img src="http://www.metacafe.com/thumb/' . $videothumb['metathumb'] . '.jpg" title="' . $btitle
-            . '" alt="' . $btitle . '" width="' . $xtubeModuleConfig['shotwidth'] . '" height="'
+            '<img src="http://www.metacafe.com/thumb/' . $videothumb['metathumb'] . '.jpg" title="' . $btitle . '" alt="' . $btitle . '" width="' . $xtubeModuleConfig['shotwidth'] . '" height="'
             . $xtubeModuleConfig['shotheight'] . '"  border="0" />';
     }
 // Determine if video source iFilm/Spike
     if ($bsource == 2) {
-        $thumbb = '<img src="http://img2.ifilmpro.com/resize/image/stills/films/resize/istd/' . $bvidid . '.jpg?width='
-                  . $xtubeModuleConfig['shotwidth'] . ' title="' . $btitle . '" alt="' . $btitle . '" border="0" />';
+        $thumbb = '<img src="http://img2.ifilmpro.com/resize/image/stills/films/resize/istd/' . $bvidid . '.jpg?width=' . $xtubeModuleConfig['shotwidth'] . ' title="' . $btitle . '" alt="' . $btitle
+            . '" border="0" />';
     }
 // Determine if video source Photobucket
     if ($bsource == 3) {
         $thumbb
-            =
-            '<img src="http://i153.photobucket.com/albums/' . $bvidid . '.jpg" title="' . $btitle . '" alt="' . $btitle
-            . '" width="' . $xtubeModuleConfig['shotwidth'] . '" height="'
+            = '<img src="http://i153.photobucket.com/albums/' . $bvidid . '.jpg" title="' . $btitle . '" alt="' . $btitle . '" width="' . $xtubeModuleConfig['shotwidth'] . '" height="'
             . $xtubeModuleConfig['shotheight'] . '"  border="0" />';
     }
 // Determine if video source Google Video / MySpace TV / DailyMotion
     if ($bsource == 100) {
-        $thumbb = '<img src="' . $bpicurl . '" title="' . $btitle . '" alt="' . $btitle . '" width="'
-                  . $xtubeModuleConfig['shotwidth'] . '" height="'
-                  . $xtubeModuleConfig['shotheight'] . '"  border="0" />';
+        $thumbb = '<img src="' . $bpicurl . '" title="' . $btitle . '" alt="' . $btitle . '" width="' . $xtubeModuleConfig['shotwidth'] . '" height="' . $xtubeModuleConfig['shotheight']
+            . '"  border="0" />';
     }
 // Determine if video source MySpace TV
     if ($bsource == 101) {
-        $thumbb = '<img src="' . $bpicurl . '" title="' . $btitle . '" alt="' . $btitle . '" width="'
-                  . $xtubeModuleConfig['shotwidth'] . '" height="'
-                  . $xtubeModuleConfig['shotheight'] . '"  border="0" />';
+        $thumbb = '<img src="' . $bpicurl . '" title="' . $btitle . '" alt="' . $btitle . '" width="' . $xtubeModuleConfig['shotwidth'] . '" height="' . $xtubeModuleConfig['shotheight']
+            . '"  border="0" />';
     }
 // Determine if video source DailyMotion
     if ($bsource == 102) {
-        $thumbb = '<img src="' . $bpicurl . '" title="' . $btitle . '" alt="' . $btitle . '" width="'
-                  . $xtubeModuleConfig['shotwidth'] . '" height="'
-                  . $xtubeModuleConfig['shotheight'] . '"  border="0" />';
+        $thumbb = '<img src="' . $bpicurl . '" title="' . $btitle . '" alt="' . $btitle . '" width="' . $xtubeModuleConfig['shotwidth'] . '" height="' . $xtubeModuleConfig['shotheight']
+            . '"  border="0" />';
     }
 
     return $thumbb;
@@ -154,12 +148,13 @@ function getThumbsTopVideoBlock($bvidid, $btitle, $bsource, $bpicurl, $size = ar
  */
 /**
  * @param $options
+ *
  * @return array
  */
 function getSpotlightVideos($options)
 {
     global $xoopsDB, $xoopsModuleConfig;
-    include_once dirname(dirname(__FILE__)) . '/include/video.php';
+    include_once dirname(__DIR__) . '/include/video.php';
     $block             = array();
     $modhandler        = xoops_gethandler('module');
     $xtubeModule       = $modhandler->getByDirname('xoopstube');
@@ -169,9 +164,8 @@ function getSpotlightVideos($options)
 
     $options[1] = 4;
     $result     = $xoopsDB->query(
-        "SELECT lid, cid, title, vidid, date, hits, vidsource, picurl FROM " . $xoopsDB->prefix('xoopstube_videos')
-        . " WHERE published > 0 AND published <= " . time() . " AND (expired = 0 OR expired > " . time()
-        . ") AND offline = 0 ORDER BY " . $options[0] . " DESC",
+        "SELECT lid, cid, title, vidid, date, hits, vidsource, picurl FROM " . $xoopsDB->prefix('xoopstube_videos') . " WHERE published > 0 AND published <= " . time()
+        . " AND (expired = 0 OR expired > " . time() . ") AND offline = 0 ORDER BY " . $options[0] . " DESC",
         $options[1],
         0
     );
@@ -209,12 +203,9 @@ function getSpotlightVideos($options)
             $videowidth  = 340;
             $videoheight = intval($videowidth / $rate);
             $showvideo
-                                    =
-                '<object width="' . $videowidth . '" height="' . $videoheight
-                . '"><param name="movie" value="http://www.youtube.com/v/' . $myrow['vidid']
-                . '"></param><param name="wmode" value="transparent"></param><embed src="http://www.youtube.com/v/'
-                . $myrow['vidid'] . '" type="application/x-shockwave-flash" wmode="transparent" width="' . $videowidth
-                . '" height="' . $videoheight . '"></embed></object>';
+                                    = '<object width="' . $videowidth . '" height="' . $videoheight . '"><param name="movie" value="http://www.youtube.com/v/' . $myrow['vidid']
+                . '"></param><param name="wmode" value="transparent"></param><embed src="http://www.youtube.com/v/' . $myrow['vidid']
+                . '" type="application/x-shockwave-flash" wmode="transparent" width="' . $videowidth . '" height="' . $videoheight . '"></embed></object>';
             $videoload['showvideo'] = $showvideo;
         }
 
@@ -228,7 +219,7 @@ function getSpotlightVideos($options)
 
         $videoload['dirname'] = $xtubeModule->getVar('dirname');
         $block['videos'][]    = $videoload;
-        $i++;
+        ++$i;
     }
     unset($_block_check_array);
 
@@ -245,12 +236,13 @@ function getSpotlightVideos($options)
 // Output  : Returns the most recent or most popular videos
 /**
  * @param $options
+ *
  * @return array
  */
 function showTopVideoBlock($options)
 {
     global $xoopsDB, $xoopsModule, $xoopsModuleConfig;
-    $mydirname         = basename(dirname(dirname(__FILE__)));
+    $mydirname         = basename(dirname(__DIR__));
     $block             = array();
     $modhandler        = xoops_gethandler('module');
     $xtubeModule       = $modhandler->getByDirname($mydirname);
@@ -338,12 +330,13 @@ function showTopVideoBlock($options)
 // Output  : Returns random video
 /**
  * @param $options
+ *
  * @return array
  */
 function getRandomVideo($options)
 {
     global $xoopsDB, $xoopsModuleConfig, $xtubemyts;
-    $mydirname         = basename(dirname(dirname(__FILE__)));
+    $mydirname         = basename(dirname(__DIR__));
     $block             = array();
     $modhandler        = xoops_gethandler('module');
     $xtubeModule       = $modhandler->getByDirname($mydirname);
@@ -417,12 +410,13 @@ function getRandomVideo($options)
 // Output  : Returns random video in horizontal block
 /**
  * @param $options
+ *
  * @return array
  */
 function getRandomVideoForHorizontalBlock($options)
 {
     global $xoopsDB, $xoopsModuleConfig, $xtubemyts;
-    $mydirname         = basename(dirname(dirname(__FILE__)));
+    $mydirname         = basename(dirname(__DIR__));
     $block             = array();
     $modhandler        = xoops_gethandler('module');
     $xtubeModule       = $modhandler->getByDirname($mydirname);
@@ -499,11 +493,12 @@ function getRandomVideoForHorizontalBlock($options)
 // @return
 /**
  * @param $options
+ *
  * @return string
  */
 function editTopVideoBlock($options)
 {
-    $form = '' . _MB_XTUBE_DISP . '&nbsp;';
+    $form = '' . _MB_XOOPSTUBE_DISP . '&nbsp;';
     $form .= "<input type='hidden' name='options[]' value='";
     if ($options[0] == "published") {
         $form .= "published'";
@@ -517,11 +512,9 @@ function editTopVideoBlock($options)
         $form .= "hits'";
     }
     $form .= " />";
-    $form .= "<input type='text' name='options[]' value='" . $options[1] . "' />&nbsp;" . _MB_XTUBE_FILES . "";
-    $form .= "&nbsp;<br />" . _MB_XTUBE_CHARS . "&nbsp;<input type='text' name='options[]' value='" . $options[2]
-             . "' />&nbsp;" . _MB_XTUBE_LENGTH . "";
-    $form .= "&nbsp;<br />" . _MB_XTUBE_DATEFORMAT . "&nbsp;<input type='text' name='options[]' value='" . $options[3]
-             . "' />&nbsp;" . _MB_XTUBE_DATEFORMATMANUAL;
+    $form .= "<input type='text' name='options[]' value='" . $options[1] . "' />&nbsp;" . _MB_XOOPSTUBE_FILES . "";
+    $form .= "&nbsp;<br />" . _MB_XOOPSTUBE_CHARS . "&nbsp;<input type='text' name='options[]' value='" . $options[2] . "' />&nbsp;" . _MB_XOOPSTUBE_LENGTH . "";
+    $form .= "&nbsp;<br />" . _MB_XOOPSTUBE_DATEFORMAT . "&nbsp;<input type='text' name='options[]' value='" . $options[3] . "' />&nbsp;" . _MB_XOOPSTUBE_DATEFORMATMANUAL;
 
     global $xoopsDB;
     $cat_arr = array();
@@ -529,11 +522,11 @@ function editTopVideoBlock($options)
     $xt      = new XoopstubeTree($xoopsDB->prefix('xoopstube_cat'), 'cid', 'pid');
     $cat_arr = $xt->getChildTreeArray(0, 'title');
 
-    $form .= "<br />" . _MB_XTUBE_SELECTCAT . "<br /><select name=\"options[]\" multiple=\"multiple\" size=\"5\">";
+    $form .= "<br />" . _MB_XOOPSTUBE_SELECTCAT . "<br /><select name=\"options[]\" multiple=\"multiple\" size=\"5\">";
     if (array_search(0, $options) === false) {
-        $form .= "<option value=\"0\">" . _MB_XTUBE_ALLCAT . "</option>";
+        $form .= "<option value=\"0\">" . _MB_XOOPSTUBE_ALLCAT . "</option>";
     } else {
-        $form .= "<option value=\"0\" selected=\"selected\">" . _MB_XTUBE_ALLCAT . "</option>";
+        $form .= "<option value=\"0\" selected=\"selected\">" . _MB_XOOPSTUBE_ALLCAT . "</option>";
     }
 
     foreach ($cat_arr as $catlist) {

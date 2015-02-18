@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Module: XoopsTube
  *
@@ -17,10 +18,14 @@
  * @link            http://sourceforge.net/projects/xoops/
  * @since           1.0.6
  */
-
 class XtubeTextSanitizer extends MyTextSanitizer
 {
 
+    /**
+     * @param $text
+     *
+     * @return string
+     */
     public function htmlSpecialCharsStrip($text)
     {
         return $this->htmlSpecialChars($this->stripSlashesGPC($text));
