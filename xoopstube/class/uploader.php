@@ -84,8 +84,8 @@ class XoopsMediaUploader
     /**
      * Fetch the uploaded file
      *
-     * @param  string $media_name Name of the file field
-     * @param  int    $index      Index of the file (if more than one uploaded under that name)
+     * @param string $media_name Name of the file field
+     * @param int    $index      Index of the file (if more than one uploaded under that name)
      *
      * @global        $HTTP_POST_FILES
      * @return bool
@@ -248,7 +248,7 @@ class XoopsMediaUploader
     /**
      * Check the file and copy it to the destination
      *
-     * @param  int $chmod
+     * @param int $chmod
      *
      * @return bool
      */
@@ -415,7 +415,7 @@ class XoopsMediaUploader
     /**
      * Get generated errors
      *
-     * @param  bool $ashtml Format using HTML?
+     * @param bool $ashtml Format using HTML?
      *
      * @return array |string    Array of array messages OR HTML string
      */

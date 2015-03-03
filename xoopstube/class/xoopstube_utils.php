@@ -59,10 +59,10 @@ class XoopstubeUtilities
     /**
      * Returns a module's option (with cache)
      *
-     * @param  string  $option    module option's name
-     * @param  boolean $withCache Do we have to use some cache ?
+     * @param string  $option    module option's name
+     * @param boolean $withCache Do we have to use some cache ?
      *
-     * @return mixed   option's value
+     * @return mixed option's value
      */
     public static function getModuleOption($option, $withCache = true)
     {
@@ -93,7 +93,6 @@ class XoopstubeUtilities
 
         return $retval;
     }
-
 
     /**
      * Is Xoops 2.3.x ?
@@ -127,14 +126,13 @@ class XoopstubeUtilities
         return $x20;
     }
 
-
     /**
      * Create (in a link) a javascript confirmation's box
      *
-     * @param  string  $message Message to display
-     * @param  boolean $form    Is this a confirmation for a form ?
+     * @param string  $message Message to display
+     * @param boolean $form    Is this a confirmation for a form ?
      *
-     * @return string  the javascript code to insert in the link (or in the form)
+     * @return string the javascript code to insert in the link (or in the form)
      */
     public static function javascriptLinkConfirm($message, $form = false)
     {
@@ -183,9 +181,9 @@ class XoopstubeUtilities
      * Set the page's title, meta description and meta keywords
      * Datas are supposed to be sanitized
      *
-     * @param  string $pageTitle       Page's Title
-     * @param  string $metaDescription Page's meta description
-     * @param  string $metaKeywords    Page's meta keywords
+     * @param string $pageTitle       Page's Title
+     * @param string $metaDescription Page's meta description
+     * @param string $metaKeywords    Page's meta keywords
      *
      * @return void
      */
@@ -367,7 +365,7 @@ class XoopstubeUtilities
     /**
      * Create a title for the href tags inside html links
      *
-     * @param  string $title Text to use
+     * @param string $title Text to use
      *
      * @return string Formated text
      */
@@ -382,7 +380,7 @@ class XoopstubeUtilities
     /**
      * Retourne la liste des utilisateurs appartenants à un groupe
      *
-     * @param  int $groupId Searched group
+     * @param int $groupId Searched group
      *
      * @return array Array of XoopsUsers
      */
@@ -433,7 +431,6 @@ class XoopstubeUtilities
         return false;
     }
 
-
     /**
      * Returns the current date in the Mysql format
      *
@@ -455,8 +452,8 @@ class XoopstubeUtilities
     /**
      * Convert a Mysql date to the human's format
      *
-     * @param  string $date The date to convert
-     * @param  string $format
+     * @param string $date   The date to convert
+     * @param string $format
      *
      * @return string The date in a human form
      */
@@ -472,9 +469,9 @@ class XoopstubeUtilities
     /**
      * Convert a timestamp to a Mysql date
      *
-     * @param  integer $timestamp The timestamp to use
+     * @param integer $timestamp The timestamp to use
      *
-     * @return string  The date in the Mysql format
+     * @return string The date in the Mysql format
      */
     public function timestampToMysqlDate($timestamp)
     {
@@ -496,15 +493,14 @@ class XoopstubeUtilities
     /**
      * Convert a timestamp to a Mysql datetime form
      *
-     * @param  integer $timestamp The timestamp to use
+     * @param integer $timestamp The timestamp to use
      *
-     * @return string  The date and time in the Mysql format
+     * @return string The date and time in the Mysql format
      */
     public function timestampToMysqlDateTime($timestamp)
     {
         return date('Y-m-d H:i:s', $timestamp);
     }
-
 
     /**
      * This function indicates if the current Xoops version needs to add asterisks to required fields in forms
@@ -532,7 +528,7 @@ class XoopstubeUtilities
     /**
      * Mark the mandatory fields of a form with a star
      *
-     * @param  object $sform The form to modify
+     * @param object $sform The form to modify
      *
      * @internal param string $caracter The character to use to mark fields
      * @return object The modified form
@@ -558,14 +554,13 @@ class XoopstubeUtilities
         return $sform;
     }
 
-
     /**
      * Create an html heading (from h1 to h6)
      *
-     * @param  string  $title The text to use
-     * @param  integer $level Level to return
+     * @param string  $title The text to use
+     * @param integer $level Level to return
      *
-     * @return string  The heading
+     * @return string The heading
      */
     public static function htitle($title = '', $level = 1)
     {
@@ -575,11 +570,11 @@ class XoopstubeUtilities
     /**
      * Create a unique upload filename
      *
-     * @param  string  $folder   The folder where the file will be saved
-     * @param  string  $fileName Original filename (coming from the user)
-     * @param  boolean $trimName Do we need to create a "short" unique name ?
+     * @param string  $folder   The folder where the file will be saved
+     * @param string  $fileName Original filename (coming from the user)
+     * @param boolean $trimName Do we need to create a "short" unique name ?
      *
-     * @return string  The unique filename to use (with its extension)
+     * @return string The unique filename to use (with its extension)
      */
     public function createUploadName($folder, $fileName, $trimName = false)
     {
@@ -613,7 +608,7 @@ class XoopstubeUtilities
     /**
      * Replace html entities with their ASCII equivalent
      *
-     * @param  string $chaine The string undecode
+     * @param string $chaine The string undecode
      *
      * @return string The undecoded string
      */
@@ -881,15 +876,14 @@ class XoopstubeUtilities
         return $chaine;
     }
 
-
     /**
      * Création d'une titre pour être utilisé par l'url rewriting
      *
-     * @param  string  $content Le texte à utiliser pour créer l'url
-     * @param  integer $urw     La limite basse pour créer les mots
+     * @param string  $content Le texte à utiliser pour créer l'url
+     * @param integer $urw     La limite basse pour créer les mots
      *
-     * @return string  Le texte à utiliser pour l'url
-     *                         Note, some parts are from Solo's code
+     * @return string Le texte à utiliser pour l'url
+     *                Note, some parts are from Solo's code
      */
     public static function makeSeoUrl($content, $urw = 1)
     {
@@ -932,11 +926,10 @@ class XoopstubeUtilities
         return $keywords;
     }
 
-
     /**
      * Create the meta keywords based on the content
      *
-     * @param  string $content Content from which we have to create metakeywords
+     * @param string $content Content from which we have to create metakeywords
      *
      * @return string The list of meta keywords
      */
@@ -1011,14 +1004,14 @@ class XoopstubeUtilities
     /**
      * Fonction chargée de gérer l'upload
      *
-     * @param  integer $indice L'indice du fichier à télécharger
-     * @param  string  $dstpath
-     * @param  null    $mimeTypes
-     * @param  null    $uploadMaxSize
-     * @param  null    $maxWidth
-     * @param  null    $maxHeight
+     * @param integer $indice        L'indice du fichier à télécharger
+     * @param string  $dstpath
+     * @param null    $mimeTypes
+     * @param null    $uploadMaxSize
+     * @param null    $maxWidth
+     * @param null    $maxHeight
      *
-     * @return mixed   True si l'upload s'est bien déroulé sinon le message d'erreur correspondant
+     * @return mixed True si l'upload s'est bien déroulé sinon le message d'erreur correspondant
      */
     public static function uploadFile($indice, $dstpath = XOOPS_UPLOAD_PATH, $mimeTypes = null, $uploadMaxSize = null, $maxWidth = null, $maxHeight = null)
     {
@@ -1105,7 +1098,6 @@ class XoopstubeUtilities
         return true;
     }
 
-
     /**
      * Déclenchement d'une alerte Xoops suite à un évènement
      *
@@ -1143,8 +1135,8 @@ class XoopstubeUtilities
     /**
      * Retourne un breadcrumb en fonction des paramètres passés et en partant (d'office) de la racine du module
      *
-     * @param  array  $path  Le chemin complet (excepté la racine) du breadcrumb sous la forme clé=url valeur=titre
-     * @param  string $raquo Le séparateur par défaut à utiliser
+     * @param array  $path  Le chemin complet (excepté la racine) du breadcrumb sous la forme clé=url valeur=titre
+     * @param string $raquo Le séparateur par défaut à utiliser
      *
      * @return string le breadcrumb
      */
@@ -1235,7 +1227,6 @@ class XoopstubeUtilities
         }
     }
 
-
     /**
      * Create an infotip
      * @param $text
@@ -1252,7 +1243,6 @@ class XoopstubeUtilities
 
         return $ret;
     }
-
 
     /**
      * Mise en place de l'appel à la feuille de style du module dans le template
@@ -1292,12 +1282,12 @@ class XoopstubeUtilities
     /**
      * Calcul du TTC à partir du HT et de la TVA
      *
-     * @param  float   $ht     Montant HT
-     * @param  float   $vat    Taux de TVA
-     * @param  boolean $edit   Si faux alors le montant est formaté pour affichage sinon il reste tel quel
-     * @param  string  $format Format d'affichage du résultat (long ou court)
+     * @param float   $ht     Montant HT
+     * @param float   $vat    Taux de TVA
+     * @param boolean $edit   Si faux alors le montant est formaté pour affichage sinon il reste tel quel
+     * @param string  $format Format d'affichage du résultat (long ou court)
      *
-     * @return mixed   Soit une chaine soit un flottant
+     * @return mixed Soit une chaine soit un flottant
      */
     public static function getTTC($ht, $vat, $edit = false, $format = 's')
     {
@@ -1324,8 +1314,8 @@ class XoopstubeUtilities
     /**
      * Retourne le montant TTC
      *
-     * @param  floatval $product_price Le montant du produit
-     * @param  integer  $vat_id        Le numéro de TVA
+     * @param floatval $product_price Le montant du produit
+     * @param integer  $vat_id        Le numéro de TVA
      *
      * @return floatval Le montant TTC si on a trouvé sa TVA sinon
      */
@@ -1379,7 +1369,7 @@ class XoopstubeUtilities
     /**
      * Retourne le type Mime d'un fichier en utilisant d'abord finfo puis mime_content
      *
-     * @param  string $filename Le fichier (avec son chemin d'accès complet) dont on veut connaître le type mime
+     * @param string $filename Le fichier (avec son chemin d'accès complet) dont on veut connaître le type mime
      *
      * @return string
      */
@@ -1419,7 +1409,7 @@ class XoopstubeUtilities
     /**
      * Retourne une liste d'objets XoopsUsers à partir d'une liste d'identifiants
      *
-     * @param  array $xoopsUsersIDs La liste des ID
+     * @param array $xoopsUsersIDs La liste des ID
      *
      * @return array Les objets XoopsUsers
      */
@@ -1456,7 +1446,7 @@ class XoopstubeUtilities
     /**
      * Retourne la liste des groupes de l'utilisateur courant (avec cache)
      *
-     * @param  int $uid
+     * @param int $uid
      *
      * @return array Les ID des groupes auquel l'utilisateur courant appartient
      */
@@ -1484,8 +1474,8 @@ class XoopstubeUtilities
     /**
      * Indique si l'utilisateur courant fait partie d'une groupe donné (avec gestion de cache)
      *
-     * @param  integer $group Groupe recherché
-     * @param  int     $uid
+     * @param integer $group Groupe recherché
+     * @param int     $uid
      *
      * @return boolean vrai si l'utilisateur fait partie du groupe, faux sinon
      */
@@ -1511,7 +1501,7 @@ class XoopstubeUtilities
     /**
      * Fonction chargée de vérifier qu'un répertoire existe, qu'on peut écrire dedans et création d'un fichier index.html
      *
-     * @param  string $folder Le chemin complet du répertoire à vérifier
+     * @param string $folder Le chemin complet du répertoire à vérifier
      *
      * @return void
      */
@@ -1527,10 +1517,10 @@ class XoopstubeUtilities
     /**
      * Duplicate a file in local
      *
-     * @param  string $path     The file's path
-     * @param  string $filename The filename
+     * @param string $path     The file's path
+     * @param string $filename The filename
      *
-     * @return mixed  If the copy succeed, the new filename else false
+     * @return mixed If the copy succeed, the new filename else false
      * @since 2.1
      */
     public function duplicateFile($path, $filename)
@@ -1586,9 +1576,9 @@ class XoopstubeUtilities
      * on appelle un fichier de langue, la méthode ajoute l'url vers le répertoire de
      * langue, dans le cas contraire on ajoute l'url vers le répertoire JS du module.
      *
-     * @param  string $javascriptFile
-     * @param  bool   $inLanguageFolder
-     * @param  bool   $oldWay
+     * @param string $javascriptFile
+     * @param bool   $inLanguageFolder
+     * @param bool   $oldWay
      *
      * @return void
      * @since 2.3.2009.03.14
@@ -1616,9 +1606,9 @@ class XoopstubeUtilities
     /**
      * Create the <option> of an html select
      *
-     * @param  array $array   Array of index and labels
-     * @param  mixed $default the default value
-     * @param  bool  $withNull
+     * @param array $array    Array of index and labels
+     * @param mixed $default  the default value
+     * @param bool  $withNull
      *
      * @return string
      * @since 2.3.2009.03.13
@@ -1648,10 +1638,10 @@ class XoopstubeUtilities
     /**
      * Creates an html select
      *
-     * @param  string  $selectName Selector's name
-     * @param  array   $array      Options
-     * @param  mixed   $default    Default's value
-     * @param  boolean $withNull   Do we include a null option ?
+     * @param string  $selectName Selector's name
+     * @param array   $array      Options
+     * @param mixed   $default    Default's value
+     * @param boolean $withNull   Do we include a null option ?
      *
      * @return string
      * @since 2.3.2009.03.13
@@ -1671,8 +1661,8 @@ class XoopstubeUtilities
      *
      * @note: utilisé par les attributs produits
      *
-     * @param  string $string    La chaine de travail
-     * @param  string $separator Le séparateur
+     * @param string $string    La chaine de travail
+     * @param string $separator Le séparateur
      *
      * @return string
      */
@@ -1691,8 +1681,8 @@ class XoopstubeUtilities
      *
      * @note: utilisé par les attributs produits
      *
-     * @param  string $string    La chaine de travail
-     * @param  string $separator Le séparateur
+     * @param string $string    La chaine de travail
+     * @param string $separator Le séparateur
      *
      * @return string
      */
@@ -1709,7 +1699,7 @@ class XoopstubeUtilities
     /**
      * Renvoie un montant nul si le montant est négatif
      *
-     * @param  float $amount
+     * @param float $amount
      *
      * @return float
      */
@@ -1723,8 +1713,8 @@ class XoopstubeUtilities
     /**
      * Returns a string from the request
      *
-     * @param  string $valueName    Name of the parameter you want to get
-     * @param  mixed  $defaultValue Default value to return if the parameter is not set in the request
+     * @param string $valueName    Name of the parameter you want to get
+     * @param mixed  $defaultValue Default value to return if the parameter is not set in the request
      *
      * @return mixed
      */
@@ -1771,8 +1761,8 @@ class XoopstubeUtilities
     /**
      * Retourne la définition d'un champ
      *
-     * @param  string $fieldname
-     * @param  string $table
+     * @param string $fieldname
+     * @param string $table
      *
      * @return array
      */
