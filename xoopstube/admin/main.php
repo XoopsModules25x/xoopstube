@@ -202,7 +202,6 @@ function edit($lid = 0)
 
     $sform->addElement($optionsTrayNote, false);
 
-
 // Meta keywords form
     $keywords = new XoopsFormTextArea(_AM_XOOPSTUBE_KEYWORDS, 'keywords', $keywords, 7, 60, false);
     $keywords->setDescription(
@@ -591,7 +590,6 @@ switch (strtolower($op)) {
             $sform->addElement($dup_tray);
             $sform->display();
 
-
 //TODO add table with categories
 
 
@@ -651,7 +649,6 @@ function xtubeToggleOffline($lid, $offline)
         $message = _AM_XOOPSTUBE_TOGGLE_ONLINE_SUCCESS;
     }
 
-
 //    $this_handler   =& xoops_getModuleHandler('xoopstube_videos', 'xoopstube');
 //    $obj            = $this_handler->get($lid);
 //    $obj->setVar('offline', $offline);
@@ -670,5 +667,6 @@ function xtubeToggleOffline($lid, $offline)
     } else {
         redirect_header('main.php', 1, $message);
     }
+
     return null;
 }

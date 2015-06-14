@@ -36,10 +36,10 @@ class FileList
     /**
      * fileList::construct()
      *
-     * @param  string  $path
-     * @param  null    $value
-     * @param  string  $selected
-     * @param  integer $size
+     * @param string  $path
+     * @param null    $value
+     * @param string  $selected
+     * @param integer $size
      *
      * @internal param int $emptySelect
      * @internal param int $type
@@ -74,7 +74,7 @@ class FileList
     /**
      * SpotList::setNoSelection()
      *
-     * @param  integer $value
+     * @param integer $value
      *
      * @return void
      */

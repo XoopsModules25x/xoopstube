@@ -301,9 +301,9 @@ class XoopsTubeTree
     /**
      * Enter description here...
      *
-     * @param  int    $sel_id
-     * @param  string $order
-     * @param  array  $parray
+     * @param int    $sel_id
+     * @param string $order
+     * @param array  $parray
      *
      * @return array
      */
@@ -330,10 +330,10 @@ class XoopsTubeTree
     /**
      * Enter description here...
      *
-     * @param  int    $sel_id
-     * @param  string $order
-     * @param  array  $parray
-     * @param  string $r_prefix
+     * @param int    $sel_id
+     * @param string $order
+     * @param array  $parray
+     * @param string $r_prefix
      *
      * @return array
      */

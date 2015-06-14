@@ -57,9 +57,9 @@ class XtubeThumbsNails
     /**
      * Constructor
      *
-     * @param  null $img_name
-     * @param  null $img_path
-     * @param  null $img_savepath
+     * @param null $img_name
+     * @param null $img_path
+     * @param null $img_savepath
      *
      * @internal param string $_imgName
      * @internal param string $_img_path
@@ -101,7 +101,7 @@ class XtubeThumbsNails
     /**
      * wfThumbsNails::setUseThumbs()
      *
-     * @param  integer $value
+     * @param integer $value
      *
      * @return void
      */
@@ -113,7 +113,7 @@ class XtubeThumbsNails
     /**
      * XtubeThumbsNails::setImageType()
      *
-     * @param  string $value
+     * @param string $value
      *
      * @return void
      */
@@ -125,11 +125,11 @@ class XtubeThumbsNails
     /**
      * ThumbsNails::createThumbnail()
      *
-     * @param  int $img_width
-     * @param  int $img_height
-     * @param  int $img_quality
-     * @param  int $img_update
-     * @param  int $img_aspect
+     * @param int $img_width
+     * @param int $img_height
+     * @param int $img_quality
+     * @param int $img_update
+     * @param int $img_aspect
      *
      * @return bool|string
      */
