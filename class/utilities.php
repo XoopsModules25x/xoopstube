@@ -529,12 +529,12 @@ class XoopstubeUtilities
     /**
      * Mark the mandatory fields of a form with a star
      *
-     * @param object $sform The form to modify
+     * @param XoopsObject $sform The form to modify
      *
      * @internal param string $caracter The character to use to mark fields
      * @return object The modified form
      */
-    public static function &formMarkRequiredFields($sform)
+    public static function &formMarkRequiredFields(XoopsObject $sform)
     {
         if (self::needsAsterisk()) {
             $required = array();
@@ -1363,10 +1363,8 @@ class XoopstubeUtilities
 
     /**
      * Returns the mime type of a file using first finfo then mime_content
-     *      *
-     *     * @param String $ filename The file (with full path) that you want to know the mime type
-     *
-     * @param $filename
+     *      
+     * @param String $ filename The file (with full path) that you want to know the mime type
      * @return string
      */
     public static function getMimeType($filename)
@@ -1496,10 +1494,9 @@ class XoopstubeUtilities
 
     /**
      * Function responsible for verifying that a directory exists, we can write in and create an index.html file
-     *      *
-     *      * @param String $ folder The full directory to verify
+     * 
+     * @param String $ folder The full directory to verify
      *
-     * @param $folder
      */
     public static function prepareFolder($folder)
     {
@@ -1981,8 +1978,7 @@ class XoopstubeUtilities
     {
         // Sanitise $_request for further use.  This method gives more control and security.
         // Method is more for functionality rather than beauty at the moment, will correct later.
-        unset($array['usercookie']);
-        unset($array['PHPSESSID']);
+        unset($array['usercookie'], $array['PHPSESSID']);
 
         if (is_array($array) && null === $name) {
             $globals = array();
@@ -2349,7 +2345,7 @@ class XoopstubeUtilities
         if (1 == $get_child) {
             $arr  = $mytree->getAllChildId($sel_id);
             $size = count($arr);
-            for ($i = 0; $i < count($arr); ++$i) {
+            for ($i = 0, $iMax = count($arr); $i < $iMax; ++$i) {
                 $query2 = 'SELECT a.lid, a.published, a.cid FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' a LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('xoopstube_altcat') . ' b'
                           . ' ON b.lid = a.lid' . ' WHERE a.published > 0 AND a.published <= ' . time() . ' AND (a.expired = 0 OR a.expired > ' . time() . ') AND offline = 0'
                           . ' AND (b.cid=a.cid OR (a.cid=' . $arr[$i] . ' OR b.cid=' . $arr[$i] . ')) GROUP BY a.lid, a.published, a.cid';
@@ -2604,8 +2600,7 @@ class XoopstubeUtilities
                 }
             }
             echo '</table><br>';
-            unset($count);
-            unset($menucount);
+            unset($count, $menucount);
         }
         // ###### Output warn messages for security ######
         if (is_dir(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/update/')) {

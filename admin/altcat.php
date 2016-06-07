@@ -23,8 +23,8 @@ $op  = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', '', 'POST'), 'GET')
 $lid = XoopsRequest::getInt('lid', XoopsRequest::getInt('lid', 0, 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'lid', 0);
 
 /**
- * @param        $xt
- * @param        $itemid
+ * @param  XoopsObject      $xt
+ * @param int       $itemid
  * @param        $title
  * @param        $checks
  * @param string $order

@@ -113,7 +113,7 @@ switch (strtolower($op)) {
             $broken['title']        = $xtubemyts->htmlSpecialCharsStrip($video_arr['title']);
             $broken['id']           = $broke_arr['reportid'];
             $broken['reporter']     = XoopsUserUtility::getUnameFromId($broke_arr['sender']);
-            $broken['date']         = XoopstubeUtilities::xtubeGetTimestamp(formatTimestamp($broke_arr['date'], $GLOBALS['xoopsModuleConfig']['dateformat']);
+            $broken['date']         = XoopstubeUtilities::xtubeGetTimestamp(formatTimestamp($broke_arr['date'], $GLOBALS['xoopsModuleConfig']['dateformat']));
             $broken['acknowledged'] = ($broke_arr['acknowledged'] == 1) ? _YES : _NO;
             $broken['confirmed']    = ($broke_arr['confirmed'] == 1) ? _YES : _NO;
             $xoopsTpl->assign('broken', $broken);

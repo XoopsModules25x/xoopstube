@@ -159,7 +159,7 @@ function getSpotlightVideos($options)
 
     $i = 0;
     while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
-        if (false == checkBlockGroups($myrow['cid']) || $myrow['cid'] == 0) {
+        if (false === checkBlockGroups($myrow['cid']) || $myrow['cid'] == 0) {
             continue;
         }
         if (false === xtubeCheckBlockGroups($myrow['cid'])) {

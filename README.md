@@ -18,5 +18,3 @@ To contribute to the Tutorial, [fork it on GitHub](https://github.com/XoopsDocs/
 Please visit us on http://xoops.org
 
 The upcoming "next generation" version of XOOPS CMS is being crafted on GitHub at: https://github.com/XOOPS
-
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/93a615a5acf448219de3a44ca4e9d5f7)](https://www.codacy.com/app/mambax7/xoopstube_2?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=XoopsModules25x/xoopstube&amp;utm_campaign=Badge_Grade)
