@@ -3,10 +3,10 @@
         <{foreach item=videoload from=$block.videos}>
             <td class="even" style="text-align: center; padding: 4px; vertical-align: middle;">
                 <a href="<{$xoops_url}>/modules/<{$videoload.dirname}>/singlevideo.php?cid=<{$videoload.cid}>&amp;lid=<{$videoload.id}>"><{$videoload.videothumb}></a>
-                <br/>
+                <br>
                 <a href="<{$xoops_url}>/modules/<{$videoload.dirname}>/singlevideo.php?cid=<{$videoload.cid}>&amp;lid=<{$videoload.id}>">
                     <span style="font-size: small;"><{$videoload.title}></span>
-                </a><br/>
+                </a><br>
                 <span style="font-size: small;">(<{$videoload.date}>)</span>
             </td>
         <{/foreach}>

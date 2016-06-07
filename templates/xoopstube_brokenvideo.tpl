@@ -10,13 +10,13 @@
             <h4><{$smarty.const._MD_XOOPSTUBE_RESOURCEREPORTED}></h4>
 
             <div><{$smarty.const._MD_XOOPSTUBE_RESOURCEREPORTED}></div>
-            <br/>
+            <br>
 
             <div><span style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_FILETITLE}></span><{$broken.title}></div>
             <div><span style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_RESOURCEID}></span><{$broken.id}></div>
             <div><span style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_REPORTER}></span> <{$broken.reporter}></div>
             <div><span style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_DATEREPORTED}></span> <{$broken.date}></div>
-            <br/>
+            <br>
 
             <div><span style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_WEBMASTERACKNOW}></span>
                 <{$broken.acknowledged}>
@@ -31,16 +31,16 @@
 
         <div><{$smarty.const._MD_XOOPSTUBE_THANKSFORHELP}></div>
         <div><{$smarty.const._MD_XOOPSTUBE_FORSECURITY}></div>
-        <br/>
+        <br>
 
         <div><{$smarty.const._MD_XOOPSTUBE_BEFORESUBMIT}></div>
-        <br/>
+        <br>
 
         <div align="center">
             <div><span style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_FILETITLE}></span><{$video.title}></div>
             <div><span style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_SUBMITTER}>:</span> <{$video.publisher}></div>
             <div><span style="font-weight: bold;"><{$lang_subdate}>:</span> <{$video.updated}></div>
-            <br/>
+            <br>
 
             <form action="brokenvideo.php" method="POST">
                 <input type="hidden" name="lid" value="<{$video_id}>"/>

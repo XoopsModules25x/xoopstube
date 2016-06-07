@@ -1,7 +1,7 @@
 <link rel="stylesheet" type="text/css" href="<{$smarty.const.xoopstube_url}>/assets/css/xtubestyle.css"/>
 
 <{if $catarray.imageheader != ""}>
-    <br/>
+    <br>
     <div class="xoopstube_header"><{$catarray.imageheader}></div>
 <{/if}>
 
@@ -10,13 +10,13 @@
     <div style="float: right;"><{$back}>&nbsp;</div>
 </div>
 
-<br/><br/>
+<br><br>
 <!-- Start ranking loop -->
 <{foreach item=ranking from=$rankings}>
     <div class="even" style="font-weight: bold; font-size: 110%;">
         <{$smarty.const._MD_XOOPSTUBE_CATEGORY}>: <{$ranking.title}>
     </div>
-    <br/>
+    <br>
     <table cellpadding="0" cellspacing="1" width="100%" class="outer">
         <tr>
             <th align="center" width="5%"><{$smarty.const._MD_XOOPSTUBE_RANK}></th>
@@ -39,6 +39,6 @@
         <{/foreach}>
         <!-- End links loop-->
     </table>
-    <br/>
+    <br>
 <{/foreach}>
 <!-- End ranking loop -->

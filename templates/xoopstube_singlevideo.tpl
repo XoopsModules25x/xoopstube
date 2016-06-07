@@ -11,10 +11,10 @@
     <{$video.title}>
     <{$video.icons}>
     <span>
-		<{if $xoops_isadmin}>
+        <{if $xoops_isadmin}>
             &nbsp;<{$video.adminvideo}>
         <{/if}>
-	</span>
+    </span>
 </div>
 <div>&nbsp;</div>
 
@@ -30,20 +30,20 @@
 <div style="clear: both;">&nbsp;</div>
 
 <fieldset class="xoopstube_description">
-	<span style="float: left; width: 48%;">
+    <span style="float: left; width: 48%;">
         <{if $video.showsubmitterx}>
             <span style="font-size: small;"><span style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_SUBMITTER}>:</span>&nbsp;<{$video.submitter}></span>
-            <br/>
+            <br>
         <{/if}>
-        <span style="font-size: small;"><span style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_PUBLISHER}>:</span>&nbsp;<{$video.publisher}></span><br/>
-		<span style="font-size: small;"><span style="font-weight: bold;"><{$lang_subdate}>:</span>&nbsp;<{$video.updated|wordwrap:50:"\n":true}></span>
-	</span>
+        <span style="font-size: small;"><span style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_PUBLISHER}>:</span>&nbsp;<{$video.publisher}></span><br>
+        <span style="font-size: small;"><span style="font-weight: bold;"><{$lang_subdate}>:</span>&nbsp;<{$video.updated|wordwrap:50:"\n":true}></span>
+    </span>
 
-	<span style="float: right; width: 48%;">
-		<span style="font-size: small;"><{$video.hits|wordwrap:50:"\n":true}></span><br/>
-		<span style="font-size: small;"><{$smarty.const._MD_XOOPSTUBE_TIMEB}>&nbsp;<{$video.time}></span>
+    <span style="float: right; width: 48%;">
+        <span style="font-size: small;"><{$video.hits|wordwrap:50:"\n":true}></span><br>
+        <span style="font-size: small;"><{$smarty.const._MD_XOOPSTUBE_TIMEB}>&nbsp;<{$video.time}></span>
         <{if $video.showrating}>
-            <br/>
+            <br>
             <span style="font-size: small;">
                 <span style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_RATINGC}></span>&nbsp;<img
                         src="<{$xoops_url}>/modules/<{$video.module_dir}>/assets/images/icon/<{$video.rateimg}>" alt=""
@@ -52,17 +52,17 @@
         <{/if}>
 
         <{if $tagbar}>
-            <br/>
+            <br>
             <span style="font-size: small;"><{include file="db:tag_bar.tpl"}></span>
         <{/if}>
-	</span>
+    </span>
 
     <div style="clear: both; height: 25px;">&nbsp;</div>
-    <span style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_DESCRIPTIONC}></span><br/>
+    <span style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_DESCRIPTIONC}></span><br>
     <{$video.description2}>
 </fieldset>
 
-<br/>
+<br>
 
 <div class="even" align="center">
     <span style="font-size: small;">[&nbsp;
@@ -86,7 +86,7 @@
     </span>
 </div>
 
-<br/>
+<br>
 <{if $video.othervideox > 0}>
     <{$other_videos}>
     <{foreach item=video_user from=$video_uid}>
@@ -96,18 +96,18 @@
         </div>
     <{/foreach}>
 <{/if}>
-<br/><br/>
+<br><br>
 <div align="center"><{$lang_copyright}></div>
 <div style="text-align: center; padding: 3px; margin:3px;">
     <{$commentsnav}> <{$lang_notice}>
 </div>
 <!-- start comments loop -->
 <{if $comment_mode == "flat"}>
-    <{include file="db:system_comments_flat.html"}>
+    <{include file="db:system_comments_flat.tpl"}>
 <{elseif $comment_mode == "thread"}>
-    <{include file="db:system_comments_thread.html"}>
+    <{include file="db:system_comments_thread.tpl"}>
 <{elseif $comment_mode == "nest"}>
-    <{include file="db:system_comments_nest.html"}>
+    <{include file="db:system_comments_nest.tpl"}>
 <{/if}>
 <!-- end comments loop -->
-<{include file="db:system_notification_select.html"}>
+<{include file="db:system_notification_select.tpl"}>

@@ -12,199 +12,235 @@
  * @category        Module
  * @package         Xoopstube
  * @author          XOOPS Development Team
- * @copyright       2001-2013 The XOOPS Project
+ * @copyright       2001-2016 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @version         $Id$
- * @link            http://sourceforge.net/projects/xoops/
+ * @link            http://xoops.org/
  * @since           1.0.6
  */
 
-$mydirname = basename(__DIR__);
+$moduleDirName = basename(__DIR__);
 
-$modversion['name']    = _MI_XOOPSTUBE_NAME;
-$modversion['version'] = '1.06';
-//$modversion['releasedate'] = 'June 19, 2012';
-$modversion['status']      = 'Final';
-$modversion['description'] = _MI_XOOPSTUBE_DESC;
-//$modversion['license'] 		= _MI_XOOPSTUBE_LICENSEDSC;
-$modversion['help']        = 'page=help';
-$modversion['license']     = 'GNU GPL 2.0';
-$modversion['license_url'] = "www.gnu.org/licenses/gpl-2.0.html";
-$modversion['official']    = 0;
-$modversion['image']       = 'assets/images/xtube_slogo.png';
+// ------------------- Informations ------------------- //
+$modversion = array(
+    'name'                => _MI_XOOPSTUBE_NAME,
+    'description'         => _MI_XOOPSTUBE_DESC,
+    'version'             => 1.07,
+    'official'            => 1, //1 indicates supported by XOOPS Dev Team, 0 means 3rd party supported
+    'author'              => 'McDonald',
+    'author_mail'         => 'http://xoops.org',
+    'author_website_url'  => 'http://xoops.org',
+    'author_website_name' => 'XOOPS',
+    'credits'             => 'WF-Projects Team. Based on the module WF-Links, thanks to the dream-team for some code snippits.',
+    'license'             => 'GPL 2.0 or later',
+    'license_url'         => 'www.gnu.org/licenses/gpl-2.0.html/',
+    'help'                => 'page=help',
+    //
+    'release_info'        => 'Changelog',
+    'release_file'        => XOOPS_URL . "/modules/{$moduleDirName}/docs/changelog file",
+    //
+    'manual'              => 'link to manual file',
+    'manual_file'         => XOOPS_URL . "/modules/{$moduleDirName}/docs/install.txt",
+    'min_php'             => '5.5',
+    'min_xoops'           => '2.5.8',
+    'min_admin'           => '1.1',
+    'min_db'              => array('mysql' => '5.0.7', 'mysqli' => '5.0.7'),
+    // images
+    'image'               => 'assets/images/logo_module.png',
+    'iconsmall'           => 'assets/images/iconsmall.png',
+    'iconbig'             => 'assets/images/iconbig.png',
+    'dirname'             => "{$moduleDirName}",
+    // Frameworks
+    //    'dirmoduleadmin'      => 'Frameworks/moduleclasses/moduleadmin',
+    'systemIcons16'       => 'Frameworks/moduleclasses/icons/16',
+    'systemIcons32'       => 'Frameworks/moduleclasses/icons/32',
+    'systemIcons32url'    => XOOPS_URL . '/' . 'Frameworks/moduleclasses/icons/32',
 
-$modversion['iconsmall'] = 'assets/images/xtube_iconsmall.png';
-$modversion['iconbig']   = 'assets/images/xtube_iconbig.png';
-$modversion['dirname']   = $mydirname;
-//$modversion['dirname'] 		= 'xoopstube';
+    //Frameworks
+    'dirmoduleadmin'      => 'Frameworks/moduleclasses/moduleadmin',
+    'sysIcons16'          => 'Frameworks/moduleclasses/icons/16',
+    'sysIcons32'          => 'Frameworks/moduleclasses/icons/32',
+    // Local path icons
+    'modIcons16'          => 'assets/images/icons/16',
+    'modIcons32'          => 'assets/images/icons/32',
 
-$modversion['author']                 = "McDonald";
-$modversion['credits']                = "WF-Projects Team. Based on the module WF-Links, thanks to the dream-team for some code snippits.";
-$modversion['author_credits']         = _MI_XOOPSTUBE_AUTHOR_CREDITSTEXT;
-$modversion['developer_website_url']  = "http://members.lycos.nl/mcdonaldsstore/";
-$modversion['developer_website_name'] = "McDonalds Store";
-
-$modversion['dirmoduleadmin'] = 'Frameworks/moduleclasses/moduleadmin';
-$modversion['icons16']        = 'Frameworks/moduleclasses/icons/16';
-$modversion['icons32']        = 'Frameworks/moduleclasses/icons/32';
-
-//about
-$modversion["module_status"]       = "RC 2";
-$modversion['release_date']        = "2014/04/23";
-$modversion['release_file']        = XOOPS_URL . "/modules/" . $modversion['dirname'] . "/docs/changelog.txt";
-$modversion["module_website_url"]  = "www.xoops.org/";
-$modversion["module_website_name"] = "XOOPS";
-$modversion['min_php']             = '5.5';
-$modversion['min_xoops']           = "2.5.7.2";
-$modversion['min_admin']           = '1.1';
-$modversion['min_db']              = array(
-    'mysql'  => '5.0.7',
-    'mysqli' => '5.0.7'
+    // Local path icons
+    'moduleIcons16'       => 'assets/images/icons/16',
+    'moduleIcons32'       => 'assets/images/icons/32',
+    // About
+    'module_status'       => 'Beta 1',
+    //    'release_date'        => "2013/10/07",
+    'release_date'        => '2016/06/03',
+    //    'release'             => "2015-04-03",
+    'demo_site_url'       => 'http://xoops.org',
+    'demo_site_name'      => 'XOOPS Demo Site',
+    'support_url'         => 'http://xoops.org/modules/newbb',
+    'support_name'        => 'Support Forum',
+    'module_website_url'  => 'www.xoops.org',
+    'module_website_name' => 'XOOPS Project',
+    // Admin system menu
+    'system_menu'         => 1,
+    // Admin menu
+    'hasAdmin'            => 1,
+    'adminindex'          => 'admin/index.php',
+    'adminmenu'           => 'admin/menu.php',
+    // Main menu
+    'hasMain'             => 1,
+    // Install/Update
+    'onInstall'           => 'include/oninstall.php',
+    'onUpdate'            => 'include/onupdate.php'
 );
 
+// ------------------- Mysql ------------------- //
 // Sql file (must contain sql generated by phpMyAdmin or phpPgAdmin)
 // All tables should not have any prefix!
 $modversion['sqlfile']['mysql'] = 'sql/mysql.sql';
 
 // Tables created by sql file (without prefix!)
-include_once 'include/config.php';
-$modversion['tables'][0] = 'xoopstube_broken';
-$modversion['tables'][1] = 'xoopstube_cat';
-$modversion['tables'][2] = 'xoopstube_videos';
-$modversion['tables'][3] = 'xoopstube_mod';
-$modversion['tables'][4] = 'xoopstube_votedata';
-$modversion['tables'][5] = 'xoopstube_indexpage';
-$modversion['tables'][6] = 'xoopstube_altcat';
+//include_once 'include/config.php';
+$modversion['tables'] = array(
+    $moduleDirName . '_broken',
+    $moduleDirName . '_cat',
+    $moduleDirName . '_videos',
+    $moduleDirName . '_mod',
+    $moduleDirName . '_votedata',
+    $moduleDirName . '_indexpage',
+    $moduleDirName . '_altcat'
+);
 
-// Launch additional install script to check
-// the existence of tables 'wf_resources_types' and 'wf_resources'
-$modversion['onInstall'] = '';
-$modversion['onUpdate']  = 'include/update.php';
+// ------------------- blocks ------------------- //
+$modversion['blocks'][] = array(
+    'file'        => $moduleDirName . '_top.php',
+    'name'        => _MI_XOOPSTUBE_BNAME1,
+    'description' => _MI_XOOPSTUBE_BNAME1_DESC,
+    'show_func'   => 'showTopVideoBlock',
+    'edit_func'   => 'editTopVideoBlock',
+    'options'     => 'published|10|19|d/m/Y|0',
+    'template'    => 'xoopstube_block_new_t.tpl',
+    'can_clone'   => true
+);
 
-// Admin things
-$modversion['hasAdmin']    = 1;
-$modversion['system_menu'] = 1;
-$modversion['adminindex']  = 'admin/index.php';
-$modversion['adminmenu']   = 'admin/menu.php';
+$modversion['blocks'][] = array(
+    'file'        => $moduleDirName . '_top.php',
+    'name'        => _MI_XOOPSTUBE_BNAME2,
+    'description' => _MI_XOOPSTUBE_BNAME2_DESC,
+    'show_func'   => 'showTopVideoBlock',
+    'edit_func'   => 'editTopVideoBlock',
+    'options'     => 'published|10|19|d/m/Y|0',
+    'template'    => 'xoopstube_block_new.tpl',
+    'can_clone'   => true
+);
 
-// Blocks
-$i = 0;
-++$i;
-$modversion['blocks'][$i]['file']        = $modversion['dirname'] . '_top.php';
-$modversion['blocks'][$i]['name']        = _MI_XOOPSTUBE_BNAME1;
-$modversion['blocks'][$i]['description'] = _MI_XOOPSTUBE_BNAME1_DESC;
-$modversion['blocks'][$i]['show_func']   = 'showTopVideoBlock';
-$modversion['blocks'][$i]['edit_func']   = 'editTopVideoBlock';
-$modversion['blocks'][$i]['options']     = 'published|10|19|d/m/Y|0';
-$modversion['blocks'][$i]['template']    = 'xoopstube_block_new_t.tpl';
-$modversion['blocks'][$i]['can_clone']   = true;
-++$i;
-$modversion['blocks'][$i]['file']        = $modversion['dirname'] . '_top.php';
-$modversion['blocks'][$i]['name']        = _MI_XOOPSTUBE_BNAME2;
-$modversion['blocks'][$i]['description'] = _MI_XOOPSTUBE_BNAME2_DESC;
-$modversion['blocks'][$i]['show_func']   = 'showTopVideoBlock';
-$modversion['blocks'][$i]['edit_func']   = 'editTopVideoBlock';
-$modversion['blocks'][$i]['options']     = 'published|10|19|d/m/Y|0';
-$modversion['blocks'][$i]['template']    = 'xoopstube_block_new.tpl';
-$modversion['blocks'][$i]['can_clone']   = true;
-++$i;
-$modversion['blocks'][$i]['file']        = $modversion['dirname'] . '_top.php';
-$modversion['blocks'][$i]['name']        = _MI_XOOPSTUBE_BNAME3;
-$modversion['blocks'][$i]['description'] = _MI_XOOPSTUBE_BNAME3_DESC;
-$modversion['blocks'][$i]['show_func']   = 'showTopVideoBlock';
-$modversion['blocks'][$i]['edit_func']   = 'editTopVideoBlock';
-$modversion['blocks'][$i]['options']     = 'hits|10|19|d/m/Y|0';
-$modversion['blocks'][$i]['template']    = 'xoopstube_block_top_t.tpl';
-$modversion['blocks'][$i]['can_clone']   = true;
-++$i;
-$modversion['blocks'][$i]['file']        = $modversion['dirname'] . '_top.php';
-$modversion['blocks'][$i]['name']        = _MI_XOOPSTUBE_BNAME4;
-$modversion['blocks'][$i]['description'] = _MI_XOOPSTUBE_BNAME4_DESC;
-$modversion['blocks'][$i]['show_func']   = 'showTopVideoBlock';
-$modversion['blocks'][$i]['edit_func']   = 'editTopVideoBlock';
-$modversion['blocks'][$i]['options']     = 'hits|10|19|d/m/Y|0';
-$modversion['blocks'][$i]['template']    = 'xoopstube_block_top.tpl';
-$modversion['blocks'][$i]['can_clone']   = true;
-++$i;
-$modversion['blocks'][$i]['file']        = $modversion['dirname'] . '_top.php';
-$modversion['blocks'][$i]['name']        = _MI_XOOPSTUBE_BNAME5;
-$modversion['blocks'][$i]['description'] = _MI_XOOPSTUBE_BNAME5_DESC;
-$modversion['blocks'][$i]['show_func']   = 'showTopVideoBlock';
-$modversion['blocks'][$i]['edit_func']   = 'editTopVideoBlock';
-$modversion['blocks'][$i]['options']     = 'published|5|19|d/m/Y|0';
-$modversion['blocks'][$i]['template']    = 'xoopstube_block_new_h.tpl';
-$modversion['blocks'][$i]['can_clone']   = true;
-++$i;
-$modversion['blocks'][$i]['file']        = $modversion['dirname'] . '_top.php';
-$modversion['blocks'][$i]['name']        = _MI_XOOPSTUBE_BNAME6;
-$modversion['blocks'][$i]['description'] = _MI_XOOPSTUBE_BNAME6_DESC;
-$modversion['blocks'][$i]['show_func']   = 'getRandomVideo';
-$modversion['blocks'][$i]['edit_func']   = 'editTopVideoBlock';
-$modversion['blocks'][$i]['options']     = 'random|5|19|d/m/Y|0';
-$modversion['blocks'][$i]['template']    = 'xoopstube_block_random.tpl';
-$modversion['blocks'][$i]['can_clone']   = true;
-++$i;
-$modversion['blocks'][$i]['file']        = $modversion['dirname'] . '_top.php';
-$modversion['blocks'][$i]['name']        = _MI_XOOPSTUBE_BNAME7;
-$modversion['blocks'][$i]['description'] = _MI_XOOPSTUBE_BNAME7_DESC;
-$modversion['blocks'][$i]['show_func']   = 'getRandomVideoForHorizontalBlock';
-$modversion['blocks'][$i]['edit_func']   = 'editTopVideoBlock';
-$modversion['blocks'][$i]['options']     = 'randomh|5|19|d/m/Y|0';
-$modversion['blocks'][$i]['template']    = 'xoopstube_block_random_h.tpl';
-$modversion['blocks'][$i]['can_clone']   = true;
-++$i;
-$modversion['blocks'][$i]['file']        = $modversion['dirname'] . '_banner.php';
-$modversion['blocks'][$i]['name']        = _MI_XOOPSTUBE_BNAME8;
-$modversion['blocks'][$i]['description'] = _MI_XOOPSTUBE_BNAME8_DESC;
-$modversion['blocks'][$i]['show_func']   = 'xtubeShowBannerB';
-$modversion['blocks'][$i]['edit_func']   = 'xtubeEditBannerB';
-$modversion['blocks'][$i]['options']     = 'hits|10|19';
-$modversion['blocks'][$i]['template']    = 'xoopstube_block_banner.tpl';
-$modversion['blocks'][$i]['can_clone']   = true;
-++$i;
-$modversion['blocks'][$i]['file']        = $modversion['dirname'] . '_block_tag.php';
-$modversion['blocks'][$i]['name']        = _MI_XOOPSTUBE_BNAME9;
-$modversion['blocks'][$i]['description'] = _MI_XOOPSTUBE_BNAME9_DESC;
-$modversion['blocks'][$i]['show_func']   = 'xtubeShowTagBlockCloud';
-$modversion['blocks'][$i]['edit_func']   = 'xtubeEditTagBlockCloud';
-$modversion['blocks'][$i]['options']     = '100|0|150|80';
-$modversion['blocks'][$i]['template']    = 'xoopstube_tag_block_cloud.tpl';
-$modversion['blocks'][$i]['can_clone']   = true;
-++$i;
-$modversion['blocks'][$i]['file']        = $modversion['dirname'] . '_block_tag.php';
-$modversion['blocks'][$i]['name']        = _MI_XOOPSTUBE_BNAME10;
-$modversion['blocks'][$i]['description'] = _MI_XOOPSTUBE_BNAME10_DESC;
-$modversion['blocks'][$i]['show_func']   = 'xtubeShowTagBlockTop';
-$modversion['blocks'][$i]['edit_func']   = 'xtubeEditTagBlockTop';
-$modversion['blocks'][$i]['options']     = '50|30|c';
-$modversion['blocks'][$i]['template']    = 'xoopstube_tag_block_tag.tpl';
-$modversion['blocks'][$i]['can_clone']   = true;
-++$i;
-$modversion['blocks'][$i]['file']        = $modversion['dirname'] . '_top.php';
-$modversion['blocks'][$i]['name']        = _MI_XOOPSTUBE_BNAME11;
-$modversion['blocks'][$i]['description'] = _MI_XOOPSTUBE_BNAME11_DESC;
-$modversion['blocks'][$i]['show_func']   = "getSpotlightVideos";
-$modversion['blocks'][$i]['edit_func']   = "editTopVideoBlock";
-$modversion['blocks'][$i]['options']     = "date|3|19";
-$modversion['blocks'][$i]['template']    = 'xoopstube_block_spotlight.tpl';
-$modversion['blocks'][$i]['can_clone']   = true;
+$modversion['blocks'][] = array(
+    'file'        => $moduleDirName . '_top.php',
+    'name'        => _MI_XOOPSTUBE_BNAME3,
+    'description' => _MI_XOOPSTUBE_BNAME3_DESC,
+    'show_func'   => 'showTopVideoBlock',
+    'edit_func'   => 'editTopVideoBlock',
+    'options'     => 'hits|10|19|d/m/Y|0',
+    'template'    => 'xoopstube_block_top_t.tpl',
+    'can_clone'   => true
+);
 
-// Menu
-$modversion['hasMain'] = 1;
+$modversion['blocks'][] = array(
+    'file'        => $moduleDirName . '_top.php',
+    'name'        => _MI_XOOPSTUBE_BNAME4,
+    'description' => _MI_XOOPSTUBE_BNAME4_DESC,
+    'show_func'   => 'showTopVideoBlock',
+    'edit_func'   => 'editTopVideoBlock',
+    'options'     => 'hits|10|19|d/m/Y|0',
+    'template'    => 'xoopstube_block_top.tpl',
+    'can_clone'   => true
+);
+
+$modversion['blocks'][] = array(
+    'file'        => $moduleDirName . '_top.php',
+    'name'        => _MI_XOOPSTUBE_BNAME5,
+    'description' => _MI_XOOPSTUBE_BNAME5_DESC,
+    'show_func'   => 'showTopVideoBlock',
+    'edit_func'   => 'editTopVideoBlock',
+    'options'     => 'published|5|19|d/m/Y|0',
+    'template'    => 'xoopstube_block_new_h.tpl',
+    'can_clone'   => true
+);
+
+$modversion['blocks'][] = array(
+    'file'        => $moduleDirName . '_top.php',
+    'name'        => _MI_XOOPSTUBE_BNAME6,
+    'description' => _MI_XOOPSTUBE_BNAME6_DESC,
+    'show_func'   => 'getRandomVideo',
+    'edit_func'   => 'editTopVideoBlock',
+    'options'     => 'random|5|19|d/m/Y|0',
+    'template'    => 'xoopstube_block_random.tpl',
+    'can_clone'   => true
+);
+
+$modversion['blocks'][] = array(
+    'file'        => $moduleDirName . '_top.php',
+    'name'        => _MI_XOOPSTUBE_BNAME7,
+    'description' => _MI_XOOPSTUBE_BNAME7_DESC,
+    'show_func'   => 'getRandomVideoForHorizontalBlock',
+    'edit_func'   => 'editTopVideoBlock',
+    'options'     => 'randomh|5|19|d/m/Y|0',
+    'template'    => 'xoopstube_block_random_h.tpl',
+    'can_clone'   => true
+);
+
+$modversion['blocks'][] = array(
+    'file'        => $moduleDirName . '_banner.php',
+    'name'        => _MI_XOOPSTUBE_BNAME8,
+    'description' => _MI_XOOPSTUBE_BNAME8_DESC,
+    'show_func'   => 'xtubeShowBannerB',
+    'edit_func'   => 'xtubeEditBannerB',
+    'options'     => 'hits|10|19',
+    'template'    => 'xoopstube_block_banner.tpl',
+    'can_clone'   => true
+);
+
+$modversion['blocks'][] = array(
+    'file'        => $moduleDirName . '_block_tag.php',
+    'name'        => _MI_XOOPSTUBE_BNAME9,
+    'description' => _MI_XOOPSTUBE_BNAME9_DESC,
+    'show_func'   => 'xtubeShowTagBlockCloud',
+    'edit_func'   => 'xtubeEditTagBlockCloud',
+    'options'     => '100|0|150|80',
+    'template'    => 'xoopstube_tag_block_cloud.tpl',
+    'can_clone'   => true
+);
+
+$modversion['blocks'][] = array(
+    'file'        => $moduleDirName . '_block_tag.php',
+    'name'        => _MI_XOOPSTUBE_BNAME10,
+    'description' => _MI_XOOPSTUBE_BNAME10_DESC,
+    'show_func'   => 'xtubeShowTagBlockTop',
+    'edit_func'   => 'xtubeEditTagBlockTop',
+    'options'     => '50|30|c',
+    'template'    => 'xoopstube_tag_block_tag.tpl',
+    'can_clone'   => true
+);
+
+$modversion['blocks'][] = array(
+    'file'        => $moduleDirName . '_top.php',
+    'name'        => _MI_XOOPSTUBE_BNAME11,
+    'description' => _MI_XOOPSTUBE_BNAME11_DESC,
+    'show_func'   => 'getSpotlightVideos',
+    'edit_func'   => 'editTopVideoBlock',
+    'options'     => 'date|3|19',
+    'template'    => 'xoopstube_block_spotlight.tpl',
+    'can_clone'   => true
+);
 
 // This part inserts the selected topics as sub items in the Xoops main menu
-$module_handler = & xoops_gethandler('module');
-$module         = & $module_handler->getByDirname($modversion['dirname']);
-$cansubmit      = 0;
+$moduleHandler = xoops_getHandler('module');
+$module        = $moduleHandler->getByDirname($modversion['dirname']);
+$cansubmit     = 0;
 if (is_object($module)) {
-    global $xoopsUser;
-    $groups        = (is_object($xoopsUser)) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
-    $gperm_handler = & xoops_gethandler('groupperm');
-    if ($gperm_handler->checkRight('XTubeSubPerm', 0, $groups, $module->getVar('mid'))) {
+    $groups       = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
+    $gpermHandler = xoops_getHandler('groupperm');
+    if ($gpermHandler->checkRight('XTubeSubPerm', 0, $groups, $module->getVar('mid'))) {
         $cansubmit = 1;
     }
 }
-if ($cansubmit == 1) {
+if (1 == $cansubmit) {
     $modversion['sub'][0]['name'] = _MI_XOOPSTUBE_SMNAME1;
     $modversion['sub'][0]['url']  = 'submit.php';
 }
@@ -239,175 +275,211 @@ $modversion['comments']['callbackFile']        = 'include/comment_functions.php'
 $modversion['comments']['callback']['approve'] = 'xtubeApproveComment';
 $modversion['comments']['callback']['update']  = 'xtubeUpdateComment';
 
-// Templates
-$i = 0;
-++$i;
-$modversion['templates'][$i]['file']        = $modversion['dirname'] . '_brokenvideo.tpl';
-$modversion['templates'][$i]['description'] = '';
-++$i;
-$modversion['templates'][$i]['file']        = $modversion['dirname'] . '_videoload.tpl';
-$modversion['templates'][$i]['description'] = '';
-++$i;
-$modversion['templates'][$i]['file']        = $modversion['dirname'] . '_index.tpl';
-$modversion['templates'][$i]['description'] = '';
-++$i;
-$modversion['templates'][$i]['file']        = $modversion['dirname'] . '_ratevideo.tpl';
-$modversion['templates'][$i]['description'] = '';
-++$i;
-$modversion['templates'][$i]['file']        = $modversion['dirname'] . '_singlevideo.tpl';
-$modversion['templates'][$i]['description'] = '';
-++$i;
-$modversion['templates'][$i]['file']        = $modversion['dirname'] . '_topten.tpl';
-$modversion['templates'][$i]['description'] = '';
-++$i;
-$modversion['templates'][$i]['file']        = $modversion['dirname'] . '_viewcat.tpl';
-$modversion['templates'][$i]['description'] = '';
-++$i;
-$modversion['templates'][$i]['file']        = $modversion['dirname'] . '_newlistindex.tpl';
-$modversion['templates'][$i]['description'] = '';
-
-++$i;
-$modversion['templates'][$i]['file']        = $modversion['dirname'] . '_common_letterschoice.tpl';
-$modversion['templates'][$i]['description'] = '';
-
-$i = 0;
-
-// Module config setting
-$i = 0;
-++$i;
-$modversion['config'][$i]['name']        = 'popular';
-$modversion['config'][$i]['title']       = '_MI_XOOPSTUBE_POPULAR';
-$modversion['config'][$i]['description'] = '_MI_XOOPSTUBE_POPULARDSC';
-$modversion['config'][$i]['formtype']    = 'select';
-$modversion['config'][$i]['valuetype']   = 'int';
-$modversion['config'][$i]['default']     = 100;
-$modversion['config'][$i]['options']     = array(
-    '5'    => 5,
-    '10'   => 10,
-    '50'   => 50,
-    '100'  => 100,
-    '200'  => 200,
-    '500'  => 500,
-    '1000' => 1000
-);
-++$i;
-$modversion['config'][$i]['name']        = 'displayicons';
-$modversion['config'][$i]['title']       = '_MI_XOOPSTUBE_ICONDISPLAY';
-$modversion['config'][$i]['description'] = '_MI_XOOPSTUBE_DISPLAYICONDSC';
-$modversion['config'][$i]['formtype']    = 'select';
-$modversion['config'][$i]['valuetype']   = 'int';
-$modversion['config'][$i]['default']     = 1;
-$modversion['config'][$i]['options']     = array(
-    '_MI_XOOPSTUBE_DISPLAYICON1' => 1,
-    '_MI_XOOPSTUBE_DISPLAYICON2' => 2,
-    '_MI_XOOPSTUBE_DISPLAYICON3' => 3
-);
-++$i;
-$modversion['config'][$i]['name']        = 'daysnew';
-$modversion['config'][$i]['title']       = '_MI_XOOPSTUBE_DAYSNEW';
-$modversion['config'][$i]['description'] = '_MI_XOOPSTUBE_DAYSNEWDSC';
-$modversion['config'][$i]['formtype']    = 'textbox';
-$modversion['config'][$i]['valuetype']   = 'int';
-$modversion['config'][$i]['default']     = 10;
-++$i;
-$modversion['config'][$i]['name']        = 'daysupdated';
-$modversion['config'][$i]['title']       = '_MI_XOOPSTUBE_DAYSUPDATED';
-$modversion['config'][$i]['description'] = '_MI_XOOPSTUBE_DAYSUPDATEDDSC';
-$modversion['config'][$i]['formtype']    = 'textbox';
-$modversion['config'][$i]['valuetype']   = 'int';
-$modversion['config'][$i]['default']     = 10;
-++$i;
-$modversion['config'][$i]['name']        = 'perpage';
-$modversion['config'][$i]['title']       = '_MI_XOOPSTUBE_PERPAGE';
-$modversion['config'][$i]['description'] = '_MI_XOOPSTUBE_PERPAGEDSC';
-$modversion['config'][$i]['formtype']    = 'select';
-$modversion['config'][$i]['valuetype']   = 'int';
-$modversion['config'][$i]['default']     = 10;
-$modversion['config'][$i]['options']     = array(
-    '5'  => 5,
-    '10' => 10,
-    '15' => 15,
-    '20' => 20,
-    '25' => 25,
-    '30' => 30,
-    '50' => 50
-);
-++$i;
-$modversion['config'][$i]['name']        = 'admin_perpage';
-$modversion['config'][$i]['title']       = '_MI_XOOPSTUBE_ADMINPAGE';
-$modversion['config'][$i]['description'] = '_MI_XOOPSTUBE_AMDMINPAGEDSC';
-$modversion['config'][$i]['formtype']    = 'select';
-$modversion['config'][$i]['valuetype']   = 'int';
-$modversion['config'][$i]['default']     = 10;
-$modversion['config'][$i]['options']     = array(
-    '5'   => 5,
-    '10'  => 10,
-    '15'  => 15,
-    '20'  => 20,
-    '25'  => 25,
-    '30'  => 30,
-    '50'  => 50,
-    '75'  => 75,
-    '100' => 100
-);
-++$i;
-$qa                                      = ' (A)';
-$qd                                      = ' (D)';
-$modversion['config'][$i]['name']        = 'linkxorder';
-$modversion['config'][$i]['title']       = '_MI_XOOPSTUBE_ARTICLESSORT';
-$modversion['config'][$i]['description'] = '_MI_XOOPSTUBE_ARTICLESSORTDSC';
-$modversion['config'][$i]['formtype']    = 'select';
-$modversion['config'][$i]['valuetype']   = 'text';
-$modversion['config'][$i]['default']     = 'title ASC';
-$modversion['config'][$i]['options']     = array(
-    _MI_XOOPSTUBE_TITLE . $qa      => 'title ASC',
-    _MI_XOOPSTUBE_TITLE . $qd      => 'title DESC',
-    _MI_XOOPSTUBE_SUBMITTED2 . $qa => 'published ASC',
-    _MI_XOOPSTUBE_SUBMITTED2 . $qd => 'published DESC',
-    _MI_XOOPSTUBE_RATING . $qa     => 'rating ASC',
-    _MI_XOOPSTUBE_RATING . $qd     => 'rating DESC',
-    _MI_XOOPSTUBE_POPULARITY . $qa => 'hits ASC',
-    _MI_XOOPSTUBE_POPULARITY . $qd => 'hits DESC'
-);
-++$i;
-$modversion['config'][$i]['name']        = 'sortcats';
-$modversion['config'][$i]['title']       = '_MI_XOOPSTUBE_SORTCATS';
-$modversion['config'][$i]['description'] = '_MI_XOOPSTUBE_SORTCATSDSC';
-$modversion['config'][$i]['formtype']    = 'select';
-$modversion['config'][$i]['valuetype']   = 'text';
-$modversion['config'][$i]['default']     = 'title';
-$modversion['config'][$i]['options']     = array(
-    'Weight' => 'weight',
-    'Title'  => 'title'
-);
-++$i;
-$modversion['config'][$i]['name']        = 'subcats';
-$modversion['config'][$i]['title']       = '_MI_XOOPSTUBE_SUBCATS';
-$modversion['config'][$i]['description'] = '_MI_XOOPSTUBE_SUBCATSDSC';
-$modversion['config'][$i]['formtype']    = 'yesno';
-$modversion['config'][$i]['valuetype']   = 'int';
-$modversion['config'][$i]['default']     = 0;
-++$i;
-$modversion['config'][$i]['name']        = 'catcolumns';
-$modversion['config'][$i]['title']       = '_MI_XOOPSTUBE_CATCOLUMNS';
-$modversion['config'][$i]['description'] = '_MI_XOOPSTUBE_CATCOLUMNSDSC';
-$modversion['config'][$i]['formtype']    = 'select';
-$modversion['config'][$i]['valuetype']   = 'int';
-$modversion['config'][$i]['default']     = 2;
-$modversion['config'][$i]['options']     = array(
-    '1' => 1,
-    '2' => 2,
-    '3' => 3,
-    '4' => 4,
-    '5' => 5
+// ------------------- Templates ------------------- //
+$modversion['templates'][] = array(
+    'file'        => $modversion['dirname'] . '_brokenvideo.tpl',
+    'description' => ''
 );
 
-++$i;
+$modversion['templates'][] = array(
+    'file'        => $modversion['dirname'] . '_videoload.tpl',
+    'description' => ''
+);
+
+$modversion['templates'][] = array(
+    'file'        => $modversion['dirname'] . '_index.tpl',
+    'description' => ''
+);
+
+$modversion['templates'][] = array(
+    'file'        => $modversion['dirname'] . '_ratevideo.tpl',
+    'description' => ''
+);
+
+$modversion['templates'][] = array(
+    'file'        => $modversion['dirname'] . '_singlevideo.tpl',
+    'description' => ''
+);
+
+$modversion['templates'][] = array(
+    'file'        => $modversion['dirname'] . '_topten.tpl',
+    'description' => ''
+);
+
+$modversion['templates'][] = array(
+    'file'        => $modversion['dirname'] . '_viewcat.tpl',
+    'description' => ''
+);
+
+$modversion['templates'][] = array(
+    'file'        => $modversion['dirname'] . '_newlistindex.tpl',
+    'description' => ''
+);
+
+$modversion['templates'][] = array(
+    'file'        => $modversion['dirname'] . '_common_letterschoice.tpl',
+    'description' => ''
+);
+
+$modversion['templates'][] = array(
+    'file'        => $modversion['dirname'] . '_co_letterschoice.tpl',
+    'description' => ''
+);
+
+// ------------------- Config ------------------- //
+$modversion['config'][] = array(
+    'name'        => 'popular',
+    'title'       => '_MI_XOOPSTUBE_POPULAR',
+    'description' => '_MI_XOOPSTUBE_POPULARDSC',
+    'formtype'    => 'select',
+    'valuetype'   => 'int',
+    'default'     => 100,
+    'options'     => array(
+        '5'    => 5,
+        '10'   => 10,
+        '50'   => 50,
+        '100'  => 100,
+        '200'  => 200,
+        '500'  => 500,
+        '1000' => 1000
+    )
+);
+
+$modversion['config'][] = array(
+    'name'        => 'displayicons',
+    'title'       => '_MI_XOOPSTUBE_ICONDISPLAY',
+    'description' => '_MI_XOOPSTUBE_DISPLAYICONDSC',
+    'formtype'    => 'select',
+    'valuetype'   => 'int',
+    'default'     => 1,
+    'options'     => array(
+        '_MI_XOOPSTUBE_DISPLAYICON1' => 1,
+        '_MI_XOOPSTUBE_DISPLAYICON2' => 2,
+        '_MI_XOOPSTUBE_DISPLAYICON3' => 3
+    )
+);
+
+$modversion['config'][] = array(
+    'name'        => 'daysnew',
+    'title'       => '_MI_XOOPSTUBE_DAYSNEW',
+    'description' => '_MI_XOOPSTUBE_DAYSNEWDSC',
+    'formtype'    => 'textbox',
+    'valuetype'   => 'int',
+    'default'     => 10
+);
+
+$modversion['config'][] = array(
+    'name'        => 'daysupdated',
+    'title'       => '_MI_XOOPSTUBE_DAYSUPDATED',
+    'description' => '_MI_XOOPSTUBE_DAYSUPDATEDDSC',
+    'formtype'    => 'textbox',
+    'valuetype'   => 'int',
+    'default'     => 10
+);
+
+$modversion['config'][] = array(
+    'name'        => 'perpage',
+    'title'       => '_MI_XOOPSTUBE_PERPAGE',
+    'description' => '_MI_XOOPSTUBE_PERPAGEDSC',
+    'formtype'    => 'select',
+    'valuetype'   => 'int',
+    'default'     => 10,
+    'options'     => array(
+        '5'  => 5,
+        '10' => 10,
+        '15' => 15,
+        '20' => 20,
+        '25' => 25,
+        '30' => 30,
+        '50' => 50
+    )
+);
+
+$modversion['config'][] = array(
+    'name'        => 'admin_perpage',
+    'title'       => '_MI_XOOPSTUBE_ADMINPAGE',
+    'description' => '_MI_XOOPSTUBE_AMDMINPAGEDSC',
+    'formtype'    => 'select',
+    'valuetype'   => 'int',
+    'default'     => 10,
+    'options'     => array(
+        '5'   => 5,
+        '10'  => 10,
+        '15'  => 15,
+        '20'  => 20,
+        '25'  => 25,
+        '30'  => 30,
+        '50'  => 50,
+        '75'  => 75,
+        '100' => 100
+    )
+);
+
+$qa = ' (A)';
+$qd = ' (D)';
+
+$modversion['config'][] = array(
+    'name'        => 'linkxorder',
+    'title'       => '_MI_XOOPSTUBE_ARTICLESSORT',
+    'description' => '_MI_XOOPSTUBE_ARTICLESSORTDSC',
+    'formtype'    => 'select',
+    'valuetype'   => 'text',
+    'default'     => 'title ASC',
+    'options'     => array(
+        _MI_XOOPSTUBE_TITLE . $qa      => 'title ASC',
+        _MI_XOOPSTUBE_TITLE . $qd      => 'title DESC',
+        _MI_XOOPSTUBE_SUBMITTED2 . $qa => 'published ASC',
+        _MI_XOOPSTUBE_SUBMITTED2 . $qd => 'published DESC',
+        _MI_XOOPSTUBE_RATING . $qa     => 'rating ASC',
+        _MI_XOOPSTUBE_RATING . $qd     => 'rating DESC',
+        _MI_XOOPSTUBE_POPULARITY . $qa => 'hits ASC',
+        _MI_XOOPSTUBE_POPULARITY . $qd => 'hits DESC'
+    )
+);
+
+$modversion['config'][] = array(
+    'name'        => 'sortcats',
+    'title'       => '_MI_XOOPSTUBE_SORTCATS',
+    'description' => '_MI_XOOPSTUBE_SORTCATSDSC',
+    'formtype'    => 'select',
+    'valuetype'   => 'text',
+    'default'     => 'title',
+    'options'     => array(
+        'Weight' => 'weight',
+        'Title'  => 'title'
+    )
+);
+
+$modversion['config'][] = array(
+    'name'        => 'subcats',
+    'title'       => '_MI_XOOPSTUBE_SUBCATS',
+    'description' => '_MI_XOOPSTUBE_SUBCATSDSC',
+    'formtype'    => 'yesno',
+    'valuetype'   => 'int',
+    'default'     => 0
+);
+
+$modversion['config'][] = array(
+    'name'        => 'catcolumns',
+    'title'       => '_MI_XOOPSTUBE_CATCOLUMNS',
+    'description' => '_MI_XOOPSTUBE_CATCOLUMNSDSC',
+    'formtype'    => 'select',
+    'valuetype'   => 'int',
+    'default'     => 2,
+    'options'     => array(
+        '1' => 1,
+        '2' => 2,
+        '3' => 3,
+        '4' => 4,
+        '5' => 5
+    )
+);
+
 xoops_load('XoopsEditorHandler');
-$editor_handler = XoopsEditorHandler::getInstance();
-$editorList     = array_flip($editor_handler->getList());
+$editorHandler = XoopsEditorHandler::getInstance();
+$editorList    = array_flip($editorHandler->getList());
 
-$modversion['config'][$i] = array(
+$modversion['config'][] = array(
     'name'        => 'form_options',
     'title'       => '_MI_XOOPSTUBE_EDITOR',
     'description' => '_MI_XOOPSTUBE_EDITORCHOICE',
@@ -417,8 +489,7 @@ $modversion['config'][$i] = array(
     'default'     => 'dhtmltextarea'
 );
 
-++$i;
-$modversion['config'][$i] = array(
+$modversion['config'][] = array(
     'name'        => 'form_optionsuser',
     'title'       => '_MI_XOOPSTUBE_EDITORUSER',
     'description' => '_MI_XOOPSTUBE_EDITORCHOICEUSER',
@@ -427,343 +498,437 @@ $modversion['config'][$i] = array(
     'options'     => $editorList,
     'default'     => 'dhtmltextarea'
 );
-//                                'default'     => 'dhtml');
-//                                'default'     => 'dhtmlext');
 
-++$i;
-$modversion['config'][$i]['name']        = 'screenshot';
-$modversion['config'][$i]['title']       = '_MI_XOOPSTUBE_USESHOTS';
-$modversion['config'][$i]['description'] = '_MI_XOOPSTUBE_USESHOTSDSC';
-$modversion['config'][$i]['formtype']    = 'yesno';
-$modversion['config'][$i]['valuetype']   = 'int';
-$modversion['config'][$i]['default']     = 1;
-++$i;
-$modversion['config'][$i]['name']        = 'usethumbs';
-$modversion['config'][$i]['title']       = '_MI_XOOPSTUBE_USETHUMBS';
-$modversion['config'][$i]['description'] = '_MI_XOOPSTUBE_USETHUMBSDSC';
-$modversion['config'][$i]['formtype']    = 'yesno';
-$modversion['config'][$i]['valuetype']   = 'int';
-$modversion['config'][$i]['default']     = 0;
-++$i;
-$modversion['config'][$i]['name']        = 'updatethumbs';
-$modversion['config'][$i]['title']       = '_MI_XOOPSTUBE_IMGUPDATE';
-$modversion['config'][$i]['description'] = '_MI_XOOPSTUBE_IMGUPDATEDSC';
-$modversion['config'][$i]['formtype']    = 'yesno';
-$modversion['config'][$i]['valuetype']   = 'int';
-$modversion['config'][$i]['default']     = 1;
-++$i;
-$modversion['config'][$i]['name']        = 'shotwidth';
-$modversion['config'][$i]['title']       = '_MI_XOOPSTUBE_SHOTWIDTH';
-$modversion['config'][$i]['description'] = '_MI_XOOPSTUBE_SHOTWIDTHDSC';
-$modversion['config'][$i]['formtype']    = 'textbox';
-$modversion['config'][$i]['valuetype']   = 'int';
-$modversion['config'][$i]['default']     = 120;
-++$i;
-$modversion['config'][$i]['name']        = 'shotheight';
-$modversion['config'][$i]['title']       = '_MI_XOOPSTUBE_SHOTHEIGHT';
-$modversion['config'][$i]['description'] = '_MI_XOOPSTUBE_SHOTHEIGHTDSC';
-$modversion['config'][$i]['formtype']    = 'textbox';
-$modversion['config'][$i]['valuetype']   = 'int';
-$modversion['config'][$i]['default']     = 90;
-++$i;
-$modversion['config'][$i]['name']        = 'maxfilesize';
-$modversion['config'][$i]['title']       = '_MI_XOOPSTUBE_MAXFILESIZE';
-$modversion['config'][$i]['description'] = '_MI_XOOPSTUBE_MAXFILESIZEDSC';
-$modversion['config'][$i]['formtype']    = 'textbox';
-$modversion['config'][$i]['valuetype']   = 'int';
-$modversion['config'][$i]['default']     = 200000;
-++$i;
-$modversion['config'][$i]['name']        = 'maximgwidth';
-$modversion['config'][$i]['title']       = '_MI_XOOPSTUBE_IMGWIDTH';
-$modversion['config'][$i]['description'] = '_MI_XOOPSTUBE_IMGWIDTHDSC';
-$modversion['config'][$i]['formtype']    = 'textbox';
-$modversion['config'][$i]['valuetype']   = 'int';
-$modversion['config'][$i]['default']     = 600;
-++$i;
-$modversion['config'][$i]['name']        = 'maximgheight';
-$modversion['config'][$i]['title']       = '_MI_XOOPSTUBE_IMGHEIGHT';
-$modversion['config'][$i]['description'] = '_MI_XOOPSTUBE_IMGHEIGHTDSC';
-$modversion['config'][$i]['formtype']    = 'textbox';
-$modversion['config'][$i]['valuetype']   = 'int';
-$modversion['config'][$i]['default']     = 600;
+//                                'default'     => 'dhtml'),
+//                                'default'     => 'dhtmlext'),
+
+$modversion['config'][] = array(
+    'name'        => 'screenshot',
+    'title'       => '_MI_XOOPSTUBE_USESHOTS',
+    'description' => '_MI_XOOPSTUBE_USESHOTSDSC',
+    'formtype'    => 'yesno',
+    'valuetype'   => 'int',
+    'default'     => 1
+);
+
+$modversion['config'][] = array(
+    'name'        => 'usethumbs',
+    'title'       => '_MI_XOOPSTUBE_USETHUMBS',
+    'description' => '_MI_XOOPSTUBE_USETHUMBSDSC',
+    'formtype'    => 'yesno',
+    'valuetype'   => 'int',
+    'default'     => 0
+);
+
+$modversion['config'][] = array(
+    'name'        => 'updatethumbs',
+    'title'       => '_MI_XOOPSTUBE_IMGUPDATE',
+    'description' => '_MI_XOOPSTUBE_IMGUPDATEDSC',
+    'formtype'    => 'yesno',
+    'valuetype'   => 'int',
+    'default'     => 1
+);
+
+$modversion['config'][] = array(
+    'name'        => 'shotwidth',
+    'title'       => '_MI_XOOPSTUBE_SHOTWIDTH',
+    'description' => '_MI_XOOPSTUBE_SHOTWIDTHDSC',
+    'formtype'    => 'textbox',
+    'valuetype'   => 'int',
+    'default'     => 120
+);
+
+$modversion['config'][] = array(
+    'name'        => 'shotheight',
+    'title'       => '_MI_XOOPSTUBE_SHOTHEIGHT',
+    'description' => '_MI_XOOPSTUBE_SHOTHEIGHTDSC',
+    'formtype'    => 'textbox',
+    'valuetype'   => 'int',
+    'default'     => 90
+);
+
+$modversion['config'][] = array(
+    'name'        => 'maxfilesize',
+    'title'       => '_MI_XOOPSTUBE_MAXFILESIZE',
+    'description' => '_MI_XOOPSTUBE_MAXFILESIZEDSC',
+    'formtype'    => 'textbox',
+    'valuetype'   => 'int',
+    'default'     => 200000
+);
+
+$modversion['config'][] = array(
+    'name'        => 'maximgwidth',
+    'title'       => '_MI_XOOPSTUBE_IMGWIDTH',
+    'description' => '_MI_XOOPSTUBE_IMGWIDTHDSC',
+    'formtype'    => 'textbox',
+    'valuetype'   => 'int',
+    'default'     => 600
+);
+
+$modversion['config'][] = array(
+    'name'        => 'maximgheight',
+    'title'       => '_MI_XOOPSTUBE_IMGHEIGHT',
+    'description' => '_MI_XOOPSTUBE_IMGHEIGHTDSC',
+    'formtype'    => 'textbox',
+    'valuetype'   => 'int',
+    'default'     => 600
+);
+
+$modversion['config'][] = array(
+    'name'        => 'imagequality',
+    'title'       => '_MI_XOOPSTUBE_QUALITY',
+    'description' => '_MI_XOOPSTUBE_QUALITYDSC',
+    'formtype'    => 'textbox',
+    'valuetype'   => 'int',
+    'default'     => 100
+);
+
+$modversion['config'][] = array(
+    'name'        => 'imageaspect',
+    'title'       => '_MI_XOOPSTUBE_IMAGEASPECT',
+    'description' => '_MI_XOOPSTUBE_IMAGEASPECTDSC',
+    'formtype'    => 'textbox',
+    'valuetype'   => 'int',
+    'default'     => 1
+);
 
 // Directories -----------------------------------------------
-++$i;
-$modversion['config'][$i]['name']        = 'directiories';
-$modversion['config'][$i]['title']       = '_MI_XOOPSTUBE_PREFERENCES_DIRECTIORIES';
-$modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype']    = 'line_break';
-$modversion['config'][$i]['valuetype']   = 'textbox';
-$modversion['config'][$i]['default']     = 'odd';
+$modversion['config'][] = array(
+    'name'        => 'directiories',
+    'title'       => '_MI_XOOPSTUBE_PREFERENCES_DIRECTIORIES',
+    'description' => '',
+    'formtype'    => 'line_break',
+    'valuetype'   => 'textbox',
+    'default'     => 'odd'
+);
 
-++$i;
-$modversion['config'][$i]['name']        = 'dirmode';
-$modversion['config'][$i]['title']       = '_MI_XOOPSTUBE_PREFERENCES_DIRMODE';
-$modversion['config'][$i]['description'] = '_MI_XOOPSTUBE_PREFERENCES_DIRMODE_DESC';
-$modversion['config'][$i]['formtype']    = 'textbox';
-$modversion['config'][$i]['valuetype']   = 'text';
-$modversion['config'][$i]['default']     = '0777';
-++$i;
-$modversion['config'][$i]['name']        = 'mainimagedir';
-$modversion['config'][$i]['title']       = '_MI_XOOPSTUBE_MAINIMGDIR';
-$modversion['config'][$i]['description'] = '_MI_XOOPSTUBE_MAINIMGDIRDSC';
-$modversion['config'][$i]['formtype']    = 'textbox';
-$modversion['config'][$i]['valuetype']   = 'text';
-$modversion['config'][$i]['default']     = 'modules/' . $mydirname . '/assets/images';
-++$i;
-$modversion['config'][$i]['name']        = 'catimage';
-$modversion['config'][$i]['title']       = '_MI_XOOPSTUBE_CATEGORYIMG';
-$modversion['config'][$i]['description'] = '_MI_XOOPSTUBE_CATEGORYIMGDSC';
-$modversion['config'][$i]['formtype']    = 'textbox';
-$modversion['config'][$i]['valuetype']   = 'text';
-//$modversion['config'][$i]['default']     = 'uploads/xt_images/category';
-$modversion['config'][$i]['default'] = 'uploads/xoopstube/category';
-++$i;
-$modversion['config'][$i]['name']        = 'videodir';
-$modversion['config'][$i]['title']       = '_MI_XOOPSTUBE_VIDEODIR';
-$modversion['config'][$i]['description'] = '_MI_XOOPSTUBE_VIDEODIRDSC';
-$modversion['config'][$i]['formtype']    = 'textbox';
-$modversion['config'][$i]['valuetype']   = 'text';
-//$modversion['config'][$i]['default']     = 'uploads/xt_images/videos';
-$modversion['config'][$i]['default'] = 'uploads/xoopstube/videos';
-++$i;
-$modversion['config'][$i]['name']        = 'videoimgdir';
-$modversion['config'][$i]['title']       = '_MI_XOOPSTUBE_VIDEOIMGDIR';
-$modversion['config'][$i]['description'] = '_MI_XOOPSTUBE_VIDEOIMGDIRDSC';
-$modversion['config'][$i]['formtype']    = 'textbox';
-$modversion['config'][$i]['valuetype']   = 'text';
-//$modversion['config'][$i]['default']     = 'uploads/xt_images/screenshots';
-$modversion['config'][$i]['default'] = 'uploads/xoopstube/screenshots';
+$modversion['config'][] = array(
+    'name'        => 'dirmode',
+    'title'       => '_MI_XOOPSTUBE_PREFERENCES_DIRMODE',
+    'description' => '_MI_XOOPSTUBE_PREFERENCES_DIRMODE_DESC',
+    'formtype'    => 'textbox',
+    'valuetype'   => 'text',
+    'default'     => '0777'
+);
+
+$modversion['config'][] = array(
+    'name'        => 'mainimagedir',
+    'title'       => '_MI_XOOPSTUBE_MAINIMGDIR',
+    'description' => '_MI_XOOPSTUBE_MAINIMGDIRDSC',
+    'formtype'    => 'textbox',
+    'valuetype'   => 'text',
+    'default'     => 'modules/' . $moduleDirName . '/assets/images'
+);
+
+$modversion['config'][] = array(
+    'name'        => 'catimage',
+    'title'       => '_MI_XOOPSTUBE_CATEGORYIMG',
+    'description' => '_MI_XOOPSTUBE_CATEGORYIMGDSC',
+    'formtype'    => 'textbox',
+    'valuetype'   => 'text',
+    //'default'  => 'uploads/xt_images/category',
+    'default'     => 'uploads/xoopstube/category'
+);
+
+$modversion['config'][] = array(
+    'name'        => 'videodir',
+    'title'       => '_MI_XOOPSTUBE_VIDEODIR',
+    'description' => '_MI_XOOPSTUBE_VIDEODIRDSC',
+    'formtype'    => 'textbox',
+    'valuetype'   => 'text',
+    //'default'  => 'uploads/xt_images/videos',
+    'default'     => 'uploads/xoopstube/videos'
+);
+
+$modversion['config'][] = array(
+    'name'        => 'videoimgdir',
+    'title'       => '_MI_XOOPSTUBE_VIDEOIMGDIR',
+    'description' => '_MI_XOOPSTUBE_VIDEOIMGDIRDSC',
+    'formtype'    => 'textbox',
+    'valuetype'   => 'text',
+    //'default'  => 'uploads/xt_images/screenshots',
+    'default'     => 'uploads/xoopstube/screenshots'
+);
 
 // Other -------------------------------------------------
-++$i;
-$modversion['config'][$i]['name']        = 'other';
-$modversion['config'][$i]['title']       = '_MI_XOOPSTUBE_PREFERENCES_OTHERS';
-$modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype']    = 'line_break';
-$modversion['config'][$i]['valuetype']   = 'textbox';
-$modversion['config'][$i]['default']     = 'odd';
-
-++$i;
-$modversion['config'][$i]['name']        = 'dateformat';
-$modversion['config'][$i]['title']       = '_MI_XOOPSTUBE_DATEFORMAT';
-$modversion['config'][$i]['description'] = '_MI_XOOPSTUBE_DATEFORMATDSC';
-$modversion['config'][$i]['formtype']    = 'textbox';
-$modversion['config'][$i]['valuetype']   = 'text';
-$modversion['config'][$i]['default']     = 'D, d-M-Y';
-++$i;
-$modversion['config'][$i]['name']        = 'dateformatadmin';
-$modversion['config'][$i]['title']       = '_MI_XOOPSTUBE_DATEFORMATADMIN';
-$modversion['config'][$i]['description'] = '_MI_XOOPSTUBE_DATEFORMATADMINDSC';
-$modversion['config'][$i]['formtype']    = 'textbox';
-$modversion['config'][$i]['valuetype']   = 'text';
-$modversion['config'][$i]['default']     = 'D, d-M-Y - G:i';
-++$i;
-$modversion['config'][$i]['name']        = 'totalchars';
-$modversion['config'][$i]['title']       = '_MI_XOOPSTUBE_TOTALCHARS';
-$modversion['config'][$i]['description'] = '_MI_XOOPSTUBE_TOTALCHARSDSC';
-$modversion['config'][$i]['formtype']    = 'select';
-$modversion['config'][$i]['valuetype']   = 'int';
-$modversion['config'][$i]['default']     = 200;
-$modversion['config'][$i]['options']     = array(
-    '100' => 100,
-    '200' => 200,
-    '300' => 300,
-    '400' => 400,
-    '500' => 500,
-    '750' => 750
+$modversion['config'][] = array(
+    'name'        => 'other',
+    'title'       => '_MI_XOOPSTUBE_PREFERENCES_OTHERS',
+    'description' => '',
+    'formtype'    => 'line_break',
+    'valuetype'   => 'textbox',
+    'default'     => 'odd'
 );
-++$i;
-$modversion['config'][$i]['name']        = 'autoplay';
-$modversion['config'][$i]['title']       = '_MI_XOOPSTUBE_AUTOPLAY';
-$modversion['config'][$i]['description'] = '_MI_XOOPSTUBE_AUTOPLAYDSC';
-$modversion['config'][$i]['formtype']    = 'yesno';
-$modversion['config'][$i]['valuetype']   = 'int';
-$modversion['config'][$i]['default']     = 0;
-++$i;
-$modversion['config'][$i]['name']        = 'othervideos';
-$modversion['config'][$i]['title']       = '_MI_XOOPSTUBE_OTHERVIDEOS';
-$modversion['config'][$i]['description'] = '_MI_XOOPSTUBE_OTHERVIDEOSDSC';
-$modversion['config'][$i]['formtype']    = 'yesno';
-$modversion['config'][$i]['valuetype']   = 'int';
-$modversion['config'][$i]['default']     = 1;
-++$i;
-$modversion['config'][$i]['name']        = 'showsubmitter';
-$modversion['config'][$i]['title']       = '_MI_XOOPSTUBE_SHOWSUBMITTER';
-$modversion['config'][$i]['description'] = '_MI_XOOPSTUBE_SHOWSUBMITTERDSC';
-$modversion['config'][$i]['formtype']    = 'yesno';
-$modversion['config'][$i]['valuetype']   = 'int';
-$modversion['config'][$i]['default']     = 1;
-++$i;
-$modversion['config'][$i]['name']        = 'showsbookmarks';
-$modversion['config'][$i]['title']       = '_MI_XOOPSTUBE_SHOWSBOOKMARKS';
-$modversion['config'][$i]['description'] = '_MI_XOOPSTUBE_SHOWSBOOKMARKSDSC';
-$modversion['config'][$i]['formtype']    = 'yesno';
-$modversion['config'][$i]['valuetype']   = 'int';
-$modversion['config'][$i]['default']     = 1;
-++$i;
-$modversion['config'][$i]['name']        = 'usemetadescr';
-$modversion['config'][$i]['title']       = '_MI_XOOPSTUBE_USEMETADESCR';
-$modversion['config'][$i]['description'] = '_MI_XOOPSTUBE_USEMETADSC';
-$modversion['config'][$i]['formtype']    = 'yesno';
-$modversion['config'][$i]['valuetype']   = 'int';
-$modversion['config'][$i]['default']     = 1;
-++$i;
-$modversion['config'][$i]['name']        = 'usercantag';
-$modversion['config'][$i]['title']       = '_MI_XOOPSTUBE_USERTAGDESCR';
-$modversion['config'][$i]['description'] = '_MI_XOOPSTUBE_USERTAGDSC';
-$modversion['config'][$i]['formtype']    = 'yesno';
-$modversion['config'][$i]['valuetype']   = 'int';
-$modversion['config'][$i]['default']     = 0;
-++$i;
-$modversion['config'][$i]['name']        = 'showrating';
-$modversion['config'][$i]['title']       = '_MI_XOOPSTUBE_RATINGDISPLAY';
-$modversion['config'][$i]['description'] = '_MI_XOOPSTUBE_RATINGDISPLAYDSC';
-$modversion['config'][$i]['formtype']    = 'yesno';
-$modversion['config'][$i]['valuetype']   = 'int';
-$modversion['config'][$i]['default']     = 1;
-++$i;
-$modversion['config'][$i]['name']        = 'showdisclaimer';
-$modversion['config'][$i]['title']       = '_MI_XOOPSTUBE_SHOWDISCLAIMER';
-$modversion['config'][$i]['description'] = '_MI_XOOPSTUBE_SHOWDISCLAIMERDSC';
-$modversion['config'][$i]['formtype']    = 'yesno';
-$modversion['config'][$i]['valuetype']   = 'int';
-$modversion['config'][$i]['default']     = 0;
-++$i;
-$modversion['config'][$i]['name']        = 'disclaimer';
-$modversion['config'][$i]['title']       = '_MI_XOOPSTUBE_DISCLAIMER';
-$modversion['config'][$i]['description'] = '_MI_XOOPSTUBE_DISCLAIMERDSC';
-$modversion['config'][$i]['formtype']    = 'textsarea';
-$modversion['config'][$i]['valuetype']   = 'text';
-$modversion['config'][$i]['default']
-                                         = 'We have the right, but not the obligation to monitor and review submissions submitted by users, to this website. We shall not be responsible for any of the content of these messages. We further reserve the right, to delete, move or edit submissions that we, in its exclusive discretion, deems abusive, defamatory, obscene or in violation of any Copyright or Trademark laws or otherwise objectionable.';
-++$i;
-$modversion['config'][$i]['name']        = 'showvideodisclaimer';
-$modversion['config'][$i]['title']       = '_MI_XOOPSTUBE_SHOWVIDEODISCL';
-$modversion['config'][$i]['description'] = '_MI_XOOPSTUBE_SHOWVIDEODISCLDSC';
-$modversion['config'][$i]['formtype']    = 'yesno';
-$modversion['config'][$i]['valuetype']   = 'int';
-$modversion['config'][$i]['default']     = 0;
-++$i;
-$modversion['config'][$i]['name']        = 'videodisclaimer';
-$modversion['config'][$i]['title']       = '_MI_XOOPSTUBE_VIDEODISCLAIMER';
-$modversion['config'][$i]['description'] = '_MI_XOOPSTUBE_VIDEODISCLAIMERDSC';
-$modversion['config'][$i]['formtype']    = 'textsarea';
-$modversion['config'][$i]['valuetype']   = 'text';
-$modversion['config'][$i]['default']
-                                         = 'The videos on this site are provided as is without warranty either expressed or implied. If you have a question concerning a particular piece video, feel free to contact the administrator of this website.<br /><br />Contact us if you have questions concerning this disclaimer.';
-++$i;
-$modversion['config'][$i]['name']        = 'copyright';
-$modversion['config'][$i]['title']       = '_MI_XOOPSTUBE_COPYRIGHT';
-$modversion['config'][$i]['description'] = '_MI_XOOPSTUBE_COPYRIGHTDSC';
-$modversion['config'][$i]['formtype']    = 'yesno';
-$modversion['config'][$i]['valuetype']   = 'int';
-$modversion['config'][$i]['default']     = 1;
-++$i;
 
-// Notification ------------------------------------------
-$modversion['config'][$i]['name']        = 'notifications';
-$modversion['config'][$i]['title']       = '_MI_XOOPSTUBE_PREFERENCES_COMMENTS';
-$modversion['config'][$i]['description'] = '';
-$modversion['config'][$i]['formtype']    = 'line_break';
-$modversion['config'][$i]['valuetype']   = 'textbox';
-$modversion['config'][$i]['default']     = 'odd';
-++$i;
+$modversion['config'][] = array(
+    'name'        => 'dateformat',
+    'title'       => '_MI_XOOPSTUBE_DATEFORMAT',
+    'description' => '_MI_XOOPSTUBE_DATEFORMATDSC',
+    'formtype'    => 'textbox',
+    'valuetype'   => 'text',
+    'default'     => 'D, d-M-Y'
+);
+
+$modversion['config'][] = array(
+    'name'        => 'dateformatadmin',
+    'title'       => '_MI_XOOPSTUBE_DATEFORMATADMIN',
+    'description' => '_MI_XOOPSTUBE_DATEFORMATADMINDSC',
+    'formtype'    => 'textbox',
+    'valuetype'   => 'text',
+    'default'     => 'D, d-M-Y - G:i'
+);
+
+$modversion['config'][] = array(
+    'name'        => 'totalchars',
+    'title'       => '_MI_XOOPSTUBE_TOTALCHARS',
+    'description' => '_MI_XOOPSTUBE_TOTALCHARSDSC',
+    'formtype'    => 'select',
+    'valuetype'   => 'int',
+    'default'     => 200,
+    'options'     => array(
+        '100' => 100,
+        '200' => 200,
+        '300' => 300,
+        '400' => 400,
+        '500' => 500,
+        '750' => 750
+    )
+);
+$modversion['config'][] = array(
+    'name'        => 'autoplay',
+    'title'       => '_MI_XOOPSTUBE_AUTOPLAY',
+    'description' => '_MI_XOOPSTUBE_AUTOPLAYDSC',
+    'formtype'    => 'yesno',
+    'valuetype'   => 'int',
+    'default'     => 0
+);
+
+$modversion['config'][] = array(
+    'name'        => 'othervideos',
+    'title'       => '_MI_XOOPSTUBE_OTHERVIDEOS',
+    'description' => '_MI_XOOPSTUBE_OTHERVIDEOSDSC',
+    'formtype'    => 'yesno',
+    'valuetype'   => 'int',
+    'default'     => 1
+);
+
+$modversion['config'][] = array(
+    'name'        => 'showsubmitter',
+    'title'       => '_MI_XOOPSTUBE_SHOWSUBMITTER',
+    'description' => '_MI_XOOPSTUBE_SHOWSUBMITTERDSC',
+    'formtype'    => 'yesno',
+    'valuetype'   => 'int',
+    'default'     => 1
+);
+
+$modversion['config'][] = array(
+    'name'        => 'showsbookmarks',
+    'title'       => '_MI_XOOPSTUBE_SHOWSBOOKMARKS',
+    'description' => '_MI_XOOPSTUBE_SHOWSBOOKMARKSDSC',
+    'formtype'    => 'yesno',
+    'valuetype'   => 'int',
+    'default'     => 1
+);
+
+$modversion['config'][] = array(
+    'name'        => 'usemetadescr',
+    'title'       => '_MI_XOOPSTUBE_USEMETADESCR',
+    'description' => '_MI_XOOPSTUBE_USEMETADSC',
+    'formtype'    => 'yesno',
+    'valuetype'   => 'int',
+    'default'     => 1
+);
+
+$modversion['config'][] = array(
+    'name'        => 'usercantag',
+    'title'       => '_MI_XOOPSTUBE_USERTAGDESCR',
+    'description' => '_MI_XOOPSTUBE_USERTAGDSC',
+    'formtype'    => 'yesno',
+    'valuetype'   => 'int',
+    'default'     => 0
+);
+
+$modversion['config'][] = array(
+    'name'        => 'showrating',
+    'title'       => '_MI_XOOPSTUBE_RATINGDISPLAY',
+    'description' => '_MI_XOOPSTUBE_RATINGDISPLAYDSC',
+    'formtype'    => 'yesno',
+    'valuetype'   => 'int',
+    'default'     => 1
+);
+
+$modversion['config'][] = array(
+    'name'        => 'showdisclaimer',
+    'title'       => '_MI_XOOPSTUBE_SHOWDISCLAIMER',
+    'description' => '_MI_XOOPSTUBE_SHOWDISCLAIMERDSC',
+    'formtype'    => 'yesno',
+    'valuetype'   => 'int',
+    'default'     => 0
+);
+
+$modversion['config'][] = array(
+    'name'        => 'disclaimer',
+    'title'       => '_MI_XOOPSTUBE_DISCLAIMER',
+    'description' => '_MI_XOOPSTUBE_DISCLAIMERDSC',
+    'formtype'    => 'textsarea',
+    'valuetype'   => 'text',
+    'default'     => 'We have the right, but not the obligation to monitor and review submissions submitted by users, to this website. We shall not be responsible for any of the content of these messages. We further reserve the right, to delete, move or edit submissions that we, in its exclusive discretion, deems abusive, defamatory, obscene or in violation of any Copyright or Trademark laws or otherwise objectionable.'
+);
+
+$modversion['config'][] = array(
+    'name'        => 'showvideodisclaimer',
+    'title'       => '_MI_XOOPSTUBE_SHOWVIDEODISCL',
+    'description' => '_MI_XOOPSTUBE_SHOWVIDEODISCLDSC',
+    'formtype'    => 'yesno',
+    'valuetype'   => 'int',
+    'default'     => 0
+);
+
+$modversion['config'][] = array(
+    'name'        => 'videodisclaimer',
+    'title'       => '_MI_XOOPSTUBE_VIDEODISCLAIMER',
+    'description' => '_MI_XOOPSTUBE_VIDEODISCLAIMERDSC',
+    'formtype'    => 'textsarea',
+    'valuetype'   => 'text',
+    'default'     => 'The videos on this site are provided as is without warranty either expressed or implied. If you have a question concerning a particular piece video, feel free to contact the administrator of this website.<br><br>Contact us if you have questions concerning this disclaimer.'
+);
+
+$modversion['config'][] = array(
+    'name'        => 'copyright',
+    'title'       => '_MI_XOOPSTUBE_COPYRIGHT',
+    'description' => '_MI_XOOPSTUBE_COPYRIGHTDSC',
+    'formtype'    => 'yesno',
+    'valuetype'   => 'int',
+    'default'     => 1
+);
+
+// ------------------- Notification ------------------- //
+$modversion['config'][] = array(
+    'name'        => 'notifications',
+    'title'       => '_MI_XOOPSTUBE_PREFERENCES_COMMENTS',
+    'description' => '',
+    'formtype'    => 'line_break',
+    'valuetype'   => 'textbox',
+    'default'     => 'odd'
+);
+
 $modversion['hasNotification']             = 1;
 $modversion['notification']['lookup_file'] = 'include/notification.inc.php';
 $modversion['notification']['lookup_func'] = 'xtubeNotifyIteminfo';
 
-$modversion['notification']['category'][1]['name']           = 'global';
-$modversion['notification']['category'][1]['title']          = _MI_XOOPSTUBE_GLOBAL_NOTIFY;
-$modversion['notification']['category'][1]['description']    = _MI_XOOPSTUBE_GLOBAL_NOTIFYDSC;
-$modversion['notification']['category'][1]['subscribe_from'] = array('index.php', 'viewcat.php', 'singlevideo.php');
+$modversion['notification']['category'][] = array(
+    'name'           => 'global',
+    'title'          => _MI_XOOPSTUBE_GLOBAL_NOTIFY,
+    'description'    => _MI_XOOPSTUBE_GLOBAL_NOTIFYDSC,
+    'subscribe_from' => array('index.php', 'viewcat.php', 'singlevideo.php')
+);
 
-$modversion['notification']['category'][2]['name']           = 'category';
-$modversion['notification']['category'][2]['title']          = _MI_XOOPSTUBE_CATEGORY_NOTIFY;
-$modversion['notification']['category'][2]['description']    = _MI_XOOPSTUBE_CATEGORY_NOTIFYDSC;
-$modversion['notification']['category'][2]['subscribe_from'] = array('viewcat.php', 'singlevideo.php');
-$modversion['notification']['category'][2]['item_name']      = 'cid';
-$modversion['notification']['category'][2]['allow_bookmark'] = 1;
+$modversion['notification']['category'][] = array(
+    'name'           => 'category',
+    'title'          => _MI_XOOPSTUBE_CATEGORY_NOTIFY,
+    'description'    => _MI_XOOPSTUBE_CATEGORY_NOTIFYDSC,
+    'subscribe_from' => array('viewcat.php', 'singlevideo.php'),
+    'item_name'      => 'cid',
+    'allow_bookmark' => 1
+);
 
-$modversion['notification']['category'][3]['name']           = 'video';
-$modversion['notification']['category'][3]['title']          = _MI_XOOPSTUBE_VIDEO_NOTIFY;
-$modversion['notification']['category'][3]['description']    = _MI_XOOPSTUBE_FILE_NOTIFYDSC;
-$modversion['notification']['category'][3]['subscribe_from'] = 'singlevideo.php';
-$modversion['notification']['category'][3]['item_name']      = 'lid';
-$modversion['notification']['category'][3]['allow_bookmark'] = 1;
+$modversion['notification']['category'][] = array(
+    'name'           => 'video',
+    'title'          => _MI_XOOPSTUBE_VIDEO_NOTIFY,
+    'description'    => _MI_XOOPSTUBE_FILE_NOTIFYDSC,
+    'subscribe_from' => 'singlevideo.php',
+    'item_name'      => 'lid',
+    'allow_bookmark' => 1
+);
 
-$modversion['notification']['event'][1]['name']          = 'new_category';
-$modversion['notification']['event'][1]['category']      = 'global';
-$modversion['notification']['event'][1]['title']         = _MI_XOOPSTUBE_GLOBAL_NEWCATEGORY_NOTIFY;
-$modversion['notification']['event'][1]['caption']       = _MI_XOOPSTUBE_GLOBAL_NEWCATEGORY_NOTIFYCAP;
-$modversion['notification']['event'][1]['description']   = _MI_XOOPSTUBE_GLOBAL_NEWCATEGORY_NOTIFYDSC;
-$modversion['notification']['event'][1]['mail_template'] = 'global_newcategory_notify';
-$modversion['notification']['event'][1]['mail_subject']  = _MI_XOOPSTUBE_GLOBAL_NEWCATEGORY_NOTIFYSBJ;
+$modversion['notification']['event'][] = array(
+    'name'          => 'new_category',
+    'category'      => 'global',
+    'title'         => _MI_XOOPSTUBE_GLOBAL_NEWCATEGORY_NOTIFY,
+    'caption'       => _MI_XOOPSTUBE_GLOBAL_NEWCATEGORY_NOTIFYCAP,
+    'description'   => _MI_XOOPSTUBE_GLOBAL_NEWCATEGORY_NOTIFYDSC,
+    'mail_template' => 'global_newcategory_notify',
+    'mail_subject'  => _MI_XOOPSTUBE_GLOBAL_NEWCATEGORY_NOTIFYSBJ
+);
 
-$modversion['notification']['event'][2]['name']          = 'video_modify';
-$modversion['notification']['event'][2]['category']      = 'global';
-$modversion['notification']['event'][2]['admin_only']    = 1;
-$modversion['notification']['event'][2]['title']         = _MI_XOOPSTUBE_GLOBAL_VIDEOMODIFY_NOTIFY;
-$modversion['notification']['event'][2]['caption']       = _MI_XOOPSTUBE_GLOBAL_VIDEOMODIFY_NOTIFYCAP;
-$modversion['notification']['event'][2]['description']   = _MI_XOOPSTUBE_GLOBAL_VIDEOMODIFY_NOTIFYDSC;
-$modversion['notification']['event'][2]['mail_template'] = 'global_videomodify_notify';
-$modversion['notification']['event'][2]['mail_subject']  = _MI_XOOPSTUBE_GLOBAL_VIDEOMODIFY_NOTIFYSBJ;
+$modversion['notification']['event'][] = array(
+    'name'           => 'video_modify',
+    'category'       => 'global',
+    'admin_only'     => 1,
+    'title'          => _MI_XOOPSTUBE_GLOBAL_VIDEOMODIFY_NOTIFY,
+    'caption'        => _MI_XOOPSTUBE_GLOBAL_VIDEOMODIFY_NOTIFYCAP,
+    'description'    => _MI_XOOPSTUBE_GLOBAL_VIDEOMODIFY_NOTIFYDSC,
+    'mail_template'  => 'global_videomodify_notify',
+    'mail_subject] ' => _MI_XOOPSTUBE_GLOBAL_VIDEOMODIFY_NOTIFYSBJ
+);
 
-$modversion['notification']['event'][3]['name']          = 'video_broken';
-$modversion['notification']['event'][3]['category']      = 'global';
-$modversion['notification']['event'][3]['admin_only']    = 1;
-$modversion['notification']['event'][3]['title']         = _MI_XOOPSTUBE_GLOBAL_VIDEOBROKEN_NOTIFY;
-$modversion['notification']['event'][3]['caption']       = _MI_XOOPSTUBE_GLOBAL_VIDEOBROKEN_NOTIFYCAP;
-$modversion['notification']['event'][3]['description']   = _MI_XOOPSTUBE_GLOBAL_VIDEOBROKEN_NOTIFYDSC;
-$modversion['notification']['event'][3]['mail_template'] = 'global_videobroken_notify';
-$modversion['notification']['event'][3]['mail_subject']  = _MI_XOOPSTUBE_GLOBAL_VIDEOBROKEN_NOTIFYSBJ;
+$modversion['notification']['event'][] = array(
+    'name'          => 'video_broken',
+    'category'      => 'global',
+    'admin_only'    => 1,
+    'title'         => _MI_XOOPSTUBE_GLOBAL_VIDEOBROKEN_NOTIFY,
+    'caption'       => _MI_XOOPSTUBE_GLOBAL_VIDEOBROKEN_NOTIFYCAP,
+    'description'   => _MI_XOOPSTUBE_GLOBAL_VIDEOBROKEN_NOTIFYDSC,
+    'mail_template' => 'global_videobroken_notify',
+    'mail_subject'  => _MI_XOOPSTUBE_GLOBAL_VIDEOBROKEN_NOTIFYSBJ
+);
 
-$modversion['notification']['event'][4]['name']          = 'video_submit';
-$modversion['notification']['event'][4]['category']      = 'global';
-$modversion['notification']['event'][4]['admin_only']    = 1;
-$modversion['notification']['event'][4]['title']         = _MI_XOOPSTUBE_GLOBAL_VIDEOSUBMIT_NOTIFY;
-$modversion['notification']['event'][4]['caption']       = _MI_XOOPSTUBE_GLOBAL_VIDEOSUBMIT_NOTIFYCAP;
-$modversion['notification']['event'][4]['description']   = _MI_XOOPSTUBE_GLOBAL_VIDEOSUBMIT_NOTIFYDSC;
-$modversion['notification']['event'][4]['mail_template'] = 'global_videosubmit_notify';
-$modversion['notification']['event'][4]['mail_subject']  = _MI_XOOPSTUBE_GLOBAL_VIDEOSUBMIT_NOTIFYSBJ;
+$modversion['notification']['event'][] = array(
+    'name'          => 'video_submit',
+    'category'      => 'global',
+    'admin_only'    => 1,
+    'title'         => _MI_XOOPSTUBE_GLOBAL_VIDEOSUBMIT_NOTIFY,
+    'caption'       => _MI_XOOPSTUBE_GLOBAL_VIDEOSUBMIT_NOTIFYCAP,
+    'description'   => _MI_XOOPSTUBE_GLOBAL_VIDEOSUBMIT_NOTIFYDSC,
+    'mail_template' => 'global_videosubmit_notify',
+    'mail_subject'  => _MI_XOOPSTUBE_GLOBAL_VIDEOSUBMIT_NOTIFYSBJ
+);
 
-$modversion['notification']['event'][5]['name']          = 'new_video';
-$modversion['notification']['event'][5]['category']      = 'global';
-$modversion['notification']['event'][5]['title']         = _MI_XOOPSTUBE_GLOBAL_NEWVIDEO_NOTIFY;
-$modversion['notification']['event'][5]['caption']       = _MI_XOOPSTUBE_GLOBAL_NEWVIDEO_NOTIFYCAP;
-$modversion['notification']['event'][5]['description']   = _MI_XOOPSTUBE_GLOBAL_NEWVIDEO_NOTIFYDSC;
-$modversion['notification']['event'][5]['mail_template'] = 'global_newfile_notify';
-$modversion['notification']['event'][5]['mail_subject']  = _MI_XOOPSTUBE_GLOBAL_NEWVIDEO_NOTIFYSBJ;
+$modversion['notification']['event'][] = array(
+    'name'          => 'new_video',
+    'category'      => 'global',
+    'title'         => _MI_XOOPSTUBE_GLOBAL_NEWVIDEO_NOTIFY,
+    'caption'       => _MI_XOOPSTUBE_GLOBAL_NEWVIDEO_NOTIFYCAP,
+    'description'   => _MI_XOOPSTUBE_GLOBAL_NEWVIDEO_NOTIFYDSC,
+    'mail_template' => 'global_newfile_notify',
+    'mail_subject'  => _MI_XOOPSTUBE_GLOBAL_NEWVIDEO_NOTIFYSBJ
+);
 
-$modversion['notification']['event'][6]['name']          = 'video_submit';
-$modversion['notification']['event'][6]['category']      = 'category';
-$modversion['notification']['event'][6]['admin_only']    = 1;
-$modversion['notification']['event'][6]['title']         = _MI_XOOPSTUBE_CATEGORY_FILESUBMIT_NOTIFY;
-$modversion['notification']['event'][6]['caption']       = _MI_XOOPSTUBE_CATEGORY_FILESUBMIT_NOTIFYCAP;
-$modversion['notification']['event'][6]['description']   = _MI_XOOPSTUBE_CATEGORY_FILESUBMIT_NOTIFYDSC;
-$modversion['notification']['event'][6]['mail_template'] = 'category_videosubmit_notify';
-$modversion['notification']['event'][6]['mail_subject']  = _MI_XOOPSTUBE_CATEGORY_FILESUBMIT_NOTIFYSBJ;
+$modversion['notification']['event'][] = array(
+    'name'          => 'video_submit',
+    'category'      => 'category',
+    'admin_only'    => 1,
+    'title'         => _MI_XOOPSTUBE_CATEGORY_FILESUBMIT_NOTIFY,
+    'caption'       => _MI_XOOPSTUBE_CATEGORY_FILESUBMIT_NOTIFYCAP,
+    'description'   => _MI_XOOPSTUBE_CATEGORY_FILESUBMIT_NOTIFYDSC,
+    'mail_template' => 'category_videosubmit_notify',
+    'mail_subject'  => _MI_XOOPSTUBE_CATEGORY_FILESUBMIT_NOTIFYSBJ
+);
 
-$modversion['notification']['event'][7]['name']          = 'new_video';
-$modversion['notification']['event'][7]['category']      = 'category';
-$modversion['notification']['event'][7]['title']         = _MI_XOOPSTUBE_CATEGORY_NEWVIDEO_NOTIFY;
-$modversion['notification']['event'][7]['caption']       = _MI_XOOPSTUBE_CATEGORY_NEWVIDEO_NOTIFYCAP;
-$modversion['notification']['event'][7]['description']   = _MI_XOOPSTUBE_CATEGORY_NEWVIDEO_NOTIFYDSC;
-$modversion['notification']['event'][7]['mail_template'] = 'category_newfile_notify';
-$modversion['notification']['event'][7]['mail_subject']  = _MI_XOOPSTUBE_CATEGORY_NEWVIDEO_NOTIFYSBJ;
+$modversion['notification']['event'][] = array(
+    'name'          => 'new_video',
+    'category'      => 'category',
+    'title'         => _MI_XOOPSTUBE_CATEGORY_NEWVIDEO_NOTIFY,
+    'caption'       => _MI_XOOPSTUBE_CATEGORY_NEWVIDEO_NOTIFYCAP,
+    'description'   => _MI_XOOPSTUBE_CATEGORY_NEWVIDEO_NOTIFYDSC,
+    'mail_template' => 'category_newfile_notify',
+    'mail_subject'  => _MI_XOOPSTUBE_CATEGORY_NEWVIDEO_NOTIFYSBJ
+);
 
-$modversion['notification']['event'][8]['name']          = 'approve';
-$modversion['notification']['event'][8]['category']      = 'video';
-$modversion['notification']['event'][8]['invisible']     = 1;
-$modversion['notification']['event'][8]['title']         = _MI_XOOPSTUBE_VIDEO_APPROVE_NOTIFY;
-$modversion['notification']['event'][8]['caption']       = _MI_XOOPSTUBE_VIDEO_APPROVE_NOTIFYCAP;
-$modversion['notification']['event'][8]['description']   = _MI_XOOPSTUBE_VIDEO_APPROVE_NOTIFYDSC;
-$modversion['notification']['event'][8]['mail_template'] = 'video_approve_notify';
-$modversion['notification']['event'][8]['mail_subject']  = _MI_XOOPSTUBE_VIDEO_APPROVE_NOTIFYSBJ;
-
+$modversion['notification']['event'][] = array(
+    'name'          => 'approve',
+    'category'      => 'video',
+    'invisible'     => 1,
+    'title'         => _MI_XOOPSTUBE_VIDEO_APPROVE_NOTIFY,
+    'caption'       => _MI_XOOPSTUBE_VIDEO_APPROVE_NOTIFYCAP,
+    'description'   => _MI_XOOPSTUBE_VIDEO_APPROVE_NOTIFYDSC,
+    'mail_template' => 'video_approve_notify',
+    'mail_subject'  => _MI_XOOPSTUBE_VIDEO_APPROVE_NOTIFYSBJ
+);
 // On Update
 //if (!empty($_POST['fct']) && !empty($_POST['op']) && $_POST['fct'] == 'modulesadmin' && $_POST['op'] == 'update_ok'
 //    && $_POST['dirname'] == $modversion['dirname']
 //) {
 //    include __DIR__ . '/include/onupdate.inc.php';
 //}
+

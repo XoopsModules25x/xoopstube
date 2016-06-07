@@ -11,19 +11,16 @@
  * @category        Module
  * @package         Xoopstube
  * @author          XOOPS Development Team
- * @copyright       2001-2013 The XOOPS Project
+ * @copyright       2001-2016 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @version         $Id$
- * @link            http://sourceforge.net/projects/xoops/
+ * @link            http://xoops.org/
  * @since           1.0.6
  */
 
 include_once __DIR__ . '/admin_header.php';
 
-global $xoopsModuleConfig;
-
-$op  = xtubeCleanRequestVars($_REQUEST, 'op', '');
-$lid = xtubeCleanRequestVars($_REQUEST, 'lid', 0);
+$op  = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', '', 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'op', '');
+$lid = XoopsRequest::getInt('lid', XoopsRequest::getInt('lid', 0, 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'lid', 0);
 
 /**
  * @param        $xt
@@ -40,14 +37,14 @@ function makeTreeCheckTable($xt, $itemid, $title, $checks, $order = '')
     echo '<form name="altcat" method="post" action="' . xoops_getenv('PHP_SELF') . '">';
     echo '<table width="100%" callspacing="1" class="outer">';
     $sql = 'SELECT ' . $xt->id . ', ' . $title . ' FROM ' . $xt->table . ' WHERE ' . $xt->pid . '=0' . ' ORDER BY ' . $title;
-    if ($order != '') {
+    if ($order !== '') {
         $sql .= ' ORDER BY ' . $order;
     }
     $result = $xt->db->query($sql);
 
-    while (list($cid, $name) = $xt->db->fetchRow($result)) {
-        $checked  = array_key_exists($cid, $checks) ? "checked='checked'" : "";
-        $disabled = ($cid == intval($_GET['cid'])) ? "disabled='yes'" : "";
+    while (false !== (list($cid, $name) = $xt->db->fetchRow($result))) {
+        $checked  = array_key_exists($cid, $checks) ? "checked='checked'" : '';
+        $disabled = ($cid == XoopsRequest::getInt('cid', 0, 'GET')) ? "disabled='yes'" : '';
         $level    = 1;
         echo '
         <tr style="text-align: left;">
@@ -60,10 +57,10 @@ function makeTreeCheckTable($xt, $itemid, $title, $checks, $order = '')
         foreach ($arr as $cat) {
             $cat['prefix'] = str_replace('.', '-', $cat['prefix']);
             $catpath       = '&nbsp;' . $cat['prefix'] . '&nbsp;' . $xtubemyts->htmlSpecialCharsStrip($cat[$title]);
-            $checked       = array_key_exists($cat['cid'], $checks) ? "checked='checked'" : "";
-            $disabled      = ($cat['cid'] == intval($_GET['cid'])) ? "disabled='yes'" : "";
+            $checked       = array_key_exists($cat['cid'], $checks) ? "checked='checked'" : '';
+            $disabled      = ($cat['cid'] == XoopsRequest::getInt('cid', 0, 'GET')) ? "disabled='yes'" : '';
             $level         = substr_count($cat['prefix'], '-') + 1;
-//          echo "<tr><td>" . $catpath . "<input type='checkbox' name='cid-" . $cat['cid'] . "' value='0' " . $checked . " " . $disabled . "/></td></tr>\n";
+            //          echo "<tr><td>" . $catpath . "<input type='checkbox' name='cid-" . $cat['cid'] . "' value='0' " . $checked . " " . $disabled . "/></td></tr>\n";
             echo '
         <tr style="text-align: left;">
          <td width="30%" class="even">' . $catpath . '</td>
@@ -72,7 +69,6 @@ function makeTreeCheckTable($xt, $itemid, $title, $checks, $order = '')
          </td>
         </tr>';
         }
-
     }
     echo '<tr>
            <td width="30%"></td>
@@ -88,8 +84,8 @@ function makeTreeCheckTable($xt, $itemid, $title, $checks, $order = '')
 switch (strtolower($op)) {
     case 'save':
         // first delete all alternate categories for this topic
-        $sql = 'DELETE FROM ' . $xoopsDB->prefix('xoopstube_altcat') . ' WHERE lid=' . $lid;
-        if (!$result = $xoopsDB->query($sql)) {
+        $sql = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_altcat') . ' WHERE lid=' . $lid;
+        if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
             XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
             return false;
@@ -97,10 +93,9 @@ switch (strtolower($op)) {
 
         $k = array_keys($_REQUEST);
         foreach ($k as $sid) {
-            if (preg_match("/cid-([0-9]*)/", $sid, $cid)) {
-                $sql
-                    = 'INSERT INTO ' . $xoopsDB->prefix('xoopstube_altcat') . '(cid, lid) VALUES("' . $cid[1] . '","' . $lid . '")';
-                if (!$result = $xoopsDB->query($sql)) {
+            if (preg_match('/cid-(\d*)/', $sid, $cid)) {
+                $sql = 'INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('xoopstube_altcat') . '(cid, lid) VALUES("' . $cid[1] . '","' . $lid . '")';
+                if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
                     XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
                     return false;
@@ -120,14 +115,12 @@ switch (strtolower($op)) {
 
         echo '<div style="text-align: left;"><h3> ' . $_REQUEST['title'] . ' </h3></div>';
         // Get an array of all alternate categories for this topic
-        $sql     = $xoopsDB->query(
-            'SELECT cid FROM ' . $xoopsDB->prefix('xoopstube_altcat') . ' WHERE lid="' . $lid . '" ORDER BY lid'
-        );
+        $sql     = $GLOBALS['xoopsDB']->query('SELECT cid FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_altcat') . ' WHERE lid="' . $lid . '" ORDER BY lid');
         $altcats = array();
-        while ($altcat = $xoopsDB->fetchArray($sql)) {
+        while (false !== ($altcat = $GLOBALS['xoopsDB']->fetchArray($sql))) {
             $altcats[$altcat['cid']] = true;
         }
-        $mytree = new XoopstubeTree($xoopsDB->prefix('xoopstube_cat'), 'cid', 'pid');
+        $mytree = new XoopstubeTree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
         makeTreeCheckTable($mytree, $lid, 'title', $altcats);
         xoops_cp_footer();
 }

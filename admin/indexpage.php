@@ -11,47 +11,44 @@
  * @category        Module
  * @package         Xoopstube
  * @author          XOOPS Development Team
- * @copyright       2001-2013 The XOOPS Project
+ * @copyright       2001-2016 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @version         $Id$
- * @link            http://sourceforge.net/projects/xoops/
+ * @link            http://xoops.org/
  * @since           1.0.6
  */
 
 include_once __DIR__ . '/admin_header.php';
 
-global $xoopsModuleConfig;
+//xoopstubeUtilities::prepareFolder(XOOPSTUBE_UPLOAD_PATH);
+//xoopstubeUtilities::prepareFolder(XOOPSTUBE_ATTACHED_FILES_PATH);
+//xoopstubeUtilities::prepareFolder(XOOPSTUBE_PICTURES_PATH);
+//xoopstubeUtilities::prepareFolder(XOOPSTUBE_CSV_PATH);
+//xoopstubeUtilities::prepareFolder(XOOPSTUBE_CACHE_PATH);
+//xoopstubeUtilities::prepareFolder(XOOPSTUBE_TEXT_PATH);
 
-xoopstubeUtilities::prepareFolder(XOOPSTUBE_UPLOAD_PATH);
-xoopstubeUtilities::prepareFolder(XOOPSTUBE_ATTACHED_FILES_PATH);
-xoopstubeUtilities::prepareFolder(XOOPSTUBE_PICTURES_PATH);
-xoopstubeUtilities::prepareFolder(XOOPSTUBE_CSV_PATH);
-xoopstubeUtilities::prepareFolder(XOOPSTUBE_CACHE_PATH);
-xoopstubeUtilities::prepareFolder(XOOPSTUBE_TEXT_PATH);
-
-$op = xtubeCleanRequestVars($_REQUEST, 'op', '');
+$op = $op = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', '', 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'op', '');
 //$cid = xtubeCleanRequestVars( $_REQUEST, 'cid', 0 );
 
 switch (strtolower($op)) {
     case 'save':
-        $indexheading     = $xtubemyts->addslashes(xoops_trim($_REQUEST['indexheading']));
-        $indexheader      = $xtubemyts->addslashes(xoops_trim($_REQUEST['indexheader']));
-        $indexfooter      = $xtubemyts->addslashes(xoops_trim($_REQUEST['indexfooter']));
-        $indeximage       = $xtubemyts->addslashes($_REQUEST['indeximage']);
-        $nohtml           = isset($_REQUEST['nohtml']) ? 1 : 0;
-        $nosmiley         = isset($_REQUEST['nosmiley']) ? 1 : 0;
-        $noxcodes         = isset($_REQUEST['noxcodes']) ? 1 : 0;
-        $noimages         = isset($_REQUEST['noimages']) ? 1 : 0;
-        $nobreak          = isset($_REQUEST['nobreak']) ? 1 : 0;
-        $indexheaderalign = $xtubemyts->addslashes($_REQUEST['indexheaderalign']);
-        $indexfooteralign = $xtubemyts->addslashes($_REQUEST['indexfooteralign']);
-        $lastvideosyn     = $_REQUEST['lastvideosyn'];
-        $lastvideostotal  = $xtubemyts->addslashes($_REQUEST['lastvideostotal']);
-        $sql              = "UPDATE " . $xoopsDB->prefix(
-                'xoopstube_indexpage'
-            )
-            . " SET indexheading='$indexheading', indexheader='$indexheader', indexfooter='$indexfooter', indeximage='$indeximage', indexheaderalign='$indexheaderalign', indexfooteralign='$indexfooteralign', nohtml='$nohtml', nosmiley='$nosmiley', noxcodes='$noxcodes', noimages='$noimages', nobreak='$nobreak', lastvideosyn='$lastvideosyn', lastvideostotal='$lastvideostotal'";
-        if (!$result = $xoopsDB->query($sql)) {
+        $indexheading = XoopsRequest::getString('indexheading', '', 'POST'); //$xtubemyts->addslashes(xoops_trim($_REQUEST['indexheading']));
+        $indexheader  = XoopsRequest::getText('indexheader', '', 'POST'); //$xtubemyts->addslashes(xoops_trim($_REQUEST['indexheader']));
+        $indexfooter  = XoopsRequest::getText('indexfooter', '', 'POST'); //$xtubemyts->addslashes(xoops_trim($_REQUEST['indexfooter']));
+        $indeximage   = XoopsRequest::getString('indeximage', '', 'POST'); //$xtubemyts->addslashes($_REQUEST['indeximage']);
+
+        $nohtml   = XoopsRequest::getInt('nohtml', 0, 'POST'); //isset($_REQUEST['nohtml']) ? 1 : 0;
+        $nosmiley = XoopsRequest::getInt('nosmiley', 0, 'POST'); //isset($_REQUEST['nosmiley']) ? 1 : 0;
+        $noxcodes = XoopsRequest::getInt('noxcodes', 0, 'POST'); //isset($_REQUEST['noxcodes']) ? 1 : 0;
+        $noimages = XoopsRequest::getInt('noimages', 0, 'POST'); //isset($_REQUEST['noimages']) ? 1 : 0;
+        $nobreak  = XoopsRequest::getInt('nobreak', 0, 'POST'); //isset($_REQUEST['nobreak']) ? 1 : 0;
+
+        $indexheaderalign = XoopsRequest::getString('indexheaderalign', '', 'POST'); //$xtubemyts->addslashes($_REQUEST['indexheaderalign']);
+        $indexfooteralign = XoopsRequest::getString('indexfooteralign', '', 'POST'); //$xtubemyts->addslashes($_REQUEST['indexfooteralign']);
+        $lastvideosyn     = XoopsRequest::getInt('lastvideosyn', 0, 'POST'); //$_REQUEST['lastvideosyn'];
+        $lastvideostotal  = XoopsRequest::getString('lastvideostotal', '', 'POST'); //$xtubemyts->addslashes($_REQUEST['lastvideostotal']);
+        $sql              = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('xoopstube_indexpage')
+                            . " SET indexheading='$indexheading', indexheader='$indexheader', indexfooter='$indexfooter', indeximage='$indeximage', indexheaderalign='$indexheaderalign', indexfooteralign='$indexfooteralign', nohtml='$nohtml', nosmiley='$nosmiley', noxcodes='$noxcodes', noimages='$noimages', nobreak='$nobreak', lastvideosyn='$lastvideosyn', lastvideostotal='$lastvideostotal'";
+        if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
             XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
             return false;
@@ -60,66 +57,49 @@ switch (strtolower($op)) {
         break;
 
     default:
-        $sql
-            = 'SELECT indeximage, indexheading, indexheader, indexfooter, nohtml, nosmiley, noxcodes, noimages, nobreak, indexheaderalign, indexfooteralign, lastvideosyn, lastvideostotal FROM '
-            . $xoopsDB->prefix(
-                'xoopstube_indexpage'
-            );
-        if (!$result = $xoopsDB->query($sql)) {
+        $sql = 'SELECT indeximage, indexheading, indexheader, indexfooter, nohtml, nosmiley, noxcodes, noimages, nobreak, indexheaderalign, indexfooteralign, lastvideosyn, lastvideostotal FROM '
+               . $GLOBALS['xoopsDB']->prefix('xoopstube_indexpage');
+        if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
             XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
             return false;
         }
-        list($indeximage, $indexheading, $indexheader, $indexfooter, $nohtml, $nosmiley, $noxcodes, $noimages, $nobreak, $indexheaderalign, $indexfooteralign, $lastvideosyn, $lastvideostotal)
-            = $xoopsDB->fetchrow(
-            $result
-        );
+        list($indeximage, $indexheading, $indexheader, $indexfooter, $nohtml, $nosmiley, $noxcodes, $noimages, $nobreak, $indexheaderalign, $indexfooteralign, $lastvideosyn, $lastvideostotal) =
+            $GLOBALS['xoopsDB']->fetchrow($result);
 
         xoops_cp_header();
         //xtubeRenderAdminMenu( _AM_XOOPSTUBE_INDEXPAGE );
         $aboutAdmin = new ModuleAdmin();
-        echo $aboutAdmin->addNavigation('indexpage.php');
+        echo $aboutAdmin->addNavigation(basename(__FILE__));
 
         echo '
          <fieldset style="border: #e8e8e8 1px solid;">
          <legend style="display: inline; font-weight: bold; color: #0A3760;">' . _AM_XOOPSTUBE_IPAGE_INFORMATION . '</legend>
          <div style="padding: 8px;">
-         <img src="' . XOOPS_URL . '/modules/' . $mydirname . '/assets/images/icon/indexpage.png" alt="" style="float: left; padding-right: 10px;" />
+         <img src="' . XOOPS_URL . '/modules/' . $moduleDirName . '/assets/images/icon/indexpage.png" alt="" style="float: left; padding-right: 10px;" />
          ' . _AM_XOOPSTUBE_MINDEX_PAGEINFOTXT . '</div>
-         </fieldset><br />';
+         </fieldset><br>';
 
         $sform = new XoopsThemeForm(_AM_XOOPSTUBE_IPAGE_MODIFY, 'op', xoops_getenv('PHP_SELF'));
         $sform->addElement(new XoopsFormText(_AM_XOOPSTUBE_IPAGE_CTITLE, 'indexheading', 60, 60, $indexheading), false);
-        $graph_array       = & XoopstubeLists :: getListTypeAsArray(
-            XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['mainimagedir'],
-            $type = 'images'
-        );
-        $indeximage_select = new XoopsFormSelect('', 'indeximage', $indeximage);
-        $indeximage_select->addOptionArray($graph_array);
-        $indeximage_select->setExtra(
-            "onchange='showImgSelected(\"image\", \"indeximage\", \"" . $xoopsModuleConfig['mainimagedir'] . "\", \"\", \"" . XOOPS_URL . "\")'"
-        );
+        $graph_array      = &XoopstubeLists:: getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $GLOBALS['xoopsModuleConfig']['mainimagedir'], $type = 'images');
+        $indexImageSelect = new XoopsFormSelect('', 'indeximage', $indeximage);
+        $indexImageSelect->addOptionArray($graph_array);
+        $indexImageSelect->setExtra("onchange='showImgSelected(\"image\", \"indeximage\", \"" . $GLOBALS['xoopsModuleConfig']['mainimagedir'] . "\", \"\", \"" . XOOPS_URL . "\")'");
         $indeximage_tray = new XoopsFormElementTray(_AM_XOOPSTUBE_IPAGE_CIMAGE, '&nbsp;');
-        $indeximage_tray->addElement($indeximage_select);
+        $indeximage_tray->addElement($indexImageSelect);
         if (!empty($indeximage)) {
-            $indeximage_tray->addElement(
-                new XoopsFormLabel(
-                    '', '<br /><br /><img src="' . XOOPS_URL . '/' . $xoopsModuleConfig['mainimagedir'] . '/' . $indeximage . '" name="image" id="image" alt="" />'
-                )
-            );
+            $indeximage_tray->addElement(new XoopsFormLabel('', '<br><br><img src="' . XOOPS_URL . '/' . $GLOBALS['xoopsModuleConfig']['mainimagedir'] . '/' . $indeximage
+                                                                . '" name="image" id="image" alt="" />'));
         } else {
-            $indeximage_tray->addElement(
-                new XoopsFormLabel(
-                    '', '<br /><br /><img src="' . XOOPS_URL . '/uploads/blank.gif" name="image" id="image" alt="" />'
-                )
-            );
+            $indeximage_tray->addElement(new XoopsFormLabel('', '<br><br><img src="' . XOOPS_URL . '/uploads/blank.gif" name="image" id="image" alt="" />'));
         }
         $sform->addElement($indeximage_tray);
 
-//        $editor = xtube_getWysiwygForm(_AM_XOOPSTUBE_IPAGE_CHEADING, 'indexheader', $indexheader, 15, 60, '');
-//        $sform->addElement($editor, false);
+        //        $editor = xtube_getWysiwygForm(_AM_XOOPSTUBE_IPAGE_CHEADING, 'indexheader', $indexheader, 15, 60, '');
+        //        $sform->addElement($editor, false);
 
-        $optionsTrayNote = new XoopsFormElementTray(_AM_XOOPSTUBE_IPAGE_CHEADING, '<br />');
+        $optionsTrayNote = new XoopsFormElementTray(_AM_XOOPSTUBE_IPAGE_CHEADING, '<br>');
         if (class_exists('XoopsFormEditor')) {
             $options['name']   = 'indexheader';
             $options['value']  = $indexheader;
@@ -127,41 +107,32 @@ switch (strtolower($op)) {
             $options['cols']   = '100%';
             $options['width']  = '100%';
             $options['height'] = '200px';
-            $editor            = new XoopsFormEditor('', $xoopsModuleConfig['form_optionsuser'], $options, $nohtml = false, $onfailure = 'textarea');
+            $editor            = new XoopsFormEditor('', $GLOBALS['xoopsModuleConfig']['form_optionsuser'], $options, $nohtml = false, $onfailure = 'textarea');
             $optionsTrayNote->addElement($editor);
         } else {
-            $editor = new XoopsFormDhtmlTextArea(
-                '', 'indexheader', $item->getVar(
-                    'indexheader',
-                    'e'
-                ), '100%', '100%'
-            );
+            $editor = new XoopsFormDhtmlTextArea('', 'indexheader', $item->getVar('indexheader', 'e'), '100%', '100%');
             $optionsTrayNote->addElement($editor);
         }
 
         $sform->addElement($optionsTrayNote, false);
 
         $headeralign_select = new XoopsFormSelect(_AM_XOOPSTUBE_IPAGE_CHEADINGA, 'indexheaderalign', $indexheaderalign);
-        $headeralign_select->addOptionArray(
-            array(
-                'left'   => _AM_XOOPSTUBE_IPAGE_CLEFT,
-                'right'  => _AM_XOOPSTUBE_IPAGE_CRIGHT,
-                'center' => _AM_XOOPSTUBE_IPAGE_CCENTER
-            )
-        );
+        $headeralign_select->addOptionArray(array(
+                                                'left'   => _AM_XOOPSTUBE_IPAGE_CLEFT,
+                                                'right'  => _AM_XOOPSTUBE_IPAGE_CRIGHT,
+                                                'center' => _AM_XOOPSTUBE_IPAGE_CCENTER
+                                            ));
         $sform->addElement($headeralign_select);
         $sform->addElement(new XoopsFormTextArea(_AM_XOOPSTUBE_IPAGE_CFOOTER, 'indexfooter', $indexfooter, 10, 60));
         $footeralign_select = new XoopsFormSelect(_AM_XOOPSTUBE_IPAGE_CFOOTERA, 'indexfooteralign', $indexfooteralign);
-        $footeralign_select->addOptionArray(
-            array(
-                'left'   => _AM_XOOPSTUBE_IPAGE_CLEFT,
-                'right'  => _AM_XOOPSTUBE_IPAGE_CRIGHT,
-                'center' => _AM_XOOPSTUBE_IPAGE_CCENTER
-            )
-        );
+        $footeralign_select->addOptionArray(array(
+                                                'left'   => _AM_XOOPSTUBE_IPAGE_CLEFT,
+                                                'right'  => _AM_XOOPSTUBE_IPAGE_CRIGHT,
+                                                'center' => _AM_XOOPSTUBE_IPAGE_CCENTER
+                                            ));
         $sform->addElement($footeralign_select);
 
-        $options_tray = new XoopsFormElementTray(_AM_XOOPSTUBE_TEXTOPTIONS, '<br />');
+        $options_tray = new XoopsFormElementTray(_AM_XOOPSTUBE_TEXTOPTIONS, '<br>');
         //html option
         $html_checkbox = new XoopsFormCheckBox('', 'nohtml', $nohtml);
         $html_checkbox->addOption(1, _AM_XOOPSTUBE_DISABLEHTML);
@@ -184,16 +155,10 @@ switch (strtolower($op)) {
         $options_tray->addElement($breaks_checkbox);
         $sform->addElement($options_tray);
 
-        $sform->addElement(
-            new XoopsFormRadioYN(
-                _AM_XOOPSTUBE_IPAGE_SHOWLATEST, 'lastvideosyn', $lastvideosyn, ' ' . _YES . '', ' ' . _NO . ''
-            )
-        );
+        $sform->addElement(new XoopsFormRadioYN(_AM_XOOPSTUBE_IPAGE_SHOWLATEST, 'lastvideosyn', $lastvideosyn, ' ' . _YES . '', ' ' . _NO . ''));
 
         $lastvideostotalform = new XoopsFormText(_AM_XOOPSTUBE_IPAGE_LATESTTOTAL, 'lastvideostotal', 2, 2, $lastvideostotal);
-        $lastvideostotalform->setDescription(
-            '<span style="font-size: small;">' . _AM_XOOPSTUBE_IPAGE_LATESTTOTAL_DSC . '</span>'
-        );
+        $lastvideostotalform->setDescription('<span style="font-size: small;">' . _AM_XOOPSTUBE_IPAGE_LATESTTOTAL_DSC . '</span>');
         $sform->addElement($lastvideostotalform, false);
 
         $button_tray = new XoopsFormElementTray('', '');

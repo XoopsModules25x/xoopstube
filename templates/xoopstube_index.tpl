@@ -1,6 +1,6 @@
 <link rel="stylesheet" type="text/css" href="<{$smarty.const.xoopstube_url}>/assets/css/xtubestyle.css"/>
 <{if $catarray.imageheader != ""}>
-    <br/>
+    <br>
     <div class="xoopstube_header"><{$catarray.imageheader}></div>
 <{/if}>
 <{if $catarray.indexheading != ""}>
@@ -23,14 +23,14 @@
             </td>
             <td width="35%" style="text-align: left; vertical-align: middle;">
                 <a href="<{$xoops_url}>/modules/<{$module_dir}>/viewcat.php?cid=<{$category.id}>"
-                   style="font-weight: bold;"><{$category.title}></a>&nbsp;(<{$category.totalvideos}>)<br/>
+                   style="font-weight: bold;"><{$category.title}></a>&nbsp;(<{$category.totalvideos}>)<br>
                 <{if $category.subcategories}>
                     <div style="margin-bottom: 3px; margin-left: 16px; font-size: smaller; vertical-align: top;">
                         <{$category.subcategories}>
                     </div>
                 <{/if}>
             </td>
-            <{if $category.count is div by $cat_columns}>
+            <{if $category.count % $cat_columns == 0}>
         </tr>
         <tr><{/if}> <{/foreach}>
             <!-- End category loop -->
@@ -54,13 +54,13 @@
 <div style="padding-bottom: 12px;text-align: <{$catarray.indexfooteralign}>;"><{$catarray.indexfooter}></div>
 
 <{if $showlatest}>
-    <br/>
-    <br/>
+    <br>
+    <br>
     <div class="odd" style="font-size: larger; font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_LATESTLIST}></div>
-    <br/>
+    <br>
     <{if $pagenav}>
         <div><{$pagenav}></div>
-        <br/>
+        <br>
     <{/if}>
     <table width="100%" cellspacing="0" cellpadding="10" border="0">
         <tr>
@@ -78,4 +78,4 @@
     <{/if}>
 <{/if}>
 
-<{include file="db:system_notification_select.html"}>
+<{include file="db:system_notification_select.tpl"}>

@@ -1,4 +1,22 @@
 =========================================================
+1.07 Beta 1                       NOT RELEASED
+=========================================================
+
+- conversion to XoopsRequest (mamba)
+- PSR-2 adjustments (mamba)
+- replaced intval() with (int) (mamba)
+- XOOPS 2.5.8, PHP 7 adjustments (mamba)
+- moved functions to Utilities class (mamba)
+- addNavigation(basename(__FILE__)) (mamba)
+- removed @version (mamba)
+- replaced <b /> with <b> (mamba)
+- Unnecessary double quotes (mamba)
+- reference mismatch (mamba)
+- partial conversion to $GLOBALS (mamba)
+
+TODO: Needs code cleanup
+
+=========================================================
 1.06 RC 2                       NOT RELEASED
 =========================================================
 
@@ -12,17 +30,17 @@
 - renamed template extensions from .html to .tpl (mamba)
 
 =========================================================
-2013-06-16  1.06 RC 1
+1.06 RC 1                               2013-06-16
 =========================================================
 
-- removed social bookmarks for: simpy, spurl, wink (cesag/mamba)
-- English corrections (cesag/mamba)
+- removed social bookmarks for: simpy, spurl, wink (cesagonchu/mamba)
+- English corrections (cesagonchu/mamba)
 - fixed bug with with "expired" icon (mamba)
 - fixed bug with approving submitted video (mamba)
 - added toggle for online/offline status (mamba)
 
 =========================================================
-2013-06-16  1.06 Beta 2
+1.06 Beta 2                             2013-06-16
 =========================================================
 
 - removed redundant PHP Closing tags (mamba)
@@ -34,20 +52,20 @@
 - added directory check for directories for images/videos
 
 =========================================================
-2013-01-02  1.06 Beta1
+1.06 Beta1                                  2013-01-02
 =========================================================
 
 - Added: option to hide name of the submitter (mamba)
 
 =========================================================
-2013-01-02  1.051 RC1
+1.051 RC1                                   2013-01-02
 =========================================================
 
 - fixed: videos from private groups visible (alain01/mamba)
 - added: option for internal video (alain01/Nikita)
 
 =========================================================
-2012-12-19  1.05 Final
+1.05 Final                                  2012-12-19
 =========================================================
 
 - Final Release
@@ -55,13 +73,13 @@
 
 
 =========================================================
-2012-04-25  1.05 RC1
+1.05 RC1                                    2012-04-25
 =========================================================
 
 - added spotlight blocks (Mariane)
 
 =========================================================
-2012-04-25  1.05 Beta 1
+1.05 Beta 1                                 2012-04-25
 =========================================================
 
 - converted to XOOPS 2.5.x Admin GUI (mamba)
@@ -71,14 +89,14 @@
 - other small code adjustments (mamba)
 
 =========================================================
-08.03.2008   1.03.1 Final
+1.03.1 Final                                08.03.2008
 =========================================================
 - Fixed XSS vulnerability [Vaughan/McDonald]
 - Fixed bug in sub-cat listing
 - Fixed bug in page nav of Recent Videos
 
 =========================================================
-26.02.2008   1.03
+1.03                                        26.02.2008
 =========================================================
 - Fixed bug in sql-file
 - Fixed bug in WYSIWYG editors (FCKEditor)
@@ -91,7 +109,7 @@
 - Updated English & Dutch langfiles
 
 =========================================================
-21.02.2008   1.02
+1.02                                        21.02.2008
 =========================================================
 - Added Spanish language files [debianus]
 - Added German language files [wuddel]
@@ -103,7 +121,7 @@
 - Minor improvements in subcat listing template
 
 =========================================================
-23.01.2008   1.01 Final
+1.01 Final                                  23.01.2008
 =========================================================
 - Fixed case sensitivity of search function
 - Removed footer.php
@@ -113,7 +131,7 @@
 - Added Facebook to Social Bookmarks
 
 =========================================================
-07.01.2008   1.0.1 RC8
+1.0.1 RC8                                   07.01.2008
 =========================================================
 - Added support for Tag module (http://xoopsforge.com)
 - Added sort options above categories
@@ -126,13 +144,13 @@
 - Removed width/height from category icons in templates
 
 =========================================================
-02.12.2007   1.0.1 RC7
+1.0.1 RC7                                   02.12.2007
 =========================================================
 - Fixed bug Publisher name replaced after approving by admin
 - Changed 'Other Videos Of' to 'No Other Videos Of' when only 1 video submitted
 
 =========================================================
-01.12.2007   1.0.1 RC7
+1.0.1 RC7                                   01.12.2007
 =========================================================
 - Fixed submit button brokenvideo for non-english languages
 - Solved problem title+date not displayed in horizontal blocks
@@ -147,13 +165,13 @@
 - Shrunk legend icons
 
 =========================================================
-23.11.2007   1.0.1 RC6
+1.0.1 RC6                                   23.11.2007
 =========================================================
 - Fixed bug in RSSFit plugin
 - Hit-counter not updating for admins (when logged in)
 
 =========================================================
-22.11.2007   1.0.1 RC6
+1.0.1 RC6                                   22.11.2007
 =========================================================
 - Fixed bug in notifications
 - Fixed bug in sorting alternative categories (admin)
@@ -162,17 +180,17 @@
 - Added generation of meta description 'on-the-fly' (experimental)
 
 =========================================================
-18.11.2007   1.0.1 RC5
+1.0.1 RC5                                   18.11.2007
 =========================================================
 - Added plugin for RSSFit module from Brandycoke Productions (http://www.brandycoke.com)
 
 =========================================================
-09.11.2007   1.0.1 RC5
+1.0.1 RC5                                   09.11.2007
 =========================================================
 - Minor fix for sorting categories option
 
 =========================================================
-07.11.2007   1.0.1 RC5
+1.0.1 RC5                                   07.11.2007
 =========================================================
 - Added option in Prefs to sort cats by title or weight
 - Removed Inbetween from WYSIWYG editors list
@@ -183,7 +201,7 @@
 - Added missing language constants for config options
 
 =========================================================
-29.10.2007   1.0.1 RC4
+1.0.1 RC4                                   29.10.2007
 =========================================================
 - Added option in Prefs to turn on/off Social Bookmarks
 - Added option in Prefs to turn on/off 'Other videos by'
@@ -191,7 +209,7 @@
 - Amount of characters of description in category view can be set
 
 =========================================================
-22.10.2007   1.0.1 RC3
+1.0.1 RC3                                   22.10.2007
 =========================================================
 - Copyright notice shows name publisher instead of title
 - Added 'Latest' to main menu
@@ -201,14 +219,14 @@
 - Added plugin for GIJOE's Sitemap module (http://xoops.peak.ne.jp/)
 
 =========================================================
-05.10.2007   1.0.1 RC3
+1.0.1 RC3                                   05.10.2007
 =========================================================
 - Fixed bug causing blank page when selecting Permissions
 - Small modifications of alternative categories
 - Modified sql file for better compatibility
 
 =========================================================
-04.10.2007   1.0.1 RC3
+1.0.1 RC3                                   04.10.2007
 =========================================================
 - Fixed bug total videos of sub cats not showing
 - Added horizontal block
@@ -216,14 +234,14 @@
 - Comment option not visible when disabled in Preferences
 
 =========================================================
-11.09.2007   1.0.1 RC2
+1.0.1 RC2                                   11.09.2007
 =========================================================
 - Added social bookmarks
 - Modified template Popular
 - Fixed bug editing broken video
 
 =========================================================
-07.09.2007   1.0.1 RC1
+1.0.1 RC1                                   07.09.2007
 =========================================================
 - Fixed bug in submit form
 - Simplified Preferences
@@ -232,6 +250,6 @@
 - Removed some files
 
 =========================================================
-01.09.2007   1.00 RC
+1.00 RC                                     01.09.2007
 =========================================================
 Added plugin for GIJOE's Waiting module (http://xoops.peak.ne.jp/)

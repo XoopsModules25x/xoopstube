@@ -44,19 +44,19 @@
                             <img src="http://sjl-static4.sjl.youtube.com/vi/<{$video.description}>/2.jpg" alt=""
                                  align="absmiddle"/>&nbsp;<{$video.description}>
                         </div>
-                        <div><span style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_DESCRIPTIONC}></span><br/>
+                        <div><span style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_DESCRIPTIONC}></span><br>
                             <{$video.description}>
                         </div>
-                        <br/>
+                        <br>
 
                         <div align="justify"><span
-                                    style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_DESCRIPTIONC}></span><br/>
+                                    style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_DESCRIPTIONC}></span><br>
                             <{$video.description}>
                         </div>
                     </td>
                     <td width="35%">
                         <div class="outer style2"
-                             style="margin-left: 10px; margin-right: 10px; padding: 4px; background-color:#E6E6E6; border-color:#999999;">
+                             style="margin-left: 10px; margin-right: 10px; padding: 4px; background-color:#e6e6e6; border-color:#999999;">
                             <!-- <div><span style="font-size: small;"><{$video.urlrating|wordwrap:50:"\n":true}></span></div> -->
                             <div>
                                 <span style="font-size: small;"><{$video.hits|wordwrap:50:"\n":true}></span>
@@ -66,7 +66,7 @@
                                 <img src="<{$video.country}>" alt="<{$video.countryname}>" align="middle"/></a></div>
 
                         </div>
-                        <br/>
+                        <br>
 
                         <div style="margin-left: 10px; margin-right: 10px; padding: 4px;" class="outer">
                             <span style="font-size: small;">
@@ -101,4 +101,4 @@
                 </tr>
             </table>
     </tr>
-</table><br/>
+</table><br>

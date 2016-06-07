@@ -1,12 +1,12 @@
 <link rel="stylesheet" type="text/css" href="<{$smarty.const.xoopstube_url}>/assets/css/xtubestyle.css"/>
 <{if $catarray.imageheader != ""}>
-    <br/>
+    <br>
     <div align="center"><{$catarray.imageheader}></div>
-    <br/>
+    <br>
 <{/if}>
-<div><{$description}></div><br/>
+<div><{$description}></div><br>
 <div style="padding-bottom: 12px; text-align: center;" class="itemPermaLink"><{$catarray.letters}></div>
-<div class="even" style="font-size: smaller; font-weight: bold;"><{$category_path}></div><br/>
+<div class="even" style="font-size: smaller; font-weight: bold;"><{$category_path}></div><br>
 <{if $subcategories}>
     <fieldset>
         <legend class="xoopstube_legend"><{$smarty.const._MD_XOOPSTUBE_SUBCATLISTING}></legend>
@@ -17,12 +17,12 @@
                     <td>
                         <a href="viewcat.php?cid=<{$subcat.id}>"><img src="<{$subcat.image}>" title="<{$subcat.alttext}>"
                                                                       alt="<{$subcat.alttext}>" align="middle"/></a>
-                        <a href="viewcat.php?cid=<{$subcat.id}>"><{$subcat.title}></a>&nbsp;(<{$subcat.totalvideos}>)<br/>
+                        <a href="viewcat.php?cid=<{$subcat.id}>"><{$subcat.title}></a>&nbsp;(<{$subcat.totalvideos}>)<br>
                         <{if $subcat.infercategories}>
                             &nbsp;&nbsp;<{$subcat.infercategories}>
                         <{/if}>
                     </td>
-                    <{if $subcat.count is div by $cat_columns}>
+                    <{if $subcat.count % $cat_columns == 0}>
                 </tr>
                 <tr>
                     <{/if}>
@@ -31,7 +31,7 @@
             </table>
         </div>
     </fieldset>
-    <br/>
+    <br>
 <{/if}>
 
 <{if $show_videos == true}>
@@ -63,15 +63,15 @@
         <a href="viewcat.php?cid=<{$category_id}>&amp;orderby=hitsD">
             <img src="<{xoModuleIcons16 down.png}>" align="middle" alt=""/></a>
         )
-        <br/>
-        <span style="font-weight: bold;"><{$lang_cursortedby}></span><br/><br/>
+        <br>
+        <span style="font-weight: bold;"><{$lang_cursortedby}></span><br><br>
     </div>
-    <br/>
+    <br>
 <{/if}>
 
 <{if $page_nav == true}>
     <div style="text-align: left;"><{$pagenav}></div>
-    <br/>
+    <br>
 <{/if}>
 
 <div>
@@ -87,7 +87,7 @@
 
 <{if $moderate == true}>
     <div style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_MODERATOR_OPTIONS}></div>
-    <br/>
+    <br>
     <div>
         <!-- Start link loop -->
         <{section name=a loop=$mod_arr}>
@@ -96,4 +96,4 @@
         <!-- End link loop -->
     </div>
 <{/if}>
-<{include file="db:system_notification_select.html"}>
+<{include file="db:system_notification_select.tpl"}>

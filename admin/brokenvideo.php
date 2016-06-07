@@ -11,48 +11,46 @@
  * @category        Module
  * @package         Xoopstube
  * @author          XOOPS Development Team
- * @copyright       2001-2013 The XOOPS Project
+ * @copyright       2001-2016 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @version         $Id$
- * @link            http://sourceforge.net/projects/xoops/
+ * @link            http://xoops.org/
  * @since           1.0.6
  */
 
 include_once __DIR__ . '/admin_header.php';
 
-global $xtubeImageArray, $xoopsModule, $xoopsDB;
+global $xtubeImageArray, $xoopsModule;
 
-$op  = xtubeCleanRequestVars($_REQUEST, 'op', '');
-$lid = xtubeCleanRequestVars($_REQUEST, 'lid', 0);
-$lid = intval($lid);
+$op  = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', '', 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'op', '');
+$lid = XoopsRequest::getInt('lid', XoopsRequest::getInt('lid', 0, 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'lid', 0);
 
 switch (strtolower($op)) {
     case 'updatenotice':
-        $ack         = xtubeCleanRequestVars($_REQUEST, 'ack', 0);
-        $con         = xtubeCleanRequestVars($_REQUEST, 'con', 1);
+        $ack         = XoopsRequest::getInt('ack', 0); //xtubeCleanRequestVars($_REQUEST, 'ack', 0);
+        $con         = XoopsRequest::getInt('con', 1); //xtubeCleanRequestVars($_REQUEST, 'con', 1);
         $update_mess = '';
 
         if ($ack && !$con) {
-            $acknowledged = ($ack == 0) ? 1 : 0;
-            $sql          = 'UPDATE ' . $xoopsDB->prefix('xoopstube_broken') . ' SET acknowledged=' . $acknowledged;
-            if ($acknowledged == 0) {
+            $acknowledged = (0 == $ack) ? 1 : 0;
+            $sql          = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('xoopstube_broken') . ' SET acknowledged=' . $acknowledged;
+            if (0 == $acknowledged) {
                 $sql .= ', confirmed=0 ';
             }
             $sql .= ' WHERE lid=' . $lid;
-            if (!$result = $xoopsDB->queryF($sql)) {
+            if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
                 XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
                 return false;
             }
             $update_mess = _AM_XOOPSTUBE_BROKEN_NOWACK;
         } elseif (!$ack && !$con) {
-            $acknowledged = ($ack == 0) ? 1 : 0;
-            $sql          = 'UPDATE ' . $xoopsDB->prefix('xoopstube_broken') . ' SET acknowledged=' . $acknowledged;
-            if ($acknowledged == 0) {
+            $acknowledged = (0 == $ack) ? 1 : 0;
+            $sql          = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('xoopstube_broken') . ' SET acknowledged=' . $acknowledged;
+            if (0 == $acknowledged) {
                 $sql .= ', confirmed=0 ';
             }
             $sql .= ' WHERE lid=' . $lid;
-            if (!$result = $xoopsDB->queryF($sql)) {
+            if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
                 XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
                 return false;
@@ -62,26 +60,26 @@ switch (strtolower($op)) {
         }
 
         if ($con) {
-            $confirmed = ($con == 0) ? 1 : 0;
-            $sql       = 'UPDATE ' . $xoopsDB->prefix('xoopstube_broken') . ' SET confirmed=' . $confirmed;
-            if ($confirmed == 1) {
+            $confirmed = (0 == $con) ? 1 : 0;
+            $sql       = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('xoopstube_broken') . ' SET confirmed=' . $confirmed;
+            if (1 == $confirmed) {
                 $sql .= ', acknowledged=' . $confirmed;
             }
             $sql .= ' WHERE lid=' . $lid;
-            if (!$result = $xoopsDB->queryF($sql)) {
+            if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
                 XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
                 return false;
             }
             $update_mess = _AM_XOOPSTUBE_BROKEN_NOWCON;
         } elseif (!$con) {
-            $confirmed = ($con == 0) ? 1 : 0;
-            $sql       = 'UPDATE ' . $xoopsDB->prefix('xoopstube_broken') . ' SET confirmed=' . $confirmed;
-            if ($confirmed == 1) {
+            $confirmed = (0 == $con) ? 1 : 0;
+            $sql       = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('xoopstube_broken') . ' SET confirmed=' . $confirmed;
+            if (1 == $confirmed) {
                 $sql .= ', acknowledged=' . $confirmed;
             }
             $sql .= ' WHERE lid=' . $lid;
-            if (!$result = $xoopsDB->queryF($sql)) {
+            if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
                 XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
                 return false;
@@ -92,27 +90,25 @@ switch (strtolower($op)) {
         break;
 
     case 'delbrokenvideos':
-        $xoopsDB->queryF('DELETE FROM ' . $xoopsDB->prefix('xoopstube_broken') . ' WHERE lid=' . $lid);
-        $xoopsDB->queryF('DELETE FROM ' . $xoopsDB->prefix('xoopstube_videos') . ' WHERE lid=' . $lid);
-        $xoopsDB->queryF('DELETE FROM ' . $xoopsDB->prefix('xoopstube_votedata') . ' WHERE lid=' . $lid);
+        $GLOBALS['xoopsDB']->queryF('DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_broken') . ' WHERE lid=' . $lid);
+        $GLOBALS['xoopsDB']->queryF('DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE lid=' . $lid);
+        $GLOBALS['xoopsDB']->queryF('DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_votedata') . ' WHERE lid=' . $lid);
         redirect_header('brokenvideo.php?op=default', 1, _AM_XOOPSTUBE_BROKENFILEDELETED);
-        exit();
+
         break;
 
     case 'ignorebrokenvideos':
-        $xoopsDB->queryF('DELETE FROM ' . $xoopsDB->prefix('xoopstube_broken') . ' WHERE lid=' . $lid);
+        $GLOBALS['xoopsDB']->queryF('DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_broken') . ' WHERE lid=' . $lid);
         redirect_header('brokenvideo.php?op=default', 1, _AM_XOOPSTUBE_BROKEN_FILEIGNORED);
         break;
 
     default:
-        $result            = $xoopsDB->query(
-            'SELECT * FROM ' . $xoopsDB->prefix('xoopstube_broken') . ' ORDER BY reportid'
-        );
-        $totalbrokenvideos = $xoopsDB->getRowsNum($result);
+        $result            = $GLOBALS['xoopsDB']->query('SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_broken') . ' ORDER BY reportid');
+        $totalbrokenvideos = $GLOBALS['xoopsDB']->getRowsNum($result);
 
         xoops_cp_header();
         $aboutAdmin = new ModuleAdmin();
-        echo $aboutAdmin->addNavigation('brokenvideo.php');
+        echo $aboutAdmin->addNavigation(basename(__FILE__));
 
         echo '
         <fieldset style="border: #E8E8E8 1px solid;">
@@ -139,61 +135,47 @@ switch (strtolower($op)) {
         echo '<th style="text-align: center;">' . _AM_XOOPSTUBE_BROKEN_ACTION . '</th>';
         echo '</tr>';
 
-        if ($totalbrokenvideos == 0) {
+        if (0 == $totalbrokenvideos) {
             echo '<tr style="text-align: center;"><td style="text-align: center;" class="head" colspan="8">' . _AM_XOOPSTUBE_BROKEN_NOFILEMATCH . '</td></tr>';
         } else {
-            while (list($reportid, $lid, $sender, $ip, $date, $confirmed, $acknowledged) = $xoopsDB->fetchRow(
-                $result
-            )) {
-                $result2 = $xoopsDB->query(
-                    'SELECT cid, title, vidid, submitter FROM ' . $xoopsDB->prefix('xoopstube_videos') . ' WHERE lid=' . $lid
-                );
-                list($cid, $videoshowname, $vidid, $submitter) = $xoopsDB->fetchRow($result2);
+            while (false !== (list($reportid, $lid, $sender, $ip, $date, $confirmed, $acknowledged) = $GLOBALS['xoopsDB']->fetchRow($result))) {
+                $result2 = $GLOBALS['xoopsDB']->query('SELECT cid, title, vidid, submitter FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE lid=' . $lid);
+                list($cid, $videoshowname, $vidid, $submitter) = $GLOBALS['xoopsDB']->fetchRow($result2);
                 $email      = '';
                 $sendername = '';
 
-                if ($sender != 0) {
-                    $result3 = $xoopsDB->query(
-                        'SELECT uname, email FROM ' . $xoopsDB->prefix('users') . ' WHERE uid=' . $sender
-                    );
-                    list($sendername, $email) = $xoopsDB->fetchRow($result3);
+                if ($sender !== 0) {
+                    $result3 = $GLOBALS['xoopsDB']->query('SELECT uname, email FROM ' . $GLOBALS['xoopsDB']->prefix('users') . ' WHERE uid=' . $sender);
+                    list($sendername, $email) = $GLOBALS['xoopsDB']->fetchRow($result3);
                 }
-                $result4 = $xoopsDB->query(
-                    'SELECT uname, email FROM ' . $xoopsDB->prefix('users') . '  WHERE uid=' . $sender
-                );
-                list($ownername, $owneremail) = $xoopsDB->fetchRow($result4);
+                $result4 = $GLOBALS['xoopsDB']->query('SELECT uname, email FROM ' . $GLOBALS['xoopsDB']->prefix('users') . '  WHERE uid=' . $sender);
+                list($ownername, $owneremail) = $GLOBALS['xoopsDB']->fetchRow($result4);
 
-                if ($ownername == '') {
+                if ('' == $ownername) {
                     $ownername = '&nbsp;';
                 }
 
-                $ack_image = ($acknowledged) ? $xtubeImageArray['ack_yes'] : $xtubeImageArray['ack_no'];
-                $con_image = ($confirmed) ? $xtubeImageArray['con_yes'] : $xtubeImageArray['con_no'];
+                $ack_image = $acknowledged ? $xtubeImageArray['ack_yes'] : $xtubeImageArray['ack_no'];
+                $con_image = $confirmed ? $xtubeImageArray['con_yes'] : $xtubeImageArray['con_no'];
 
                 echo '<tr style="text-align: center;">';
                 echo '<td class="head">' . $reportid . '</td>';
                 echo '<td class="even" style="text-align: left;"><a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/singlevideo.php?cid=' . $cid . '&amp;lid=' . $lid
-                    . '" target="_blank">' . $videoshowname . '</a></td>';
+                     . '" target="_blank">' . $videoshowname . '</a></td>';
 
-                if ($email == '') {
+                if ('' == $email) {
                     echo '<td class="even">' . XoopsUserUtility::getUnameFromId($sender) . ' (' . $ip . ')</td>';
                 } else {
                     echo '<td class="even"><a href="mailto:' . $email . '">' . XoopsUserUtility::getUnameFromId($sender) . '</a> (' . $ip . ')</td>';
                 }
-                if ($owneremail == '') {
+                if ('' == $owneremail) {
                     echo '<td class="even">' . $ownername . '</td>';
                 } else {
                     echo '<td class="even"><a href="mailto:' . $owneremail . '">' . $ownername . '</a></td>';
                 }
-                echo '<td class="even" style="text-align: center;">' . xtubeGetTimestamp(
-                        formatTimestamp($date, $xoopsModuleConfig["dateformatadmin"])
-                    ) . '</td>';
-                echo '<td class="even"><a href="brokenvideo.php?op=updateNotice&amp;lid=' . $lid . '&ack=' . intval(
-                        $acknowledged
-                    ) . '">' . $ack_image . ' </a></td>';
-                echo '<td class="even"><a href="brokenvideo.php?op=updateNotice&amp;lid=' . $lid . '&con=' . intval(
-                        $confirmed
-                    ) . '">' . $con_image . '</a></td>';
+                echo '<td class="even" style="text-align: center;">' . XoopstubeUtilities::xtubeGetTimestamp(formatTimestamp($date, $GLOBALS['xoopsModuleConfig']['dateformatadmin'])) . '</td>';
+                echo '<td class="even"><a href="brokenvideo.php?op=updateNotice&amp;lid=' . $lid . '&ack=' . (int)$acknowledged . '">' . $ack_image . ' </a></td>';
+                echo '<td class="even"><a href="brokenvideo.php?op=updateNotice&amp;lid=' . $lid . '&con=' . (int)$confirmed . '">' . $con_image . '</a></td>';
                 echo '<td class="even" style="text-align: center;" nowrap>';
                 echo '<a href="brokenvideo.php?op=ignorebrokenvideos&amp;lid=' . $lid . '">' . $xtubeImageArray['ignore'] . '</a>&nbsp;';
                 echo '<a href="main.php?op=edit&amp;lid=' . $lid . '">' . $xtubeImageArray['editimg'] . '</a>&nbsp;';

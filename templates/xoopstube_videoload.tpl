@@ -4,37 +4,37 @@
 <{/if}>
 
 <div class="even" style="display: table; width: 99%;">
-	<span style="float: left;">
-		<a href="<{$xoops_url}>/modules/<{$video.module_dir}>/singlevideo.php?cid=<{$video.cid}>&amp;lid=<{$video.id}>"><{$video.title}></a><{$video.icons}>
+    <span style="float: left;">
+        <a href="<{$xoops_url}>/modules/<{$video.module_dir}>/singlevideo.php?cid=<{$video.cid}>&amp;lid=<{$video.id}>"><{$video.title}></a><{$video.icons}>
         &nbsp;<{if $xoops_isadmin}><{$video.adminvideo}><{/if}>
-	</span>
+    </span>
     <{if $video.published > 0 }>
         <span style="float: right; vertical-align: middle; padding-left: 10px;">
-			<a href="<{$xoops_url}>/modules/<{$video.module_dir}>/singlevideo.php?cid=<{$video.cid}>&amp;lid=<{$video.id}>">
+            <a href="<{$xoops_url}>/modules/<{$video.module_dir}>/singlevideo.php?cid=<{$video.cid}>&amp;lid=<{$video.id}>">
                 <img src="<{$xoops_url}>/modules/<{$video.module_dir}>/assets/images/icon/play.png"
                      alt="<{$smarty.const._MD_XOOPSTUBE_VIEWDETAILS}>" title="<{$smarty.const._MD_XOOPSTUBE_VIEWDETAILS}>"/>
             </a>
-		</span>
+        </span>
     <{/if}>
 </div>
 
-<br/>
+<br>
 
 <div style="float: right; width: 250px;">
     <div class="xoopstube_infoblock">
         <{if $video.showsubmitterx}>
             <span style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_SUBMITTER}>:</span>
             <{$video.submitter}>
-            <br/>
+            <br>
         <{/if}>
-        <span style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_PUBLISHER}>:</span>&nbsp;<{$video.publisher}><br/>
-        <span style="font-weight: bold;"><{$lang_subdate}>:</span>&nbsp;&nbsp;<{$video.updated}><br/>
-        <{$video.hits|wordwrap:50:"\n":true}><br/>
+        <span style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_PUBLISHER}>:</span>&nbsp;<{$video.publisher}><br>
+        <span style="font-weight: bold;"><{$lang_subdate}>:</span>&nbsp;&nbsp;<{$video.updated}><br>
+        <{$video.hits|wordwrap:50:"\n":true}><br>
         <{$smarty.const._MD_XOOPSTUBE_TIMEB}>&nbsp;<{$video.time}>
     </div>
 
     <{if $video.showrating}>
-        <br/>
+        <br>
         <div class="xoopstube_infoblock">
             <span style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_RATINGC}></span>&nbsp;<img
                     src="<{$xoops_url}>/modules/<{$video.module_dir}>/assets/images/icon/<{$video.rateimg}>" alt="" align="middle"/>&nbsp;&nbsp;(<{$video.votes}>)
@@ -50,7 +50,7 @@
 </div>
 
 <div>
-    <span style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_DESCRIPTIONC}></span><br/>
+    <span style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_DESCRIPTIONC}></span><br>
     <{$video.description|truncate:$video.total_chars}>
 </div>
 

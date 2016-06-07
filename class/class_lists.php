@@ -12,15 +12,13 @@
  * @category        Module
  * @package         Xoopstube
  * @author          XOOPS Development Team
- * @copyright       2001-2013 The XOOPS Project
+ * @copyright       2001-2016 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @version         $Id$
- * @link            http://sourceforge.net/projects/xoops/
+ * @link            http://xoops.org/
  * @since           1.0.6
  */
 class FileList
 {
-
     public $filelist = array();
 
     public $value;
@@ -45,26 +43,18 @@ class FileList
      * @internal param int $type
      * @internal param string $prefix
      * @internal param string $suffix
-     * @return \fileList
      */
     public function __construct($path = 'uploads', $value = null, $selected = '', $size = 1)
     {
         $this->value     = $value;
         $this->selection = $selected;
-        $this->size      = intval($size);
+        $this->size      = (int)$size;
 
         $pathToCheck = XOOPS_ROOT_PATH . "/{$path}";
-        if (!is_dir($pathToCheck)) {
-            if (false === @mkdir("$pathToCheck", 0777)) {
-                XoopsErrorHandler_HandleError(
-                    E_USER_WARNING,
-                    $pathToCheck . _AM_XOOPSTUBE_DOESNOTEXIST,
-                    __FILE__,
-                    __LINE__
-                );
+        if (!is_dir($pathToCheck) && false === @mkdir("$pathToCheck", 0777)) {
+            XoopsErrorHandler_HandleError(E_USER_WARNING, $pathToCheck . _AM_XOOPSTUBE_DOESNOTEXIST, __FILE__, __LINE__);
 
-                return false;
-            }
+            return false;
         }
         $this->path = $path;
 
@@ -81,7 +71,7 @@ class FileList
 
     public function setEmptySelect($value = 0)
     {
-        $this->emptySelect = (intval($value) != 1) ? 0 : 1;
+        $this->emptySelect = ((int)$value !== 1) ? 0 : 1;
     }
 
     /**
@@ -89,7 +79,7 @@ class FileList
      */
     public function setNoSelection($value = 0)
     {
-        $this->noSelection = (intval($value) != 1) ? 0 : 1;
+        $this->noSelection = ((int)$value !== 1) ? 0 : 1;
     }
 
     /**
@@ -97,7 +87,7 @@ class FileList
      */
     public function setPrefix($value = '')
     {
-        $this->prefix = (strval($value) != '') ? strval($value) : '';
+        $this->prefix = ((string)$value) !== '' ? (string)$value : '';
     }
 
     /**
@@ -105,7 +95,7 @@ class FileList
      */
     public function setSuffix($value = '')
     {
-        $this->suffix = (strval($value) != '') ? strval($value) : '';
+        $this->suffix = ((string)$value) !== '' ? (string)$value : '';
     }
 
     /**
@@ -113,7 +103,7 @@ class FileList
      */
     public function setListType($value = 'images')
     {
-        $this->type = strval(strtolower($value));
+        $this->type = (string)strtolower($value);
     }
 
     /**
@@ -121,21 +111,21 @@ class FileList
      *
      * @return string
      */
-    function &showSelection()
+    public function &showSelection()
     {
         $ret = "<select size='" . $this->size() . "' name='$this->value()'>";
         if ($this->emptySelect) {
             $ret .= "<option value='" . $this->value() . "'>----------------------</option>";
         }
         foreach ($this->filelist as $content) {
-            $optSelected = "";
+            $optSelected = '';
 
-            if ($content[0] == $this->selected()) {
+            if ($content[0] == $this->isSelected()) {
                 $optSelected = "selected='selected'";
             }
-            $ret .= "<option value='" . $content . "' $optSelected>" . $content . "</option>";
+            $ret .= "<option value='" . $content . "' $optSelected>" . $content . '</option>';
         }
-        $ret .= "</select>";
+        $ret .= '</select>';
 
         return $ret;
     }
@@ -145,7 +135,7 @@ class FileList
      *
      * @return array
      */
-    function &getListTypeAsArray()
+    public function &getListTypeAsArray()
     {
         $filelist = array();
         switch (trim($this->type)) {
@@ -177,7 +167,7 @@ class FileList
                 break;
         }
 
-        if (substr($this->path, -1) == '/') {
+        if ('/' === substr($this->path, -1)) {
             $this->path = substr($this->path, 0, -1);
         }
 
@@ -185,12 +175,8 @@ class FileList
 
         if (is_dir($_full_path) && $handle = opendir($_full_path)) {
             while (false !== ($file = readdir($handle))) {
-                if (!preg_match("/^[.]{1,2}$/", $file) && preg_match("/$types$/i", $file)
-                    && is_file(
-                        $_full_path . '/' . $file
-                    )
-                ) {
-                    if (strtolower($file) == 'blank.gif') {
+                if (!preg_match("/^[.]{1,2}$/", $file) && preg_match("/$types$/i", $file) && is_file($_full_path . '/' . $file)) {
+                    if ('blank.gif' === strtolower($file)) {
                         continue;
                     }
                     $file                  = $this->prefix . $file;
@@ -213,7 +199,7 @@ class FileList
         return $this->value;
     }
 
-    public function selected()
+    public function isSelected()
     {
         return $this->selected;
     }
@@ -234,22 +220,22 @@ class FileList
         return $this->size;
     }
 
-    public function emptySelect()
+    public function isEmptySelect()
     {
         return $this->emptySelect;
     }
 
-    public function type()
+    public function getType()
     {
         return $this->type;
     }
 
-    public function prefix()
+    public function getPrefix()
     {
         return $this->prefix;
     }
 
-    public function suffix()
+    public function getSuffix()
     {
         return $this->suffix;
     }

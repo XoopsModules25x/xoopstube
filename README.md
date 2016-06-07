@@ -2,10 +2,10 @@
 ##xoopstube module for  [XOOPS CMS 2.5.8+](https://xoops.org)
 [![Software License](https://img.shields.io/badge/license-GPL-brightgreen.svg?style=flat)](LICENSE)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/XoopsModules25x/xoopstube.svg?style=flat)](https://scrutinizer-ci.com/g/XoopsModules25x/xoopstube/?branch=master)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/0fdcfa1725a14753865921b99bb3611e)](https://www.codacy.com/app/mambax7/xoopstube_2)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/93a615a5acf448219de3a44ca4e9d5f7)](https://www.codacy.com/app/mambax7/xoopstube_2)
 [![Code Climate](https://img.shields.io/codeclimate/github/XoopsModules25x/xoopstube.svg?style=flat)](https://codeclimate.com/github/XoopsModules25x/xoopstube)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/0ffc2915-82a8-446a-978e-df50e2e58858/mini.png)](https://insight.sensiolabs.com/projects/0ffc2915-82a8-446a-978e-df50e2e58858)
-[![Latest Pre-Release](https://img.shields.io/github/xoopstube/XoopsModules25x/xoopstube.svg?style=flat)](https://github.com/XoopsModules25x/xoopstube/xoopstubes/)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/68207475-07ff-4567-a282-6e2f119077d2/mini.png)](https://insight.sensiolabs.com/projects/68207475-07ff-4567-a282-6e2f119077d2)
+[![Latest Pre-Release](https://img.shields.io/github/tag/XoopsModules25x/xoopstube.svg?style=flat)](https://github.com/XoopsModules25x/xoopstube/tags/)
 [![Latest Version](https://img.shields.io/github/release/XoopsModules25x/xoopstube.svg?style=flat)](https://github.com/XoopsModules25x/xoopstube/releases/)
 
 XoopsTube module for [XOOPS CMS](http://xoops.org) helps to add and categorize movies from sites like YouTube, DailyMotion, LiveLeak, etc. for your website..
@@ -19,3 +19,4 @@ Please visit us on http://xoops.org
 
 The upcoming "next generation" version of XOOPS CMS is being crafted on GitHub at: https://github.com/XOOPS
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/93a615a5acf448219de3a44ca4e9d5f7)](https://www.codacy.com/app/mambax7/xoopstube_2?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=XoopsModules25x/xoopstube&amp;utm_campaign=Badge_Grade)

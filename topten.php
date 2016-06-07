@@ -12,10 +12,9 @@
  * @category        Module
  * @package         Xoopstube
  * @author          XOOPS Development Team
- * @copyright       2001-2013 The XOOPS Project
+ * @copyright       2001-2016 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @version         $Id$
- * @link            http://sourceforge.net/projects/xoops/
+ * @link            http://xoops.org/
  * @since           1.0.6
  */
 
@@ -24,7 +23,7 @@ include __DIR__ . '/header.php';
 $xoopsOption['template_main'] = 'xoopstube_topten.tpl';
 include XOOPS_ROOT_PATH . '/header.php';
 
-$mytree = new XoopstubeTree($xoopsDB->prefix('xoopstube_cat'), 'cid', 'pid');
+$mytree = new XoopstubeTree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
 
 $action_array = array(
     'hit'  => 0,
@@ -34,37 +33,34 @@ $list_array   = array('hits', 'rating');
 $lang_array   = array(_MD_XOOPSTUBE_HITS, _MD_XOOPSTUBE_RATING);
 $rankings     = array();
 
-$sort     = (isset($_GET['list']) && in_array($_GET['list'], $action_array)) ? $_GET['list'] : 'rate';
+$sort     = in_array(XoopsRequest::getString('list', '', 'GET'), $action_array) ? XoopsRequest::getString('list', '', 'GET') : 'rate';
 $sort_arr = $action_array[$sort];
 $sortDB   = $list_array[$sort_arr];
 
-$catarray['imageheader'] = xtubeRenderImageHeader();
+$catarray['imageheader'] = XoopstubeUtilities::xtubeRenderImageHeader();
 $xoopsTpl->assign('catarray', $catarray);
 
 $arr    = array();
-$result = $xoopsDB->query(
-    'SELECT cid, title, pid FROM ' . $xoopsDB->prefix('xoopstube_cat') . ' WHERE pid=0 ORDER BY ' . $xoopsModuleConfig['sortcats']
-);
+$result = $GLOBALS['xoopsDB']->query('SELECT cid, title, pid FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_cat') . ' WHERE pid=0 ORDER BY ' . $GLOBALS['xoopsModuleConfig']['sortcats']);
 
 $e = 0;
-while (list($cid, $ctitle) = $xoopsDB->fetchRow($result)) {
-    if (true == xtubeCheckGroups($cid)) {
-        $query
-             =
-            'SELECT lid, cid, title, hits, rating, votes FROM ' . $xoopsDB->prefix('xoopstube_videos') . ' WHERE published > 0 AND published <= ' . time() . ' AND (expired = 0 OR expired > ' . time()
-            . ') AND offline = 0 AND (cid=' . $cid;
-        $arr = $mytree->getAllChildId($cid);
-        for ($i = 0; $i < count($arr); ++$i) {
+while (false !== (list($cid, $ctitle) = $GLOBALS['xoopsDB']->fetchRow($result))) {
+    if (true === XoopstubeUtilities::xtubeCheckGroups($cid)) {
+        $query      = 'SELECT lid, cid, title, hits, rating, votes FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE published > 0 AND published <= ' . time()
+                      . ' AND (expired = 0 OR expired > ' . time() . ') AND offline = 0 AND (cid=' . $cid;
+        $arr        = $mytree->getAllChildId($cid);
+        $arrayCount = count($arr);
+        for ($i = 0; $i < $arrayCount; ++$i) {
             $query .= ' or cid=' . $arr[$i] . '';
         }
         $query .= ') order by ' . $sortDB . ' DESC';
-        $result2   = $xoopsDB->query($query, 10, 0);
-        $filecount = $xoopsDB->getRowsNum($result2);
+        $result2   = $GLOBALS['xoopsDB']->query($query, 10, 0);
+        $filecount = $GLOBALS['xoopsDB']->getRowsNum($result2);
 
         if ($filecount > 0) {
             $rankings[$e]['title'] = $xtubemyts->htmlSpecialCharsStrip($ctitle);
             $rank                  = 1;
-            while (list($did, $dcid, $dtitle, $hits, $rating, $votes) = $xoopsDB->fetchRow($result2)) {
+            while (false !== (list($did, $dcid, $dtitle, $hits, $rating, $votes) = $GLOBALS['xoopsDB']->fetchRow($result2))) {
                 $catpath                = basename($mytree->getPathFromId($dcid, 'title'));
                 $dtitle                 = $xtubemyts->htmlSpecialCharsStrip($dtitle);
                 $rankings[$e]['file'][] = array(
@@ -83,10 +79,7 @@ while (list($cid, $ctitle) = $xoopsDB->fetchRow($result)) {
         }
     }
 }
-$xoopsTpl->assign(
-    'back',
-    '<a href="javascript:history.go(-1)"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getvar('dirname') . '/assets/images/icon/back.png" /></a>'
-);
+$xoopsTpl->assign('back', '<a href="javascript:history.go(-1)"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/back.png" /></a>');
 $xoopsTpl->assign('lang_sortby', $lang_array[$sort_arr]);
 $xoopsTpl->assign('rankings', $rankings);
 $xoopsTpl->assign('module_dir', $xoopsModule->getVar('dirname'));

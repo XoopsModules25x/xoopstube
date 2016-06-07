@@ -12,20 +12,19 @@
  * @category        Module
  * @package         Xoopstube
  * @author          XOOPS Development Team
- * @copyright       2001-2013 The XOOPS Project
+ * @copyright       2001-2016 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @version         $Id$
- * @link            http://sourceforge.net/projects/xoops/
+ * @link            http://xoops.org/
  * @since           1.0.6
  */
 
 include dirname(dirname(__DIR__)) . '/mainfile.php';
-$com_itemid = isset($_GET['com_itemid']) ? intval($_GET['com_itemid']) : 0;
+$com_itemid = XoopsRequest::getInt('com_itemid', 0, 'GET');
 if ($com_itemid > 0) {
     // Get file title
-    $sql            = 'SELECT title FROM ' . $xoopsDB->prefix('xoopstube_videos') . ' WHERE lid=' . $com_itemid;
-    $result         = $xoopsDB->query($sql);
-    $row            = $xoopsDB->fetchArray($result);
+    $sql            = 'SELECT title FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE lid=' . $com_itemid;
+    $result         = $GLOBALS['xoopsDB']->query($sql);
+    $row            = $GLOBALS['xoopsDB']->fetchArray($result);
     $com_replytitle = $row['title'];
     include XOOPS_ROOT_PATH . '/include/comment_new.php';
 }
