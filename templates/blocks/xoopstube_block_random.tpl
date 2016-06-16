@@ -5,9 +5,9 @@
                 <a href="<{$xoops_url}>/modules/<{$videorandom.dirname}>/singlevideo.php?cid=<{$videorandom.cid}>&amp;lid=<{$videorandom.id}>">
                     <span style="font-size: small;"><{$videorandom.title}></span>
                 </a>
-                <br/>
+                <br>
                 <span style="font-size: small;">(<{$videorandom.date}>)</span>
-                <br/>
+                <br>
                 <a href="<{$xoops_url}>/modules/<{$videorandom.dirname}>/singlevideo.php?cid=<{$videorandom.cid}>&amp;lid=<{$videorandom.id}>"><{$videorandom.videothumb}></a>
             </td>
         </tr>

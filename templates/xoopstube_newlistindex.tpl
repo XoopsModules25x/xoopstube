@@ -1,11 +1,11 @@
 <link rel="stylesheet" type="text/css" href="<{$smarty.const.xoopstube_url}>/assets/css/xtubestyle.css"/>
 <{if $catarray.imageheader != ""}>
-    <br/>
+    <br>
     <div class="xoopstube_header"><{$catarray.imageheader}></div>
-<{/if}> <br/>
+<{/if}> <br>
 <div style="text-align: right;"><{$back}>&nbsp;</div>
 <div class="even" style="font-weight: bold; font-size: 110%;">&nbsp;<{$smarty.const._MD_XOOPSTUBE_NEWVIDEOS}></div>
-<br/>
+<br>
 
 <table class="outer" style="width: 400px; margin-left: 8px;" border="0" cellspacing="2" cellpadding="0">
     <tr>
@@ -20,7 +20,7 @@
         <td width="15%" class="odd" align="center"><{$allmonthvideos}></td>
     </tr>
 </table>
-<br/><br/>
+<br><br>
 
 <div style="float: left; margin-left: 8px; margin-right: 8px;">
     <span style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_SHOW}>:</span>
@@ -31,7 +31,7 @@
     <a class="xoopstube_button" href="<{$xoops_url}>/modules/<{$module_dir}>/newlist.php?newvideoshowdays=30"><{$smarty.const._MD_XOOPSTUBE_30DAYS}></a>
 </div>
 
-<br/><br/><br/>
+<br><br><br>
 
 <table class="outer" style="width: 400px; margin-left: 8px;" border="0" cellspacing="2" cellpadding="0">
     <tr>
@@ -52,9 +52,9 @@
         </tr>
     <{/foreach}>
 </table>
-    <!-- End day loop -->
+<!-- End day loop -->
 
-    <!-- <h4><{$smarty.const._MD_XOOPSTUBE_LATESTLIST}></h4> -->
+<!-- <h4><{$smarty.const._MD_XOOPSTUBE_LATESTLIST}></h4> -->
     <table width="100%" cellspacing="0" cellpadding="2" border="0">
         <tr>
             <td width="100%">

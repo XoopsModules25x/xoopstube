@@ -11,10 +11,9 @@
  * @category        Module
  * @package         Xoopstube
  * @author          XOOPS Development Team
- * @copyright       2001-2013 The XOOPS Project
+ * @copyright       2001-2016 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @version         $Id$
- * @link            http://sourceforge.net/projects/xoops/
+ * @link            http://xoops.org/
  * @since           1.0.6
  */
 
@@ -30,16 +29,16 @@ class XoopsMediaUploader
     public $mediaSize;
     public $mediaTmpName;
     public $mediaError;
-    public $uploadDir = '';
+    public $uploadDir        = '';
     public $allowedMimeTypes = array();
-    public $maxFileSize = 0;
+    public $maxFileSize      = 0;
     public $maxWidth;
     public $maxHeight;
     public $targetFileName;
     public $prefix;
     public $ext;
     public $dimension;
-    public $errors = array();
+    public $errors           = array();
     public $savedDestination;
     public $savedFileName;
     /**
@@ -61,15 +60,15 @@ class XoopsMediaUploader
     public function __construct($uploadDir, $allowedMimeTypes = 0, $maxFileSize, $maxWidth = 0, $maxHeight = 0)
     {
         if (is_array($allowedMimeTypes)) {
-            $this->allowedMimeTypes = & $allowedMimeTypes;
+            $this->allowedMimeTypes = &$allowedMimeTypes;
         }
         $this->uploadDir   = $uploadDir;
-        $this->maxFileSize = intval($maxFileSize);
+        $this->maxFileSize = (int)$maxFileSize;
         if (isset($maxWidth)) {
-            $this->maxWidth = intval($maxWidth);
+            $this->maxWidth = (int)$maxWidth;
         }
         if (isset($maxHeight)) {
-            $this->maxHeight = intval($maxHeight);
+            $this->maxHeight = (int)$maxHeight;
         }
     }
 
@@ -84,8 +83,8 @@ class XoopsMediaUploader
     /**
      * Fetch the uploaded file
      *
-     * @param string $media_name Name of the file field
-     * @param int    $index      Index of the file (if more than one uploaded under that name)
+     * @param string  $media_name Name of the file field
+     * @param int     $index      Index of the file (if more than one uploaded under that name)
      *
      * @global        $HTTP_POST_FILES
      * @return bool
@@ -99,17 +98,14 @@ class XoopsMediaUploader
 
             return false;
         } elseif (is_array($_FILES[$media_name]['name']) && isset($index)) {
-            $index              = intval($index);
-            $this->mediaName    = (get_magic_quotes_gpc()) ? stripslashes(
-                $_FILES[$media_name]['name'][$index]
-            ) : $_FILES[$media_name]['name'][$index];
+            $index              = (int)$index;
+            $this->mediaName    = $_FILES[$media_name]['name'][$index];
             $this->mediaType    = $_FILES[$media_name]['type'][$index];
             $this->mediaSize    = $_FILES[$media_name]['size'][$index];
             $this->mediaTmpName = $_FILES[$media_name]['tmp_name'][$index];
             $this->mediaError   = !empty($_FILES[$media_name]['error'][$index]) ? $_FILES[$media_name]['error'][$index] : 0;
         } else {
             $media_name         = @$_FILES[$media_name];
-            $this->mediaName    = (get_magic_quotes_gpc()) ? stripslashes($media_name['name']) : $media_name['name'];
             $this->mediaName    = $media_name['name'];
             $this->mediaType    = $media_name['type'];
             $this->mediaSize    = $media_name['size'];
@@ -120,18 +116,18 @@ class XoopsMediaUploader
 
         $this->errors = array();
 
-        if (intval($this->mediaSize) < 0) {
+        if ((int)$this->mediaSize < 0) {
             $this->setErrors(_AM_XOOPSTUBE_INVALIDFILESIZE);
 
             return false;
         }
-        if ($this->mediaName == '') {
+        if ('' === $this->mediaName) {
             $this->setErrors(_AM_XOOPSTUBE_FILENAMEEMPTY);
 
             return false;
         }
 
-        if ($this->mediaTmpName == 'none') {
+        if ('none' === $this->mediaTmpName) {
             $this->setErrors(_AM_XOOPSTUBE_NOFILEUPLOAD);
 
             return false;
@@ -172,7 +168,7 @@ class XoopsMediaUploader
      */
     public function setTargetFileName($value)
     {
-        $this->targetFileName = strval(trim($value));
+        $this->targetFileName = (string)trim($value);
     }
 
     /**
@@ -182,7 +178,7 @@ class XoopsMediaUploader
      */
     public function setPrefix($value)
     {
-        $this->prefix = strval(trim($value));
+        $this->prefix = (string)trim($value);
     }
 
     /**
@@ -254,7 +250,7 @@ class XoopsMediaUploader
      */
     public function upload($chmod = 0644)
     {
-        if ($this->uploadDir == '') {
+        if ('' === $this->uploadDir) {
             $this->setErrors(_AM_XOOPSTUBE_NOUPLOADDIR);
 
             return false;
@@ -264,7 +260,7 @@ class XoopsMediaUploader
             $this->setErrors(_AM_XOOPSTUBE_FAILOPENDIR . $this->uploadDir);
         }
 
-        if (!is_writeable($this->uploadDir)) {
+        if (!is_writable($this->uploadDir)) {
             $this->setErrors(_AM_XOOPSTUBE_FAILOPENDIRWRITEPERM . $this->uploadDir);
         }
 
@@ -312,7 +308,7 @@ class XoopsMediaUploader
         if (isset($this->targetFileName)) {
             $this->savedFileName = $this->targetFileName;
         } elseif (isset($this->prefix)) {
-            $this->savedFileName = uniqid($this->prefix) . '.' . strtolower($matched[1]);
+            $this->savedFileName = uniqid($this->prefix, true) . '.' . strtolower($matched[1]);
         } else {
             $this->savedFileName = strtolower($this->mediaName);
         }
@@ -419,7 +415,7 @@ class XoopsMediaUploader
      *
      * @return array |string    Array of array messages OR HTML string
      */
-    function &getErrors($ashtml = true)
+    public function &getErrors($ashtml = true)
     {
         if (!$ashtml) {
             return $this->errors;
@@ -428,7 +424,7 @@ class XoopsMediaUploader
             if (count($this->errors) > 0) {
                 $ret = _AM_XOOPSTUBE_ERRORSRETURNUPLOAD;
                 foreach ($this->errors as $error) {
-                    $ret .= $error . '<br />';
+                    $ret .= $error . '<br>';
                 }
             }
 

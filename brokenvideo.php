@@ -12,106 +12,85 @@
  * @category        Module
  * @package         Xoopstube
  * @author          XOOPS Development Team
- * @copyright       2001-2013 The XOOPS Project
+ * @copyright       2001-2016 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link            http://sourceforge.net/projects/xoops/
+ * @link            http://xoops.org/
  * @since           1.0.6
- * @version         $Id$
  */
 
+include dirname(dirname(__DIR__)) . '/mainfile.php';
 require __DIR__ . '/header.php';
 
-$op  = xtubeCleanRequestVars($_REQUEST, 'op', '');
-$lid = xtubeCleanRequestVars($_REQUEST, 'lid', 0);
-$lid = intval($lid);
+$op  = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', '', 'POST'), 'GET');
+$lid = XoopsRequest::getInt('lid', XoopsRequest::getInt('lid', '', 'POST'), 'GET');
 
 $buttonn = strtolower(_MD_XOOPSTUBE_SUBMITBROKEN);
 
 switch (strtolower($op)) {
     case $buttonn:
-        global $xoopsUser;
-
-        $sender = (is_object($xoopsUser) && !empty($xoopsUser)) ? $xoopsUser->getVar('uid') : 0;
+        $sender = (is_object($GLOBALS['xoopsUser']) && !empty($GLOBALS['xoopsUser'])) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
         $ip     = getenv('REMOTE_ADDR');
-        $title  = xtubeCleanRequestVars($_REQUEST, 'title', '');
-        $title  = $xtubemyts->addslashes($title);
+        $title  = XoopsRequest::getString('title', '', 'POST');
         $time   = time();
 
         // Check if REG user is trying to report twice
-        $result = $xoopsDB->query(
-            'SELECT COUNT(*) FROM ' . $xoopsDB->prefix('xoopstube_broken') . ' WHERE lid=' . intval($lid)
-        );
-        list ($count) = $xoopsDB->fetchRow($result);
+        $result = $GLOBALS['xoopsDB']->query('SELECT COUNT(*) FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_broken') . ' WHERE lid=' . (int)$lid);
+        list($count) = $GLOBALS['xoopsDB']->fetchRow($result);
         if ($count > 0) {
             $ratemessage = _MD_XOOPSTUBE_ALREADYREPORTED;
-            redirect_header('singlevideo.php?cid=' . intval($cid) . '&amp;lid=' . intval($lid), 2, $ratemessage);
-            exit();
+            redirect_header('singlevideo.php?cid=' . (int)$cid . '&amp;lid=' . (int)$lid, 2, $ratemessage);
         } else {
             $reportid = 0;
-            $sql      = sprintf(
-                "INSERT INTO %s (reportid, lid, sender, ip, date, confirmed, acknowledged, title ) VALUES ( %u, %u, %u, %s, %u, %u, %u, %s)",
-                $xoopsDB->prefix('xoopstube_broken'),
-                $reportid,
-                $lid,
-                $sender,
-                $xoopsDB->quoteString($ip),
-                $time,
-                0,
-                0,
-                $xoopsDB->quoteString($title)
-            );
-            if (!$result = $xoopsDB->query($sql)) {
+            $sql      =
+                sprintf('INSERT INTO %s (reportid, lid, sender, ip, date, confirmed, acknowledged, title ) VALUES ( %u, %u, %u, %s, %u, %u, %u, %s)', $GLOBALS['xoopsDB']->prefix('xoopstube_broken'),
+                        $reportid, $lid, $sender, $GLOBALS['xoopsDB']->quoteString($ip), $time, 0, 0, $GLOBALS['xoopsDB']->quoteString($title));
+            if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
                 $error[] = _MD_XOOPSTUBE_ERROR;
             }
-            $newid = $xoopsDB->getInsertId();
+            $newid = $GLOBALS['xoopsDB']->getInsertId();
 
             // Send notifications
-            $tags = array();
-            $tags['BROKENREPORTS_URL']
-                                  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/admin/main.php?op=listBrokenvideos';
-            $notification_handler = & xoops_gethandler('notification');
-            $notification_handler->triggerEvent('global', 0, 'video_broken', $tags);
+            $tags                      = array();
+            $tags['BROKENREPORTS_URL'] = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/admin/main.php?op=listBrokenvideos';
+            $notificationHandler       = xoops_getHandler('notification');
+            $notificationHandler->triggerEvent('global', 0, 'video_broken', $tags);
 
             // Send email to the owner of the linkload stating that it is broken
-            $sql
-                       =
-                'SELECT * FROM ' . $xoopsDB->prefix('xoopstube_videos') . ' WHERE lid=' . intval($lid) . ' AND published > 0 AND published <= ' . time() . ' AND (expired = 0 OR expired > ' . time()
-                . ')';
-            $video_arr = $xoopsDB->fetchArray($xoopsDB->query($sql));
+            $sql       =
+                'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE lid=' . (int)$lid . ' AND published > 0 AND published <= ' . time() . ' AND (expired = 0 OR expired > '
+                . time() . ')';
+            $video_arr = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
             unset($sql);
 
-            $member_handler = & xoops_gethandler('member');
-            $submit_user    = & $member_handler->getUser($video_arr['submitter']);
+            $memberHandler = xoops_getHandler('member');
+            $submit_user   = $memberHandler->getUser($video_arr['submitter']);
             if (is_object($submit_user) && !empty($submit_user)) {
-                $subdate = formatTimestamp($video_arr['date'], $xoopsModuleConfig['dateformat']);
+                $subdate = formatTimestamp($video_arr['date'], $GLOBALS['xoopsModuleConfig']['dateformat']);
                 $cid     = $video_arr['cid'];
                 $title   = $xtubemyts->htmlSpecialCharsStrip($video_arr['title']);
                 $subject = _MD_XOOPSTUBE_BROKENREPORTED;
 
-                $xoopsMailer = & getMailer();
+                $xoopsMailer = &getMailer();
                 $xoopsMailer->useMail();
-                $template_dir = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/mail_template';
+                $template_dir = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/mail_template';
                 $xoopsMailer->setTemplateDir($template_dir);
                 $xoopsMailer->setTemplate('videobroken_notify.tpl');
                 $xoopsMailer->setToEmails($submit_user->getVar('email'));
-                $xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
-                $xoopsMailer->setFromName($xoopsConfig['sitename']);
-                $xoopsMailer->assign("X_UNAME", $submit_user->getVar('uname'));
-                $xoopsMailer->assign("SITENAME", $xoopsConfig['sitename']);
-                $xoopsMailer->assign("X_ADMINMAIL", $xoopsConfig['adminmail']);
+                $xoopsMailer->setFromEmail($GLOBALS['xoopsConfig']['adminmail']);
+                $xoopsMailer->setFromName($GLOBALS['xoopsConfig']['sitename']);
+                $xoopsMailer->assign('X_UNAME', $submit_user->getVar('uname'));
+                $xoopsMailer->assign('SITENAME', $GLOBALS['xoopsConfig']['sitename']);
+                $xoopsMailer->assign('X_ADMINMAIL', $GLOBALS['xoopsConfig']['adminmail']);
                 $xoopsMailer->assign('X_SITEvidid', XOOPS_VIDID . '/');
-                $xoopsMailer->assign("X_TITLE", $title);
-                $xoopsMailer->assign("X_SUB_DATE", $subdate);
-                $xoopsMailer->assign(
-                    'X_VIDEOLOAD',
-                    XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/singlevideo.php?cid=' . $cid . '&amp;lid=' . $lid
-                );
+                $xoopsMailer->assign('X_TITLE', $title);
+                $xoopsMailer->assign('X_SUB_DATE', $subdate);
+                $xoopsMailer->assign('X_VIDEOLOAD', XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/singlevideo.php?cid=' . $cid . '&amp;lid=' . $lid);
                 $xoopsMailer->setSubject($subject);
-                $message = ($xoopsMailer->send()) ? _MD_XOOPSTUBE_BROKENREPORTED : _MD_XOOPSTUBE_ERRORSENDEMAIL;
+                $message = $xoopsMailer->send() ? _MD_XOOPSTUBE_BROKENREPORTED : _MD_XOOPSTUBE_ERRORSENDEMAIL;
             } else {
                 $message = _MD_XOOPSTUBE_ERRORSENDEMAIL;
             }
-            redirect_header('singlevideo.php?cid=' . intval($cid) . '&amp;lid=' . intval($lid), 2, $message);
+            redirect_header('singlevideo.php?cid=' . (int)$cid . '&amp;lid=' . (int)$lid, 2, $message);
         }
         break;
 
@@ -120,21 +99,21 @@ switch (strtolower($op)) {
         $xoopsOption['template_main'] = 'xoopstube_brokenvideo.tpl';
         include XOOPS_ROOT_PATH . '/header.php';
 
-        $catarray['imageheader'] = xtubeRenderImageHeader();
+        $catarray['imageheader'] = XoopstubeUtilities::xtubeRenderImageHeader();
         $xoopsTpl->assign('catarray', $catarray);
 
-        $sql       = 'SELECT * FROM ' . $xoopsDB->prefix('xoopstube_videos') . ' WHERE lid=' . intval($lid);
-        $video_arr = $xoopsDB->fetchArray($xoopsDB->query($sql));
+        $sql       = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE lid=' . (int)$lid;
+        $video_arr = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
         unset($sql);
 
-        $sql       = 'SELECT * FROM ' . $xoopsDB->prefix('xoopstube_broken') . ' WHERE lid=' . intval($lid);
-        $broke_arr = $xoopsDB->fetchArray($xoopsDB->query($sql));
+        $sql       = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_broken') . ' WHERE lid=' . (int)$lid;
+        $broke_arr = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
         xoops_load('XoopsUserUtility');
         if (is_array($broke_arr)) {
             $broken['title']        = $xtubemyts->htmlSpecialCharsStrip($video_arr['title']);
             $broken['id']           = $broke_arr['reportid'];
             $broken['reporter']     = XoopsUserUtility::getUnameFromId($broke_arr['sender']);
-            $broken['date']         = xoopstube(formatTimestamp($broke_arr['date'], $xoopsModuleConfig['dateformat']));
+            $broken['date']         = XoopstubeUtilities::xtubeGetTimestamp(formatTimestamp($broke_arr['date'], $GLOBALS['xoopsModuleConfig']['dateformat']));
             $broken['acknowledged'] = ($broke_arr['acknowledged'] == 1) ? _YES : _NO;
             $broken['confirmed']    = ($broke_arr['confirmed'] == 1) ? _YES : _NO;
             $xoopsTpl->assign('broken', $broken);
@@ -142,24 +121,23 @@ switch (strtolower($op)) {
         } else {
             if (!is_array($video_arr) || empty($video_arr)) {
                 $ratemessage = _MD_XOOPSTUBE_THISFILEDOESNOTEXIST;
-                redirect_header('singlevideo.php?cid=' . intval($cid) . '&amp;lid=' . intval($lid), 0, $ratemessage);
-                exit();
+                redirect_header('singlevideo.php?cid=' . (int)$cid . '&amp;lid=' . (int)$lid, 0, $ratemessage);
             }
 
             // file info
             $video['title']   = $xtubemyts->htmlSpecialCharsStrip($video_arr['title']);
             $time             = ($video_arr['published'] > 0) ? $video_arr['published'] : $link_arr['updated'];
-            $video['updated'] = xtubeGetTimestamp(formatTimestamp($time, $xoopsModuleConfig['dateformat']));
-            $is_updated       = ($video_arr['updated'] != 0) ? _MD_XOOPSTUBE_UPDATEDON : _MD_XOOPSTUBE_SUBMITDATE;
+            $video['updated'] = XoopstubeUtilities::xtubeGetTimestamp(formatTimestamp($time, $GLOBALS['xoopsModuleConfig']['dateformat']));
+            $is_updated       = ($video_arr['updated'] !== 0) ? _MD_XOOPSTUBE_UPDATEDON : _MD_XOOPSTUBE_SUBMITDATE;
 
             $video['publisher'] = XoopsUserUtility::getUnameFromId($video_arr['submitter']);
 
-            $xoopsTpl->assign('video_id', intval($lid));
+            $xoopsTpl->assign('video_id', (int)$lid);
             $xoopsTpl->assign('lang_subdate', $is_updated);
             $xoopsTpl->assign('video', $video);
         }
 
-        xtubeSetNoIndexNoFollow();
+        XoopstubeUtilities::xtubeSetNoIndexNoFollow();
 
         $xoopsTpl->assign('module_dir', $xoopsModule->getVar('dirname'));
         include XOOPS_ROOT_PATH . '/footer.php';

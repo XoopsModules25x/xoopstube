@@ -11,10 +11,9 @@
  * @category        Module
  * @package         Xoopstube
  * @author          XOOPS Development Team
- * @copyright       2001-2013 The XOOPS Project
+ * @copyright       2001-2016 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @version         $Id$
- * @link            http://sourceforge.net/projects/xoops/
+ * @link            http://xoops.org/
  * @since           1.0.6
  *
  * @param $category
@@ -25,52 +24,50 @@
 
 function xtubeNotifyIteminfo($category, $item_id)
 {
-    global $xoopsModule, $xoopsModuleConfig;
+    global $xoopsModule;
 
-    $mydirname = basename(dirname(__DIR__));
-//    $mydirpath = dirname(__DIR__);
+    $moduleDirName = basename(dirname(__DIR__));
+    //    $modulePath = dirname(__DIR__);
 
-    if (empty($xoopsModule) || $xoopsModule->getVar('dirname') != 'xoopstube') {
-        $module_handler =& xoops_gethandler('module');
-        $module         =& $module_handler->getByDirname($mydirname);
-        $config_handler =& xoops_gethandler('config');
-        $config         =& $config_handler->getConfigsByCat(0, $module->getVar('mid'));
+    if (empty($xoopsModule) || $xoopsModule->getVar('dirname') !== 'xoopstube') {
+        $moduleHandler = xoops_getHandler('module');
+        $module        = $moduleHandler->getByDirname($moduleDirName);
+        $configHandler = xoops_getHandler('config');
+        $config        = $configHandler->getConfigsByCat(0, $module->getVar('mid'));
     } else {
-        $module =& $xoopsModule;
-        $config =& $xoopsModuleConfig;
+        $module = $xoopsModule;
+        $config = $GLOBALS['xoopsModuleConfig'];
     }
 
-    if ($category == 'global') {
+    if ('global' === $category) {
         $item['name'] = '';
         $item['url']  = '';
 
         return $item;
     }
 
-    global $xoopsDB;
-    if ($category == 'category') {
+    if ('category' === $category) {
         // Assume we have a valid category id
-        $sql = "SELECT title FROM " . $xoopsDB->prefix('xoopstube_cat') . " WHERE cid=" . $item_id;
-        if (!$result = $xoopsDB->query($sql)) {
+        $sql = 'SELECT title FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_cat') . ' WHERE cid=' . $item_id;
+        if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
             return false;
         }
-        $result_array = $xoopsDB->fetchArray($result);
+        $result_array = $GLOBALS['xoopsDB']->fetchArray($result);
         $item['name'] = $result_array['title'];
         $item['url']  = XOOPS_URL . '/modules/xoopstube/viewcat.php?cid=' . $item_id;
 
         return $item;
     }
 
-    if ($category == 'video') {
+    if ('video' === $category) {
         // Assume we have a valid file id
-        $sql = "SELECT cid,title FROM " . $xoopsDB->prefix('xoopstube_videos') . " WHERE lid=" . $item_id;
-        if (!$result = $xoopsDB->query($sql)) {
+        $sql = 'SELECT cid,title FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE lid=' . $item_id;
+        if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
             return false;
         }
-        $result_array = $xoopsDB->fetchArray($result);
+        $result_array = $GLOBALS['xoopsDB']->fetchArray($result);
         $item['name'] = $result_array['title'];
-        $item['url']
-                      = XOOPS_URL . '/modules/xoopstube/singlevideo.php?cid=' . $result_array['cid'] . '&amp;lid=' . $item_id;
+        $item['url']  = XOOPS_URL . '/modules/xoopstube/singlevideo.php?cid=' . $result_array['cid'] . '&amp;lid=' . $item_id;
 
         return $item;
     }

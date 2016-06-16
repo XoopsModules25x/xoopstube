@@ -5,11 +5,11 @@
                 <a href="<{$xoops_url}>/modules/<{$videoload.dirname}>/singlevideo.php?cid=<{$videoload.cid}>&amp;lid=<{$videoload.id}>">
                     <span style="font-size: small;"><{$videoload.title}></span>
                 </a>
-                <br/>
+                <br>
                 <span style="font-size: small;">(<{$videoload.date}>)</span>
-                <br/>
+                <br>
                 <a href="<{$xoops_url}>/modules/<{$videoload.dirname}>/singlevideo.php?cid=<{$videoload.cid}>&amp;lid=<{$videoload.id}>"><{$videoload.videothumb}></a>
-                <br/>
+                <br>
             </td>
         </tr>
     <{/foreach}>

@@ -11,43 +11,40 @@
  * @category        Module
  * @package         Xoopstube
  * @author          XOOPS Development Team
- * @copyright       2001-2013 The XOOPS Project
+ * @copyright       2001-2016 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @version         $Id$
- * @link            http://sourceforge.net/projects/xoops/
+ * @link            http://xoops.org/
  * @since           1.0.6
  */
 
 include_once __DIR__ . '/admin_header.php';
 
-$op  = xtubeCleanRequestVars($_REQUEST, 'op', '');
-$lid = xtubeCleanRequestVars($_REQUEST, 'lid', '');
-$lid = intval($lid);
+$op  = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', '', 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'op', '');
+$lid = XoopsRequest::getInt('lid', XoopsRequest::getInt('lid', 0, 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'lid', 0);
 
 switch (strtolower($op)) {
     case 'approve':
 
         global $xoopsModule;
-        $sql
-            = 'SELECT cid, title, publisher, notifypub FROM ' . $xoopsDB->prefix('xoopstube_videos') . ' WHERE lid=' . $lid;
-        if (!$result = $xoopsDB->query($sql)) {
+        $sql = 'SELECT cid, title, publisher, notifypub FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE lid=' . $lid;
+        if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
             XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
             return false;
         }
-        list($cid, $title, $publisher, $notifypub) = $xoopsDB->fetchRow($result);
+        list($cid, $title, $publisher, $notifypub) = $GLOBALS['xoopsDB']->fetchRow($result);
 
         // Update the database
         $time = time();
-//        $publisher = $xoopsUser -> getVar( 'uname' );
+        //        $publisher = $GLOBALS['xoopsUser'] -> getVar( 'uname' );
 
-//        $xoopsDB->queryF(
-//            'UPDATE ' . $xoopsDB->prefix('xoopstube_videos') . ' SET published=' . $time . ', status=1, publisher='
-//            . $publisher . ' WHERE lid=' . $lid
-//        );
+        //        $GLOBALS['xoopsDB']->queryF(
+        //            'UPDATE ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' SET published=' . $time . ', status=1, publisher='
+        //            . $publisher . ' WHERE lid=' . $lid
+        //        );
 
-        $sql = 'UPDATE ' . $xoopsDB->prefix('xoopstube_videos') . ' SET published=' . $time . ", status=1, publisher='" . $publisher . "' WHERE lid=" . $lid;
-        if (!$result = $xoopsDB->queryF($sql)) {
+        $sql = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' SET published=' . $time . ", status=1, publisher='" . $publisher . "' WHERE lid=" . $lid;
+        if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
             XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
             return false;
@@ -55,22 +52,20 @@ switch (strtolower($op)) {
 
         $tags               = array();
         $tags['VIDEO_NAME'] = $title;
-        $tags['VIDEO_URL']
-                            = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/singlevideo.php?cid=' . $cid . '&amp;lid=' . $lid;
+        $tags['VIDEO_URL']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/singlevideo.php?cid=' . $cid . '&amp;lid=' . $lid;
 
-        $sql = 'SELECT title FROM ' . $xoopsDB->prefix('xoopstube_cat') . ' WHERE cid=' . $cid;
-        if (!$result = $xoopsDB->query($sql)) {
+        $sql = 'SELECT title FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_cat') . ' WHERE cid=' . $cid;
+        if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
             XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
         } else {
-            $row                   = $xoopsDB->fetchArray($result);
+            $row                   = $GLOBALS['xoopsDB']->fetchArray($result);
             $tags['CATEGORY_NAME'] = $row['title'];
-            $tags['CATEGORY_URL']
-                                   = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewcat.php?cid=' . $cid;
-            $notification_handler  = & xoops_gethandler('notification');
-            $notification_handler->triggerEvent('global', 0, 'new_video', $tags);
-            $notification_handler->triggerEvent('category', $cid, 'new_video', $tags);
-            if (intval($notifypub) == 1) {
-                $notification_handler->triggerEvent('video', $lid, 'approve', $tags);
+            $tags['CATEGORY_URL']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewcat.php?cid=' . $cid;
+            $notificationHandler   = xoops_getHandler('notification');
+            $notificationHandler->triggerEvent('global', 0, 'new_video', $tags);
+            $notificationHandler->triggerEvent('category', $cid, 'new_video', $tags);
+            if ((int)$notifypub == 1) {
+                $notificationHandler->triggerEvent('video', $lid, 'approve', $tags);
             }
         }
         redirect_header('main.php', 1, _AM_XOOPSTUBE_SUB_NEWFILECREATED);
@@ -79,29 +74,27 @@ switch (strtolower($op)) {
     case 'main':
     default:
 
-        global $xoopsModuleConfig;
-
-        $start = xtubeCleanRequestVars($_REQUEST, 'start', 0);
-        $sql   = 'SELECT * FROM ' . $xoopsDB->prefix('xoopstube_videos') . ' WHERE published = 0 ORDER BY lid DESC';
-        if (!$result = $xoopsDB->query($sql)) {
+        $start = XoopsRequest::getInt('start', 0); //xtubeCleanRequestVars($_REQUEST, 'start', 0);
+        $sql   = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE published = 0 ORDER BY lid DESC';
+        if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
             XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
             return false;
         }
-        $new_array       = $xoopsDB->query($sql, $xoopsModuleConfig['admin_perpage'], $start);
-        $new_array_count = $xoopsDB->getRowsNum($xoopsDB->query($sql));
+        $new_array       = $GLOBALS['xoopsDB']->query($sql, $GLOBALS['xoopsModuleConfig']['admin_perpage'], $start);
+        $new_array_count = $GLOBALS['xoopsDB']->getRowsNum($GLOBALS['xoopsDB']->query($sql));
 
         xoops_cp_header();
         $aboutAdmin = new ModuleAdmin();
-        echo $aboutAdmin->addNavigation('newvideos.php');
+        echo $aboutAdmin->addNavigation(basename(__FILE__));
 
         echo '  <div style="padding:5px; background-color: #EEEEEE; border: 1px solid #D9D9D9;">
-                <span style="font-weight: bold; color: #0A3760;">' . _AM_XOOPSTUBE_SUB_FILESWAITINGINFO . '<br /><br /></span>
-                <span style="padding: 12px;">' . _AM_XOOPSTUBE_SUB_FILESWAITINGVALIDATION . '<b>' . $new_array_count . '</b><br /><br /><span>
-                <div style="padding: 8px;"><li>&nbsp;&nbsp;' . $xtubeImageArray['approve'] . ' ' . _AM_XOOPSTUBE_SUB_APPROVEWAITINGFILE . '<br />
-                <li>&nbsp;&nbsp;' . $xtubeImageArray['editimg'] . ' ' . _AM_XOOPSTUBE_SUB_EDITWAITINGFILE . '<br />
+                <span style="font-weight: bold; color: #0A3760;">' . _AM_XOOPSTUBE_SUB_FILESWAITINGINFO . '<br><br></span>
+                <span style="padding: 12px;">' . _AM_XOOPSTUBE_SUB_FILESWAITINGVALIDATION . '<b>' . $new_array_count . '</b><br><br><span>
+                <div style="padding: 8px;"><li>&nbsp;&nbsp;' . $xtubeImageArray['approve'] . ' ' . _AM_XOOPSTUBE_SUB_APPROVEWAITINGFILE . '<br>
+                <li>&nbsp;&nbsp;' . $xtubeImageArray['editimg'] . ' ' . _AM_XOOPSTUBE_SUB_EDITWAITINGFILE . '<br>
                 <li>&nbsp;&nbsp;' . $xtubeImageArray['deleteimg'] . ' ' . _AM_XOOPSTUBE_SUB_DELETEWAITINGFILE . '</div>
-                </div><br />
+                </div><br>
              ';
 
         echo '<table width="100%" cellspacing="1" class="outer">';
@@ -114,17 +107,17 @@ switch (strtolower($op)) {
         echo '<th><span style="font-size: small;">' . _AM_XOOPSTUBE_MINDEX_ACTION . '</span></th>';
         echo '</tr>';
         if ($new_array_count > 0) {
-            while ($new = $xoopsDB->fetchArray($new_array)) {
-                $lid          = intval($new['lid']);
+            while (false !== ($new = $GLOBALS['xoopsDB']->fetchArray($new_array))) {
+                $lid          = (int)$new['lid'];
                 $rating       = number_format($new['rating'], 2);
                 $title        = $xtubemyts->htmlSpecialCharsStrip($new['title']);
                 $vidid        = urldecode($xtubemyts->htmlSpecialCharsStrip($new['vidid']));
                 $logourl      = $xtubemyts->htmlSpecialCharsStrip($new['screenshot']);
-                $submitter    = xtubeGetLinkedUserNameFromId($new['submitter']);
+                $submitter    = XoopstubeUtilities::xtubeGetLinkedUserNameFromId($new['submitter']);
                 $returnsource = xtubeReturnSource($new['vidsource']);
-                $datetime     = xtubeGetTimestamp(formatTimestamp($new['date'], $xoopsModuleConfig['dateformatadmin']));
+                $datetime     = XoopstubeUtilities::xtubeGetTimestamp(formatTimestamp($new['date'], $GLOBALS['xoopsModuleConfig']['dateformatadmin']));
 
-                $icon = ($new['published']) ? $approved : '<a href="newvideos.php?op=approve&amp;lid=' . $lid . '">' . $xtubeImageArray['approve'] . ' </a>';
+                $icon = $new['published'] ? $approved : '<a href="newvideos.php?op=approve&amp;lid=' . $lid . '">' . $xtubeImageArray['approve'] . ' </a>';
                 $icon .= '<a href="main.php?op=edit&amp;lid=' . $lid . '">' . $xtubeImageArray['editimg'] . ' </a>';
                 $icon .= '<a href="main.php?op=delete&amp;lid=' . $lid . '">' . $xtubeImageArray['deleteimg'] . '</a>';
 
@@ -143,8 +136,8 @@ switch (strtolower($op)) {
         echo '</table>';
 
         include_once XOOPS_ROOT_PATH . '/class/pagenav.php';
-//        $page = ( $new_array_count > $xoopsModuleConfig['admin_perpage'] ) ? _AM_XOOPSTUBE_MINDEX_PAGE : '';
-        $pagenav = new XoopsPageNav($new_array_count, $xoopsModuleConfig['admin_perpage'], $start, 'start');
+        //        $page = ( $new_array_count > $GLOBALS['xoopsModuleConfig']['admin_perpage'] ) ? _AM_XOOPSTUBE_MINDEX_PAGE : '';
+        $pagenav = new XoopsPageNav($new_array_count, $GLOBALS['xoopsModuleConfig']['admin_perpage'], $start, 'start');
         echo '<div align="right" style="padding: 8px;">' . $pagenav->renderNav() . '</div>';
         include_once __DIR__ . '/admin_footer.php';
         break;

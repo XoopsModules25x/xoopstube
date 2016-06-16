@@ -12,10 +12,9 @@
  * @category        Module
  * @package         Xoopstube
  * @author          XOOPS Development Team
- * @copyright       2001-2013 The XOOPS Project
+ * @copyright       2001-2016 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @version         $Id$
- * @link            http://sourceforge.net/projects/xoops/
+ * @link            http://xoops.org/
  * @since           1.0.6
  */
 class XoopstubeLists
@@ -39,21 +38,13 @@ class XoopstubeLists
      * @param string $prefix
      * @param string $suffix
      */
-    public function __construct(
-        $path = 'uploads',
-        $value = null,
-        $selected = '',
-        $size = 1,
-        $emptyselect = 0,
-        $type = 0,
-        $prefix = '',
-        $suffix = ''
-    ) {
+    public function __construct($path = 'uploads', $value = null, $selected = '', $size = 1, $emptyselect = 0, $type = 0, $prefix = '', $suffix = '')
+    {
         $this->value       = $value;
         $this->selection   = $selected;
         $this->path        = $path;
-        $this->size        = intval($size);
-        $this->emptyselect = ($emptyselect) ? 0 : 1;
+        $this->size        = (int)$size;
+        $this->emptyselect = $emptyselect ? 0 : 1;
         $this->type        = $type;
     }
 
@@ -62,21 +53,21 @@ class XoopstubeLists
      *
      * @return string
      */
-    function &getarray($this_array)
+    public function &getarray($this_array)
     {
         $ret = "<select size='" . $this->size() . "' name='$this->value()'>";
         if ($this->emptyselect) {
             $ret .= "<option value='" . $this->value() . "'>----------------------</option>";
         }
         foreach ($this_array as $content) {
-            $opt_selected = "";
+            $opt_selected = '';
 
-            if ($content[0] == $this->selected()) {
+            if ($content[0] == $this->isSelected()) {
                 $opt_selected = "selected='selected'";
             }
-            $ret .= "<option value='" . $content . "' $opt_selected>" . $content . "</option>";
+            $ret .= "<option value='" . $content . "' $opt_selected>" . $content . '</option>';
         }
-        $ret .= "</select>";
+        $ret .= '</select>';
 
         return $ret;
     }
@@ -88,13 +79,13 @@ class XoopstubeLists
      *
      * @return array
      */
-    function &getDirListAsArray($dirname)
+    public function &getDirListAsArray($dirname)
     {
         $dirlist = array();
         if (is_dir($dirname) && $handle = opendir($dirname)) {
             while (false !== ($file = readdir($handle))) {
                 if (!preg_match("/^[.]{1,2}$/", $file)) {
-                    if (strtolower($file) != 'cvs' && is_dir($dirname . $file)) {
+                    if (strtolower($file) !== 'cvs' && is_dir($dirname . $file)) {
                         $dirlist[$file] = $file;
                     }
                 }
@@ -115,7 +106,7 @@ class XoopstubeLists
      *
      * @return array
      */
-    static function &getListTypeAsArray($dirname, $type = '', $prefix = '', $noselection = 1)
+    public static function &getListTypeAsArray($dirname, $type = '', $prefix = '', $noselection = 1)
     {
         $filelist = array();
         switch (trim($type)) {
@@ -145,18 +136,14 @@ class XoopstubeLists
                 break;
         }
 
-        if (substr($dirname, -1) == '/') {
+        if ('/' === substr($dirname, -1)) {
             $dirname = substr($dirname, 0, -1);
         }
 
         if (is_dir($dirname) && $handle = opendir($dirname)) {
             while (false !== ($file = readdir($handle))) {
-                if (!preg_match("/^[.]{1,2}$/", $file) && preg_match("/$types$/i", $file)
-                    && is_file(
-                        $dirname . '/' . $file
-                    )
-                ) {
-                    if (strtolower($file) == 'blank.gif') {
+                if (!preg_match("/^[.]{1,2}$/", $file) && preg_match("/$types$/i", $file) && is_file($dirname . '/' . $file)) {
+                    if ('blank.gif' === strtolower($file)) {
                         continue;
                     }
                     $file            = $prefix . $file;
@@ -179,7 +166,7 @@ class XoopstubeLists
         return $this->value;
     }
 
-    public function selected()
+    public function isSelected()
     {
         return $this->selected;
     }
@@ -203,7 +190,7 @@ class XoopstubeLists
     /**
      * @return int
      */
-    public function emptyselect()
+    public function isEmptySelect()
     {
         return $this->emptyselect;
     }
@@ -211,17 +198,17 @@ class XoopstubeLists
     /**
      * @return int
      */
-    public function type()
+    public function getType()
     {
         return $this->type;
     }
 
-    public function prefix()
+    public function getPrefix()
     {
         return $this->prefix;
     }
 
-    public function suffix()
+    public function getSuffix()
     {
         return $this->suffix;
     }

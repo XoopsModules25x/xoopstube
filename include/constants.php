@@ -11,37 +11,36 @@
 /**
  * XoopsTube module
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package         xoopstube
  * @since           1.06
  * @author          Xoops Development Team
- * @version         svn:$id$
  */
 // CONFIG displayicons
-define("_XOOPSTUBE_DISPLAYICONS_ICON", 1);
-define("_XOOPSTUBE_DISPLAYICONS_TEXT", 2);
-define("_XOOPSTUBE_DISPLAYICONS_NO", 3);
+define('_XOOPSTUBE_DISPLAYICONS_ICON', 1);
+define('_XOOPSTUBE_DISPLAYICONS_TEXT', 2);
+define('_XOOPSTUBE_DISPLAYICONS_NO', 3);
 
 // CONFIG submissions
-define("_XOOPSTUBE_SUBMISSIONS_NONE", 1);
-define("_XOOPSTUBE_SUBMISSIONS_DOWNLOAD", 2);
-define("_XOOPSTUBE_SUBMISSIONS_MIRROR", 3);
-define("_XOOPSTUBE_SUBMISSIONS_BOTH", 4);
+define('_XOOPSTUBE_SUBMISSIONS_NONE', 1);
+define('_XOOPSTUBE_SUBMISSIONS_DOWNLOAD', 2);
+define('_XOOPSTUBE_SUBMISSIONS_MIRROR', 3);
+define('_XOOPSTUBE_SUBMISSIONS_BOTH', 4);
 
 // CONFIG anonpost
-define("_XOOPSTUBE_ANONPOST_NONE", 1);
-define("_XOOPSTUBE_ANONPOST_DOWNLOAD", 2);
-define("_XOOPSTUBE_ANONPOST_MIRROR", 3);
-define("_XOOPSTUBE_ANONPOST_BOTH", 4);
+define('_XOOPSTUBE_ANONPOST_NONE', 1);
+define('_XOOPSTUBE_ANONPOST_DOWNLOAD', 2);
+define('_XOOPSTUBE_ANONPOST_MIRROR', 3);
+define('_XOOPSTUBE_ANONPOST_BOTH', 4);
 
 // CONFIG autoapprove
-define("_XOOPSTUBE_AUTOAPPROVE_NONE", 1);
-define("_XOOPSTUBE_AUTOAPPROVE_DOWNLOAD", 2);
-define("_XOOPSTUBE_AUTOAPPROVE_MIRROR", 3);
-define("_XOOPSTUBE_AUTOAPPROVE_BOTH", 4);
+define('_XOOPSTUBE_AUTOAPPROVE_NONE', 1);
+define('_XOOPSTUBE_AUTOAPPROVE_DOWNLOAD', 2);
+define('_XOOPSTUBE_AUTOAPPROVE_MIRROR', 3);
+define('_XOOPSTUBE_AUTOAPPROVE_BOTH', 4);
 
 // CONFIG autosummary
-define("_XOOPSTUBE_AUTOSUMMARY_NO", 1);
-define("_XOOPSTUBE_AUTOSUMMARY_IFBLANK", 2);
-define("_XOOPSTUBE_AUTOSUMMARY_YES", 3);
+define('_XOOPSTUBE_AUTOSUMMARY_NO', 1);
+define('_XOOPSTUBE_AUTOSUMMARY_IFBLANK', 2);
+define('_XOOPSTUBE_AUTOSUMMARY_YES', 3);

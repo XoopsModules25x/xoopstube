@@ -11,17 +11,18 @@
  * @category        Module
  * @package         Xoopstube
  * @author          XOOPS Development Team
- * @copyright       2001-2013 The XOOPS Project
+ * @copyright       2001-2016 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @version         $Id$
- * @link            http://sourceforge.net/projects/xoops/
+ * @link            http://xoops.org/
  * @since           1.0.6
  */
 
 // WARNING: ONCE SET DO NOT CHANGE! Improper use will render this module useless and unworkable.
 // Only Change if you know what you are doing.
 
-$mydirname = basename(dirname(__DIR__));
+require_once dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
+
+$moduleDirName = basename(dirname(__DIR__));
 
 //These are names of the current tables
 
@@ -47,5 +48,31 @@ if (!defined('xoopstube_altcat')) {
     define('xoopstube_altcat', 'xoopstube_altcat');
 }
 if (!defined('xoopstube_url')) {
-    define('xoopstube_url', XOOPS_URL . '/modules/' . $mydirname . '/');
+    define('xoopstube_url', XOOPS_URL . '/modules/' . $moduleDirName . '/');
 }
+
+if (!defined('XOOPSTUBE_MODULE_PATH')) {
+    //    define("XOOPSTUBE_DIRNAME", $GLOBALS['xoopsModule']->dirname());
+    define('XOOPSTUBE_DIRNAME', $moduleDirName);
+    define('XOOPSTUBE_PATH', XOOPS_ROOT_PATH . '/modules/' . XOOPSTUBE_DIRNAME);
+    define('XOOPSTUBE_URL', XOOPS_URL . '/modules/' . XOOPSTUBE_DIRNAME);
+    define('XOOPSTUBE_IMAGES_URL', XOOPSTUBE_URL . '/assets/images');
+    define('XOOPSTUBE_ADMIN_URL', XOOPSTUBE_URL . '/admin');
+    define('XOOPSTUBE_ROOT_PATH', XOOPS_ROOT_PATH . '/modules/' . XOOPSTUBE_DIRNAME);
+    define('XOOPSTUBE_AUTHOR_LOGOIMG', XOOPSTUBE_URL . '/assets/images/logo_module.png');
+}
+
+// Define here the place where main upload path
+
+//$moduleUploadsPath = $GLOBALS['xoopsModuleConfig']['uploaddir'];
+
+define('XOOPSTUBE_UPLOAD_URL', XOOPS_UPLOAD_URL . '/' . XOOPSTUBE_DIRNAME); // WITHOUT Trailing slash
+//define("XOOPSTUBE_UPLOAD_PATH", $img_dir); // WITHOUT Trailing slash
+define('XOOPSTUBE_UPLOAD_PATH', XOOPS_UPLOAD_PATH . '/' . XOOPSTUBE_DIRNAME); // WITHOUT Trailing slash
+
+$uploadFolders = array(
+    XOOPSTUBE_UPLOAD_PATH,
+    XOOPSTUBE_UPLOAD_PATH . '/category',
+    XOOPSTUBE_UPLOAD_PATH . '/videos',
+    XOOPSTUBE_UPLOAD_PATH . '/screenshots'
+);

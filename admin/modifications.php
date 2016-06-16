@@ -11,43 +11,38 @@
  * @category        Module
  * @package         Xoopstube
  * @author          XOOPS Development Team
- * @copyright       2001-2013 The XOOPS Project
+ * @copyright       2001-2016 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @version         $Id$
- * @link            http://sourceforge.net/projects/xoops/
+ * @link            http://xoops.org/
  * @since           1.0.6
  */
 
 include_once __DIR__ . '/admin_header.php';
 
-global $xoopstubetree, $xoopsModuleConfig;
+global $xoopstubetree;
 
-$op        = xtubeCleanRequestVars($_REQUEST, 'op', '');
-$requestid = xtubeCleanRequestVars($_REQUEST, 'requestid', 0);
+$op        = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', '', 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'op', '');
+$requestid = XoopsRequest::getInt('requestid', XoopsRequest::getInt('requestid', 0, 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'requestid', 0);
 
 switch (strtolower($op)) {
     case 'listmodreqshow':
 
         xoops_cp_header();
-//    xtubeRenderAdminMenu(_AM_XOOPSTUBE_MOD_MODREQUESTS);
+        //    xtubeRenderAdminMenu(_AM_XOOPSTUBE_MOD_MODREQUESTS);
 
-        $sql
-                   =
-            'SELECT modifysubmitter, requestid, lid, cid, title, vidid, submitter, publisher, vidsource, description, time, keywords, item_tag, picurl FROM ' . $xoopsDB->prefix('xoopstube_mod')
-            . ' WHERE requestid=' . $requestid;
-        $mod_array = $xoopsDB->fetchArray($xoopsDB->query($sql));
+        $sql       = 'SELECT modifysubmitter, requestid, lid, cid, title, vidid, submitter, publisher, vidsource, description, time, keywords, item_tag, picurl FROM '
+                     . $GLOBALS['xoopsDB']->prefix('xoopstube_mod') . ' WHERE requestid=' . $requestid;
+        $mod_array = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
         unset($sql);
 
-        $sql
-                    =
-            'SELECT submitter, lid, cid, title, vidid, submitter, publisher, vidsource, description, time, keywords, item_tag, picurl FROM ' . $xoopsDB->prefix('xoopstube_videos') . ' WHERE lid='
-            . $mod_array['lid'];
-        $orig_array = $xoopsDB->fetchArray($xoopsDB->query($sql));
+        $sql        = 'SELECT submitter, lid, cid, title, vidid, submitter, publisher, vidsource, description, time, keywords, item_tag, picurl FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos')
+                      . ' WHERE lid=' . $mod_array['lid'];
+        $orig_array = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
         unset($sql);
 
         $orig_user      = new XoopsUser($orig_array['submitter']);
-        $submittername  = xtubeGetLinkedUserNameFromId($orig_array['submitter']);
-        $submitteremail = $orig_user->getUnameFromId('email');
+        $submittername  = XoopstubeUtilities::xtubeGetLinkedUserNameFromId($orig_array['submitter']);
+        $submitteremail = $orig_user::getUnameFromId('email');
 
         echo '<div><b>' . _AM_XOOPSTUBE_MOD_MODPOSTER . '</b> ' . $submittername . '</div>';
         $not_allowed = array('lid', 'submitter', 'requestid', 'modifysubmitter');
@@ -59,8 +54,8 @@ switch (strtolower($op)) {
             $lang_def = constant('_AM_XOOPSTUBE_MOD_' . strtoupper($key));
 
             if ($key == 'cid') {
-                $sql     = 'SELECT title FROM ' . $xoopsDB->prefix('xoopstube_cat') . ' WHERE cid=' . $content;
-                $row     = $xoopsDB->fetchArray($xoopsDB->query($sql));
+                $sql     = 'SELECT title FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_cat') . ' WHERE cid=' . $content;
+                $row     = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
                 $content = $row['title'];
             }
 
@@ -73,8 +68,8 @@ switch (strtolower($op)) {
         $sform->display();
 
         $orig_user      = new XoopsUser($mod_array['modifysubmitter']);
-        $submittername  = xtubeGetLinkedUserNameFromId($mod_array['modifysubmitter']);
-        $submitteremail = $orig_user->getUnameFromId('email');
+        $submittername  = XoopstubeUtilities::xtubeGetLinkedUserNameFromId($mod_array['modifysubmitter']);
+        $submitteremail = $orig_user::getUnameFromId('email');
 
         echo '<div><b>' . _AM_XOOPSTUBE_MOD_MODIFYSUBMITTER . '</b> ' . $submittername . '</div>';
         $sform = new XoopsThemeForm(_AM_XOOPSTUBE_MOD_PROPOSED, 'storyform', 'modifications.php');
@@ -85,8 +80,8 @@ switch (strtolower($op)) {
             $lang_def = constant('_AM_XOOPSTUBE_MOD_' . strtoupper($key));
 
             if ($key == 'cid') {
-                $sql     = 'SELECT title FROM ' . $xoopsDB->prefix('xoopstube_cat') . ' WHERE cid=' . $content;
-                $row     = $xoopsDB->fetchArray($xoopsDB->query($sql));
+                $sql     = 'SELECT title FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_cat') . ' WHERE cid=' . $content;
+                $row     = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
                 $content = $row['title'];
             }
 
@@ -115,13 +110,13 @@ switch (strtolower($op)) {
         break;
 
     case 'changemodreq':
-        $sql         = 'SELECT * FROM ' . $xoopsDB->prefix('xoopstube_mod') . ' WHERE requestid=' . $requestid;
-        $video_array = $xoopsDB->fetchArray($xoopsDB->query($sql));
+        $sql         = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_mod') . ' WHERE requestid=' . $requestid;
+        $video_array = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
 
         $lid          = $video_array['lid'];
         $cid          = $video_array['cid'];
         $title        = $video_array['title'];
-        $publisher    = $xoopsUser->uname();
+        $publisher    = $GLOBALS['xoopsUser']->uname();
         $screenshot   = $video_array['screenshot'];
         $vidsource    = $video_array['vidsource'];
         $descriptionb = $video_array['description'];
@@ -134,33 +129,32 @@ switch (strtolower($op)) {
         $time         = $video_array['time'];
         $updated      = time();
 
-        $xoopsDB->query(
-            "UPDATE " . $xoopsDB->prefix('xoopstube_videos') . " SET cid = $cid, title='$title', vidid='$vidid', screenshot='', publisher='$publisher', vidsource='$vidsource', description='$descriptionb', time='$time', keywords='$keywords', item_tag='$item_tag', picurl='$picurl', updated='$updated' WHERE lid = "
-            . $lid
-        );
-        $sql    = 'DELETE FROM ' . $xoopsDB->prefix('xoopstube_mod') . ' WHERE requestid=' . $requestid;
-        $result = $xoopsDB->query($sql);
+        $GLOBALS['xoopsDB']->query('UPDATE ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos')
+                                   . " SET cid = $cid, title='$title', vidid='$vidid', screenshot='', publisher='$publisher', vidsource='$vidsource', description='$descriptionb', time='$time', keywords='$keywords', item_tag='$item_tag', picurl='$picurl', updated='$updated' WHERE lid = "
+                                   . $lid);
+        $sql    = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_mod') . ' WHERE requestid=' . $requestid;
+        $result = $GLOBALS['xoopsDB']->query($sql);
         redirect_header('index.php', 1, _AM_XOOPSTUBE_MOD_REQUPDATED);
         break;
 
     case 'ignoremodreq':
-        $sql = sprintf('DELETE FROM ' . $xoopsDB->prefix('xoopstube_mod') . ' WHERE requestid=' . $requestid);
-        $xoopsDB->query($sql);
+        $sql = sprintf('DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_mod') . ' WHERE requestid=' . $requestid);
+        $GLOBALS['xoopsDB']->query($sql);
         redirect_header('index.php', 1, _AM_XOOPSTUBE_MOD_REQDELETED);
         break;
 
     case 'main':
     default:
 
-        $start            = isset($_GET['start']) ? intval($_GET['start']) : 0;
-        $xoopstubetree    = new XoopstubeTree($xoopsDB->prefix('xoopstube_mod'), 'requestid', 0);
-        $sql              = 'SELECT * FROM ' . $xoopsDB->prefix('xoopstube_mod') . ' ORDER BY requestdate DESC';
-        $result           = $xoopsDB->query($sql, $xoopsModuleConfig['admin_perpage'], $start);
-        $totalmodrequests = $xoopsDB->getRowsNum($xoopsDB->query($sql));
+        $start            = XoopsRequest::getInt('start', 0, 'GET');
+        $xoopstubetree    = new XoopstubeTree($GLOBALS['xoopsDB']->prefix('xoopstube_mod'), 'requestid', 0);
+        $sql              = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_mod') . ' ORDER BY requestdate DESC';
+        $result           = $GLOBALS['xoopsDB']->query($sql, $GLOBALS['xoopsModuleConfig']['admin_perpage'], $start);
+        $totalmodrequests = $GLOBALS['xoopsDB']->getRowsNum($GLOBALS['xoopsDB']->query($sql));
 
         xoops_cp_header();
         $aboutAdmin = new ModuleAdmin();
-        echo $aboutAdmin->addNavigation('modifications.php');
+        echo $aboutAdmin->addNavigation(basename(__FILE__));
 
         echo '<fieldset style="border: #E8E8E8 1px solid;">
               <legend style="display: inline; font-weight: bold; color: #0A3760;">' . _AM_XOOPSTUBE_MOD_MODREQUESTSINFO . '</legend>';
@@ -176,19 +170,13 @@ switch (strtolower($op)) {
         echo '<th>' . _AM_XOOPSTUBE_MINDEX_ACTION . '</th>';
         echo '</tr>';
         if ($totalmodrequests > 0) {
-            while ($video_arr = $xoopsDB->fetchArray($result)) {
-                $path        = $xoopstubetree->getNicePathFromId(
-                    $video_arr['requestid'],
-                    'title',
-                    'modifications.php?op=listmodreqshow&requestid'
-                );
+            while (false !== ($video_arr = $GLOBALS['xoopsDB']->fetchArray($result))) {
+                $path        = $xoopstubetree->getNicePathFromId($video_arr['requestid'], 'title', 'modifications.php?op=listmodreqshow&requestid');
                 $path        = str_replace('/', '', $path);
                 $path        = str_replace(':', '', trim($path));
                 $title       = trim($path);
-                $submitter   = xtubeGetLinkedUserNameFromId($video_arr['modifysubmitter']);
-                $requestdate = xtubeGetTimestamp(
-                    formatTimestamp($video_arr['requestdate'], $xoopsModuleConfig['dateformatadmin'])
-                );
+                $submitter   = XoopstubeUtilities::xtubeGetLinkedUserNameFromId($video_arr['modifysubmitter']);
+                $requestdate = XoopstubeUtilities::xtubeGetTimestamp(formatTimestamp($video_arr['requestdate'], $GLOBALS['xoopsModuleConfig']['dateformatadmin']));
 
                 echo '<tr style="text-align: center;">';
                 echo '<td class="head">' . $video_arr['requestid'] . '</td>';
@@ -204,8 +192,8 @@ switch (strtolower($op)) {
         echo '</table>';
 
         include_once XOOPS_ROOT_PATH . '/class/pagenav.php';
-//        $page = ( $totalmodrequests > $xoopsModuleConfig['admin_perpage'] ) ? _AM_xtube_MINDEX_PAGE : '';
-        $pagenav = new XoopsPageNav($totalmodrequests, $xoopsModuleConfig['admin_perpage'], $start, 'start');
+        //        $page = ( $totalmodrequests > $GLOBALS['xoopsModuleConfig']['admin_perpage'] ) ? _AM_xtube_MINDEX_PAGE : '';
+        $pagenav = new XoopsPageNav($totalmodrequests, $GLOBALS['xoopsModuleConfig']['admin_perpage'], $start, 'start');
         echo "<div style='text-align: right; padding: 8px;'>" . $pagenav->renderNav() . '</div>';
         include_once __DIR__ . '/admin_footer.php';
 }

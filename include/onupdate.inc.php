@@ -11,23 +11,21 @@
  * @category        Module
  * @package         Xoopstube
  * @author          XOOPS Development Team
- * @copyright       2001-2013 The XOOPS Project
+ * @copyright       2001-2016 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @version         $Id$
- * @link            http://sourceforge.net/projects/xoops/
+ * @link            http://xoops.org/
  * @since           1.0.6
  */
 
-// defined('XOOPS_ROOT_PATH') || die('XOOPS Root Path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 // referer check
 $ref = xoops_getenv('HTTP_REFERER');
-if ($ref == '' || strpos($ref, XOOPS_URL . '/modules/system/admin.php') === 0) {
+if ('' === $ref || 0 === strpos($ref, XOOPS_URL . '/modules/system/admin.php')) {
     /* module specific part */
 
     /* General part */
 
     // Keep the values of block's options when module is updated (by nobunobu)
-    include __DIR__ . "/updateblock.inc.php";
-
+    include __DIR__ . '/updateblock.inc.php';
 }

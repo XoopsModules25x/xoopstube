@@ -1,7 +1,7 @@
 <link rel="stylesheet" type="text/css" href="<{$smarty.const.xoopstube_url}>/assets/css/xtubestyle.css"/>
 
 <{if $catarray.imageheader != ""}>
-    <br/>
+    <br>
     <div class="xoopstube_header"><{$catarray.imageheader}></div>
 <{/if}>
 <div style="padding-bottom: 12px; text-align: center;" class="xoopstube_itemTitle"><{$catarray.letters}></div>
@@ -21,7 +21,7 @@
     <tr>
         <td align="center">
             <div style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_VOTEFORTITLE}>: <{$video.title}></div>
-            <br/>
+            <br>
 
             <form method="post" action="ratevideo.php">
                 <input type="hidden" name="lid" value="<{$video.id}>"/>

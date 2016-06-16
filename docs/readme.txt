@@ -1,5 +1,5 @@
 ==================
-  XOOPSTUBE 1.06
+  XOOPSTUBE 1.07
 ==================
 
 1. INSTALLING XOOPSTUBE
@@ -25,7 +25,7 @@ Go to the admin panel, choose Modules -> Administration and install XoopsTube as
 When you have renamed the installation folder from 'xoopstube' in whatever you wish, you have to open the file ../include/plugin.tag.php
 Find the line: function xoopstube_tag_iteminfo(&$items) {
 In this line you have to change 'xoopstube' into the name gave to the module folder before.
-Also for other plugins you might have to change 'xoopstube' into the new folder name. 
+Also for other plugins you might have to change 'xoopstube' into the new folder name.
 
 
 4. WAITING, SITEMAP & RSSFIT PLUGINS

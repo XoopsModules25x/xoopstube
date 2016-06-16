@@ -32,20 +32,20 @@
                     <div><span style="font-size: small;"><b><{$lang_subdate}>:</b>&nbsp;<{$video.updated|wordwrap:50:"\n":true}></span></div>
                     <div><span style="font-size: small;"><{$video.hits|wordwrap:50:"\n":true}></span></div>
                     <div><span style="font-size: small;"><{$smarty.const._MD_XOOPSTUBE_TIMEB}>&nbsp;<{$video.time}></span></div>
-                    <br />
+                    <br>
                     <hr noshade="noshade">
-                    <br />
-                    <div><b><{$smarty.const._MD_XOOPSTUBE_DESCRIPTIONC}></b><br /><{$video.description}></div><br />
+                    <br>
+                    <div><b><{$smarty.const._MD_XOOPSTUBE_DESCRIPTIONC}></b><br><{$video.description}></div><br>
               </div>
-            <br />
+            <br>
             <div style="margin-left: 10px; margin-right: 10px; padding: 4px;" class="xoopstube_description"> <span style="font-size: small;"> <b><{$smarty.const._MD_XOOPSTUBE_RATINGC}></b>&nbsp;<img src="<{$xoops_url}>/modules/<{$video.module_dir}>/assets/images/icon/<{$video.rateimg}>" alt="" align="middle" />&nbsp;&nbsp;(<{$video.votes}>) </span> </div>
-            <br />
+            <br>
            <{if $tagbar}>
 	        <div class="xoopstube_rating">
                  <{include file="db:tag_bar.tpl"}>
                 </div>
 	    <{/if}>
-	    <br />
+	    <br>
             </td>
         </tr>
         <tr>
@@ -72,25 +72,25 @@
        </table>
   </tr>
 </table>
-<br />
+<br>
 <{if $video.othervideox > 0}>
 <{$other_videos}>
 <{foreach item=video_user from=$video_uid}>
    <div style="margin-left: 10px;"> <a href="<{$xoops_url}>/modules/<{$video.module_dir}>/singlevideo.php?cid=<{$video_user.cid}>&amp;lid=<{$video_user.lid}>"><{$video_user.title}></a> (<{$video_user.published}>) </div>
 <{/foreach}>
 <{/if}>
-<br /><br />
+<br><br>
 <div align="center"><{$lang_copyright}></div>
 <div style="text-align: center; padding: 3px; margin:3px;">
  <{$commentsnav}> <{$lang_notice}>
 </div>
 <!-- start comments loop -->
 <{if $comment_mode == "flat"}>
-	<{include file="db:system_comments_flat.html"}>
+	<{include file="db:system_comments_flat.tpl"}>
 <{elseif $comment_mode == "thread"}>
-	<{include file="db:system_comments_thread.html"}>
+	<{include file="db:system_comments_thread.tpl"}>
 <{elseif $comment_mode == "nest"}>
-	<{include file="db:system_comments_nest.html"}>
+	<{include file="db:system_comments_nest.tpl"}>
 <{/if}>
 <!-- end comments loop -->
-<{include file="db:system_notification_select.html"}>
+<{include file="db:system_notification_select.tpl"}>

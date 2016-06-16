@@ -12,10 +12,9 @@
  * @category        Module
  * @package         Xoopstube
  * @author          XOOPS Development Team
- * @copyright       2001-2013 The XOOPS Project
+ * @copyright       2001-2016 XOOPS Project (http://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @version         $Id$
- * @link            http://sourceforge.net/projects/xoops/
+ * @link            http://xoops.org/
  * @since           1.0.6
  */
 
@@ -24,126 +23,99 @@ include __DIR__ . '/header.php';
 global $xtubemyts, $xoTheme;
 
 // Check if videoload POSTER is voting (UNLESS Anonymous users allowed to post)
-$lid = xtubeCleanRequestVars($_REQUEST, 'lid', '');
-$lid = intval($lid);
+$lid = XoopsRequest::getInt('lid', XoopsRequest::getInt('lid', '', 'POST'), 'GET');
 
-$ip         = getenv("REMOTE_ADDR");
-$ratinguser = (!is_object($xoopsUser)) ? 0 : $xoopsUser->getVar('uid');
+$ip         = getenv('REMOTE_ADDR');
+$ratinguser = (!is_object($GLOBALS['xoopsUser'])) ? 0 : $GLOBALS['xoopsUser']->getVar('uid');
 
-if ($xoopsModuleConfig['showrating'] == 0 || $lid == '') {
+if (0 == $GLOBALS['xoopsModuleConfig']['showrating'] || '' === $lid) {
     $ratemessage = _MD_XOOPSTUBE_CANTVOTEOWN;
     redirect_header('index.php', 4, $ratemessage);
-    exit();
 }
 
-if ($ratinguser != 0) {
-    $result = $xoopsDB->query(
-        'SELECT cid, submitter FROM ' . $xoopsDB->prefix('xoopstube_videos') . ' WHERE lid=' . intval($lid)
-    );
-    while (list($cid, $ratinguserDB) = $xoopsDB->fetchRow($result)) {
-        if ($ratinguserDB == $ratinguser) {
+if ($ratinguser !== 0) {
+    $result = $GLOBALS['xoopsDB']->query('SELECT cid, submitter FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE lid=' . (int)$lid);
+    while (false !== (list($cid, $ratinguserDB) = $GLOBALS['xoopsDB']->fetchRow($result))) {
+        if ($ratinguserDB === $ratinguser) {
             $ratemessage = _MD_XOOPSTUBE_CANTVOTEOWN;
-            redirect_header('singlevideo.php?cid=' . intval($cid) . '&amp;lid=' . intval($lid), 4, $ratemessage);
-            exit();
+            redirect_header('singlevideo.php?cid=' . (int)$cid . '&amp;lid=' . (int)$lid, 4, $ratemessage);
         }
     }
     // Check if REG user is trying to vote twice.
-    $result = $xoopsDB->query(
-        'SELECT cid, ratinguser FROM ' . $xoopsDB->prefix('xoopstube_votedata') . ' WHERE lid=' . intval($lid)
-    );
-    while (list($cid, $ratinguserDB) = $xoopsDB->fetchRow($result)) {
-        if ($ratinguserDB == $ratinguser) {
+    $result = $GLOBALS['xoopsDB']->query('SELECT cid, ratinguser FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_votedata') . ' WHERE lid=' . (int)$lid);
+    while (false !== (list($cid, $ratinguserDB) = $GLOBALS['xoopsDB']->fetchRow($result))) {
+        if ($ratinguserDB === $ratinguser) {
             $ratemessage = _MD_XOOPSTUBE_VOTEONCE;
-            redirect_header('singlevideo.php?cid=' . intval($cid) . '&amp;lid=' . intval($lid), 4, $ratemessage);
-            exit();
+            redirect_header('singlevideo.php?cid=' . (int)$cid . '&amp;lid=' . (int)$lid, 4, $ratemessage);
         }
     }
 } else {
     // Check if ANONYMOUS user is trying to vote more than once per day.
     $yesterday = (time() - (86400 * $anonwaitdays));
-    $result    = $xoopsDB->query(
-        'SELECT COUNT(*) FROM ' . $xoopsDB->prefix('xoopstube_votedata') . ' WHERE lid=' . intval($lid) . ' AND ratinguser=0 AND ratinghostname=' . $ip . '  AND ratingtimestamp > ' . $yesterday
-    );
-    list($anonvotecount) = $xoopsDB->fetchRow($result);
+    $result    = $GLOBALS['xoopsDB']->query('SELECT COUNT(*) FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_votedata') . ' WHERE lid=' . (int)$lid . ' AND ratinguser=0 AND ratinghostname=' . $ip
+                                            . '  AND ratingtimestamp > ' . $yesterday);
+    list($anonvotecount) = $GLOBALS['xoopsDB']->fetchRow($result);
     if ($anonvotecount >= 1) {
         $ratemessage = _MD_XOOPSTUBE_VOTEONCE;
-        redirect_header('singlevideo.php?cid=' . intval($cid) . '&amp;lid=' . intval($lid), 4, $ratemessage);
-        exit();
+        redirect_header('singlevideo.php?cid=' . (int)$cid . '&amp;lid=' . (int)$lid, 4, $ratemessage);
     }
 }
 
-if (!empty($_POST['submit'])) {
-    $ratinguser = (!is_object($xoopsUser)) ? 0 : $xoopsUser->getVar('uid');
+if (!empty(XoopsRequest::getString('submit', ''))) {
+    $ratinguser = (!is_object($GLOBALS['xoopsUser'])) ? 0 : $GLOBALS['xoopsUser']->getVar('uid');
     // Make sure only 1 anonymous from an IP in a single day.
     $anonwaitdays = 1;
     $ip           = getenv('REMOTE_ADDR');
-    $lid          = xtubeCleanRequestVars($_REQUEST, 'lid', 0);
-    $cid          = xtubeCleanRequestVars($_REQUEST, 'cid', 0);
-    $rating       = xtubeCleanRequestVars($_REQUEST, 'rating', 0);
-    $title        = $xtubemyts->addslashes(trim($_POST['title']));
-    $lid          = intval($lid);
-    $cid          = intval($cid);
-    $rating       = intval($rating);
+    $lid          = XoopsRequest::getInt('lid', 0, 'POST');
+    $cid          = XoopsRequest::getInt('cid', 0, 'POST');
+    $rating       = XoopsRequest::getInt('rating', 0, 'POST');
+    //    $title        = $xtubemyts->addslashes(trim(XoopsRequest::getString('title', '', 'POST')));
+    $title = XoopsRequest::getString('title', '', 'POST');
     // Check if Rating is Null
-    if ($rating == '--') {
+    if (0 == $rating) {
         $ratemessage = _MD_XOOPSTUBE_NORATING;
-        redirect_header('ratevideo.php?cid=' . intval($cid) . '&amp;lid=' . intval($lid), 4, $ratemessage);
-        exit();
+        redirect_header('ratevideo.php?cid=' . (int)$cid . '&amp;lid=' . (int)$lid, 4, $ratemessage);
     }
     // All is well.  Add to Line Item Rate to DB.
-    $newid    = $xoopsDB->genId($xoopsDB->prefix('xoopstube_votedata') . '_ratingid_seq');
+    $newid    = $GLOBALS['xoopsDB']->genId($GLOBALS['xoopsDB']->prefix('xoopstube_votedata') . '_ratingid_seq');
     $datetime = time();
-    $sql      = sprintf(
-        "INSERT INTO %s (ratingid, lid, ratinguser, rating, ratinghostname, ratingtimestamp, title) VALUES (%u, %u, %u, %u, %s, %u, %s)",
-        $xoopsDB->prefix('xoopstube_votedata'),
-        $newid,
-        intval($lid),
-        $ratinguser,
-        $rating,
-        $xoopsDB->quoteString($ip),
-        $datetime,
-        $xoopsDB->quoteString($title)
-    );
-    if (!$result = $xoopsDB->query($sql)) {
+    $sql      =
+        sprintf('INSERT INTO %s (ratingid, lid, ratinguser, rating, ratinghostname, ratingtimestamp, title) VALUES (%u, %u, %u, %u, %s, %u, %s)', $GLOBALS['xoopsDB']->prefix('xoopstube_votedata'),
+                $newid, (int)$lid, $ratinguser, $rating, $GLOBALS['xoopsDB']->quoteString($ip), $datetime, $GLOBALS['xoopsDB']->quoteString($title));
+    if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
         $ratemessage = _MD_XOOPSTUBE_ERROR;
     } else {
         // All is well.  Calculate Score & Add to Summary (for quick retrieval & sorting) to DB.
-        xtubeUpdateRating($lid);
-        $ratemessage = _MD_XOOPSTUBE_VOTEAPPRE . '<br />' . sprintf(_MD_XOOPSTUBE_THANKYOU, $xoopsConfig['sitename']);
+        XoopstubeUtilities::xtubeUpdateRating($lid);
+        $ratemessage = _MD_XOOPSTUBE_VOTEAPPRE . '<br>' . sprintf(_MD_XOOPSTUBE_THANKYOU, $GLOBALS['xoopsConfig']['sitename']);
     }
-    redirect_header('singlevideo.php?cid=' . intval($cid) . '&amp;lid=' . intval($lid), 4, $ratemessage);
-    exit();
+    redirect_header('singlevideo.php?cid=' . (int)$cid . '&amp;lid=' . (int)$lid, 4, $ratemessage);
 } else {
+    //TODO add
     $xoopsOption['template_main'] = 'xoopstube_ratevideo.tpl';
     include XOOPS_ROOT_PATH . '/header.php';
 
-    $catarray['imageheader'] = xtubeRenderImageHeader();
-    $cid                     = xtubeCleanRequestVars($_REQUEST, 'cid', 0);
-    $cid                     = intval($cid);
+    $catarray['imageheader'] = XoopstubeUtilities::xtubeRenderImageHeader();
+    $cid                     = XoopsRequest::getInt('cid', XoopsRequest::getInt('cid', '', 'POST'), 'GET');
 
-    $catarray['imageheader'] = xtubeRenderImageHeader();
+    $catarray['imageheader'] = XoopstubeUtilities::xtubeRenderImageHeader();
     $xoopsTpl->assign('catarray', $catarray);
 
-    $result = $xoopsDB->query(
-        'SELECT title FROM ' . $xoopsDB->prefix('xoopstube_videos') . ' WHERE lid=' . intval($lid)
-    );
-    list($title) = $xoopsDB->fetchRow($result);
-    $xoopsTpl->assign(
-        'video',
-        array(
-            'id'    => intval($lid),
-            'cid'   => intval($cid),
-            'title' => $xtubemyts->htmlSpecialCharsStrip($title)
-        )
-    );
+    $result = $GLOBALS['xoopsDB']->query('SELECT title FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE lid=' . (int)$lid);
+    list($title) = $GLOBALS['xoopsDB']->fetchRow($result);
+    $xoopsTpl->assign('video', array(
+        'id'    => (int)$lid,
+        'cid'   => (int)$cid,
+        'title' => $xtubemyts->htmlSpecialCharsStrip($title)
+    ));
 
-    xtubeSetNoIndexNoFollow();
+    XoopstubeUtilities::xtubeSetNoIndexNoFollow();
 
     $xoopsTpl->assign('module_dir', $xoopsModule->getVar('dirname'));
     include XOOPS_ROOT_PATH . '/footer.php';
 }
 
-xtubeSetNoIndexNoFollow();
+XoopstubeUtilities::xtubeSetNoIndexNoFollow();
 
 $xoopsTpl->assign('module_dir', $xoopsModule->getVar('dirname'));
 include XOOPS_ROOT_PATH . '/footer.php';
