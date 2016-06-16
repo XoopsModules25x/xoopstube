@@ -23,13 +23,13 @@ $op  = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', '', 'POST'), 'GET')
 $lid = XoopsRequest::getInt('lid', XoopsRequest::getInt('lid', 0, 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'lid', 0);
 
 /**
- * @param  XoopsObject      $xt
+ * @param  XoopstubeTree      $xt
  * @param int       $itemid
  * @param        $title
  * @param        $checks
  * @param string $order
  */
-function makeTreeCheckTable($xt, $itemid, $title, $checks, $order = '')
+function makeTreeCheckTable(XoopstubeTree $xt, $itemid, $title, $checks, $order = '')
 {
     global $xtubemyts;
 

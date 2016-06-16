@@ -276,8 +276,11 @@ function xtubeShowVideo($vidid, $source, $screenshot, $picurl)
         // YouTube
         case 0:
             //  $showvideo = '<object width="480" height="295"><param name="movie" value="http://www.youtube.com/v/' . $vidid . '&ap=%2526fmt%3D18&&autoplay=' . $autoplay . '&rel=1&fs=1&color1=0x999999&color2=0x999999&border=0&loop=0"></param><param name="wmode" value="transparent"></param><embed src="http://www.youtube.com/v/' . $vidid . '&ap=%2526fmt%3D18&&autoplay=' . $autoplay . '&rel=1&fs=1&color1=0x999999&color2=0x999999&border=0&loop=0" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="transparent" width="480" height="295"></embed></object>';
-            $showvideo = '<embed src="http://www.youtube.com/v/' . $vidid . '&autoplay=' . $autoplay
-                         . '&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="480" height="295"></embed>';
+//            $showvideo = '<embed src="http://www.youtube.com/v/' . $vidid . '&autoplay=' . $autoplay
+//                         . '&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="480" height="295"></embed>';
+
+            $showvideo = '<iframe src="http://www.youtube.com/embed/' . $vidid . '?html5=1&amp;rel=0&amp;hl=en_US&amp;version=3' . '&autoplay=' . $autoplay
+                         . '&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="480" height="295"></iframe>';
             break;
 
         // MetaCafe

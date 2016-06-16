@@ -13,6 +13,9 @@
 - Unnecessary double quotes (mamba)
 - reference mismatch (mamba)
 - partial conversion to $GLOBALS (mamba)
+- adapted Alphabet Letter Selection (mamba)
+- added HTML5 as default for YouTube (option/bleekk)
+
 
 TODO: Needs code cleanup
 

@@ -81,7 +81,7 @@
     }
 </style>
 <{$smarty.const._MD_XOOPSTUBE_BROWSETOTOPIC}>
-<br/>
+<br>
 <div>
     <{assign var="alphabetcount" value=$alphabet|@count}>
     <{foreach name=letters item=letter from=$alphabet}>
