@@ -69,7 +69,7 @@ $modversion = array(
     // About
     'module_status'       => 'Beta 1',
     //    'release_date'        => "2013/10/07",
-    'release_date'        => '2016/06/03',
+    'release_date'        => '2016/06/16',
     //    'release'             => "2015-04-03",
     'demo_site_url'       => 'http://xoops.org',
     'demo_site_name'      => 'XOOPS Demo Site',

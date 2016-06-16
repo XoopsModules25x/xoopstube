@@ -1,5 +1,5 @@
 =========================================================
-1.07 Beta 1                       NOT RELEASED
+1.07 Beta 1                       2016-06-16
 =========================================================
 
 - conversion to XoopsRequest (mamba)
@@ -14,6 +14,7 @@
 - reference mismatch (mamba)
 - partial conversion to $GLOBALS (mamba)
 - adapted Alphabet Letter Selection (mamba)
+- added updated templates for xBootstrap theme (in /themes) (mamba)
 - added HTML5 as default for YouTube (option/bleekk)
 
 
