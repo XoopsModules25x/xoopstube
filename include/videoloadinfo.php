@@ -87,7 +87,7 @@ if (is_object($GLOBALS['xoopsUser']) && !empty($GLOBALS['xoopsUser'])) {
     if (true === XoopstubeUtilities::xtubeCheckGroups($cid)) {
         $video['useradminvideo'] = 1;
         if ($GLOBALS['xoopsUser']->getVar('uid') === $video_arr['submitter']) {
-            $video['usermodify'] = '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/submit.php?lid=' . $video_arr['lid'] . '"> ' . _MD_XOOPSTUBE_MODIFY . '</a> |';
+            $video['usermodify'] = '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/submit.php?lid=' . $video_arr['lid'] . '"> ' . _MD_XOOPSTUBE_MODIFY . '</a>';
         }
     }
 }
