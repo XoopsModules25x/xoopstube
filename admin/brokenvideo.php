@@ -110,6 +110,7 @@ switch (strtolower($op)) {
         $aboutAdmin = new ModuleAdmin();
         echo $aboutAdmin->addNavigation(basename(__FILE__));
 
+
         echo '
         <fieldset style="border: #E8E8E8 1px solid;">
             <legend style="display: inline; font-weight: bold; color: #0A3760;">' . _AM_XOOPSTUBE_BROKEN_REPORTINFO . '</legend>
@@ -157,7 +158,8 @@ switch (strtolower($op)) {
 
                 $ack_image = $acknowledged ? $xtubeImageArray['ack_yes'] : $xtubeImageArray['ack_no'];
                 $con_image = $confirmed ? $xtubeImageArray['con_yes'] : $xtubeImageArray['con_no'];
-
+                xoops_load('XoopsUserUtility');
+                
                 echo '<tr style="text-align: center;">';
                 echo '<td class="head">' . $reportid . '</td>';
                 echo '<td class="even" style="text-align: left;"><a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/singlevideo.php?cid=' . $cid . '&amp;lid=' . $lid

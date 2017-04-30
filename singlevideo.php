@@ -48,6 +48,8 @@ $xoopsOption['template_main'] = 'xoopstube_singlevideo.tpl';
 
 include XOOPS_ROOT_PATH . '/header.php';
 
+$xoTheme->addStylesheet('modules/'.$moduleDirName.'/assets/css/xtubestyle.css');
+
 // tags support
 if (XoopstubeUtilities::xtubeIsModuleTagInstalled()) {
     include_once XOOPS_ROOT_PATH . '/modules/tag/include/tagbar.php';

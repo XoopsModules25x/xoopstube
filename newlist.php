@@ -22,11 +22,16 @@ include __DIR__ . '/header.php';
 
 $xoopsOption['template_main'] = 'xoopstube_newlistindex.tpl';
 include XOOPS_ROOT_PATH . '/header.php';
+$xoTheme->addStylesheet('modules/'.$moduleDirName.'/assets/css/xtubestyle.css');
 
 global $xoopsModule;
 
 $catarray['imageheader'] = XoopstubeUtilities::xtubeRenderImageHeader();
 $xoopsTpl->assign('catarray', $catarray);
+
+if (!isset($_GET['newvideoshowdays'])){
+    redirect_header('newlist.php?newvideoshowdays=7',1,'');
+}
 
 if (XoopsRequest::getInt('newvideoshowdays', '', 'GET')) {
     $newvideoshowdays = XoopsRequest::getInt('newvideoshowdays', 7, 'GET');
@@ -46,6 +51,7 @@ if (XoopsRequest::getInt('newvideoshowdays', '', 'GET')) {
     $result         =
         $GLOBALS['xoopsDB']->query('SELECT lid, cid, published, updated FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE (published >= ' . $duration . ' AND published <= '
                                    . $time_cur . ') OR updated >= ' . $duration . ' AND (expired = 0 OR expired > ' . $time_cur . ') AND offline = 0');
+
     while (false !== ($myrow = $GLOBALS['xoopsDB']->fetcharray($result))) {
         $published = ($myrow['updated'] > 0) ? $myrow['updated'] : $myrow['published'];
         ++$allmonthvideos;
@@ -60,14 +66,16 @@ if (XoopsRequest::getInt('newvideoshowdays', '', 'GET')) {
     //  $newvideoshowdays = xtubeCleanRequestVars($_REQUEST, 'newvideoshowdays', 7 );
     $newvideoshowdays = (int)XoopsRequest::getInt('newvideoshowdays', 7, 'GET');
     $xoopsTpl->assign('newvideoshowdays', $newvideoshowdays);
-
+    
     $dailyvideos = array();
     for ($i = 0; $i < $newvideoshowdays; ++$i) {
         $key                                 = $newvideoshowdays - $i - 1;
         $time                                = $time_cur - (86400 * $key);
         $dailyvideos[$key]['newvideodayRaw'] = $time;
         $dailyvideos[$key]['newvideoView']   = XoopstubeUtilities::xtubeGetTimestamp(formatTimestamp($time, $GLOBALS['xoopsModuleConfig']['dateformat']));
-        $dailyvideos[$key]['totalvideos']    = 0;
+        
+         $dailyvideos[$key]['totalvideos']  = 0;
+        
     }
 }
 
@@ -76,7 +84,7 @@ $result   =
     $GLOBALS['xoopsDB']->query('SELECT lid, cid, published, updated FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE (published > ' . $duration . ' AND published <= ' . $time_cur
                                . ') OR (updated >= ' . $duration . ' AND updated <= ' . $time_cur . ') AND (expired = 0 OR expired > ' . $time_cur . ') AND offline = 0');
 while (false !== ($myrow = $GLOBALS['xoopsDB']->fetcharray($result))) {
-    $published = ($myrow['updated'] > 0) ? $myrow['updated'] : $myrow['published'];
+    $published = ($myrow['updated'] > 0) ? date($GLOBALS['xoopsModuleConfig']['dateformat'], $myrow['updated']) : date($GLOBALS['xoopsModuleConfig']['dateformat'], $myrow['published']);
     $d         = date('j', $published);
     $m         = date('m', $published);
     $y         = date('Y', $published);
