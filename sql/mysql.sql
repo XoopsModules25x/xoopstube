@@ -45,7 +45,7 @@ CREATE TABLE `xoopstube_cat` (
   pid          INT(5) UNSIGNED NOT NULL DEFAULT '0',
   title        VARCHAR(50)     NOT NULL DEFAULT '',
   imgurl       VARCHAR(150)    NOT NULL DEFAULT '',
-  description  VARCHAR(255)    NOT NULL DEFAULT '',
+  description  TEXT            NOT NULL ,
   total        INT(11)         NOT NULL DEFAULT '0',
   spotlighttop INT(11)         NOT NULL DEFAULT '0',
   spotlighthis INT(11)         NOT NULL DEFAULT '0',
@@ -60,9 +60,9 @@ CREATE TABLE `xoopstube_cat` (
   PRIMARY KEY (cid),
   KEY pid (pid)
 )
-  ENGINE =MyISAM
+  ENGINE = MyISAM
   COMMENT ='XoopsTube by McDonald'
-  AUTO_INCREMENT =1;
+  AUTO_INCREMENT = 1;
 
 #
 # Table structure for table 'xoopstube_indexpage'

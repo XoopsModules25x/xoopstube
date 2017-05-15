@@ -46,6 +46,7 @@ if (!is_array($video_arr)) {
 $GLOBALS['xoopsOption']['template_main'] = 'xoopstube_singlevideo.tpl';
 
 include XOOPS_ROOT_PATH . '/header.php';
+$xoTheme->addStylesheet('modules/'.$moduleDirName.'/assets/css/xtubestyle.css');
 
 // tags support
 if (XoopstubeUtility::xtubeIsModuleTagInstalled()) {
@@ -59,9 +60,9 @@ $video['cid']          = $video_arr['cid'];
 $video['vidid']        = $video_arr['vidid'];
 $video['description2'] = $xtubemyts->displayTarea($video_arr['description'], 1, 1, 1, 1, 1);
 
-$mytree     = new XoopstubeTree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
-$pathstring = '<a href="index.php">' . _MD_XOOPSTUBE_MAIN . '</a>&nbsp;:&nbsp;';
-$pathstring .= $mytree->getNicePathFromId($cid, 'title', 'viewcat.php?op=');
+$mytree        = new XoopstubeTree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
+$pathstring    = '<a href="index.php">' . _MD_XOOPSTUBE_MAIN . '</a>&nbsp;:&nbsp;';
+$pathstring    .= $mytree->getNicePathFromId($cid, 'title', 'viewcat.php?op=');
 $video['path'] = $pathstring;
 // Get video from source
 $video['showvideo'] = xtubeShowVideo($video_arr['vidid'], $video_arr['vidsource'], $video_arr['screenshot'], $video_arr['picurl']);

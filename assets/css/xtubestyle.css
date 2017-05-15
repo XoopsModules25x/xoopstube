@@ -1,7 +1,6 @@
-/**
-* 
-* Module: XoopsTube
-*/
+.xt-list li{
+    padding-bottom: 5px !important;
+}
 
 .xoopstube_button {
     padding: 2px 0.5em 3px;

@@ -22,6 +22,7 @@ include __DIR__ . '/header.php';
 
 $GLOBALS['xoopsOption']['template_main'] = 'xoopstube_topten.tpl';
 include XOOPS_ROOT_PATH . '/header.php';
+$xoTheme->addStylesheet('modules/'.$moduleDirName.'/assets/css/xtubestyle.css');
 
 $mytree = new XoopstubeTree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
 
@@ -52,7 +53,7 @@ while (false !== (list($cid, $ctitle) = $GLOBALS['xoopsDB']->fetchRow($result)))
         for ($i = 0; $i < $arrayCount; ++$i) {
             $query .= ' or cid=' . $arr[$i] . '';
         }
-        $query .= ') order by ' . $sortDB . ' DESC';
+        $query     .= ') order by ' . $sortDB . ' DESC';
         $result2   = $GLOBALS['xoopsDB']->query($query, 10, 0);
         $filecount = $GLOBALS['xoopsDB']->getRowsNum($result2);
 

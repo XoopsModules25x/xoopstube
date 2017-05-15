@@ -36,6 +36,13 @@ if (false === XoopstubeUtility::xtubeCheckGroups($cid, 'XTubeSubPerm')) {
 }
 
 if (true === XoopstubeUtility::xtubeCheckGroups($cid, 'XTubeSubPerm')) {
+    echo '<div class="row">
+    <div class="col-md-12">';
+    echo '<ol class="breadcrumb">
+        <li><a href="index.php">'.$moduleDirName.'</a></li>
+        <li>'._MD_XOOPSTUBE_SUBMITCATHEAD.'</li>
+    </ol>
+    ';
     //    if (xtubeCleanRequestVars($_REQUEST, 'submit', 0)) {
     if (XoopsRequest::getString('submit', '')) {
         if (false === XoopstubeUtility::xtubeCheckGroups($cid, 'XTubeSubPerm')) {
@@ -69,8 +76,7 @@ if (true === XoopstubeUtility::xtubeCheckGroups($cid, 'XTubeSubPerm')) {
                 $status      = 1;
                 $message     = _MD_XOOPSTUBE_ISAPPROVED;
             }
-            $sql =
-                'INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . '  (lid, cid, title, vidid, submitter, publisher, status, date, hits, rating, votes, comments, vidsource, published, expired, offline, description, ipaddress, notifypub, vidrating, time, keywords, item_tag, picurl) ';
+            $sql = 'INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . '  (lid, cid, title, vidid, submitter, publisher, status, date, hits, rating, votes, comments, vidsource, published, expired, offline, description, ipaddress, notifypub, vidrating, time, keywords, item_tag, picurl) ';
             $sql .= " VALUES    ('', $cid, '$title', '$vidid', '$submitter', '$publisher', '$status', '$date', 0, 0, 0, 0, '$vidsource', '$publishdate', 0, '$offline', '$descriptionb', '$ipaddress', '$notifypub', '$vidrating', '$time', '$keywords', '$item_tag', '$picurl')";
             if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
                 $_error = $GLOBALS['xoopsDB']->error() . ' : ' . $GLOBALS['xoopsDB']->errno();
@@ -186,7 +192,7 @@ if (true === XoopstubeUtility::xtubeCheckGroups($cid, 'XTubeSubPerm')) {
             include XOOPS_ROOT_PATH . '/footer.php';
             exit();
         }
-        echo '<br><div style="text-align: center;">' . XoopstubeUtility::xtubeRenderImageHeader() . '</div><br>';
+//        echo '<br><div style="text-align: center;">' . XoopstubeUtility::xtubeRenderImageHeader() . '</div><br>';
         echo '<div>' . _MD_XOOPSTUBE_SUB_SNEWMNAMEDESC . '</div>';
         //        echo "<div class='xoopstube_singletitle'>" . _MD_XOOPSTUBE_SUBMITCATHEAD . "</div>\n";
 
@@ -351,8 +357,12 @@ if (true === XoopstubeUtility::xtubeCheckGroups($cid, 'XTubeSubPerm')) {
         $sform->addElement($button_tray);
         $sform->display();
 
+        echo '</div></div>';
+
         include XOOPS_ROOT_PATH . '/footer.php';
     }
+
 } else {
     redirect_header('index.php', 2, _MD_XOOPSTUBE_NOPERMISSIONTOPOST);
 }
+

@@ -157,6 +157,7 @@ switch (strtolower($op)) {
 
                 $ack_image = $acknowledged ? $xtubeImageArray['ack_yes'] : $xtubeImageArray['ack_no'];
                 $con_image = $confirmed ? $xtubeImageArray['con_yes'] : $xtubeImageArray['con_no'];
+                xoops_load('XoopsUserUtility');
 
                 echo '<tr style="text-align: center;">';
                 echo '<td class="head">' . $reportid . '</td>';

@@ -9,6 +9,13 @@
     - displayNavigation(basename(__FILE__))  (mamba)
     - changed to ->displayButton('left') (mamba)
 
+<h5>1.07 Beta 2                       [ 2015-05-01]</h5>
+<hr>
+- Update templates for bootstrap (bleekk)
+- fixed bug in admin->broken (bleekk)
+- fixed date bug in category and videos (bleekk)
+- load css not in templates (bleekk)
+
 <h5>1.07 Beta 1                       [2016-06-16]</h5>
 <hr>
 - conversion to XoopsRequest (mamba)
