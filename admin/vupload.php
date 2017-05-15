@@ -21,7 +21,7 @@
  * @author           McDonald
  */
 
-include_once __DIR__ . '/admin_header.php';
+require_once __DIR__ . '/admin_header.php';
 
 //$op       = (isset($_REQUEST['op']) && !empty($_REQUEST['op'])) ? $_REQUEST['op'] : '';
 //$rootpath = (isset($_GET['rootpath'])) ? (int) $_GET['rootpath'] : 0;
@@ -36,7 +36,7 @@ switch (strtolower($op)) {
                 redirect_header('vupload.php', 2, _AM_XOOPSTUBE_VUPLOAD_VIDEOEXIST);
             }
             $allowed_mimetypes = 'media/aac, media/flv, media/mp3, media/mp4';
-            XoopstubeUtilities::xtubeUploadFiles($_FILES, XoopsRequest::getString('uploadpath', '', 'POST'), $allowed_mimetypes, 'vupload.php', 1, 0);
+            XoopstubeUtility::xtubeUploadFiles($_FILES, XoopsRequest::getString('uploadpath', '', 'POST'), $allowed_mimetypes, 'vupload.php', 1, 0);
             redirect_header('vupload.php', 2, _AM_XOOPSTUBE_VUPLOAD_VIDEOUPLOAD);
         } else {
             redirect_header('vupload.php', 2, _AM_XOOPSTUBE_VUPLOAD_NOVIDEOEXIST);
@@ -73,8 +73,8 @@ switch (strtolower($op)) {
     default:
         $displayimage = '';
         xoops_cp_header();
-        $aboutAdmin = new ModuleAdmin();
-        echo $aboutAdmin->addNavigation(basename(__FILE__));
+        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject->displayNavigation(basename(__FILE__));
 
         $dirarray  = array(1 => $GLOBALS['xoopsModuleConfig']['videodir']);
         $namearray = array(1 => _AM_XOOPSTUBE_VUPLOAD_CATVIDEO);
@@ -93,7 +93,7 @@ switch (strtolower($op)) {
         $iform->setExtra('enctype="multipart/form-data"');
         ob_start();
         $iform->addElement(new XoopsFormHidden('dir', $rootpath));
-        XoopstubeUtilities::xtubeVGetDirSelectOption($namelist, $dirarray, $namearray);
+        XoopstubeUtility::xtubeVGetDirSelectOption($namelist, $dirarray, $namearray);
         $iform->addElement(new XoopsFormLabel(_AM_XOOPSTUBE_VUPLOAD_FOLDERSELECTION, ob_get_contents()));
         ob_end_clean();
 
@@ -130,4 +130,4 @@ switch (strtolower($op)) {
         }
         $iform->display();
 }
-include_once __DIR__ . '/admin_footer.php';
+require_once __DIR__ . '/admin_footer.php';

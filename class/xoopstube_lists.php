@@ -38,8 +38,16 @@ class XoopstubeLists
      * @param string $prefix
      * @param string $suffix
      */
-    public function __construct($path = 'uploads', $value = null, $selected = '', $size = 1, $emptyselect = 0, $type = 0, $prefix = '', $suffix = '')
-    {
+    public function __construct(
+        $path = 'uploads',
+        $value = null,
+        $selected = '',
+        $size = 1,
+        $emptyselect = 0,
+        $type = 0,
+        $prefix = '',
+        $suffix = ''
+    ) {
         $this->value       = $value;
         $this->selection   = $selected;
         $this->path        = $path;

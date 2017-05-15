@@ -18,7 +18,7 @@
  * @since           1.0.6
  */
 
-include dirname(dirname(__DIR__)) . '/mainfile.php';
+include __DIR__ . '/../../mainfile.php';
 $com_itemid = XoopsRequest::getInt('com_itemid', 0, 'GET');
 if ($com_itemid > 0) {
     // Get file title

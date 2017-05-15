@@ -30,7 +30,7 @@
  * @package   xoopstubetree
  * @access    public
  */
-class xoopstubetree
+class XoopstubeTree
 {
     public $table; //table with parent-child structure
     public $id; //name of unique id for records in table $table

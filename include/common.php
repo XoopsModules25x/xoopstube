@@ -20,7 +20,7 @@
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-include_once __DIR__ . '/config.php';
+require_once __DIR__ . '/config.php';
 
 //define("XOOPSTUBE_DIRNAME", basename(dirname(__DIR__)));
 //define("XOOPSTUBE_URL", XOOPS_URL . '/modules/' . XOOPSTUBE_DIRNAME);
@@ -34,14 +34,14 @@ include_once __DIR__ . '/config.php';
 
 xoops_loadLanguage('common', XOOPSTUBE_DIRNAME);
 
-include_once XOOPSTUBE_ROOT_PATH . '/class/utilities.php';
-//include_once XOOPSTUBE_ROOT_PATH . '/include/config.php';
-include_once XOOPSTUBE_ROOT_PATH . '/class/session.php';
-include_once XOOPSTUBE_ROOT_PATH . '/class/xoopstube.php';
-include_once XOOPSTUBE_ROOT_PATH . '/class/utilities.php';
+require_once XOOPSTUBE_ROOT_PATH . '/class/utility.php';
+//require_once XOOPSTUBE_ROOT_PATH . '/include/config.php';
+require_once XOOPSTUBE_ROOT_PATH . '/class/session.php';
+require_once XOOPSTUBE_ROOT_PATH . '/class/xoopstube.php';
+require_once XOOPSTUBE_ROOT_PATH . '/class/utility.php';
 
-//include_once XOOPSTUBE_ROOT_PATH . '/class/request.php';
-//include_once XOOPSTUBE_ROOT_PATH . '/class/breadcrumb.php';
+//require_once XOOPSTUBE_ROOT_PATH . '/class/request.php';
+//require_once XOOPSTUBE_ROOT_PATH . '/class/breadcrumb.php';
 
 $debug     = false;
 $xoopstube = XoopstubeXoopstube::getInstance($debug);
@@ -52,5 +52,5 @@ global $xtubeIsAdmin;
 // Load only if module is installed
 if (is_object($xoopstube->getModule())) {
     // Find if the user is admin of the module
-    $xtubeIsAdmin = XoopstubeUtilities::xtubeUserIsAdmin();
+    $xtubeIsAdmin = XoopstubeUtility::xtubeUserIsAdmin();
 }

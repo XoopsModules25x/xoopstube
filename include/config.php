@@ -20,7 +20,7 @@
 // WARNING: ONCE SET DO NOT CHANGE! Improper use will render this module useless and unworkable.
 // Only Change if you know what you are doing.
 
-require_once dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
+require_once __DIR__ . '/../../../mainfile.php';
 
 $moduleDirName = basename(dirname(__DIR__));
 

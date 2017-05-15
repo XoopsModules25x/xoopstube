@@ -61,7 +61,7 @@ class XoopstubeXoopstube
     /**
      * @return null
      */
-    public function &getModule()
+    public function getModule()
     {
         if (null === $this->module) {
             $this->initModule();

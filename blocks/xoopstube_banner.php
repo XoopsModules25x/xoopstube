@@ -27,13 +27,17 @@ function xtubeShowBannerB($options)
 
     $block                 = array();
     $time                  = time();
+    /** @var XoopsModuleHandler $moduleHandler */
     $moduleHandler         = xoops_getHandler('module');
     $xoopstubeModule       = $moduleHandler->getByDirname($moduleDirName);
     $configHandler         = xoops_getHandler('config');
     $xoopstubeModuleConfig = $configHandler->getConfigsByCat(0, $xoopstubeModule->getVar('mid'));
 
-    $result = $GLOBALS['xoopsDB']->query('SELECT a.cid as acid, a.title, a.client_id, a.banner_id, b.bid, b.cid, b.imptotal, b.impmade, b.clicks FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_cat')
-                                         . ' a, ' . $GLOBALS['xoopsDB']->prefix('banner') . ' b WHERE (b.cid = a.client_id) OR (b.bid = a.banner_id) ORDER BY b.cid, b.bid, a.title ASC');
+    $result = $GLOBALS['xoopsDB']->query('SELECT a.cid AS acid, a.title, a.client_id, a.banner_id, b.bid, b.cid, b.imptotal, b.impmade, b.clicks FROM '
+                                         . $GLOBALS['xoopsDB']->prefix('xoopstube_cat')
+                                         . ' a, '
+                                         . $GLOBALS['xoopsDB']->prefix('banner')
+                                         . ' b WHERE (b.cid = a.client_id) OR (b.bid = a.banner_id) ORDER BY b.cid, b.bid, a.title ASC');
 
     while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $impmade    = $myrow['impmade'];

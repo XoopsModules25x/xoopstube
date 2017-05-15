@@ -121,7 +121,7 @@ class XoopsMediaUploader
 
             return false;
         }
-        if ('' === $this->mediaName) {
+        if ('' == $this->mediaName) {
             $this->setErrors(_AM_XOOPSTUBE_FILENAMEEMPTY);
 
             return false;
@@ -250,7 +250,7 @@ class XoopsMediaUploader
      */
     public function upload($chmod = 0644)
     {
-        if ('' === $this->uploadDir) {
+        if ('' == $this->uploadDir) {
             $this->setErrors(_AM_XOOPSTUBE_NOUPLOADDIR);
 
             return false;

@@ -1,0 +1,162 @@
+-
+  lid: 1
+  cid: 2
+  title: "XOOPS 2.6.0 pre-Alpha 3 installation in 4:40, with instructions"
+  vidid: "xM8xzbGcdgA"
+  screenshot: ""
+  submitter: 1
+  publisher: "XOOPS"
+  status: 1
+  date: 1494835529
+  hits: 0
+  rating: 0.0000
+  votes: 0
+  comments: 0
+  vidsource: 0
+  published: 1494576600
+  expired: 0
+  updated: 1494835529
+  offline: 0
+  description: "This was just to show that even if we are using now Composer, installing XOOPS 2.6.0 is not taking much more time than any previous version of XOOPS. \r\nIncluding download of XOOPS zip file from GitHub, installing Composer, and downloading all required files with it, and the installation itself - all together was 4:40 minutes. \r\nIncluded in this video are also installation notes, so you know what is happening on the screen..."
+  ipaddress: "127.0.0.1"
+  notifypub: 0
+  vidrating: 6
+  time: "0:00:00"
+  keywords: ""
+  item_tag: ""
+  picurl: "https://www.youtube.com/watch?v=xM8xzbGcdgA"
+-
+  lid: 2
+  cid: 2
+  title: "XOOPS 2.5.0 Alpha Preview"
+  vidid: "zn_qK9PAM-M"
+  screenshot: ""
+  submitter: 1
+  publisher: "XOOPS"
+  status: 1
+  date: 1494843806
+  hits: 0
+  rating: 0.0000
+  votes: 0
+  comments: 0
+  vidsource: 0
+  published: 1494325800
+  expired: 0
+  updated: 1494843806
+  offline: 0
+  description: "Preview of the main changes in the upcoming XOOPS 2.5"
+  ipaddress: "127.0.0.1"
+  notifypub: 0
+  vidrating: 6
+  time: "0:00:00"
+  keywords: ""
+  item_tag: ""
+  picurl: "https://www.youtube.com/watch?v=zn_qK9PAM-M"
+-
+  lid: 3
+  cid: 2
+  title: "Creating XOOPS Module with TDMCreate"
+  vidid: "dg7zGFCopxY"
+  screenshot: ""
+  submitter: 1
+  publisher: "XOOPS"
+  status: 1
+  date: 1494843900
+  hits: 0
+  rating: 0.0000
+  votes: 0
+  comments: 0
+  vidsource: 0
+  published: 1493634600
+  expired: 0
+  updated: 1494843900
+  offline: 0
+  description: "New version of our Module Builder: TDMCreate 1.38.1"
+  ipaddress: "127.0.0.1"
+  notifypub: 0
+  vidrating: 6
+  time: "0:07:05"
+  keywords: ""
+  item_tag: ""
+  picurl: "https://www.youtube.com/watch?v=dg7zGFCopxY"
+-
+  lid: 4
+  cid: 1
+  title: "New version of our Module Builder: TDMCreate 1.38.1"
+  vidid: "d7zW5oaQGbA"
+  screenshot: ""
+  submitter: 1
+  publisher: "XOOPS"
+  status: 1
+  date: 1494844009
+  hits: 0
+  rating: 0.0000
+  votes: 0
+  comments: 0
+  vidsource: 0
+  published: 1493893800
+  expired: 0
+  updated: 1494844009
+  offline: 0
+  description: "This is a tutorial showing how to use XOOPS Module Installer to install/update/uninstall XOOPS modules in bulk. \r\nSince we don't have to do it anymore \"one by one\", it will increase user productivity. Also developers, who constantly install and uninstall modules for testing purposes, will benefit from this."
+  ipaddress: "127.0.0.1"
+  notifypub: 0
+  vidrating: 6
+  time: "0:03:27"
+  keywords: "XOOPS"
+  item_tag: ""
+  picurl: "https://www.youtube.com/watch?v=d7zW5oaQGbA"
+-
+  lid: 5
+  cid: 2
+  title: "XOOPS 2.6.0 Development on GitHub: One year in 45 seconds"
+  vidid: "wSeyrKk5rHI"
+  screenshot: ""
+  submitter: 1
+  publisher: "XOOPS"
+  status: 1
+  date: 1494844091
+  hits: 0
+  rating: 0.0000
+  votes: 0
+  comments: 0
+  vidsource: 0
+  published: 1399804200
+  expired: 0
+  updated: 1494844091
+  offline: 0
+  description: "XOOPS 2.6.0 Development on GitHub: One year in 45 seconds"
+  ipaddress: "127.0.0.1"
+  notifypub: 0
+  vidrating: 6
+  time: "0:00:44"
+  keywords: ""
+  item_tag: ""
+  picurl: ""
+-
+  lid: 6
+  cid: 3
+  title: "Adaptar Plantillas HTML y CSS a XOOPS (Spanish)"
+  vidid: "k-0sDe67t30"
+  screenshot: ""
+  submitter: 1
+  publisher: "Tony Rod"
+  status: 1
+  date: 1494844251
+  hits: 0
+  rating: 0.0000
+  votes: 0
+  comments: 0
+  vidsource: 0
+  published: 1411554600
+  expired: 0
+  updated: 1494844251
+  offline: 0
+  description: "Una guía básica pero completa sobre como adaptar plantillas, themes o temas en HTML y CSS a XOOPS CMS sin perderse en el camino y sin mayores complicaciones.\r\n\r\nPara poner en práctica lo especificado en este tutorial, pueden descargar el material didáctico que contiene todos los elementos usados en este pequeño curso."
+  ipaddress: "127.0.0.1"
+  notifypub: 0
+  vidrating: 6
+  time: "0:35:49"
+  keywords: ""
+  item_tag: ""
+  picurl: ""
