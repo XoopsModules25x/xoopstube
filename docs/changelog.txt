@@ -1,23 +1,31 @@
-=========================================================
-1.07 Beta 2                       2015-05-01
-=========================================================
+<h5>1.07 RC 1       [NOT RELEASED]</h5>
+<hr>
+- fixed rating images (cesagonchu/mamba)
+- renamed several $indexAdmin with $adminObject for consistency (mamba)
+- updates for PayPal changes (zyspec)
+- added Sample Data
+- started conversion to XMF (mamba)
+    - updated addInfoBoxLine entries (mamba)
+    - displayNavigation(basename(__FILE__))  (mamba)
+    - changed to ->displayButton('left') (mamba)
+
+<h5>1.07 Beta 2                       [ 2015-05-01]</h5>
+<hr>
 - Update templates for bootstrap (bleekk)
 - fixed bug in admin->broken (bleekk)
 - fixed date bug in category and videos (bleekk)
 - load css not in templates (bleekk)
 
-=========================================================
-1.07 Beta 1                       2016-06-16
-=========================================================
-
+<h5>1.07 Beta 1                       [2016-06-16]</h5>
+<hr>
 - conversion to XoopsRequest (mamba)
 - PSR-2 adjustments (mamba)
 - replaced intval() with (int) (mamba)
 - XOOPS 2.5.8, PHP 7 adjustments (mamba)
-- moved functions to Utilities class (mamba)
+- moved functions to Utility class (mamba)
 - addNavigation(basename(__FILE__)) (mamba)
 - removed @version (mamba)
-- replaced <b /> with <b> (mamba)
+- replaced < br /> with < br > (mamba)
 - Unnecessary double quotes (mamba)
 - reference mismatch (mamba)
 - partial conversion to $GLOBALS (mamba)
@@ -28,10 +36,9 @@
 
 TODO: Needs code cleanup
 
-=========================================================
-1.06 RC 2                       NOT RELEASED
-=========================================================
 
+<h5>1.06 RC 2                       [NOT RELEASED]</h5>
+<hr>
 - added language variables to block descriptions (mamba)
 - some cosmetic source code formatting (mmamba)
 - improved consistency of language variable naming for cloning (mamba)
@@ -41,20 +48,16 @@ TODO: Needs code cleanup
 - moved /css and /images to /assets (mamba)
 - renamed template extensions from .html to .tpl (mamba)
 
-=========================================================
-1.06 RC 1                               2013-06-16
-=========================================================
-
+<h5>1.06 RC 1                               [2013-06-16]</h5>
+<hr>
 - removed social bookmarks for: simpy, spurl, wink (cesagonchu/mamba)
 - English corrections (cesagonchu/mamba)
 - fixed bug with with "expired" icon (mamba)
 - fixed bug with approving submitted video (mamba)
 - added toggle for online/offline status (mamba)
 
-=========================================================
-1.06 Beta 2                             2013-06-16
-=========================================================
-
+<h5>1.06 Beta 2                             [2013-06-16]</h5>
+<hr>
 - removed redundant PHP Closing tags (mamba)
 - replaced deprecated HTML tags (mamba)
 - replaced hard-coded directory references (mamba)
@@ -63,53 +66,41 @@ TODO: Needs code cleanup
 - reformatted code according to PSR-2
 - added directory check for directories for images/videos
 
-=========================================================
-1.06 Beta1                                  2013-01-02
-=========================================================
-
+<h5>1.06 Beta1                                  [2013-01-02]</h5>
+<hr>
 - Added: option to hide name of the submitter (mamba)
 
-=========================================================
-1.051 RC1                                   2013-01-02
-=========================================================
-
+<h5>1.051 RC1                                   [2013-01-02]</h5>
+<hr>
 - fixed: videos from private groups visible (alain01/mamba)
 - added: option for internal video (alain01/Nikita)
 
-=========================================================
-1.05 Final                                  2012-12-19
-=========================================================
-
+<h5>1.05 Final                                  [2012-12-19]</h5>
+<hr>
 - Final Release
 - TODO: fix spotlight block
 
 
-=========================================================
-1.05 RC1                                    2012-04-25
-=========================================================
-
+<h5>1.05 RC1                                    [2012-04-25]</h5>
+<hr>
 - added spotlight blocks (Mariane)
 
-=========================================================
-1.05 Beta 1                                 2012-04-25
-=========================================================
-
+<h5>1.05 Beta 1                                 [2012-04-25]</h5>
+<hr>
 - converted to XOOPS 2.5.x Admin GUI (mamba)
 - added code from MyTube 1.05 (mamba)
 - added files from Mastop Publisher (Blocks Admin) (mamba)
 - changing editor list selection to dynamic (mamba)
 - other small code adjustments (mamba)
 
-=========================================================
-1.03.1 Final                                08.03.2008
-=========================================================
+<h5>1.03.1 Final                                [08.03.2008]</h5>
+<hr>
 - Fixed XSS vulnerability [Vaughan/McDonald]
 - Fixed bug in sub-cat listing
 - Fixed bug in page nav of Recent Videos
 
-=========================================================
-1.03                                        26.02.2008
-=========================================================
+<h5>1.03                                        [26.02.2008]</h5>
+<hr>
 - Fixed bug in sql-file
 - Fixed bug in WYSIWYG editors (FCKEditor)
 - Fixed option to move videos from category to category
@@ -120,9 +111,8 @@ TODO: Needs code cleanup
 - Updated Spanish langfiles [debianus]
 - Updated English & Dutch langfiles
 
-=========================================================
-1.02                                        21.02.2008
-=========================================================
+<h5>1.02                                        [21.02.2008]</h5>
+<hr>
 - Added Spanish language files [debianus]
 - Added German language files [wuddel]
 - Added Control Panel icons for ImpressCMS
@@ -132,9 +122,8 @@ TODO: Needs code cleanup
 - Replaced form for meta keywords
 - Minor improvements in subcat listing template
 
-=========================================================
-1.01 Final                                  23.01.2008
-=========================================================
+<h5>1.01 Final                                  [23.01.2008]</h5>
+<hr>
 - Fixed case sensitivity of search function
 - Removed footer.php
 - Renamed rate6.png into rate5.png in folder images/icon/
@@ -142,9 +131,8 @@ TODO: Needs code cleanup
 - Added support for videoclips from DailyMotion
 - Added Facebook to Social Bookmarks
 
-=========================================================
-1.0.1 RC8                                   07.01.2008
-=========================================================
+<h5>1.0.1 RC8                                   [07.01.2008]</h5>
+<hr>
 - Added support for Tag module (http://xoopsforge.com)
 - Added sort options above categories
 - Added 'Back' button above videoclip and top10
@@ -155,15 +143,13 @@ TODO: Needs code cleanup
 - Replaced icons by new ones, all graphs in PNG format
 - Removed width/height from category icons in templates
 
-=========================================================
-1.0.1 RC7                                   02.12.2007
-=========================================================
+<h5>1.0.1 RC7                                   [02.12.2007]</h5>
+<hr>
 - Fixed bug Publisher name replaced after approving by admin
 - Changed 'Other Videos Of' to 'No Other Videos Of' when only 1 video submitted
 
-=========================================================
-1.0.1 RC7                                   01.12.2007
-=========================================================
+<h5>1.0.1 RC7                                   [01.12.2007]</h5>
+<hr>
 - Fixed submit button brokenvideo for non-english languages
 - Solved problem title+date not displayed in horizontal blocks
 - Removed file xoopstube/visit.php
@@ -176,34 +162,29 @@ TODO: Needs code cleanup
 - Started with css file for XoopsTube
 - Shrunk legend icons
 
-=========================================================
-1.0.1 RC6                                   23.11.2007
-=========================================================
+<h5>1.0.1 RC6                                   [23.11.2007]</h5>
+<hr>
 - Fixed bug in RSSFit plugin
 - Hit-counter not updating for admins (when logged in)
 
-=========================================================
-1.0.1 RC6                                   22.11.2007
-=========================================================
+<h5>1.0.1 RC6                                   [22.11.2007]</h5>
+<hr>
 - Fixed bug in notifications
 - Fixed bug in sorting alternative categories (admin)
 - Fixed bug in search function
 - Added title+date to horizontal blocks
 - Added generation of meta description 'on-the-fly' (experimental)
 
-=========================================================
-1.0.1 RC5                                   18.11.2007
-=========================================================
+<h5>1.0.1 RC5                                   [18.11.2007]</h5>
+<hr>
 - Added plugin for RSSFit module from Brandycoke Productions (http://www.brandycoke.com)
 
-=========================================================
-1.0.1 RC5                                   09.11.2007
-=========================================================
+<h5>1.0.1 RC5                                   [09.11.2007]</h5>
+<hr>
 - Minor fix for sorting categories option
 
-=========================================================
-1.0.1 RC5                                   07.11.2007
-=========================================================
+<h5>1.0.1 RC5                                   [07.11.2007]</h5>
+<hr>
 - Added option in Prefs to sort cats by title or weight
 - Removed Inbetween from WYSIWYG editors list
 - Rewrote permissions.php
@@ -212,17 +193,15 @@ TODO: Needs code cleanup
 - After submitting brokenlink visitor is redirected back to video
 - Added missing language constants for config options
 
-=========================================================
-1.0.1 RC4                                   29.10.2007
-=========================================================
+<h5>1.0.1 RC4                                   [29.10.2007]</h5>
+<hr>
 - Added option in Prefs to turn on/off Social Bookmarks
 - Added option in Prefs to turn on/off 'Other videos by'
 - Added option in Prefs to turn on/off screenshots
 - Amount of characters of description in category view can be set
 
-=========================================================
-1.0.1 RC3                                   22.10.2007
-=========================================================
+<h5>1.0.1 RC3                                   [22.10.2007]</h5>
+<hr>
 - Copyright notice shows name publisher instead of title
 - Added 'Latest' to main menu
 - Added horizontal random block
@@ -230,38 +209,33 @@ TODO: Needs code cleanup
 - Fixed security issue
 - Added plugin for GIJOE's Sitemap module (http://xoops.peak.ne.jp/)
 
-=========================================================
-1.0.1 RC3                                   05.10.2007
-=========================================================
+<h5>1.0.1 RC3                                   [05.10.2007]</h5>
+<hr>
 - Fixed bug causing blank page when selecting Permissions
 - Small modifications of alternative categories
 - Modified sql file for better compatibility
 
-=========================================================
-1.0.1 RC3                                   04.10.2007
-=========================================================
+<h5>1.0.1 RC3                                   [04.10.2007]</h5>
+<hr>
 - Fixed bug total videos of sub cats not showing
 - Added horizontal block
 - Added random block
 - Comment option not visible when disabled in Preferences
 
-=========================================================
-1.0.1 RC2                                   11.09.2007
-=========================================================
+<h5>1.0.1 RC2                                   11.09.2007]</h5>
+<hr>
 - Added social bookmarks
 - Modified template Popular
 - Fixed bug editing broken video
 
-=========================================================
-1.0.1 RC1                                   07.09.2007
-=========================================================
+<h5>1.0.1 RC1                                   [07.09.2007]</h5>
+<hr>
 - Fixed bug in submit form
 - Simplified Preferences
 - Removed option for adding screenshot in submit form
 - Screenshot is linked to YouTube
 - Removed some files
 
-=========================================================
-1.00 RC                                     01.09.2007
-=========================================================
+<h5>1.00 RC                                     [01.09.2007]</h5>
+<hr>
 Added plugin for GIJOE's Waiting module (http://xoops.peak.ne.jp/)

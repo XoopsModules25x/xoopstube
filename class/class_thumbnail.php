@@ -63,6 +63,7 @@ class XtubeThumbsNails
      * @internal param string $_imgName
      * @internal param string $_img_path
      * @internal param string $_img_savepath
+     * @return \XtubeThumbsNails
      */
     public function __construct($img_name = null, $img_path = null, $img_savepath = null)
     {
@@ -131,8 +132,13 @@ class XtubeThumbsNails
      *
      * @return bool|string
      */
-    public function createThumbnail($img_width = null, $img_height = null, $img_quality = null, $img_update = null, $img_aspect = null)
-    {
+    public function createThumbnail(
+        $img_width = null,
+        $img_height = null,
+        $img_quality = null,
+        $img_update = null,
+        $img_aspect = null
+    ) {
         $this->_source_path  = XOOPS_ROOT_PATH . "/{$this->_img_path}";
         $this->_save_path    = XOOPS_ROOT_PATH . "/{$this->_img_path}/{$this->_img_savepath}";
         $this->_source_url   = XOOPS_URL . "/{$this->_img_path}";
@@ -259,8 +265,8 @@ class XtubeThumbsNails
             case 'gd2':
             default :
 
-                $imageCreateFunction = (function_exists('imagecreatetruecolor') && 'gd2' == $this->_image_type) ? 'imagecreatetruecolor' : 'imagecreate';
-                $imageCopyfunction   = (function_exists('ImageCopyResampled') && 'gd2' == $this->_image_type) ? 'imagecopyresampled' : 'imagecopyresized';
+                $imageCreateFunction = (function_exists('imagecreatetruecolor') && 'gd2' === $this->_image_type) ? 'imagecreatetruecolor' : 'imagecreate';
+                $imageCopyfunction   = (function_exists('ImageCopyResampled') && 'gd2' === $this->_image_type) ? 'imagecopyresampled' : 'imagecopyresized';
 
                 switch ($this->_img_info[2]) {
                     case 1:

@@ -22,9 +22,11 @@ $moduleDirName = basename(__DIR__);
 
 // ------------------- Informations ------------------- //
 $modversion = array(
+    'version'             => 1.07,
+    'module_status'       => 'Beta 1',
+    'release_date'        => '2017/05/14',
     'name'                => _MI_XOOPSTUBE_NAME,
     'description'         => _MI_XOOPSTUBE_DESC,
-    'version'             => 1.07,
     'official'            => 1, //1 indicates supported by XOOPS Dev Team, 0 means 3rd party supported
     'author'              => 'McDonald',
     'author_mail'         => 'http://xoops.org',
@@ -34,43 +36,39 @@ $modversion = array(
     'license'             => 'GPL 2.0 or later',
     'license_url'         => 'www.gnu.org/licenses/gpl-2.0.html/',
     'help'                => 'page=help',
-    //
     'release_info'        => 'Changelog',
     'release_file'        => XOOPS_URL . "/modules/{$moduleDirName}/docs/changelog file",
     //
     'manual'              => 'link to manual file',
     'manual_file'         => XOOPS_URL . "/modules/{$moduleDirName}/docs/install.txt",
     'min_php'             => '5.5',
-    'min_xoops'           => '2.5.8',
+    'min_xoops'           => '2.5.9',
     'min_admin'           => '1.1',
-    'min_db'              => array('mysql' => '5.0.7', 'mysqli' => '5.0.7'),
+    'min_db'              => array('mysql' => '5.5'),
     // images
-    'image'               => 'assets/images/logo_module.png',
+    'image'               => 'assets/images/logoModule.png',
     'iconsmall'           => 'assets/images/iconsmall.png',
     'iconbig'             => 'assets/images/iconbig.png',
     'dirname'             => "{$moduleDirName}",
     // Frameworks
     //    'dirmoduleadmin'      => 'Frameworks/moduleclasses/moduleadmin',
-    'systemIcons16'       => 'Frameworks/moduleclasses/icons/16',
-    'systemIcons32'       => 'Frameworks/moduleclasses/icons/32',
-    'systemIcons32url'    => XOOPS_URL . '/' . 'Frameworks/moduleclasses/icons/32',
+    //    'systemIcons16'       => 'Frameworks/moduleclasses/icons/16',
+    //    'systemIcons32'       => 'Frameworks/moduleclasses/icons/32',
+    //    'systemIcons32url'    => XOOPS_URL . '/' . 'Frameworks/moduleclasses/icons/32',
 
     //Frameworks
-    'dirmoduleadmin'      => 'Frameworks/moduleclasses/moduleadmin',
-    'sysIcons16'          => 'Frameworks/moduleclasses/icons/16',
-    'sysIcons32'          => 'Frameworks/moduleclasses/icons/32',
+    //    'dirmoduleadmin'      => 'Frameworks/moduleclasses/moduleadmin',
+    //    'sysIcons16'          => 'Frameworks/moduleclasses/icons/16',
+    //    'sysIcons32'          => 'Frameworks/moduleclasses/icons/32',
     // Local path icons
-    'modIcons16'          => 'assets/images/icons/16',
-    'modIcons32'          => 'assets/images/icons/32',
+    'modicons16'          => 'assets/images/icons/16',
+    'modicons32'          => 'assets/images/icons/32',
 
     // Local path icons
-    'moduleIcons16'       => 'assets/images/icons/16',
-    'moduleIcons32'       => 'assets/images/icons/32',
+    //    'moduleIcons16'       => 'assets/images/icons/16',
+    //    'moduleIcons32'       => 'assets/images/icons/32',
     // About
-    'module_status'       => 'Beta 2',
     //    'release_date'        => "2013/10/07",
-    //'release_date'        => '2016/06/16',
-    'release_date'        => '2017/05/01',
     //    'release'             => "2015-04-03",
     'demo_site_url'       => 'http://xoops.org',
     'demo_site_name'      => 'XOOPS Demo Site',
@@ -97,7 +95,7 @@ $modversion = array(
 $modversion['sqlfile']['mysql'] = 'sql/mysql.sql';
 
 // Tables created by sql file (without prefix!)
-//include_once 'include/config.php';
+//require_once __DIR__ . '/include/config.php';
 $modversion['tables'] = array(
     $moduleDirName . '_broken',
     $moduleDirName . '_cat',
@@ -231,6 +229,7 @@ $modversion['blocks'][] = array(
 );
 
 // This part inserts the selected topics as sub items in the Xoops main menu
+/** @var XoopsModuleHandler $moduleHandler */
 $moduleHandler = xoops_getHandler('module');
 $module        = $moduleHandler->getByDirname($modversion['dirname']);
 $cansubmit     = 0;
@@ -319,11 +318,6 @@ $modversion['templates'][] = array(
 
 $modversion['templates'][] = array(
     'file'        => $modversion['dirname'] . '_common_letterschoice.tpl',
-    'description' => ''
-);
-
-$modversion['templates'][] = array(
-    'file'        => $modversion['dirname'] . '_co_letterschoice.tpl',
     'description' => ''
 );
 
@@ -932,4 +926,3 @@ $modversion['notification']['event'][] = array(
 //) {
 //    include __DIR__ . '/include/onupdate.inc.php';
 //}
-

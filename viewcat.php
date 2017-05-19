@@ -31,22 +31,25 @@ $mytree  = new XoopstubeTree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid'
 $arr     = $mytree->getFirstChild($cid, $catsort);
 
 if (is_array($arr) > 0 && !$list && !$selectdate) {
-    if (false === XoopstubeUtilities::xtubeCheckGroups($cid)) {
+    if (false === XoopstubeUtility::xtubeCheckGroups($cid)) {
         redirect_header('index.php', 1, _MD_XOOPSTUBE_MUSTREGFIRST);
     }
 }
 
-$xoopsOption['template_main'] = 'xoopstube_viewcat.tpl';
+$GLOBALS['xoopsOption']['template_main'] = 'xoopstube_viewcat.tpl';
 
 include XOOPS_ROOT_PATH . '/header.php';
-
 $xoTheme->addStylesheet('modules/'.$moduleDirName.'/assets/css/xtubestyle.css');
-
 global $xoopsModule;
-//$catarray['letters']     = XoopstubeUtilities::xtubeGetLetters();
-$catarray['letters']     = XoopstubeUtilities::xoopstubeLettersChoice();
-$catarray['imageheader'] = XoopstubeUtilities::xtubeRenderImageHeader();
+$catarray['letters']     = XoopstubeUtility::xtubeGetLetters();
+//$catarray['letters']     = XoopstubeUtility::xoopstubeLettersChoice();
+$catarray['imageheader'] = XoopstubeUtility::xtubeRenderImageHeader();
 $xoopsTpl->assign('catarray', $catarray);
+
+//$catArray['letters'] = XoopstubeUtility::xtubeLettersChoice();
+//$catArray['letters'] = XoopstubeUtility::xoopstubeLettersChoice();
+//$catArray['toolbar'] = xoopstube_toolbar();
+//$xoopsTpl->assign('catarray', $catArray);
 
 // Breadcrumb
 $pathstring = '<li><a href="index.php">' . _MD_XOOPSTUBE_MAIN . '</a></li>';
@@ -58,7 +61,7 @@ $xoopsTpl->assign('category_id', $cid);
 if (is_array($arr) > 0 && !$list && !$selectdate) {
     $scount = 1;
     foreach ($arr as $ele) {
-        if (false === XoopstubeUtilities::xtubeCheckGroups($ele['cid'])) {
+        if (false === XoopstubeUtility::xtubeCheckGroups($ele['cid'])) {
             continue;
         }
         $sub_arr         = array();
@@ -68,9 +71,9 @@ if (is_array($arr) > 0 && !$list && !$selectdate) {
         $infercategories = '';
         foreach ($sub_arr as $sub_ele) {
             // Subitem file count
-            $hassubitems = XoopstubeUtilities::xtubeGetTotalItems($sub_ele['cid']);
+            $hassubitems = XoopstubeUtility::xtubeGetTotalItems($sub_ele['cid']);
             // Filter group permissions
-            if (true === XoopstubeUtilities::xtubeCheckGroups($sub_ele['cid'])) {
+            if (true === XoopstubeUtility::xtubeCheckGroups($sub_ele['cid'])) {
                 // If subcategory count > 5 then finish adding subcats to $infercategories and end
                 if ($chcount > 5) {
                     $infercategories .= '...';
@@ -80,14 +83,13 @@ if (is_array($arr) > 0 && !$list && !$selectdate) {
                     $infercategories .= ', ';
                 }
 
-                $infercategories .= '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewcat.php?cid=' . $sub_ele['cid'] . '">'
-                                    . $xtubemyts->htmlSpecialCharsStrip($sub_ele['title']) . '</a> (' . $hassubitems['count'] . ')';
+                $infercategories .= '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewcat.php?cid=' . $sub_ele['cid'] . '">' . $xtubemyts->htmlSpecialCharsStrip($sub_ele['title']) . '</a> (' . $hassubitems['count'] . ')';
                 ++$space;
                 ++$chcount;
             }
         }
-        $totalvideos = XoopstubeUtilities::xtubeGetTotalItems($ele['cid']);
-        $indicator   = XoopstubeUtilities::xtubeIsNewImage($totalvideos['published']);
+        $totalvideos = XoopstubeUtility::xtubeGetTotalItems($ele['cid']);
+        $indicator   = XoopstubeUtility::xtubeIsNewImage($totalvideos['published']);
 
         // This code is copyright WF-Projects
         // Using this code without our permission or removing this code voids the license agreement
@@ -98,12 +100,11 @@ if (is_array($arr) > 0 && !$list && !$selectdate) {
             if ($_thumb_image) {
                 $_thumb_image->setUseThumbs(1);
                 $_thumb_image->setImageType('gd2');
-                $_image = $_thumb_image->createThumbnail($GLOBALS['xoopsModuleConfig']['shotwidth'], $GLOBALS['xoopsModuleConfig']['shotheight'], $GLOBALS['xoopsModuleConfig']['imagequality'],
-                                                         $GLOBALS['xoopsModuleConfig']['updatethumbs'], $GLOBALS['xoopsModuleConfig']['imageAspect']);
+                $_image = $_thumb_image->createThumbnail($GLOBALS['xoopsModuleConfig']['shotwidth'], $GLOBALS['xoopsModuleConfig']['shotheight'], $GLOBALS['xoopsModuleConfig']['imagequality'], $GLOBALS['xoopsModuleConfig']['updatethumbs'], $GLOBALS['xoopsModuleConfig']['imageAspect']);
             }
         }
 
-        if (empty($_image) || '' === $_image) {
+        if (empty($_image) || '' == $_image) {
             $imgurl  = $indicator['image'];
             $_width  = 33;
             $_height = 24;
@@ -141,6 +142,7 @@ $images      = $head_arr['noimages'] ? 0 : 1;
 $breaks      = $head_arr['nobreak'] ? 1 : 0;
 $description =& $xtubemyts->displayTarea($head_arr['description'], $html, $smiley, $xcodes, $images, $breaks);
 $xoopsTpl->assign('description', $description);
+/** @var XoopsModuleHandler $moduleHandler */
 $moduleHandler = xoops_getHandler('module');
 $versioninfo   = $moduleHandler->get($xoopsModule->getVar('mid'));
 if ($head_arr['title'] > '') {
@@ -150,20 +152,19 @@ if ($head_arr['title'] > '') {
 }
 
 if ($head_arr['client_id'] > 0) {
-    $catarray['imageheader'] = XoopstubeUtilities::xtubeGetBannerFromClientId($head_arr['client_id']);
+    $catarray['imageheader'] = XoopstubeUtility::xtubeGetBannerFromClientId($head_arr['client_id']);
 } elseif ($head_arr['banner_id'] > 0) {
-    $catarray['imageheader'] = XoopstubeUtilities::xtubeGetBannerFromBannerId($head_arr['banner_id']);
+    $catarray['imageheader'] = XoopstubeUtility::xtubeGetBannerFromBannerId($head_arr['banner_id']);
 } else {
-    $catarray['imageheader'] = XoopstubeUtilities::xtubeRenderImageHeader();
+    $catarray['imageheader'] = XoopstubeUtility::xtubeRenderImageHeader();
 }
 $xoopsTpl->assign('catarray', $catarray);
 // Extract linkload information from database
 $xoopsTpl->assign('show_categort_title', true);
 
 $orderby0 = (isset($_REQUEST['orderby'])
-             && !empty($_REQUEST['orderby'])) ? XoopstubeUtilities::xtubeConvertOrderByIn(htmlspecialchars($_REQUEST['orderby'])) : XoopstubeUtilities::xtubeConvertOrderByIn($GLOBALS['xoopsModuleConfig']['linkxorder']);
-$orderby  = XoopsRequest::getString('orderby', '', 'GET') ? XoopstubeUtilities::xtubeConvertOrderByIn(XoopsRequest::getString('orderby', '',
-                                                                                                                              'GET')) : XoopstubeUtilities::xtubeConvertOrderByIn($GLOBALS['xoopsModuleConfig']['linkxorder']);
+             && !empty($_REQUEST['orderby'])) ? XoopstubeUtility::xtubeConvertOrderByIn(htmlspecialchars($_REQUEST['orderby'])) : XoopstubeUtility::xtubeConvertOrderByIn($GLOBALS['xoopsModuleConfig']['linkxorder']);
+$orderby  = XoopsRequest::getString('orderby', '', 'GET') ? XoopstubeUtility::xtubeConvertOrderByIn(XoopsRequest::getString('orderby', '', 'GET')) : XoopstubeUtility::xtubeConvertOrderByIn($GLOBALS['xoopsModuleConfig']['linkxorder']);
 
 if ($selectdate) {
     $d = date('j', $selectdate);
@@ -181,10 +182,10 @@ if ($selectdate) {
     list($count) = $GLOBALS['xoopsDB']->fetchRow($GLOBALS['xoopsDB']->query($sql));
 
     $list_by = 'selectdate=' . $selectdate;
-    
+
     $xoopsTpl->assign('is_selectdate', true);
-    $xoopsTpl->assign('selected_date', XoopstubeUtilities::xtubeGetTimestamp(formatTimestamp($selectdate, $GLOBALS['xoopsModuleConfig']['dateformat'])));
-    
+    $xoopsTpl->assign('selected_date', XoopstubeUtility::xtubeGetTimestamp(formatTimestamp($selectdate, $GLOBALS['xoopsModuleConfig']['dateformat'])));
+
 } elseif ($list) {
     $query = " WHERE title LIKE '$list%' AND (published>0 AND published<=" . time() . ') AND (expired=0 OR expired>' . time() . ') AND offline=0 AND cid>0';
 
@@ -197,14 +198,12 @@ if ($selectdate) {
 } else {
     $query = 'WHERE a.published>0 AND a.published<=' . time() . ' AND (a.expired=0 OR a.expired>' . time() . ') AND a.offline=0' . ' AND (b.cid=a.cid OR (a.cid=' . $cid . ' OR b.cid=' . $cid . '))';
 
-    $sql    =
-        'SELECT DISTINCT a.* FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' a LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('xoopstube_altcat') . ' b ON b.lid=a.lid ' . $query . ' ORDER BY '
-        . $orderby;
+    $sql    = 'SELECT DISTINCT a.* FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' a LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('xoopstube_altcat') . ' b ON b.lid=a.lid ' . $query . ' ORDER BY ' . $orderby;
     $result = $GLOBALS['xoopsDB']->query($sql, $GLOBALS['xoopsModuleConfig']['perpage'], $start);
 
     $sql2 = 'SELECT COUNT(*) FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' a LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('xoopstube_altcat') . ' b ON b.lid=a.lid ' . $query;
     list($count) = $GLOBALS['xoopsDB']->fetchRow($GLOBALS['xoopsDB']->query($sql2));
-    $order   = XoopstubeUtilities::xtubeConvertOrderByOut($orderby);
+    $order   = XoopstubeUtility::xtubeConvertOrderByOut($orderby);
     $list_by = 'cid=' . $cid . '&orderby=' . $order;
     $xoopsTpl->assign('show_categort_title', false);
 }
@@ -214,8 +213,8 @@ $pagenav = new XoopsPageNav($count, $GLOBALS['xoopsModuleConfig']['perpage'], $s
 if ($count > 0) {
     $moderate = 0;
     while (false !== ($video_arr = $GLOBALS['xoopsDB']->fetchArray($result))) {
-        if (true === XoopstubeUtilities::xtubeCheckGroups($video_arr['cid'])) {
-            require XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/include/videoloadinfo.php';            
+        if (true === XoopstubeUtility::xtubeCheckGroups($video_arr['cid'])) {
+            require XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/include/videoloadinfo.php';
             $xoopsTpl->append('video', $video);
         }
     }
@@ -226,9 +225,9 @@ if ($count > 0) {
     $xoopsTpl->assign('show_videos', false);
     if ($count > 1 && $cid !== 0) {
         $xoopsTpl->assign('show_videos', true);
-        $orderbyTrans = XoopstubeUtilities::xtubeConvertOrderByTrans($orderby);
-        $xoopsTpl->assign('lang_cursortedby', sprintf(_MD_XOOPSTUBE_CURSORTBY, XoopstubeUtilities::xtubeConvertOrderByTrans($orderby)));
-        $orderby = XoopstubeUtilities::xtubeConvertOrderByOut($orderby);
+        $orderbyTrans = XoopstubeUtility::xtubeConvertOrderByTrans($orderby);
+        $xoopsTpl->assign('lang_cursortedby', sprintf(_MD_XOOPSTUBE_CURSORTBY, XoopstubeUtility::xtubeConvertOrderByTrans($orderby)));
+        $orderby = XoopstubeUtility::xtubeConvertOrderByOut($orderby);
     }
 
     // Screenshots display

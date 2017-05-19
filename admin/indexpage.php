@@ -17,14 +17,14 @@
  * @since           1.0.6
  */
 
-include_once __DIR__ . '/admin_header.php';
+require_once __DIR__ . '/admin_header.php';
 
-//xoopstubeUtilities::prepareFolder(XOOPSTUBE_UPLOAD_PATH);
-//xoopstubeUtilities::prepareFolder(XOOPSTUBE_ATTACHED_FILES_PATH);
-//xoopstubeUtilities::prepareFolder(XOOPSTUBE_PICTURES_PATH);
-//xoopstubeUtilities::prepareFolder(XOOPSTUBE_CSV_PATH);
-//xoopstubeUtilities::prepareFolder(XOOPSTUBE_CACHE_PATH);
-//xoopstubeUtilities::prepareFolder(XOOPSTUBE_TEXT_PATH);
+//xoopstubeUtility::prepareFolder(XOOPSTUBE_UPLOAD_PATH);
+//xoopstubeUtility::prepareFolder(XOOPSTUBE_ATTACHED_FILES_PATH);
+//xoopstubeUtility::prepareFolder(XOOPSTUBE_PICTURES_PATH);
+//xoopstubeUtility::prepareFolder(XOOPSTUBE_CSV_PATH);
+//xoopstubeUtility::prepareFolder(XOOPSTUBE_CACHE_PATH);
+//xoopstubeUtility::prepareFolder(XOOPSTUBE_TEXT_PATH);
 
 $op = $op = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', '', 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'op', '');
 //$cid = xtubeCleanRequestVars( $_REQUEST, 'cid', 0 );
@@ -64,13 +64,12 @@ switch (strtolower($op)) {
 
             return false;
         }
-        list($indeximage, $indexheading, $indexheader, $indexfooter, $nohtml, $nosmiley, $noxcodes, $noimages, $nobreak, $indexheaderalign, $indexfooteralign, $lastvideosyn, $lastvideostotal) =
-            $GLOBALS['xoopsDB']->fetchrow($result);
+        list($indeximage, $indexheading, $indexheader, $indexfooter, $nohtml, $nosmiley, $noxcodes, $noimages, $nobreak, $indexheaderalign, $indexfooteralign, $lastvideosyn, $lastvideostotal) = $GLOBALS['xoopsDB']->fetchrow($result);
 
         xoops_cp_header();
         //xtubeRenderAdminMenu( _AM_XOOPSTUBE_INDEXPAGE );
-        $aboutAdmin = new ModuleAdmin();
-        echo $aboutAdmin->addNavigation(basename(__FILE__));
+        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject->displayNavigation(basename(__FILE__));
 
         echo '
          <fieldset style="border: #e8e8e8 1px solid;">
@@ -89,7 +88,12 @@ switch (strtolower($op)) {
         $indeximage_tray = new XoopsFormElementTray(_AM_XOOPSTUBE_IPAGE_CIMAGE, '&nbsp;');
         $indeximage_tray->addElement($indexImageSelect);
         if (!empty($indeximage)) {
-            $indeximage_tray->addElement(new XoopsFormLabel('', '<br><br><img src="' . XOOPS_URL . '/' . $GLOBALS['xoopsModuleConfig']['mainimagedir'] . '/' . $indeximage
+            $indeximage_tray->addElement(new XoopsFormLabel('', '<br><br><img src="'
+                                                                . XOOPS_URL
+                                                                . '/'
+                                                                . $GLOBALS['xoopsModuleConfig']['mainimagedir']
+                                                                . '/'
+                                                                . $indeximage
                                                                 . '" name="image" id="image" alt="" />'));
         } else {
             $indeximage_tray->addElement(new XoopsFormLabel('', '<br><br><img src="' . XOOPS_URL . '/uploads/blank.gif" name="image" id="image" alt="" />'));
@@ -169,4 +173,4 @@ switch (strtolower($op)) {
         $sform->display();
         break;
 }
-include_once __DIR__ . '/admin_footer.php';
+require_once __DIR__ . '/admin_footer.php';
