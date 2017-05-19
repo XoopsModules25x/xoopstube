@@ -295,7 +295,7 @@ switch ($op) {
         $groups       = XoopsRequest::getArray('groups', array(), 'POST'); //isset($_REQUEST['groups']) ? $_REQUEST['groups'] : array();
         $cid          = XoopsRequest::getInt('cid', 0, 'POST'); //(isset($_REQUEST['cid'])) ? $_REQUEST['cid'] : 0;
         $pid          = XoopsRequest::getInt('pid', 0, 'POST'); //(isset($_REQUEST['pid'])) ? $_REQUEST['pid'] : 0;
-        $weight       = (XoopsRequest::getInt('pid', 0, 'POST') > 0) ? XoopsRequest::getInt('pid', 0, 'POST') : 0; //(isset($_REQUEST['weight']) && $_REQUEST['weight'] > 0) ? $_REQUEST['weight'] : 0;
+        $weight       = (XoopsRequest::getInt('weight', 0, 'POST') > 0) ? XoopsRequest::getInt('weight', 0, 'POST') : 0; //(isset($_REQUEST['weight']) && $_REQUEST['weight'] > 0) ? $_REQUEST['weight'] : 0;
         $spotlighthis = XoopsRequest::getInt('lid', 0, 'POST'); //(isset($_REQUEST['lid'])) ? $_REQUEST['lid'] : 0;
         $spotlighttop = (1 == XoopsRequest::getInt('spotlighttop', 0, 'POST')) ? 1 : 0; //($_REQUEST['spotlighttop'] == 1) ? 1 : 0;
         $title        = XoopsRequest::getString('title', '', 'POST'); //$xtubemyts->addslashes($_REQUEST['title']);

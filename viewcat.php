@@ -40,19 +40,16 @@ $xoopsOption['template_main'] = 'xoopstube_viewcat.tpl';
 
 include XOOPS_ROOT_PATH . '/header.php';
 
+$xoTheme->addStylesheet('modules/'.$moduleDirName.'/assets/css/xtubestyle.css');
+
 global $xoopsModule;
 //$catarray['letters']     = XoopstubeUtilities::xtubeGetLetters();
 $catarray['letters']     = XoopstubeUtilities::xoopstubeLettersChoice();
 $catarray['imageheader'] = XoopstubeUtilities::xtubeRenderImageHeader();
 $xoopsTpl->assign('catarray', $catarray);
 
-//$catArray['letters'] = XoopstubeUtilities::xtubeLettersChoice();
-//$catArray['letters'] = XoopstubeUtilities::xoopstubeLettersChoice();
-//$catArray['toolbar'] = xoopstube_toolbar();
-//$xoopsTpl->assign('catarray', $catArray);
-
 // Breadcrumb
-$pathstring = '<a href="index.php">' . _MD_XOOPSTUBE_MAIN . '</a>&nbsp;:&nbsp;';
+$pathstring = '<li><a href="index.php">' . _MD_XOOPSTUBE_MAIN . '</a></li>';
 $pathstring .= $mytree->getNicePathFromId($cid, 'title', 'viewcat.php?op=');
 $xoopsTpl->assign('category_path', $pathstring);
 $xoopsTpl->assign('category_id', $cid);
@@ -184,6 +181,10 @@ if ($selectdate) {
     list($count) = $GLOBALS['xoopsDB']->fetchRow($GLOBALS['xoopsDB']->query($sql));
 
     $list_by = 'selectdate=' . $selectdate;
+    
+    $xoopsTpl->assign('is_selectdate', true);
+    $xoopsTpl->assign('selected_date', XoopstubeUtilities::xtubeGetTimestamp(formatTimestamp($selectdate, $GLOBALS['xoopsModuleConfig']['dateformat'])));
+    
 } elseif ($list) {
     $query = " WHERE title LIKE '$list%' AND (published>0 AND published<=" . time() . ') AND (expired=0 OR expired>' . time() . ') AND offline=0 AND cid>0';
 
@@ -209,12 +210,12 @@ if ($selectdate) {
 }
 $pagenav = new XoopsPageNav($count, $GLOBALS['xoopsModuleConfig']['perpage'], $start, 'start', $list_by);
 
-// Show links
+// Show videos
 if ($count > 0) {
     $moderate = 0;
     while (false !== ($video_arr = $GLOBALS['xoopsDB']->fetchArray($result))) {
         if (true === XoopstubeUtilities::xtubeCheckGroups($video_arr['cid'])) {
-            require XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/include/videoloadinfo.php';
+            require XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/include/videoloadinfo.php';            
             $xoopsTpl->append('video', $video);
         }
     }

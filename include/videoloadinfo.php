@@ -35,7 +35,7 @@ $path              = str_replace('/', '', $path);
 $video['category'] = $path;
 
 $rating           = round(number_format($video_arr['rating'], 0) / 2);
-$video['rateimg'] = "rate$rating.png";
+$video['rateimg'] = "rating_".$rating.".gif";
 unset($rating);
 
 $video['votes'] = (1 == $video_arr['votes']) ? _MD_XOOPSTUBE_ONEVOTE : sprintf(_MD_XOOPSTUBE_NUMVOTES, $video_arr['votes']);
@@ -87,7 +87,7 @@ if (is_object($GLOBALS['xoopsUser']) && !empty($GLOBALS['xoopsUser'])) {
     if (true === XoopstubeUtilities::xtubeCheckGroups($cid)) {
         $video['useradminvideo'] = 1;
         if ($GLOBALS['xoopsUser']->getVar('uid') === $video_arr['submitter']) {
-            $video['usermodify'] = '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/submit.php?lid=' . $video_arr['lid'] . '"> ' . _MD_XOOPSTUBE_MODIFY . '</a> |';
+            $video['usermodify'] = '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/submit.php?lid=' . $video_arr['lid'] . '"> ' . _MD_XOOPSTUBE_MODIFY . '</a>';
         }
     }
 }
@@ -95,7 +95,8 @@ if (is_object($GLOBALS['xoopsUser']) && !empty($GLOBALS['xoopsUser'])) {
 $description          =& $xtubemyts->displayTarea($video_arr['description'], 1, 1, 1, 1, 1);
 $video['description'] = xoops_substr($description, 0, $GLOBALS['xoopsModuleConfig']['totalchars'], '...');
 
-$video['updated']        = XoopstubeUtilities::xtubeGetTimestamp(formatTimestamp($time, $GLOBALS['xoopsModuleConfig']['dateformat']));
+$video['updated']        = XoopstubeUtilities::xtubeGetTimestamp(formatTimestamp($video_arr['date'], $GLOBALS['xoopsModuleConfig']['dateformat']));
+//$video['updated']        = date($GLOBALS['xoopsModuleConfig']['dateformat'], $video_arr['date']);
 $video['submitter']      = XoopstubeUtilities::xtubeGetLinkedUserNameFromId($video_arr['submitter']);
 $video['time']           = $video_arr['time'];
 $video['mail_subject']   = rawurlencode(sprintf(_MD_XOOPSTUBE_INTFILEFOUND, $GLOBALS['xoopsConfig']['sitename']));

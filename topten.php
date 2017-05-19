@@ -22,6 +22,7 @@ include __DIR__ . '/header.php';
 
 $xoopsOption['template_main'] = 'xoopstube_topten.tpl';
 include XOOPS_ROOT_PATH . '/header.php';
+$xoTheme->addStylesheet('modules/'.$moduleDirName.'/assets/css/xtubestyle.css');
 
 $mytree = new XoopstubeTree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
 

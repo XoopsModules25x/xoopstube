@@ -45,7 +45,7 @@ CREATE TABLE `xoopstube_cat` (
   pid          INT(5) UNSIGNED NOT NULL DEFAULT '0',
   title        VARCHAR(50)     NOT NULL DEFAULT '',
   imgurl       VARCHAR(150)    NOT NULL DEFAULT '',
-  description  VARCHAR(255)    NOT NULL DEFAULT '',
+  description  TEXT		    NOT NULL DEFAULT '',
   total        INT(11)         NOT NULL DEFAULT '0',
   spotlighttop INT(11)         NOT NULL DEFAULT '0',
   spotlighthis INT(11)         NOT NULL DEFAULT '0',

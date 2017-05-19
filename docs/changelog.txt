@@ -1,4 +1,12 @@
 =========================================================
+1.07 Beta 2                       2015-05-01
+=========================================================
+- Update templates for bootstrap (bleekk)
+- fixed bug in admin->broken (bleekk)
+- fixed date bug in category and videos (bleekk)
+- load css not in templates (bleekk)
+
+=========================================================
 1.07 Beta 1                       2016-06-16
 =========================================================
 

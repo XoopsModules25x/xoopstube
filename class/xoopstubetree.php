@@ -247,7 +247,7 @@ class xoopstubetree
      */
     public function getNicePathFromId($selectId, $title, $funcURL, $path = '')
     {
-        $path     = !empty($path) ? '&nbsp;:&nbsp;' . $path : $path;
+        $path     = !empty($path) ?  $path : $path;
         $selectId = (int)$selectId;
         $sql      = 'SELECT ' . $this->pid . ', ' . $title . ' FROM ' . $this->table . ' WHERE ' . $this->id . "=$selectId";
         $result   = $this->db->query($sql);
@@ -257,7 +257,7 @@ class xoopstubetree
         list($parentid, $name) = $this->db->fetchRow($result);
         $myts = MyTextSanitizer::getInstance();
         $name = $myts->htmlspecialchars($name);
-        $path = "<a href='" . $funcURL . '&amp;' . $this->id . '=' . $selectId . "'>" . $name . '</a>' . $path . '';
+        $path = "<li><a href='" . $funcURL . '&amp;' . $this->id . '=' . $selectId . "'>" . $name . '</a></li>' . $path . '';
         if (0 == $parentid) {
             return $path;
         }

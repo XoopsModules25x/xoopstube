@@ -35,7 +35,15 @@ if (false === XoopstubeUtilities::xtubeCheckGroups($cid, 'XTubeSubPerm')) {
     redirect_header('index.php', 1, _MD_XOOPSTUBE_NOPERMISSIONTOPOST);
 }
 
+
 if (true === XoopstubeUtilities::xtubeCheckGroups($cid, 'XTubeSubPerm')) {
+    echo '<div class="row">
+    <div class="col-md-12">';
+    echo '<ol class="breadcrumb">
+        <li><a href="index.php">'.$moduleDirName.'</a></li>
+        <li>'._MD_XOOPSTUBE_SUBMITCATHEAD.'</li>
+    </ol>
+    ';
     //    if (xtubeCleanRequestVars($_REQUEST, 'submit', 0)) {
     if (XoopsRequest::getString('submit', '')) {
         if (false === XoopstubeUtilities::xtubeCheckGroups($cid, 'XTubeSubPerm')) {
@@ -174,7 +182,7 @@ if (true === XoopstubeUtilities::xtubeCheckGroups($cid, 'XTubeSubPerm')) {
         $approve = XoopsRequest::getInt('approve', 0, 'POST'); // xtubeCleanRequestVars($_REQUEST, 'approve', 0);
 
         // Show disclaimer
-        if ($GLOBALS['xoopsModuleConfig']['showdisclaimer'] && !XoopsRequest::getInt('agree', '', 'GET') && 0 == $approve) {
+        if ($GLOBALS['xoopsModuleConfig']['showdisclaimer'] && !XoopsRequest::getInt('agree', '', 'GET') && 0 == $approve) {    
             echo '<br><div style="text-align: center;">' . XoopstubeUtilities::xtubeRenderImageHeader() . '</div><br>';
             echo '<h4>' . _MD_XOOPSTUBE_DISCLAIMERAGREEMENT . '</h4>';
             echo '<div>' . $xtubemyts->displayTarea($GLOBALS['xoopsModuleConfig']['disclaimer'], 1, 1, 1, 1, 1) . '</div>';
@@ -187,7 +195,6 @@ if (true === XoopstubeUtilities::xtubeCheckGroups($cid, 'XTubeSubPerm')) {
             include XOOPS_ROOT_PATH . '/footer.php';
             exit();
         }
-        echo '<br><div style="text-align: center;">' . XoopstubeUtilities::xtubeRenderImageHeader() . '</div><br>';
         echo '<div>' . _MD_XOOPSTUBE_SUB_SNEWMNAMEDESC . '</div>';
         //        echo "<div class='xoopstube_singletitle'>" . _MD_XOOPSTUBE_SUBMITCATHEAD . "</div>\n";
 
@@ -352,8 +359,12 @@ if (true === XoopstubeUtilities::xtubeCheckGroups($cid, 'XTubeSubPerm')) {
         $sform->addElement($button_tray);
         $sform->display();
 
+    echo '</div></div>';
+
         include XOOPS_ROOT_PATH . '/footer.php';
     }
+
 } else {
     redirect_header('index.php', 2, _MD_XOOPSTUBE_NOPERMISSIONTOPOST);
 }
+
