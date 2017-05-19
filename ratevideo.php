@@ -18,12 +18,14 @@
  * @since           1.0.6
  */
 
+use Xmf\Request;
+
 include __DIR__ . '/header.php';
 
 global $xtubemyts, $xoTheme;
 
 // Check if videoload POSTER is voting (UNLESS Anonymous users allowed to post)
-$lid = XoopsRequest::getInt('lid', XoopsRequest::getInt('lid', '', 'POST'), 'GET');
+$lid = Request::getInt('lid', Request::getInt('lid', '', 'POST'), 'GET');
 
 $ip         = getenv('REMOTE_ADDR');
 $ratinguser = (!is_object($GLOBALS['xoopsUser'])) ? 0 : $GLOBALS['xoopsUser']->getVar('uid');
@@ -60,16 +62,16 @@ if ($ratinguser !== 0) {
     }
 }
 
-if (!empty(XoopsRequest::getString('submit', ''))) {
+if (!empty(Request::getString('submit', ''))) {
     $ratinguser = (!is_object($GLOBALS['xoopsUser'])) ? 0 : $GLOBALS['xoopsUser']->getVar('uid');
     // Make sure only 1 anonymous from an IP in a single day.
     $anonwaitdays = 1;
     $ip           = getenv('REMOTE_ADDR');
-    $lid          = XoopsRequest::getInt('lid', 0, 'POST');
-    $cid          = XoopsRequest::getInt('cid', 0, 'POST');
-    $rating       = XoopsRequest::getInt('rating', 0, 'POST');
-    //    $title        = $xtubemyts->addslashes(trim(XoopsRequest::getString('title', '', 'POST')));
-    $title = XoopsRequest::getString('title', '', 'POST');
+    $lid          = Request::getInt('lid', 0, 'POST');
+    $cid          = Request::getInt('cid', 0, 'POST');
+    $rating       = Request::getInt('rating', 0, 'POST');
+    //    $title        = $xtubemyts->addslashes(trim(Request::getString('title', '', 'POST')));
+    $title = Request::getString('title', '', 'POST');
     // Check if Rating is Null
     if (0 == $rating) {
         $ratemessage = _MD_XOOPSTUBE_NORATING;
@@ -94,7 +96,7 @@ if (!empty(XoopsRequest::getString('submit', ''))) {
     include XOOPS_ROOT_PATH . '/header.php';
 
     $catarray['imageheader'] = XoopstubeUtility::xtubeRenderImageHeader();
-    $cid                     = XoopsRequest::getInt('cid', XoopsRequest::getInt('cid', '', 'POST'), 'GET');
+    $cid                     = Request::getInt('cid', Request::getInt('cid', '', 'POST'), 'GET');
 
     $catarray['imageheader'] = XoopstubeUtility::xtubeRenderImageHeader();
     $xoopsTpl->assign('catarray', $catarray);

@@ -595,5 +595,3 @@ define('_AM_XOOPSTUBE_VIDEO_EXPIREWARNING', 'The publishing date is after expira
 
 define('_AM_XOOPSTUBE_ADD_SAMPLEDATA', 'Add Sample Data (will delete ALL current data)');
 define('_AM_XOOPSTUBE_SAMPLEDATA_SUCCESS', 'Sample Date uploaded successfully');
-
-

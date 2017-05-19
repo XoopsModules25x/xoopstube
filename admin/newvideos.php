@@ -17,10 +17,12 @@
  * @since           1.0.6
  */
 
+use Xmf\Request;
+
 require_once __DIR__ . '/admin_header.php';
 
-$op  = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', '', 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'op', '');
-$lid = XoopsRequest::getInt('lid', XoopsRequest::getInt('lid', 0, 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'lid', 0);
+$op  = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'op', '');
+$lid = Request::getInt('lid', Request::getInt('lid', 0, 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'lid', 0);
 
 switch (strtolower($op)) {
     case 'approve':
@@ -74,7 +76,7 @@ switch (strtolower($op)) {
     case 'main':
     default:
 
-        $start = XoopsRequest::getInt('start', 0); //xtubeCleanRequestVars($_REQUEST, 'start', 0);
+        $start = Request::getInt('start', 0); //xtubeCleanRequestVars($_REQUEST, 'start', 0);
         $sql   = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE published = 0 ORDER BY lid DESC';
         if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
             XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);

@@ -18,6 +18,8 @@
  * @since           1.0.6
  */
 
+use Xmf\Request;
+
 include __DIR__ . '/header.php';
 
 $GLOBALS['xoopsOption']['template_main'] = 'xoopstube_topten.tpl';
@@ -34,7 +36,7 @@ $list_array   = array('hits', 'rating');
 $lang_array   = array(_MD_XOOPSTUBE_HITS, _MD_XOOPSTUBE_RATING);
 $rankings     = array();
 
-$sort     = in_array(XoopsRequest::getString('list', '', 'GET'), $action_array) ? XoopsRequest::getString('list', '', 'GET') : 'rate';
+$sort     = in_array(Request::getString('list', '', 'GET'), $action_array) ? Request::getString('list', '', 'GET') : 'rate';
 $sort_arr = $action_array[$sort];
 $sortDB   = $list_array[$sort_arr];
 

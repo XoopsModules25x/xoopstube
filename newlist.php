@@ -18,6 +18,8 @@
  * @link            http://xoops.org/
  */
 
+use Xmf\Request;
+
 include __DIR__ . '/header.php';
 
 $GLOBALS['xoopsOption']['template_main'] = 'xoopstube_newlistindex.tpl';
@@ -28,12 +30,12 @@ global $xoopsModule;
 
 $catarray['imageheader'] = XoopstubeUtility::xtubeRenderImageHeader();
 $xoopsTpl->assign('catarray', $catarray);
-if (!isset($_GET['newvideoshowdays'])){
-    redirect_header('newlist.php?newvideoshowdays=7',1,'');
+if (!isset($_GET['newvideoshowdays'])) {
+    redirect_header('newlist.php?newvideoshowdays=7', 1, '');
 }
 
-if (XoopsRequest::getInt('newvideoshowdays', '', 'GET')) {
-    $newvideoshowdays = XoopsRequest::getInt('newvideoshowdays', 7, 'GET');
+if (Request::getInt('newvideoshowdays', '', 'GET')) {
+    $newvideoshowdays = Request::getInt('newvideoshowdays', 7, 'GET');
     if ($newvideoshowdays !== 7) {
         if ($newvideoshowdays !== 14) {
             if ($newvideoshowdays !== 30) {
@@ -60,7 +62,7 @@ if (XoopsRequest::getInt('newvideoshowdays', '', 'GET')) {
 
     // List Last VARIABLE Days of videos
     //  $newvideoshowdays = xtubeCleanRequestVars($_REQUEST, 'newvideoshowdays', 7 );
-    $newvideoshowdays = (int)XoopsRequest::getInt('newvideoshowdays', 7, 'GET');
+    $newvideoshowdays = (int)Request::getInt('newvideoshowdays', 7, 'GET');
     $xoopsTpl->assign('newvideoshowdays', $newvideoshowdays);
 
     $dailyvideos = array();

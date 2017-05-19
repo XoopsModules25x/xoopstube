@@ -18,6 +18,8 @@
  * @since           1.0.6
  */
 
+use Xmf\Request;
+
 include __DIR__ . '/header.php';
 include XOOPS_ROOT_PATH . '/header.php';
 include XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
@@ -28,8 +30,8 @@ global $xoopsModule, $xtubemyts;
 
 $xoopsTpl->assign('xoops_module_header', '<link rel="stylesheet" type="text/css" href="' . $moduleDirName . '/assets/css/xtubestyle.css" />');
 
-$cid = XoopsRequest::getInt('cid', 0); //(int) xtubeCleanRequestVars($_REQUEST, 'cid', 0);
-$lid = XoopsRequest::getInt('lid', 0); //(int) xtubeCleanRequestVars($_REQUEST, 'lid', 0);
+$cid = Request::getInt('cid', 0); //(int) xtubeCleanRequestVars($_REQUEST, 'cid', 0);
+$lid = Request::getInt('lid', 0); //(int) xtubeCleanRequestVars($_REQUEST, 'lid', 0);
 
 if (false === XoopstubeUtility::xtubeCheckGroups($cid, 'XTubeSubPerm')) {
     redirect_header('index.php', 1, _MD_XOOPSTUBE_NOPERMISSIONTOPOST);
@@ -44,25 +46,25 @@ if (true === XoopstubeUtility::xtubeCheckGroups($cid, 'XTubeSubPerm')) {
     </ol>
     ';
     //    if (xtubeCleanRequestVars($_REQUEST, 'submit', 0)) {
-    if (XoopsRequest::getString('submit', '')) {
+    if (Request::getString('submit', '')) {
         if (false === XoopstubeUtility::xtubeCheckGroups($cid, 'XTubeSubPerm')) {
             redirect_header('index.php', 1, _MD_XOOPSTUBE_NOPERMISSIONTOPOST);
         }
 
         $submitter    = (is_object($GLOBALS['xoopsUser']) && !empty($GLOBALS['xoopsUser'])) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
-        $vidsource    = XoopsRequest::getInt('vidsource', 0, 'POST'); // xtubeCleanRequestVars($_REQUEST, 'vidsource', 0);
-        $offline      = XoopsRequest::getInt('offline', 0, 'POST'); // xtubeCleanRequestVars($_REQUEST, 'offline', 0);
-        $notifypub    = XoopsRequest::getInt('notifypub', 0, 'POST'); // xtubeCleanRequestVars($_REQUEST, 'notifypub', 0);
-        $approve      = XoopsRequest::getInt('approve', 0, 'POST'); // xtubeCleanRequestVars($_REQUEST, 'approve', 0);
-        $vidrating    = XoopsRequest::getInt('vidrating', 0, 'POST'); // xtubeCleanRequestVars($_REQUEST, 'vidrating', 0);
-        $vidid        = XoopsRequest::getString('vidid', 0, 'POST'); // $xtubemyts->addslashes(ltrim(XoopsRequest::getInt('vidid', 0, 'POST')));
-        $title        = XoopsRequest::getString('title', '', 'POST'); // $xtubemyts->addslashes(ltrim($_REQUEST['title']));
-        $descriptionb = XoopsRequest::getString('descriptionb', '', 'POST'); // $xtubemyts->addslashes(ltrim($_REQUEST['descriptionb']));
-        $publisher    = XoopsRequest::getString('publisher', '', 'POST'); // $xtubemyts->addslashes(trim($_REQUEST['publisher']));
-        $time         = XoopsRequest::getString('time', '', 'POST'); // $xtubemyts->addslashes(ltrim($_REQUEST['time']));
-        $keywords     = XoopsRequest::getString('keywords', '', 'POST'); // $xtubemyts->addslashes(trim($_REQUEST['keywords']));
-        $item_tag     = XoopsRequest::getString('item_tag', '', 'POST'); // $xtubemyts->addslashes(ltrim($_REQUEST['item_tag']));
-        $picurl       = XoopsRequest::getString('picurl', '', 'POST'); // $xtubemyts->addslashes(ltrim($_REQUEST['picurl']));
+        $vidsource    = Request::getInt('vidsource', 0, 'POST'); // xtubeCleanRequestVars($_REQUEST, 'vidsource', 0);
+        $offline      = Request::getInt('offline', 0, 'POST'); // xtubeCleanRequestVars($_REQUEST, 'offline', 0);
+        $notifypub    = Request::getInt('notifypub', 0, 'POST'); // xtubeCleanRequestVars($_REQUEST, 'notifypub', 0);
+        $approve      = Request::getInt('approve', 0, 'POST'); // xtubeCleanRequestVars($_REQUEST, 'approve', 0);
+        $vidrating    = Request::getInt('vidrating', 0, 'POST'); // xtubeCleanRequestVars($_REQUEST, 'vidrating', 0);
+        $vidid        = Request::getString('vidid', 0, 'POST'); // $xtubemyts->addslashes(ltrim(Request::getInt('vidid', 0, 'POST')));
+        $title        = Request::getString('title', '', 'POST'); // $xtubemyts->addslashes(ltrim($_REQUEST['title']));
+        $descriptionb = Request::getString('descriptionb', '', 'POST'); // $xtubemyts->addslashes(ltrim($_REQUEST['descriptionb']));
+        $publisher    = Request::getString('publisher', '', 'POST'); // $xtubemyts->addslashes(trim($_REQUEST['publisher']));
+        $time         = Request::getString('time', '', 'POST'); // $xtubemyts->addslashes(ltrim($_REQUEST['time']));
+        $keywords     = Request::getString('keywords', '', 'POST'); // $xtubemyts->addslashes(trim($_REQUEST['keywords']));
+        $item_tag     = Request::getString('item_tag', '', 'POST'); // $xtubemyts->addslashes(ltrim($_REQUEST['item_tag']));
+        $picurl       = Request::getString('picurl', '', 'POST'); // $xtubemyts->addslashes(ltrim($_REQUEST['picurl']));
         $date         = time();
         $publishdate  = 0;
         $ipaddress    = $_SERVER['REMOTE_ADDR'];
@@ -147,7 +149,7 @@ if (true === XoopstubeUtility::xtubeCheckGroups($cid, 'XTubeSubPerm')) {
                 $modifysubmitter = $GLOBALS['xoopsUser']->uid();
                 $requestid       = $modifysubmitter;
                 $requestdate     = time();
-                $updated         = XoopsRequest::getInt('up_dated', time(), 'POST'); //xtubeCleanRequestVars($_REQUEST, 'up_dated', time());
+                $updated         = Request::getInt('up_dated', time(), 'POST'); //xtubeCleanRequestVars($_REQUEST, 'up_dated', time());
                 if ($modifysubmitter === $submitter_array['submitter']) {
                     $sql = 'INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('xoopstube_mod') . ' (requestid, lid, cid, title, vidid, publisher, vidsource, description, modifysubmitter, requestdate, time, keywords, item_tag, picurl)';
                     $sql .= " VALUES ('', $lid, $cid, '$title', '$vidid', '$publisher', '$vidsource', '$descriptionb', '$modifysubmitter', '$requestdate', '$time', '$keywords', '$item_tag', '$picurl')";
@@ -176,10 +178,10 @@ if (true === XoopstubeUtility::xtubeCheckGroups($cid, 'XTubeSubPerm')) {
             redirect_header('index.php', 2, $_message);
         }
     } else {
-        $approve = XoopsRequest::getInt('approve', 0, 'POST'); // xtubeCleanRequestVars($_REQUEST, 'approve', 0);
+        $approve = Request::getInt('approve', 0, 'POST'); // xtubeCleanRequestVars($_REQUEST, 'approve', 0);
 
         // Show disclaimer
-        if ($GLOBALS['xoopsModuleConfig']['showdisclaimer'] && !XoopsRequest::getInt('agree', '', 'GET') && 0 == $approve) {
+        if ($GLOBALS['xoopsModuleConfig']['showdisclaimer'] && !Request::getInt('agree', '', 'GET') && 0 == $approve) {
             echo '<br><div style="text-align: center;">' . XoopstubeUtility::xtubeRenderImageHeader() . '</div><br>';
             echo '<h4>' . _MD_XOOPSTUBE_DISCLAIMERAGREEMENT . '</h4>';
             echo '<div>' . $xtubemyts->displayTarea($GLOBALS['xoopsModuleConfig']['disclaimer'], 1, 1, 1, 1, 1) . '</div>';
@@ -361,8 +363,6 @@ if (true === XoopstubeUtility::xtubeCheckGroups($cid, 'XTubeSubPerm')) {
 
         include XOOPS_ROOT_PATH . '/footer.php';
     }
-
 } else {
     redirect_header('index.php', 2, _MD_XOOPSTUBE_NOPERMISSIONTOPOST);
 }
-

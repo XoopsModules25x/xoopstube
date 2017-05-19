@@ -18,6 +18,8 @@
  * @author          Xoops Development Team
  */
 
+use Xmf\Request;
+
 //defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 require_once __DIR__ . '/../../../include/cp_header.php';
@@ -111,19 +113,19 @@ class DirectoryChecker
     }
 }
 
-$dircheck = XoopsRequest::getString('dircheck', '', 'GET') ? filter_input(INPUT_GET, 'dircheck', FILTER_SANITIZE_STRING) : '';
+$dircheck = Request::getString('dircheck', '', 'GET') ? filter_input(INPUT_GET, 'dircheck', FILTER_SANITIZE_STRING) : '';
 
 switch ($dircheck) {
     case 'createdir':
         $languageConstants = array();
-        if (XoopsRequest::getString('path', '', 'GET')) {
+        if (Request::getString('path', '', 'GET')) {
             $path = filter_input(INPUT_GET, 'path', FILTER_SANITIZE_STRING);
         }
-        if (XoopsRequest::getString('redirect', '', 'GET')) {
+        if (Request::getString('redirect', '', 'GET')) {
             $redirect = filter_input(INPUT_GET, 'redirect', FILTER_SANITIZE_STRING);
         }
-        if (XoopsRequest::getString('languageConstants', '', 'GET')) {
-            $languageConstants = json_decode(XoopsRequest::getString('languageConstants', '', 'GET'));
+        if (Request::getString('languageConstants', '', 'GET')) {
+            $languageConstants = json_decode(Request::getString('languageConstants', '', 'GET'));
         }
         $result = DirectoryChecker::createDirectory($path);
         $msg    = $result ? $languageConstants[0] : $languageConstants[1];
@@ -132,17 +134,17 @@ switch ($dircheck) {
         break;
     case 'setperm':
         $languageConstants = array();
-        if (XoopsRequest::getString('path', '', 'GET')) {
+        if (Request::getString('path', '', 'GET')) {
             $path = filter_input(INPUT_GET, 'path', FILTER_SANITIZE_STRING);
         }
-        if (XoopsRequest::getString('mode', '', 'GET')) {
+        if (Request::getString('mode', '', 'GET')) {
             $mode = filter_input(INPUT_GET, 'mode', FILTER_SANITIZE_STRING);
         }
-        if (XoopsRequest::getString('redirect', '', 'GET')) {
+        if (Request::getString('redirect', '', 'GET')) {
             $redirect = filter_input(INPUT_GET, 'redirect', FILTER_SANITIZE_STRING);
         }
-        if (XoopsRequest::getString('languageConstants', '', 'GET')) {
-            $languageConstants = json_decode(XoopsRequest::getString('languageConstants', '', 'GET'));
+        if (Request::getString('languageConstants', '', 'GET')) {
+            $languageConstants = json_decode(Request::getString('languageConstants', '', 'GET'));
         }
         $result = DirectoryChecker::setDirectoryPermissions($path, $mode);
         $msg    = $result ? $languageConstants[0] : $languageConstants[1];

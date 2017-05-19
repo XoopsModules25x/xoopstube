@@ -17,13 +17,15 @@
  * @since           1.0.6
  */
 
+use Xmf\Request;
+
 require_once __DIR__ . '/admin_header.php';
 global $xoopsModule;
 
 $mytree = new XoopstubeTree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
 
-$op  = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', '', 'POST'), 'GET');
-$lid = XoopsRequest::getInt('lid', XoopsRequest::getInt('lid', 0, 'POST'), 'GET');
+$op  = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET');
+$lid = Request::getInt('lid', Request::getInt('lid', 0, 'POST'), 'GET');
 
 /**
  * @param int $lid
@@ -279,61 +281,61 @@ switch (strtolower($op)) {
 
     case 'save':
 
-        $groups    = XoopsRequest::getArray('groups', array(), 'POST'); //isset($_POST['groups']) ? $_POST['groups'] : array();
-        $lid       = XoopsRequest::getInt('lid', 0, 'POST');// (!empty($_POST['lid'])) ? $_POST['lid'] : 0;
-        $cid       = XoopsRequest::getInt('cid', 0, 'POST');// (!empty($_POST['cid'])) ? $_POST['cid'] : 0;
-        $vidrating = XoopsRequest::getInt('vidrating', 6, 'POST');// (!empty($_POST['vidrating'])) ? $_POST['vidrating'] : 6;
-        $status    = XoopsRequest::getInt('status', 2, 'POST');// (!empty($_POST['status'])) ? $_POST['status'] : 2;
+        $groups    = Request::getArray('groups', array(), 'POST'); //isset($_POST['groups']) ? $_POST['groups'] : array();
+        $lid       = Request::getInt('lid', 0, 'POST');// (!empty($_POST['lid'])) ? $_POST['lid'] : 0;
+        $cid       = Request::getInt('cid', 0, 'POST');// (!empty($_POST['cid'])) ? $_POST['cid'] : 0;
+        $vidrating = Request::getInt('vidrating', 6, 'POST');// (!empty($_POST['vidrating'])) ? $_POST['vidrating'] : 6;
+        $status    = Request::getInt('status', 2, 'POST');// (!empty($_POST['status'])) ? $_POST['status'] : 2;
 
         // Get data from form
-        $vidid        = $xtubemyts->addSlashes(XoopsRequest::getString('vidid', '', 'POST'));
-        $picurl       = ('http://' !== XoopsRequest::getString('picurl', '', 'POST')) ? $xtubemyts->addSlashes(XoopsRequest::getString('picurl', '', 'POST')) : '';
-        $title        = $xtubemyts->addSlashes(XoopsRequest::getString('title', '', 'POST'));
-        $descriptionb = $xtubemyts->addSlashes(XoopsRequest::getString('descriptionb', '', 'POST'));
-        $time         = $xtubemyts->addSlashes(XoopsRequest::getString('time', '', 'POST'));
-        $keywords     = $xtubemyts->addSlashes(XoopsRequest::getString('keywords', '', 'POST'));
-        $item_tag     = $xtubemyts->addSlashes(XoopsRequest::getString('item_tag', '', 'POST'));
+        $vidid        = $xtubemyts->addSlashes(Request::getString('vidid', '', 'POST'));
+        $picurl       = ('http://' !== Request::getString('picurl', '', 'POST')) ? $xtubemyts->addSlashes(Request::getString('picurl', '', 'POST')) : '';
+        $title        = $xtubemyts->addSlashes(Request::getString('title', '', 'POST'));
+        $descriptionb = $xtubemyts->addSlashes(Request::getString('descriptionb', '', 'POST'));
+        $time         = $xtubemyts->addSlashes(Request::getString('time', '', 'POST'));
+        $keywords     = $xtubemyts->addSlashes(Request::getString('keywords', '', 'POST'));
+        $item_tag     = $xtubemyts->addSlashes(Request::getString('item_tag', '', 'POST'));
         $submitter    = $GLOBALS['xoopsUser']->uid();
-        $publisher    = $xtubemyts->addSlashes(XoopsRequest::getString('publisher', '', 'POST'));
-        $vidsource    = XoopsRequest::getInt('vidsource', 0, 'POST'); //(!empty($_POST['vidsource'])) ? $_POST['vidsource'] : 0;
-        $updated      = (0 == XoopsRequest::getInt('was_published', '', 'POST')) ? 0 : time();
+        $publisher    = $xtubemyts->addSlashes(Request::getString('publisher', '', 'POST'));
+        $vidsource    = Request::getInt('vidsource', 0, 'POST'); //(!empty($_POST['vidsource'])) ? $_POST['vidsource'] : 0;
+        $updated      = (0 == Request::getInt('was_published', '', 'POST')) ? 0 : time();
 
         //PHP 5.3
-        $published0 = XoopsRequest::getArray('published', '', 'POST');
+        $published0 = Request::getArray('published', '', 'POST');
         $published  = strtotime($published0['date']) + $published0['time'];
 
         //          PHP 5.4
-        //        $published    = strtotime(XoopsRequest::getArray('published', '', 'POST')['date']) + XoopsRequest::getArray('published', '', 'POST')['time'];
+        //        $published    = strtotime(Request::getArray('published', '', 'POST')['date']) + Request::getArray('published', '', 'POST')['time'];
 
-        if (0 == XoopsRequest::getInt('up_dated', '', 'POST')) {
+        if (0 == Request::getInt('up_dated', '', 'POST')) {
             $updated = 0;
             $status  = 1;
         }
 
-        $offline   = (1 == XoopsRequest::getInt('offline', '', 'POST')) ? 1 : 0; // $_POST['offline'] == 1) ? 1 : 0;
-        $approved  = (1 == XoopsRequest::getInt('approved', '', 'POST')) ? 1 : 0; //isset($_POST['approved']) && $_POST['approved'] == 1) ? 1 : 0;
-        $notifypub = (1 == XoopsRequest::getInt('notifypub', '', 'POST')); //(isset($_POST['notifypub']) && $_POST['notifypub'] == 1);
+        $offline   = (1 == Request::getInt('offline', '', 'POST')) ? 1 : 0; // $_POST['offline'] == 1) ? 1 : 0;
+        $approved  = (1 == Request::getInt('approved', '', 'POST')) ? 1 : 0; //isset($_POST['approved']) && $_POST['approved'] == 1) ? 1 : 0;
+        $notifypub = (1 == Request::getInt('notifypub', '', 'POST')); //(isset($_POST['notifypub']) && $_POST['notifypub'] == 1);
 
         if (!$lid) {
             $date        = time();
             $publishdate = time();
             $expiredate  = '0';
         } else {
-            $publishdate = XoopsRequest::getBool('was_published', false, 'POST');//$_POST['was_published'];
-            $expiredate  = XoopsRequest::getBool('was_expired', false, 'POST');//$_POST['was_expired'];
+            $publishdate = Request::getBool('was_published', false, 'POST');//$_POST['was_published'];
+            $expiredate  = Request::getBool('was_expired', false, 'POST');//$_POST['was_expired'];
         }
         if (1 == $approved && empty($publishdate)) {
             $publishdate = time();
         }
-        //        if (XoopsRequest::getBool('expiredateactivate', false, 'POST')) {
+        //        if (Request::getBool('expiredateactivate', false, 'POST')) {
         //PHP 5.3
-        $expiredate0 = XoopsRequest::getArray('expired', array(), 'POST');
+        $expiredate0 = Request::getArray('expired', array(), 'POST');
         $expiredate  = strtotime($expiredate0['date']) + $expiredate0['time'];
         //PHP 5.4
-        //        $expiredate = strtotime(XoopsRequest::getArray('expired', array(), 'POST')['date']) + XoopsRequest::getArray('expired', array(), 'POST')['time'];
+        //        $expiredate = strtotime(Request::getArray('expired', array(), 'POST')['date']) + Request::getArray('expired', array(), 'POST')['time'];
         //        }
 
-        if (XoopsRequest::getBool('clearexpire', false, 'POST')) {
+        if (Request::getBool('clearexpire', false, 'POST')) {
             $expiredate = '0';
         }
 
@@ -396,9 +398,9 @@ switch (strtolower($op)) {
             $notificationHandler->triggerEvent('video', $lid, 'approve', $tags);
         }
         $message = (!$lid) ? _AM_XOOPSTUBE_VIDEO_NEWFILEUPLOAD : _AM_XOOPSTUBE_VIDEO_FILEMODIFIEDUPDATE;
-        $message = ($lid && !XoopsRequest::getBool('was_published', false, 'POST') && $approved) ? _AM_XOOPSTUBE_VIDEO_FILEAPPROVED : $message;
+        $message = ($lid && !Request::getBool('was_published', false, 'POST') && $approved) ? _AM_XOOPSTUBE_VIDEO_FILEAPPROVED : $message;
 
-        if (XoopsRequest::getInt('delbroken', 0)) { //xtubeCleanRequestVars($_REQUEST, 'delbroken', 0)) {
+        if (Request::getInt('delbroken', 0)) { //xtubeCleanRequestVars($_REQUEST, 'delbroken', 0)) {
             $sql = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_broken') . ' WHERE lid=' . $lid;
             if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
                 XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
@@ -412,8 +414,8 @@ switch (strtolower($op)) {
         break;
 
     case 'delete':
-        if (XoopsRequest::getInt('confirm', 0)) { // (xtubeCleanRequestVars($_REQUEST, 'confirm', 0)) {
-            $title = XoopsRequest::getString('title', 0); //xtubeCleanRequestVars($_REQUEST, 'title', 0);
+        if (Request::getInt('confirm', 0)) { // (xtubeCleanRequestVars($_REQUEST, 'confirm', 0)) {
+            $title = Request::getString('title', 0); //xtubeCleanRequestVars($_REQUEST, 'title', 0);
 
             // delete video
             $sql = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE lid=' . $lid;
@@ -470,32 +472,32 @@ switch (strtolower($op)) {
         break;
 
     case 'toggle':
-        if (XoopsRequest::getInt('lid', 0, 'GET') > 0) {
-            $a = (null === XoopsRequest::getInt('offline', null, 'GET'));
-            $b = null === XoopsRequest::getInt('offzzline', null, 'GET');
-            $c = null === XoopsRequest::getInt('offline', '', 'GET');
-            $d = null === XoopsRequest::getInt('offzzline', '', 'GET');
-            //            $e = empty(XoopsRequest::getInt('offline', 0, 'GET'));
-            $yy  = XoopsRequest::getInt('offzzline', null, 'GET');
+        if (Request::getInt('lid', 0, 'GET') > 0) {
+            $a = (null === Request::getInt('offline', null, 'GET'));
+            $b = null === Request::getInt('offzzline', null, 'GET');
+            $c = null === Request::getInt('offline', '', 'GET');
+            $d = null === Request::getInt('offzzline', '', 'GET');
+            //            $e = empty(Request::getInt('offline', 0, 'GET'));
+            $yy  = Request::getInt('offzzline', null, 'GET');
             $f0  = isset($yy);
             $g0  = empty($yy);
             $h0  = null === $yy;
-            $yy1 = XoopsRequest::getString('offzzline');
+            $yy1 = Request::getString('offzzline');
             $f1  = isset($yy1);
             $g1  = empty($yy1);
             $h1  = null === $yy1;
 
-            $yy2 = XoopsRequest::getVar('offzzline', null, 'GET');
+            $yy2 = Request::getVar('offzzline', null, 'GET');
             $f2  = isset($yy2);
             $g2  = empty($yy2);
             $h2  = null === $yy2;
 
-            $xx = XoopsRequest::getInt('offline', '', 'GET');
+            $xx = Request::getInt('offline', '', 'GET');
             $f  = isset($xx);
             $g  = empty($xx);
             $h  = null === $xx;
-            //            $e = empty(XoopsRequest::getInt('offline', '', 'GET'));
-            $offline = XoopsRequest::getInt('offline', null, 'GET');
+            //            $e = empty(Request::getInt('offline', '', 'GET'));
+            $offline = Request::getInt('offline', null, 'GET');
             if (null !== $offline) {
                 xtubeToggleOffline($lid, $offline);
             }
@@ -503,7 +505,7 @@ switch (strtolower($op)) {
         break;
 
     case 'delvote':
-        $rid = XoopsRequest::getInt('rid', 0); //xtubeCleanRequestVars($_REQUEST, 'rid', 0);
+        $rid = Request::getInt('rid', 0); //xtubeCleanRequestVars($_REQUEST, 'rid', 0);
         $sql = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_votedata') . ' WHERE ratingid=' . $rid;
         if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
             XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
@@ -516,12 +518,12 @@ switch (strtolower($op)) {
 
     case 'main':
     default:
-        $start     = XoopsRequest::getInt('start', 0, 'POST');// xtubeCleanRequestVars($_REQUEST, 'start', 0);
-        $start1    = XoopsRequest::getInt('start1', 0, 'POST');// xtubeCleanRequestVars($_REQUEST, 'start1', 0);
-        $start2    = XoopsRequest::getInt('start2', 0, 'POST');// xtubeCleanRequestVars($_REQUEST, 'start2', 0);
-        $start3    = XoopsRequest::getInt('start3', 0, 'POST');// xtubeCleanRequestVars($_REQUEST, 'start3', 0);
-        $start4    = XoopsRequest::getInt('start4', 0, 'POST');// xtubeCleanRequestVars($_REQUEST, 'start4', 0);
-        $start5    = XoopsRequest::getInt('start5', 0, 'POST');// xtubeCleanRequestVars($_REQUEST, 'start5', 0);
+        $start     = Request::getInt('start', 0, 'POST');// xtubeCleanRequestVars($_REQUEST, 'start', 0);
+        $start1    = Request::getInt('start1', 0, 'POST');// xtubeCleanRequestVars($_REQUEST, 'start1', 0);
+        $start2    = Request::getInt('start2', 0, 'POST');// xtubeCleanRequestVars($_REQUEST, 'start2', 0);
+        $start3    = Request::getInt('start3', 0, 'POST');// xtubeCleanRequestVars($_REQUEST, 'start3', 0);
+        $start4    = Request::getInt('start4', 0, 'POST');// xtubeCleanRequestVars($_REQUEST, 'start4', 0);
+        $start5    = Request::getInt('start5', 0, 'POST');// xtubeCleanRequestVars($_REQUEST, 'start5', 0);
         $totalcats = XoopstubeUtility::xtubeGetTotalCategoryCount();
 
         $result = $GLOBALS['xoopsDB']->query('SELECT COUNT(*) FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_broken'));

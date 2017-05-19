@@ -18,9 +18,11 @@
  * @since           1.0.6
  */
 
+use Xmf\Request;
+
 include __DIR__ . '/header.php';
 
-$start = XoopsRequest::getInt('start', XoopsRequest::getInt('start', 0, 'POST'), 'GET');
+$start = Request::getInt('start', Request::getInt('start', 0, 'POST'), 'GET');
 
 $GLOBALS['xoopsOption']['template_main'] = 'xoopstube_index.tpl';
 include XOOPS_ROOT_PATH . '/header.php';

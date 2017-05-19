@@ -18,10 +18,12 @@
  * @since           1.0.6
  */
 
+use Xmf\Request;
+
 require_once __DIR__ . '/header.php';
 
-$op  = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', '', 'POST'), 'GET');
-$lid = XoopsRequest::getInt('lid', XoopsRequest::getInt('lid', '', 'POST'), 'GET');
+$op  = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET');
+$lid = Request::getInt('lid', Request::getInt('lid', '', 'POST'), 'GET');
 
 $buttonn = strtolower(_MD_XOOPSTUBE_SUBMITBROKEN);
 
@@ -29,7 +31,7 @@ switch (strtolower($op)) {
     case $buttonn:
         $sender = (is_object($GLOBALS['xoopsUser']) && !empty($GLOBALS['xoopsUser'])) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
         $ip     = getenv('REMOTE_ADDR');
-        $title  = XoopsRequest::getString('title', '', 'POST');
+        $title  = Request::getString('title', '', 'POST');
         $time   = time();
 
         // Check if REG user is trying to report twice

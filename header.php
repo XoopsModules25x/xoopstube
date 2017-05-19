@@ -17,9 +17,9 @@
  * @link            http://xoops.org/
  * @since           1.0.6
  */
+use Xmf\Request;
 
 include __DIR__ . '/../../mainfile.php';
-xoops_load('XoopsRequest');
 
 $moduleDirName = basename(__DIR__);
 $modulePath    = __DIR__;

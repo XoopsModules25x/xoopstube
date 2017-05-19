@@ -18,8 +18,10 @@
  * @since           1.0.6
  */
 
+use Xmf\Request;
+
 include __DIR__ . '/../../mainfile.php';
-$com_itemid = XoopsRequest::getInt('com_itemid', 0, 'GET');
+$com_itemid = Request::getInt('com_itemid', 0, 'GET');
 if ($com_itemid > 0) {
     // Get file title
     $sql            = 'SELECT title FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE lid=' . $com_itemid;
