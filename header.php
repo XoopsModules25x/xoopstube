@@ -32,9 +32,7 @@ include_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/class_thum
 include_once XOOPS_ROOT_PATH . '/modules/xoopstube/class/xoopstubetree.php';
 include_once XOOPS_ROOT_PATH . '/class/pagenav.php';
 
-if (!file_exists('language/' . $GLOBALS['xoopsConfig']['language'] . '/main.php')) {
-    include __DIR__ . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/main.php';
-}
+xoops_loadLanguage('main', $moduleDirName);
 
 include_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/myts_extended.php';
 $xtubemyts = new XtubeTextSanitizer(); // MyTextSanitizer object

@@ -1363,7 +1363,7 @@ class XoopstubeUtilities
 
     /**
      * Returns the mime type of a file using first finfo then mime_content
-     *      
+     *     
      * @param String $ filename The file (with full path) that you want to know the mime type
      * @return string
      */
@@ -1494,7 +1494,7 @@ class XoopstubeUtilities
 
     /**
      * Function responsible for verifying that a directory exists, we can write in and create an index.html file
-     * 
+     *
      * @param String $ folder The full directory to verify
      *
      */
@@ -3275,7 +3275,7 @@ class XoopstubeUtilities
     public static function xtubeGetTimestamp($time)
     {
         $moduleDirName = basename(dirname(__DIR__));
-        include_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/local.php';
+        xoops_loadLanguage('local', $moduleDirName);
 
         $trans     = array(
             'Monday'    => _XOOPSTUBE_MONDAY,
