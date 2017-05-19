@@ -43,6 +43,7 @@ class FileList
      * @internal param int $type
      * @internal param string $prefix
      * @internal param string $suffix
+     * @return \fileList
      */
     public function __construct($path = 'uploads', $value = null, $selected = '', $size = 1)
     {

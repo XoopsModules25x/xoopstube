@@ -17,13 +17,13 @@
  * @since           1.0.6
  */
 
-include_once __DIR__ . '/admin_header.php';
-include_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
-include_once XOOPS_ROOT_PATH . '/class/xoopsform/grouppermform.php';
+require_once __DIR__ . '/admin_header.php';
+require_once __DIR__ . '/../../../include/cp_header.php';
+require_once XOOPS_ROOT_PATH . '/class/xoopsform/grouppermform.php';
 
 xoops_cp_header();
-$aboutAdmin = new ModuleAdmin();
-echo $aboutAdmin->addNavigation(basename(__FILE__));
+$adminObject = \Xmf\Module\Admin::getInstance();
+$adminObject->displayNavigation(basename(__FILE__));
 
 $permtoset                = XoopsRequest::getInt('permtoset', 1, 'POST');// isset($_POST['permtoset']) ? (int) $_POST['permtoset'] : 1;
 $selected                 = array('', '', '', '', '');
@@ -79,4 +79,4 @@ unset($permform);
 
 echo _AM_XOOPSTUBE_PERM_PERMSNOTE . '<br>';
 
-include_once __DIR__ . '/admin_footer.php';
+require_once __DIR__ . '/admin_footer.php';

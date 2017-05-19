@@ -22,7 +22,7 @@ include __DIR__ . '/header.php';
 
 $start = XoopsRequest::getInt('start', XoopsRequest::getInt('start', 0, 'POST'), 'GET');
 
-$xoopsOption['template_main'] = 'xoopstube_index.tpl';
+$GLOBALS['xoopsOption']['template_main'] = 'xoopstube_index.tpl';
 include XOOPS_ROOT_PATH . '/header.php';
 
 $mytree = new XoopstubeTree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
@@ -31,7 +31,7 @@ $mytree = new XoopstubeTree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid',
 $sql      = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_indexpage');
 $head_arr = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
 
-$catarray['imageheader']      = XoopstubeUtilities::xtubeRenderImageHeader($head_arr['indeximage'], $head_arr['indexheading']);
+$catarray['imageheader']      = XoopstubeUtility::xtubeRenderImageHeader($head_arr['indeximage'], $head_arr['indexheading']);
 $catarray['indexheaderalign'] = $xtubemyts->htmlSpecialCharsStrip($head_arr['indexheaderalign']);
 $catarray['indexfooteralign'] = $xtubemyts->htmlSpecialCharsStrip($head_arr['indexfooteralign']);
 
@@ -41,11 +41,10 @@ $xcodes = $head_arr['noxcodes'] ? 0 : 1;
 $images = $head_arr['noimages'] ? 0 : 1;
 $breaks = $head_arr['nobreak'] ? 1 : 0;
 
-$catarray['indexheading'] =& $xtubemyts->displayTarea($head_arr['indexheading'], $html, $smiley, $xcodes, $images, $breaks);
-$catarray['indexheader']  =& $xtubemyts->displayTarea($head_arr['indexheader'], $html, $smiley, $xcodes, $images, $breaks);
-$catarray['indexfooter']  =& $xtubemyts->displayTarea($head_arr['indexfooter'], $html, $smiley, $xcodes, $images, $breaks);
-//$catarray['letters']      = XoopstubeUtilities::xtubeGetLetters();
-$catarray['letters'] = XoopstubeUtilities::xoopstubeLettersChoice();
+$catarray['indexheading'] = $xtubemyts->displayTarea($head_arr['indexheading'], $html, $smiley, $xcodes, $images, $breaks);
+$catarray['indexheader']  = $xtubemyts->displayTarea($head_arr['indexheader'], $html, $smiley, $xcodes, $images, $breaks);
+$catarray['indexfooter']  = $xtubemyts->displayTarea($head_arr['indexfooter'], $html, $smiley, $xcodes, $images, $breaks);
+$catarray['letters']      = XoopstubeUtility::xtubeGetLetters();
 $xoopsTpl->assign('catarray', $catarray);
 // End main page Headers
 
@@ -54,9 +53,9 @@ $chcount = 0;
 $countin = 0;
 
 // Begin Main page linkload info
-$listings = XoopstubeUtilities::xtubeGetTotalItems();
+$listings = XoopstubeUtility::xtubeGetTotalItems();
 // get total amount of categories
-$total_cat = XoopstubeUtilities::xtubeGetTotalCategoryCount();
+$total_cat = XoopstubeUtility::xtubeGetTotalCategoryCount();
 
 $catsort = $GLOBALS['xoopsModuleConfig']['sortcats'];
 $sql     = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_cat') . ' WHERE pid=0 ORDER BY ' . $catsort;
@@ -64,9 +63,9 @@ $result  = $GLOBALS['xoopsDB']->query($sql);
 while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
     ++$countin;
     $subtotalvideoload = 0;
-    $totalvideoload    = XoopstubeUtilities::xtubeGetTotalItems($myrow['cid'], 1);
-    $indicator         = XoopstubeUtilities::xtubeIsNewImage($totalvideoload['published']);
-    if (XoopstubeUtilities::xtubeCheckGroups($myrow['cid'])) {
+    $totalvideoload    = XoopstubeUtility::xtubeGetTotalItems($myrow['cid'], 1);
+    $indicator         = XoopstubeUtility::xtubeIsNewImage($totalvideoload['published']);
+    if (XoopstubeUtility::xtubeCheckGroups($myrow['cid'])) {
         $title = $xtubemyts->htmlSpecialCharsStrip($myrow['title']);
 
         $arr = array();
@@ -76,7 +75,7 @@ while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $chcount       = 1;
         $subcategories = '';
         foreach ($arr as $ele) {
-            if (true === XoopstubeUtilities::xtubeCheckGroups($ele['cid'])) {
+            if (true === XoopstubeUtility::xtubeCheckGroups($ele['cid'])) {
                 if ($GLOBALS['xoopsModuleConfig']['subcats'] == 1) {
                     $chtitle = $xtubemyts->htmlSpecialCharsStrip($ele['title']);
                     if ($chcount > 5) {
@@ -101,11 +100,10 @@ while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
             if ($_thumb_image) {
                 $_thumb_image->setUseThumbs(1);
                 $_thumb_image->setImageType('gd2');
-                $_image = $_thumb_image->createThumbnail($GLOBALS['xoopsModuleConfig']['shotwidth'], $GLOBALS['xoopsModuleConfig']['shotheight'], $GLOBALS['xoopsModuleConfig']['imagequality'],
-                                                         $GLOBALS['xoopsModuleConfig']['updatethumbs'], $GLOBALS['xoopsModuleConfig']['imageAspect']);
+                $_image = $_thumb_image->createThumbnail($GLOBALS['xoopsModuleConfig']['shotwidth'], $GLOBALS['xoopsModuleConfig']['shotheight'], $GLOBALS['xoopsModuleConfig']['imagequality'], $GLOBALS['xoopsModuleConfig']['updatethumbs'], $GLOBALS['xoopsModuleConfig']['imageAspect']);
             }
         }
-        if (empty($_image) || '' === $_image) {
+        if (empty($_image) || '' == $_image) {
             $imgurl  = $indicator['image'];
             $_width  = 33;
             $_height = 24;
@@ -162,7 +160,7 @@ if ($lastvideos['lastvideosyn'] == 1 && $lastvideos['lastvideostotal'] > 0) {
                                 ORDER BY published DESC', $limit, $start);
 
     while (false !== ($video_arr = $GLOBALS['xoopsDB']->fetchArray($result))) {
-        if (true === XoopstubeUtilities::xtubeCheckGroups($video_arr['cid'])) {
+        if (true === XoopstubeUtility::xtubeCheckGroups($video_arr['cid'])) {
             $res_type = 0;
             $moderate = 0;
             $cid      = $video_arr['cid'];

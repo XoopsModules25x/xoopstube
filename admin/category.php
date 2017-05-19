@@ -15,8 +15,8 @@
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  */
 
-include_once __DIR__ . '/admin_header.php';
-include_once XOOPS_ROOT_PATH . '/class/xoopsform/grouppermform.php';
+require_once __DIR__ . '/admin_header.php';
+require_once XOOPS_ROOT_PATH . '/class/xoopsform/grouppermform.php';
 
 $op = '';
 
@@ -37,8 +37,8 @@ if (isset($_GET)) {
  */
 function createCategory($cid = 0)
 {
-    include_once dirname(__DIR__) . '/class/xoopstube_lists.php';
-    //    include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+    require_once __DIR__ . '/../class/xoopstube_lists.php';
+    //    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
     global $xtubemyts, $totalcats, $xoopsModule;
 
@@ -58,7 +58,7 @@ function createCategory($cid = 0)
     $client_id    = 0;
     $banner_id    = 0;
     $heading      = _AM_XOOPSTUBE_CCATEGORY_CREATENEW;
-    $totalcats    = XoopstubeUtilities::xtubeGetTotalCategoryCount();
+    $totalcats    = XoopstubeUtility::xtubeGetTotalCategoryCount();
 
     if ($cid > 0) {
         $sql          = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_cat') . ' WHERE cid=' . (int)$cid;
@@ -251,7 +251,7 @@ switch ($op) {
             xoops_cp_header();
             //xtubeRenderAdminMenu(_AM_XOOPSTUBE_MCATEGORY);
 
-            include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+            require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
             $xoopstubetree = new XoopstubeTree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
             $sform         = new XoopsThemeForm(_AM_XOOPSTUBE_CCATEGORY_MOVE, 'move', xoops_getenv('PHP_SELF'));
             ob_start();
@@ -444,7 +444,7 @@ switch ($op) {
         xoops_cp_header();
         //xtubeRenderAdminMenu(_AM_XOOPSTUBE_MCATEGORY);
         createCategory($cid);
-        include_once __DIR__ . '/admin_footer.php';
+        require_once __DIR__ . '/admin_footer.php';
         break;
 
     case 'main':
@@ -452,10 +452,10 @@ switch ($op) {
         xoops_cp_header();
         //xtubeRenderAdminMenu(_AM_XOOPSTUBE_MCATEGORY);
 
-        //        include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+        //        require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
         $xoopstubetree = new XoopstubeTree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
         $sform         = new XoopsThemeForm(_AM_XOOPSTUBE_CCATEGORY_MODIFY, 'category', xoops_getenv('PHP_SELF'));
-        $totalcats     = XoopstubeUtilities::xtubeGetTotalCategoryCount();
+        $totalcats     = XoopstubeUtility::xtubeGetTotalCategoryCount();
 
         if ($totalcats > 0) {
             ob_start();
@@ -477,6 +477,6 @@ switch ($op) {
             $sform->display();
         }
         createCategory(0);
-        include_once __DIR__ . '/admin_footer.php';
+        require_once __DIR__ . '/admin_footer.php';
         break;
 }

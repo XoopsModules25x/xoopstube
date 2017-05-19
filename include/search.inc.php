@@ -32,6 +32,7 @@ function xtubeCheckSearchGroups($cid = 0, $permType = 'XTubeCatPerm', $redirect 
     $groups       = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
     $gpermHandler = xoops_getHandler('groupperm');
 
+    /** @var XoopsModuleHandler $moduleHandler */
     $moduleHandler = xoops_getHandler('module');
     $module        = $moduleHandler->getByDirname($moduleDirName);
 
@@ -88,7 +89,7 @@ function xtubeSearch($queryarray, $andor, $limit, $offset, $userid)
 
     while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
         // Following is commented out because it can cause a conflict with View Account function (userinfo.php)
-        //        if ( false == xtubeCheckSearchGroups( $myrow['cid'] ) ) {
+        //        if ( false === xtubeCheckSearchGroups( $myrow['cid'] ) ) {
         //            continue;
         //        }
         $ret[$i]['image'] = 'assets/images/size2.gif';

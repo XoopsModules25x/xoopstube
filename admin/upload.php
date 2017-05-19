@@ -17,7 +17,7 @@
  * @since           1.0.6
  */
 
-include_once __DIR__ . '/admin_header.php';
+require_once __DIR__ . '/admin_header.php';
 
 //$op       = (isset($_REQUEST['op']) && !empty($_REQUEST['op'])) ? $_REQUEST['op'] : '';
 //$rootpath = (isset($_GET['rootpath'])) ? (int) $_GET['rootpath'] : 0;
@@ -39,7 +39,7 @@ switch (strtolower($op)) {
                 'image/png',
                 'media/flv'
             );
-            XoopstubeUtilities::xtubeUploadFiles($_FILES, XoopsRequest::getString('uploadpath', '', 'POST'), $allowed_mimetypes, 'upload.php', 1, 0);
+            XoopstubeUtility::xtubeUploadFiles($_FILES, XoopsRequest::getString('uploadpath', '', 'POST'), $allowed_mimetypes, 'upload.php', 1, 0);
             redirect_header('upload.php', 2, _AM_XOOPSTUBE_VIDEO_IMAGEUPLOAD);
         } else {
             redirect_header('upload.php', 2, _AM_XOOPSTUBE_VIDEO_NOIMAGEEXIST);
@@ -48,7 +48,7 @@ switch (strtolower($op)) {
 
     case 'delfile':
 
-        if (1 == XoopsRequest::getInt('confirm', '', 'POST')) { // isset($_POST['confirm']) && $_POST['confirm'] == 1) {
+        if (1 === XoopsRequest::getInt('confirm', '', 'POST')) { // isset($_POST['confirm']) && $_POST['confirm'] == 1) {
             $filetodelete = XOOPS_ROOT_PATH . '/' . XoopsRequest::getString('uploadpath', '', 'POST') . '/' . XoopsRequest::getString('videofile', '', 'POST');
             if (file_exists($filetodelete)) {
                 chmod($filetodelete, 0666);
@@ -77,8 +77,8 @@ switch (strtolower($op)) {
     default:
         $displayimage = '';
         xoops_cp_header();
-        $aboutAdmin = new ModuleAdmin();
-        echo $aboutAdmin->addNavigation(basename(__FILE__));
+        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject->displayNavigation(basename(__FILE__));
 
         $dirarray  = array(
             1 => $GLOBALS['xoopsModuleConfig']['catimage'],
@@ -110,7 +110,7 @@ switch (strtolower($op)) {
         //    );
 
         //xtubeRenderAdminMenu( _AM_XOOPSTUBE_MUPLOADS );
-        XoopstubeUtilities::xtubeGetServerStatistics();
+        XoopstubeUtility::xtubeGetServerStatistics();
         if ($rootpath > 0) {
             echo '<div><b>' . _AM_XOOPSTUBE_VIDEO_FUPLOADPATH . '</b> ' . XOOPS_ROOT_PATH . '/' . $dirarray[$rootpath] . '</div>';
             echo '<div><b>' . _AM_XOOPSTUBE_VIDEO_FUPLOADURL . '</b> ' . XOOPS_URL . '/' . $dirarray[$rootpath] . '</div><br>';
@@ -122,7 +122,7 @@ switch (strtolower($op)) {
         $iform->setExtra('enctype="multipart/form-data"');
         ob_start();
         $iform->addElement(new XoopsFormHidden('dir', $rootpath));
-        XoopstubeUtilities::xtubeGetDirSelectOption($namelist, $dirarray, $namearray);
+        XoopstubeUtility::xtubeGetDirSelectOption($namelist, $dirarray, $namearray);
         $iform->addElement(new XoopsFormLabel(_AM_XOOPSTUBE_VIDEO_FOLDERSELECTION, ob_get_contents()));
         ob_end_clean();
 
@@ -157,4 +157,4 @@ switch (strtolower($op)) {
         }
         $iform->display();
 }
-include_once __DIR__ . '/admin_footer.php';
+require_once __DIR__ . '/admin_footer.php';

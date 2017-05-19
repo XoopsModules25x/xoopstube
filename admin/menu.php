@@ -17,21 +17,22 @@
  * @since           1.0.6
  */
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-$moduleDirName = basename(dirname(__DIR__));
 
-$moduleHandler = xoops_getHandler('module');
-$module        = $moduleHandler->getByDirname($moduleDirName);
-$pathIcon32    = '../../' . $module->getInfo('sysIcons32');
-$pathModIcon32 = './' . $module->getInfo('modIcons32');
-xoops_loadLanguage('modinfo', $module->dirname());
-
-$xoopsModuleAdminPath = XOOPS_ROOT_PATH . '/' . $module->getInfo('dirmoduleadmin');
-if (!file_exists($fileinc = $xoopsModuleAdminPath . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/' . 'main.php')) {
-    $fileinc = $xoopsModuleAdminPath . '/language/english/main.php';
+if (!isset($moduleDirName)) {
+    $moduleDirName = basename(dirname(__DIR__));
 }
-include_once $fileinc;
+
+if (false !== ($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName))) {
+} else {
+    $moduleHelper = Xmf\Module\Helper::getHelper('system');
+}
+$adminObject = \Xmf\Module\Admin::getInstance();
+
+$pathIcon32    = \Xmf\Module\Admin::menuIconPath('');
+//$pathModIcon32 = $moduleHelper->getModule()->getInfo('modicons32');
+
+$moduleHelper->loadLanguage('modinfo');
 
 $adminmenu[] = array(
     'title' => _AM_MODULEADMIN_HOME,
