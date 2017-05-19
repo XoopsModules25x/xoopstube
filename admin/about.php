@@ -17,12 +17,11 @@
  * @since           1.0.6
  */
 
-include_once __DIR__ . '/admin_header.php';
+require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
-$aboutAdmin = new ModuleAdmin();
+$adminObject->displayNavigation(basename(__FILE__));
+\Xmf\Module\Admin::setPaypal('xoopsfoundation@gmail.com');
+$adminObject->displayAbout(false);
 
-echo $aboutAdmin->addNavigation(basename(__FILE__));
-echo $aboutAdmin->renderAbout('6KJ7RW5DR3VTJ', false);
-
-include_once __DIR__ . '/admin_footer.php';
+require_once __DIR__ . '/admin_footer.php';

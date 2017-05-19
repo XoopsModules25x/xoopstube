@@ -17,10 +17,10 @@
  * @since           1.0.6
  */
 
-include_once __DIR__ . '/admin_header.php';
+require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
-$indexAdmin = new ModuleAdmin();
+$adminObject  = \Xmf\Module\Admin::getInstance();
 
 $start     = XoopsRequest::getInt('start', 0, 'POST');// xtubeCleanRequestVars($_REQUEST, 'start', 0);
 $start1    = XoopsRequest::getInt('start1', 0, 'POST');// xtubeCleanRequestVars($_REQUEST, 'start1', 0);
@@ -28,7 +28,7 @@ $start2    = XoopsRequest::getInt('start2', 0, 'POST');// xtubeCleanRequestVars(
 $start3    = XoopsRequest::getInt('start3', 0, 'POST');// xtubeCleanRequestVars($_REQUEST, 'start3', 0);
 $start4    = XoopsRequest::getInt('start4', 0, 'POST');// xtubeCleanRequestVars($_REQUEST, 'start4', 0);
 $start5    = XoopsRequest::getInt('start5', 0, 'POST');// xtubeCleanRequestVars($_REQUEST, 'start5', 0);
-$totalcats = XoopstubeUtilities::xtubeGetTotalCategoryCount();
+$totalcats = XoopstubeUtility::xtubeGetTotalCategoryCount();
 
 $result = $GLOBALS['xoopsDB']->query('SELECT COUNT(*) FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_broken'));
 list($totalbrokenvideos) = $GLOBALS['xoopsDB']->fetchRow($result);
@@ -41,55 +41,60 @@ list($totalvideos) = $GLOBALS['xoopsDB']->fetchRow($result4);
 
 //$xxx='<a href="brokenvideo.php">' . _AM_XOOPSTUBE_SBROKENSUBMIT . '</a><b>';
 
-$indexAdmin->addInfoBox(_AM_XOOPSTUBE_MINDEX_VIDEOSUMMARY);
+$adminObject->addInfoBox(_AM_XOOPSTUBE_MINDEX_VIDEOSUMMARY);
 if ($totalcats > 0) {
-    $indexAdmin->addInfoBoxLine(_AM_XOOPSTUBE_MINDEX_VIDEOSUMMARY, '<infolabel>' . '<a href="category.php">' . _AM_XOOPSTUBE_SCATEGORY . '</a><b>' . '</infolabel>', $totalcats, 'Green');
+    $adminObject->addInfoBoxLine(sprintf('<infolabel>' . '<a href="category.php">' . _AM_XOOPSTUBE_SCATEGORY . '</a><b>' . '</infolabel>', $totalcats), '', 'Green');
 } else {
-    $indexAdmin->addInfoBoxLine(_AM_XOOPSTUBE_MINDEX_VIDEOSUMMARY, '<infolabel>' . _AM_XOOPSTUBE_SCATEGORY . '</infolabel>', $totalcats, 'Green');
+    $adminObject->addInfoBoxLine(sprintf('<infolabel>' . _AM_XOOPSTUBE_SCATEGORY . '</infolabel>', $totalcats), '', 'Green');
 }
 
 if ($totalvideos > 0) {
-    $indexAdmin->addInfoBoxLine(_AM_XOOPSTUBE_MINDEX_VIDEOSUMMARY, '<infolabel>' . '<a href="main.php">' . _AM_XOOPSTUBE_SFILES . '</a><b>' . '</infolabel>', $totalvideos, 'Green');
+    $adminObject->addInfoBoxLine(sprintf('<infolabel>' . '<a href="main.php">' . _AM_XOOPSTUBE_SFILES . '</a><b>' . '</infolabel>', $totalvideos), '', 'Green');
 } else {
-    $indexAdmin->addInfoBoxLine(_AM_XOOPSTUBE_MINDEX_VIDEOSUMMARY, '<infolabel>' . _AM_XOOPSTUBE_SFILES . '</infolabel>', $totalvideos, 'Green');
+    $adminObject->addInfoBoxLine(sprintf('<infolabel>' . _AM_XOOPSTUBE_SFILES . '</infolabel>', $totalvideos), '', 'Green');
 }
 
 if ($totalnewvideos > 0) {
-    $indexAdmin->addInfoBoxLine(_AM_XOOPSTUBE_MINDEX_VIDEOSUMMARY, '<infolabel>' . '<a href="newvideos.php">' . _AM_XOOPSTUBE_SNEWFILESVAL . '</a><b>' . '</infolabel>', $totalnewvideos, 'Red');
+    $adminObject->addInfoBoxLine(sprintf('<infolabel>' . '<a href="newvideos.php">' . _AM_XOOPSTUBE_SNEWFILESVAL . '</a><b>' . '</infolabel>', $totalnewvideos), '', 'Red');
 } else {
-    $indexAdmin->addInfoBoxLine(_AM_XOOPSTUBE_MINDEX_VIDEOSUMMARY, '<infolabel>' . _AM_XOOPSTUBE_SNEWFILESVAL . '</infolabel>', $totalnewvideos, 'Red');
+    $adminObject->addInfoBoxLine(sprintf('<infolabel>' . _AM_XOOPSTUBE_SNEWFILESVAL . '</infolabel>', $totalnewvideos), '', 'Red');
 }
 if ($totalmodrequests > 0) {
-    $indexAdmin->addInfoBoxLine(_AM_XOOPSTUBE_MINDEX_VIDEOSUMMARY, '<infolabel>' . '<a href="modifications.php">' . _AM_XOOPSTUBE_SMODREQUEST . '</a><b>' . '</infolabel>', $totalmodrequests, 'Red');
+    $adminObject->addInfoBoxLine(sprintf('<infolabel>' . '<a href="modifications.php">' . _AM_XOOPSTUBE_SMODREQUEST . '</a><b>' . '</infolabel>', $totalmodrequests), '', 'Red');
 } else {
-    $indexAdmin->addInfoBoxLine(_AM_XOOPSTUBE_MINDEX_VIDEOSUMMARY, '<infolabel>' . _AM_XOOPSTUBE_SMODREQUEST . '</infolabel>', $totalmodrequests, 'Red');
+    $adminObject->addInfoBoxLine(sprintf('<infolabel>' . _AM_XOOPSTUBE_SMODREQUEST . '</infolabel>', $totalmodrequests), '', 'Red');
 }
 
 if ($totalbrokenvideos > 0) {
-    $indexAdmin->addInfoBoxLine(_AM_XOOPSTUBE_MINDEX_VIDEOSUMMARY, '<infolabel>' . '<a href="brokenvideo.php">' . _AM_XOOPSTUBE_SBROKENSUBMIT . '</a><b>' . '</infolabel><infotext>',
-                                $totalbrokenvideos . '</infotext>', 'Red');
+    $adminObject->addInfoBoxLine(sprintf('<infolabel>' . '<a href="brokenvideo.php">' . _AM_XOOPSTUBE_SBROKENSUBMIT . '</a><b>' . '</infolabel><infotext>',
+                                $totalbrokenvideos . '</infotext>'), '', 'Red');
 } else {
-    $indexAdmin->addInfoBoxLine(_AM_XOOPSTUBE_MINDEX_VIDEOSUMMARY, '<infolabel>' . _AM_XOOPSTUBE_SBROKENSUBMIT . '</infolabel><infotext>', $totalbrokenvideos . '</infotext>', 'Red');
+    $adminObject->addInfoBoxLine(sprintf('<infolabel>' . _AM_XOOPSTUBE_SBROKENSUBMIT . '</infolabel><infotext>', $totalbrokenvideos . '</infotext>'), '', 'Red');
 }
 
 //------ create directories ---------------
-
+/*
 $folderMode = $GLOBALS['xoopsModuleConfig']['dirmode'];
-//include_once dirname(__DIR__) . '/class/utilities.php';
+//require_once __DIR__ . '/../class/utility.php';
 foreach (array_keys($uploadFolders) as $i) {
-    XoopstubeUtilities::prepareFolder($uploadFolders[$i], $folderMode);
-    $indexAdmin->addConfigBoxLine($uploadFolders[$i], 'folder');
-    //    $indexAdmin->addConfigBoxLine(array($uploadFolders[$i], $folderMode), 'chmod');
+    XoopstubeUtility::prepareFolder($uploadFolders[$i], $folderMode);
+    $adminObject->addConfigBoxLine($uploadFolders[$i], 'folder');
+    //    $adminObject->addConfigBoxLine(array($uploadFolders[$i], $folderMode), 'chmod');
 }
+*/
 
-echo $indexAdmin->addNavigation(basename(__FILE__));
-echo $indexAdmin->renderIndex();
+require_once __DIR__ . '/../testdata/index.php';
+$adminObject->addItemButton(_AM_XOOPSTUBE_ADD_SAMPLEDATA, '__DIR__ . /../../testdata/index.php?op=load', 'add');
+
+$adminObject->displayNavigation(basename(__FILE__));
+$adminObject->displayButton('left', '');
+$adminObject->displayIndex();
 
 /*
 //------ check directories ---------------
-include_once dirname(__DIR__) . '/include/directorychecker.php';
+require_once __DIR__ . '/../include/directorychecker.php';
 
-$indexAdmin->addConfigBoxLine('');
+$adminObject->addConfigBoxLine('');
 $redirectFile = $_SERVER['PHP_SELF'];
 
 $languageConstants = array(
@@ -105,19 +110,19 @@ $languageConstants = array(
 );
 
 $path = $GLOBALS['xoopsModuleConfig']['uploaddir'] . '/';
-$indexAdmin->addConfigBoxLine(DirectoryChecker::getDirectoryStatus($path, 0777, $languageConstants, $redirectFile));
+$adminObject->addConfigBoxLine(DirectoryChecker::getDirectoryStatus($path, 0777, $languageConstants, $redirectFile));
 
 $path = XOOPS_ROOT_PATH . '/' . $GLOBALS['xoopsModuleConfig']['screenshots'] . '/';
-$indexAdmin->addConfigBoxLine(DirectoryChecker::getDirectoryStatus($path, 0777, $languageConstants, $redirectFile));
+$adminObject->addConfigBoxLine(DirectoryChecker::getDirectoryStatus($path, 0777, $languageConstants, $redirectFile));
 
 $path = XOOPS_ROOT_PATH . '/' . $GLOBALS['xoopsModuleConfig']['catimage'] . '/';
-$indexAdmin->addConfigBoxLine(DirectoryChecker::getDirectoryStatus($path, 0777, $languageConstants, $redirectFile));
+$adminObject->addConfigBoxLine(DirectoryChecker::getDirectoryStatus($path, 0777, $languageConstants, $redirectFile));
 
 $path = XOOPS_ROOT_PATH . '/' . $GLOBALS['xoopsModuleConfig']['mainimagedir'] . '/';
-$indexAdmin->addConfigBoxLine(DirectoryChecker::getDirectoryStatus($path, 0777, $languageConstants, $redirectFile));
+$adminObject->addConfigBoxLine(DirectoryChecker::getDirectoryStatus($path, 0777, $languageConstants, $redirectFile));
 
-//echo $indexAdmin->addNavigation(basename(__FILE__));
-//echo $indexAdmin->renderIndex();
+//$adminObject->displayNavigation(basename(__FILE__));
+//$adminObject->displayIndex();
 //echo wfd_serverstats();
 //---------------------------
 
@@ -125,4 +130,4 @@ xtubeFileChecks();
 
 */
 
-include_once __DIR__ . '/admin_footer.php';
+require_once __DIR__ . '/admin_footer.php';

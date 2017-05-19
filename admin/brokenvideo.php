@@ -17,7 +17,7 @@
  * @since           1.0.6
  */
 
-include_once __DIR__ . '/admin_header.php';
+require_once __DIR__ . '/admin_header.php';
 
 global $xtubeImageArray, $xoopsModule;
 
@@ -107,8 +107,8 @@ switch (strtolower($op)) {
         $totalbrokenvideos = $GLOBALS['xoopsDB']->getRowsNum($result);
 
         xoops_cp_header();
-        $aboutAdmin = new ModuleAdmin();
-        echo $aboutAdmin->addNavigation(basename(__FILE__));
+        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject->displayNavigation(basename(__FILE__));
 
         echo '
         <fieldset style="border: #E8E8E8 1px solid;">
@@ -157,6 +157,7 @@ switch (strtolower($op)) {
 
                 $ack_image = $acknowledged ? $xtubeImageArray['ack_yes'] : $xtubeImageArray['ack_no'];
                 $con_image = $confirmed ? $xtubeImageArray['con_yes'] : $xtubeImageArray['con_no'];
+                xoops_load('XoopsUserUtility');
 
                 echo '<tr style="text-align: center;">';
                 echo '<td class="head">' . $reportid . '</td>';
@@ -173,7 +174,7 @@ switch (strtolower($op)) {
                 } else {
                     echo '<td class="even"><a href="mailto:' . $owneremail . '">' . $ownername . '</a></td>';
                 }
-                echo '<td class="even" style="text-align: center;">' . XoopstubeUtilities::xtubeGetTimestamp(formatTimestamp($date, $GLOBALS['xoopsModuleConfig']['dateformatadmin'])) . '</td>';
+                echo '<td class="even" style="text-align: center;">' . XoopstubeUtility::xtubeGetTimestamp(formatTimestamp($date, $GLOBALS['xoopsModuleConfig']['dateformatadmin'])) . '</td>';
                 echo '<td class="even"><a href="brokenvideo.php?op=updateNotice&amp;lid=' . $lid . '&ack=' . (int)$acknowledged . '">' . $ack_image . ' </a></td>';
                 echo '<td class="even"><a href="brokenvideo.php?op=updateNotice&amp;lid=' . $lid . '&con=' . (int)$confirmed . '">' . $con_image . '</a></td>';
                 echo '<td class="even" style="text-align: center;" nowrap>';
@@ -185,4 +186,4 @@ switch (strtolower($op)) {
         }
         echo '</table>';
 }
-include_once __DIR__ . '/admin_footer.php';
+require_once __DIR__ . '/admin_footer.php';

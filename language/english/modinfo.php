@@ -82,11 +82,9 @@ define('_MI_XOOPSTUBE_SUBCATS', 'Sub-Categories:');
 define('_MI_XOOPSTUBE_SUBCATSDSC', 'Select Yes to display sub-categories. Selecting No will hide sub-categories from the listings');
 
 define('_MI_XOOPSTUBE_EDITOR', 'Editor to use (admin):');
-define('_MI_XOOPSTUBE_EDITORCHOICE',
-       "Select the editor to use for admin side. If you have a 'simple' install (e.g you use only XOOPS core editor class, provided in the standard xoops core package), then you can just select DHTML and Compact");
+define('_MI_XOOPSTUBE_EDITORCHOICE', "Select the editor to use for admin side. If you have a 'simple' install (e.g you use only XOOPS core editor class, provided in the standard xoops core package), then you can just select DHTML and Compact");
 define('_MI_XOOPSTUBE_EDITORUSER', 'Editor to use (user):');
-define('_MI_XOOPSTUBE_EDITORCHOICEUSER',
-       "Select the editor to use for user side. If you have a 'simple' install (e.g you use only XOOPS core editor class, provided in the standard xoops core package), then you can just select DHTML and Compact");
+define('_MI_XOOPSTUBE_EDITORCHOICEUSER', "Select the editor to use for user side. If you have a 'simple' install (e.g you use only XOOPS core editor class, provided in the standard xoops core package), then you can just select DHTML and Compact");
 define('_MI_XOOPSTUBE_FORM_DHTML', 'DHTML');
 define('_MI_XOOPSTUBE_FORM_COMPACT', 'Compact');
 define('_MI_XOOPSTUBE_FORM_SPAW', 'Spaw Editor');
@@ -99,8 +97,7 @@ define('_MI_XOOPSTUBE_USESHOTS', 'Display Screenshot Images?');
 define('_MI_XOOPSTUBE_USESHOTSDSC', 'Select yes to display screenshot images for each video item');
 
 define('_MI_XOOPSTUBE_USETHUMBS', 'Use Thumbnails:');
-define('_MI_XOOPSTUBE_USETHUMBSDSC',
-       "Supported link types: JPG, GIF, PNG.<div style='padding-top: 8px;'>WF-Links will use thumb nails for images. Set to 'No' to use orginal image if the server does not support this option.</div>");
+define('_MI_XOOPSTUBE_USETHUMBSDSC', "Supported link types: JPG, GIF, PNG.<div style='padding-top: 8px;'>XoopsTube will use thumb nails for images. Set to 'No' to use orginal image if the server does not support this option.</div>");
 
 define('_MI_XOOPSTUBE_IMGUPDATE', 'Update Thumbnails?');
 define('_MI_XOOPSTUBE_IMGUPDATEDSC', 'If selected Thumbnail images will be updated at each page render, otherwise the first thumbnail image will be used regardless. <br><br>');

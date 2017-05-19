@@ -17,47 +17,48 @@
  * @since           1.0.6
  */
 
-$path = dirname(dirname(dirname(__DIR__)));
-include_once $path . '/mainfile.php';
-include_once $path . '/include/cp_functions.php';
-require_once $path . '/include/cp_header.php';
+require_once __DIR__ . '/../../../include/cp_header.php';
+//require_once $GLOBALS['xoops']->path('www/class/xoopsformloader.php');
 
-include_once dirname(__DIR__) . '/include/common.php';
+//require_once __DIR__ . '/../class/utility.php';
+require_once __DIR__ . '/../include/common.php';
 
-global $xoopsModule;
+if (!isset($moduleDirName)) {
+    $moduleDirName = basename(dirname(__DIR__));
+}
+if (false !== ($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName))) {
+} else {
+    $moduleHelper = Xmf\Module\Helper::getHelper('system');
+}
+$adminObject = \Xmf\Module\Admin::getInstance();
 
-$moduleDirName  = $GLOBALS['xoopsModule']->getVar('dirname');
-$thisModulePath = dirname(__DIR__);
-
-//if functions.php file exist
-//require_once dirname(__DIR__) . '/class/utilities.php';
-//require_once $thisModulePath . '/class/utilities.php';
+$pathIcon16      = \Xmf\Module\Admin::iconUrl('', 16);
+$pathIcon32      = \Xmf\Module\Admin::iconUrl('', 32);
+$pathModIcon16 = $moduleHelper->getModule()->getInfo('modicons16');
+$pathModIcon32 = $moduleHelper->getModule()->getInfo('modicons32');
 
 // Load language files
-//xoops_loadLanguage('admin', $moduleDirName);
-//xoops_loadLanguage('modinfo', $moduleDirName);
-//xoops_loadLanguage('main', $moduleDirName);
-xoops_loadLanguage('admin', XOOPSTUBE_DIRNAME);
-xoops_loadLanguage('modinfo', XOOPSTUBE_DIRNAME);
-xoops_loadLanguage('main', XOOPSTUBE_DIRNAME);
+$moduleHelper->loadLanguage('admin');
+$moduleHelper->loadLanguage('modinfo');
+$moduleHelper->loadLanguage('main');
+
+$myts = MyTextSanitizer::getInstance();
+
+if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof XoopsTpl)) {
+    require_once $GLOBALS['xoops']->path('class/template.php');
+    $xoopsTpl = new XoopsTpl();
+}
 xoops_load('XoopsRequest');
 
-$pathIcon16 = $GLOBALS['xoops']->url('www/' . $GLOBALS['xoopsModule']->getInfo('systemIcons16'));
-$pathIcon32 = $GLOBALS['xoops']->url('www/' . $GLOBALS['xoopsModule']->getInfo('systemIcons32'));
+//include $moduleDirName . '/include/config.php';
+require_once __DIR__ . '/../class/utility.php';
+require_once __DIR__ . '/../include/video.php';
+require_once __DIR__ . '/../class/xoopstube_lists.php';
+require_once __DIR__ . '/../class/myts_extended.php';
+require_once __DIR__ . '/../class/xoopstubetree.php';
 
-$pathModuleAdmin = XOOPS_ROOT_PATH . '/' . $xoopsModule->getInfo('dirmoduleadmin');
-
-require_once $pathModuleAdmin . '/moduleadmin.php';
-
-//include $thisModulePath . '/include/config.php';
-include_once $thisModulePath . '/class/utilities.php';
-include_once $thisModulePath . '/include/video.php';
-include_once $thisModulePath . '/class/xoopstube_lists.php';
-include_once $thisModulePath . '/class/myts_extended.php';
-
-include_once XOOPS_ROOT_PATH . '/modules/xoopstube/class/xoopstubetree.php';
-include_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
-include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
+require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
 $xtubemyts = new XtubeTextSanitizer(); // MyTextSanitizer object
 

@@ -19,7 +19,7 @@
  */
 
 define('_MD_XOOPSTUBE_NOVIDEO', 'This video does not exist!');
-define('_MD_XOOPSTUBE_SUBCATLISTING', 'Category Listing');
+define('_MD_XOOPSTUBE_SUBCATLISTING', 'Subcategories');
 define('_MD_XOOPSTUBE_ISADMINNOTICE', 'Webmaster: There is a problem with this image.');
 define('_MD_XOOPSTUBE_THANKSFORINFO', 'Thank you for your submission.<br>You will be notified once your request has be approved by the Webmaster.');
 define('_MD_XOOPSTUBE_ISAPPROVED', 'Thank-you for your submission.<br>Your request has been approved and will now appear in our listing.');
@@ -78,8 +78,7 @@ define('_MD_XOOPSTUBE_VIDEO_DLVIDID_NOTE', "
 <span style='font-weight: bold;'>Megavideo:</span> http://www.megavideo.com/?v=<span style='color: #FF0000;'>J6YSRE0T</span><br>
 <span style='font-weight: bold;'>Viddler:</span> http://www.viddler.com/player/<span style='color: #FF0000;'>d32d2b94</span>/ (see embed code)</span>");
 define('_MD_XOOPSTUBE_VIDEO_PICURL', 'Picture url: ');
-define('_MD_XOOPSTUBE_VIDEO_PICURLNOTE',
-       "<span style='font-size: small;'>Picture url when source is Google Video, MySpace TV, DailyMotion, Blip.tv, ClipFish, LiveLeak, Veoh, Vimeo, Viddler or Maktoob</span>");
+define('_MD_XOOPSTUBE_VIDEO_PICURLNOTE', "<span style='font-size: small;'>Picture url when source is Google Video, MySpace TV, DailyMotion, Blip.tv, ClipFish, LiveLeak, Veoh, Vimeo, Viddler or Maktoob</span>");
 define('_MD_XOOPSTUBE_VIDSOURCE', 'Video source:');
 define('_MD_XOOPSTUBE_YOUTUBE', 'YouTube');
 define('_MD_XOOPSTUBE_METACAFE', 'MetaCafe');
@@ -110,7 +109,7 @@ define('_MD_XOOPSTUBE_CATEGORY', 'Category');
 define('_MD_XOOPSTUBE_HITS', 'Views');
 define('_MD_XOOPSTUBE_RATING', 'Rating');
 define('_MD_XOOPSTUBE_VOTE', 'Vote');
-define('_MD_XOOPSTUBE_SORTBY', 'Sort by:');
+define('_MD_XOOPSTUBE_SORTBY', 'Sort by');
 define('_MD_XOOPSTUBE_TITLE', 'Title');
 define('_MD_XOOPSTUBE_DATE', 'Date');
 define('_MD_XOOPSTUBE_POPULARITY', 'Popularity');
@@ -123,9 +122,8 @@ define('_MD_XOOPSTUBE_NORATING', 'No rating selected.');
 define('_MD_XOOPSTUBE_VOTEFORTITLE', 'Rate This Video: ');
 define('_MD_XOOPSTUBE_CANTVOTEOWN', 'You cannot vote on the resource you submitted.<br>All votes are logged and reviewed.');
 define('_MD_XOOPSTUBE_SUBMITVIDEO', 'Submit video');
-define('_MD_XOOPSTUBE_SUB_SNEWMNAMEDESC',
-       '<ul><li>All new videos are subject to validation and may take up to 24 hours before they appear in our listing.</li><li>We reserve the rights to refuse any submitted video or change the content without approval.</li></ul>');
-define('_MD_XOOPSTUBE_MAINLISTING', 'Main Category Listings');
+define('_MD_XOOPSTUBE_SUB_SNEWMNAMEDESC', '<ul><li>All new videos are subject to validation and may take up to 24 hours before they appear in our listing.</li><li>We reserve the rights to refuse any submitted video or change the content without approval.</li></ul>');
+define('_MD_XOOPSTUBE_MAINLISTING', 'Categories');
 define('_MD_XOOPSTUBE_LASTWEEK', 'Last Week');
 define('_MD_XOOPSTUBE_LAST30DAYS', 'Last 30 Days');
 define('_MD_XOOPSTUBE_1WEEK', '1 Week');

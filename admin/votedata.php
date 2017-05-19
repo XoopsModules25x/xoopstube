@@ -17,7 +17,7 @@
  * @since           1.0.6
  */
 
-include_once __DIR__ . '/admin_header.php';
+require_once __DIR__ . '/admin_header.php';
 
 $op  = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', '', 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'op', '');
 $lid = XoopsRequest::getInt('rid', XoopsRequest::getInt('rid', 0, 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'rid', 0);
@@ -27,7 +27,7 @@ switch (strtolower($op)) {
     case 'delvote':
         $sql    = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_votedata') . ' WHERE ratingid=' . $rid;
         $result = $GLOBALS['xoopsDB']->queryF($sql);
-        XoopstubeUtilities::xtubeUpdateRating($lid);
+        XoopstubeUtility::xtubeUpdateRating($lid);
         redirect_header('votedata.php', 1, _AM_XOOPSTUBE_VOTEDELETED);
         break;
 
@@ -36,9 +36,9 @@ switch (strtolower($op)) {
         $start = XoopsRequest::getInt('start', 0); //xtubeCleanRequestVars($_REQUEST, 'start', 0);
         xoops_cp_header();
         //xtubeRenderAdminMenu( _AM_XOOPSTUBE_VOTE_RATINGINFOMATION );
-        $aboutAdmin = new ModuleAdmin();
-        echo $aboutAdmin->addNavigation(basename(__FILE__));
-        $_vote_data = XoopstubeUtilities::xtubeGetVoteDetails($lid);
+        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject->displayNavigation(basename(__FILE__));
+        $_vote_data = XoopstubeUtility::xtubeGetVoteDetails($lid);
 
         $text_info = '
         <table width="100%">
@@ -89,7 +89,7 @@ switch (strtolower($op)) {
             echo '<tr><td style="text-align: center;" colspan="7" class="head">' . _AM_XOOPSTUBE_VOTE_NOVOTES . '</td></tr>';
         } else {
             while (false !== (list($ratingid, $lid, $ratinguser, $rating, $ratinghostname, $ratingtimestamp, $title) = $GLOBALS['xoopsDB']->fetchRow($results))) {
-                $formatted_date = XoopstubeUtilities::xtubeGetTimestamp(formatTimestamp($ratingtimestamp, $GLOBALS['xoopsModuleConfig']['dateformat']));
+                $formatted_date = XoopstubeUtility::xtubeGetTimestamp(formatTimestamp($ratingtimestamp, $GLOBALS['xoopsModuleConfig']['dateformat']));
                 $ratinguname    = XoopsUser::getUnameFromId($ratinguser);
                 echo '
                     <tr>
@@ -105,10 +105,10 @@ switch (strtolower($op)) {
         }
         echo '</table>';
         // Include page navigation
-        include_once XOOPS_ROOT_PATH . '/class/pagenav.php';
+        require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
         $page    = ($votes > $GLOBALS['xoopsModuleConfig']['admin_perpage']) ? _AM_XOOPSTUBE_MINDEX_PAGE : '';
         $pagenav = new XoopsPageNav($page, $GLOBALS['xoopsModuleConfig']['admin_perpage'], $start, 'start');
         echo '<div align="right" style="padding: 8px;">' . $pagenav->renderNav() . '</div>';
         break;
 }
-include_once __DIR__ . '/admin_footer.php';
+require_once __DIR__ . '/admin_footer.php';

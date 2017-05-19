@@ -17,7 +17,7 @@
  * @since           1.0.6
  */
 
-include_once __DIR__ . '/admin_header.php';
+require_once __DIR__ . '/admin_header.php';
 
 $op  = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', '', 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'op', '');
 $lid = XoopsRequest::getInt('lid', XoopsRequest::getInt('lid', 0, 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'lid', 0);
@@ -43,8 +43,8 @@ function makeTreeCheckTable(XoopstubeTree $xt, $itemid, $title, $checks, $order 
     $result = $xt->db->query($sql);
 
     while (false !== (list($cid, $name) = $xt->db->fetchRow($result))) {
-        $checked  = array_key_exists($cid, $checks) ? "checked='checked'" : '';
-        $disabled = ($cid == XoopsRequest::getInt('cid', 0, 'GET')) ? "disabled='yes'" : '';
+        $checked  = array_key_exists($cid, $checks) ? 'checked' : '';
+        $disabled = ($cid === XoopsRequest::getInt('cid', 0, 'GET')) ? "disabled='yes'" : '';
         $level    = 1;
         echo '
         <tr style="text-align: left;">
@@ -57,8 +57,8 @@ function makeTreeCheckTable(XoopstubeTree $xt, $itemid, $title, $checks, $order 
         foreach ($arr as $cat) {
             $cat['prefix'] = str_replace('.', '-', $cat['prefix']);
             $catpath       = '&nbsp;' . $cat['prefix'] . '&nbsp;' . $xtubemyts->htmlSpecialCharsStrip($cat[$title]);
-            $checked       = array_key_exists($cat['cid'], $checks) ? "checked='checked'" : '';
-            $disabled      = ($cat['cid'] == XoopsRequest::getInt('cid', 0, 'GET')) ? "disabled='yes'" : '';
+            $checked       = array_key_exists($cat['cid'], $checks) ? 'checked' : '';
+            $disabled      = ($cat['cid'] === XoopsRequest::getInt('cid', 0, 'GET')) ? "disabled='yes'" : '';
             $level         = substr_count($cat['prefix'], '-') + 1;
             //          echo "<tr><td>" . $catpath . "<input type='checkbox' name='cid-" . $cat['cid'] . "' value='0' " . $checked . " " . $disabled . "/></td></tr>\n";
             echo '

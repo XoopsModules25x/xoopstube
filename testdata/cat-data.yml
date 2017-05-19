@@ -1,0 +1,52 @@
+-
+  cid: 1
+  pid: 0
+  title: "XOOPS Development"
+  imgurl: ""
+  description: "Videos Tutorials for PHP"
+  total: 0
+  spotlighttop: 1
+  spotlighthis: 0
+  nohtml: 0
+  nosmiley: 0
+  noxcodes: 0
+  noimages: 0
+  nobreak: 1
+  weight: 0
+  client_id: 1
+  banner_id: 0
+-
+  cid: 2
+  pid: 0
+  title: "XOOPS"
+  imgurl: ""
+  description: "Video Tutorials for XOOPS CMS"
+  total: 0
+  spotlighttop: 0
+  spotlighthis: 0
+  nohtml: 0
+  nosmiley: 0
+  noxcodes: 0
+  noimages: 0
+  nobreak: 1
+  weight: 0
+  client_id: 1
+  banner_id: 0
+-
+  cid: 3
+  pid: 0
+  title: "Bootstrap"
+  imgurl: ""
+  description: "Video Tutorials for Bootstrap"
+  total: 0
+  spotlighttop: 0
+  spotlighthis: 0
+  nohtml: 0
+  nosmiley: 0
+  noxcodes: 0
+  noimages: 0
+  nobreak: 1
+  weight: 0
+  client_id: 1
+  banner_id: 0
+...

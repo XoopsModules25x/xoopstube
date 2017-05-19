@@ -18,12 +18,9 @@
  * @since           1.0.6
  */
 
-define('_AM_XOOPSTUBE_WARNINSTALL1',
-       "<span style='font-weight: bold;'>WARNING:</span> <span style='text-decoration: underline;'>Directory</span> %s exists on your server.<br>Please remove this directory for security reasons.");
-define('_AM_XOOPSTUBE_WARNINSTALL2',
-       "<span style='font-weight: bold;'>WARNING:</span> <span style='text-decoration: underline;'>File</span> %s exists on your server.<br>Please remove this directory for security reasons.");
-define('_AM_XOOPSTUBE_WARNINSTALL3',
-       "<span style='font-weight: bold;'>WARNING:</span> <span style='text-decoration: underline;'>Folder</span> %s does not exists on your server.<br>This folder is required by XoopsTube.");
+define('_AM_XOOPSTUBE_WARNINSTALL1', "<span style='font-weight: bold;'>WARNING:</span> <span style='text-decoration: underline;'>Directory</span> %s exists on your server.<br>Please remove this directory for security reasons.");
+define('_AM_XOOPSTUBE_WARNINSTALL2', "<span style='font-weight: bold;'>WARNING:</span> <span style='text-decoration: underline;'>File</span> %s exists on your server.<br>Please remove this directory for security reasons.");
+define('_AM_XOOPSTUBE_WARNINSTALL3', "<span style='font-weight: bold;'>WARNING:</span> <span style='text-decoration: underline;'>Folder</span> %s does not exists on your server.<br>This folder is required by XoopsTube.");
 
 define('_AM_XOOPSTUBE_MODULE_NAME', 'XoopsTube');
 
@@ -89,12 +86,9 @@ define('_AM_XOOPSTUBE_CCATEGORY_MODIFIED', 'Selected Category Modified and Datab
 define('_AM_XOOPSTUBE_CCATEGORY_DELETED', 'Selected Category Deleted and Database Updated Successfully');
 define('_AM_XOOPSTUBE_CCATEGORY_AREUSURE', 'WARNING: Are you sure you want to delete this Category and ALL its Videos and Comments?');
 define('_AM_XOOPSTUBE_CCATEGORY_NOEXISTS', 'You must create a Category before you can add a new video');
-define('_AM_XOOPSTUBE_FCATEGORY_GROUPPROMPT',
-       "Category Access Permissions:<div style='padding-top: 8px;'><span style='font-weight: normal;'>Select user groups who will have access to this Category.</span></div>");
-define('_AM_XOOPSTUBE_FCATEGORY_SUBGROUPPROMPT',
-       "Category Submission Permissions:<div style='padding-top: 8px;'><span style='font-weight: normal;'>Select user groups who will have permission to submit new videos to this Category.</span></div>");
-define('_AM_XOOPSTUBE_FCATEGORY_MODGROUPPROMPT',
-       "Category Moderation Permissions:<div style='padding-top: 8px;'><span style='font-weight: normal;'>Select user groups who will have permission to moderate this Category.</span></div>");
+define('_AM_XOOPSTUBE_FCATEGORY_GROUPPROMPT', "Category Access Permissions:<div style='padding-top: 8px;'><span style='font-weight: normal;'>Select user groups who will have access to this Category.</span></div>");
+define('_AM_XOOPSTUBE_FCATEGORY_SUBGROUPPROMPT', "Category Submission Permissions:<div style='padding-top: 8px;'><span style='font-weight: normal;'>Select user groups who will have permission to submit new videos to this Category.</span></div>");
+define('_AM_XOOPSTUBE_FCATEGORY_MODGROUPPROMPT', "Category Moderation Permissions:<div style='padding-top: 8px;'><span style='font-weight: normal;'>Select user groups who will have permission to moderate this Category.</span></div>");
 
 define('_AM_XOOPSTUBE_FCATEGORY_TITLE', 'Category Title:');
 define('_AM_XOOPSTUBE_FCATEGORY_WEIGHT', 'Category Weight:');
@@ -187,8 +181,7 @@ define('_AM_XOOPSTUBE_MINDEX_SUBMITTED', 'Date Submitted');
 define('_AM_XOOPSTUBE_MINDEX_ACTION', 'Action');
 define('_AM_XOOPSTUBE_MINDEX_NOVIDEOSFOUND', 'NOTICE: There are no videos that match this criteria');
 define('_AM_XOOPSTUBE_MINDEX_PAGE', "<span style='font-weight: bold;'>Page:<span style='font-weight: bold;'> ");
-define('_AM_XOOPSTUBE_MINDEX_PAGEINFOTXT',
-       '<ul><li>XoopsTubes main page details.</li><li>You can easily change the image logo, heading, main index header and footer text to suit your own look</li></ul><br>Note: The Logo image choosen will be used throughout XoopsTube.');
+define('_AM_XOOPSTUBE_MINDEX_PAGEINFOTXT', '<ul><li>XoopsTubes main page details.</li><li>You can easily change the image logo, heading, main index header and footer text to suit your own look</li></ul><br>Note: The Logo image choosen will be used throughout XoopsTube.');
 define('_AM_XOOPSTUBE_MINDEX_RESPONSE', 'Response Time');
 // Submitted Links
 define('_AM_XOOPSTUBE_SUB_SUBMITTEDFILES', 'Submitted Videos');
@@ -296,8 +289,7 @@ define('_AM_XOOPSTUBE_VIDEO_SETNEWPUBLISHDATE', "<span style='font-weight: bold;
 define('_AM_XOOPSTUBE_VIDEO_SETPUBDATESETS', "<span style='font-weight: bold;'>Publish Date Set: </span><br>Publishes On Date:");
 define('_AM_XOOPSTUBE_VIDEO_EXPIREDATESET', ' Expire date set: ');
 define('_AM_XOOPSTUBE_VIDEO_SETEXPIREDATE', "<span style='font-weight: bold;'>Set Expire Date: </span>");
-define('_AM_XOOPSTUBE_VIDEO_DELEDITMESS',
-       "Delete Broken Report?<br><br><span style='font-weight: normal;'>When you choose <span style='font-weight: bold;'>YES</span> the Broken Report will automatically deleted and you confirm that the video now works again.</span>");
+define('_AM_XOOPSTUBE_VIDEO_DELEDITMESS', "Delete Broken Report?<br><br><span style='font-weight: normal;'>When you choose <span style='font-weight: bold;'>YES</span> the Broken Report will automatically deleted and you confirm that the video now works again.</span>");
 define('_AM_XOOPSTUBE_VIDEO_MUSTBEVALID', 'Screenshot image must be a valid image under %s directory (ex. shot.gif). This screenshot is used for XoopsTube internal flv player only.');
 define('_AM_XOOPSTUBE_VIDEO_EDITAPPROVE', 'Approve video:');
 define('_AM_XOOPSTUBE_VIDEO_NEWFILEUPLOAD', 'New Video Created and Database Updated Successfully');
@@ -406,8 +398,7 @@ define('_AM_XOOPSTUBE_RES_INFOTEXT', '<ul><li>New resources can be added, edited
     <li>List all resources linked to a video</li>
     <li>Modify resource name and description</li></ul>
     ');
-define('_AM_XOOPSTUBE_LISTBROKEN',
-       'Displays Videos that are possibly broken. NB: These results may not be accurate and should be taken as a rough guide.<br><br>Please check the video does exist first before any action taken.<br><br>');
+define('_AM_XOOPSTUBE_LISTBROKEN', 'Displays Videos that are possibly broken. NB: These results may not be accurate and should be taken as a rough guide.<br><br>Please check the video does exist first before any action taken.<br><br>');
 define('_AM_XOOPSTUBE_PINGTIMES', 'Displays the first estimated round ping time to each video.<br><br>NB: These results may not be accurate and should be taken as a rough guide.<br><br>');
 
 define('_AM_XOOPSTUBE_NO_FORUM', 'No forum Selected');
@@ -428,8 +419,7 @@ define('_AM_XOOPSTUBE_TIME', 'Time:');
 define('_AM_XOOPSTUBE_KEYWORDS', 'Keywords:');
 define('_AM_XOOPSTUBE_KEYWORDS_NOTE', 'Keywords should be seperated with a comma (keyword1, keyword2, keyword3)');
 define('_AM_XOOPSTUBE_VIDEO_META_DESCRIPTION', 'Meta Description');
-define('_AM_XOOPSTUBE_VIDEO_META_DESCRIPTION_DSC',
-       'In order to help Search Engines, you can customize the meta description you would like to use for this article. if you leave this field empty when creating a category, it will automatically be populated with the Summary field of this article.');
+define('_AM_XOOPSTUBE_VIDEO_META_DESCRIPTION_DSC', 'In order to help Search Engines, you can customize the meta description you would like to use for this article. if you leave this field empty when creating a category, it will automatically be populated with the Summary field of this article.');
 
 define('_AM_XOOPSTUBE_VIDSOURCE', 'Video source:');
 define('_AM_XOOPSTUBE_VIDSOURCE2', 'Video source');
@@ -471,8 +461,7 @@ define('_AM_XOOPSTUBE_NOIMAGE', 'Show No Image');
 define('_AM_XOOPSTUBE_NOSELECT', 'No Selection');
 define('_AM_XOOPSTUBE_NOFILESELECT', 'No Selected File');
 define('_AM_XOOPSTUBE_XOOPSTUBEVIDEO', 'XoopsTube Video File:');
-define('_AM_XOOPSTUBE_WARNINSTALL4',
-       "<span style='font-weight: bold;'>WARNING:</span> <span style='text-decoration: underline;'>Folder</span> %s is not writeable. <br>This folder needs to be writeable (CHMOD 777) for XoopsTube.");
+define('_AM_XOOPSTUBE_WARNINSTALL4', "<span style='font-weight: bold;'>WARNING:</span> <span style='text-decoration: underline;'>Folder</span> %s is not writeable. <br>This folder needs to be writeable (CHMOD 777) for XoopsTube.");
 define('_AM_XOOPSTUBE_CATSPONSOR', 'Select Category Sponsor:');
 define('_AM_XOOPSTUBE_CATSPONSORDSC', 'If you select a Client the banner id from the form below will not be saved!');
 define('_AM_XOOPSTUBE_BANNER', 'Banner');
@@ -603,4 +592,8 @@ define('_AM_XOOPSTUBE_DIRNOTCREATED', 'The directory can not be created');
 define('_AM_XOOPSTUBE_PERMSET', 'The permission has been set');
 define('_AM_XOOPSTUBE_PERMNOTSET', 'The permission can not be set');
 define('_AM_XOOPSTUBE_VIDEO_EXPIREWARNING', 'The publishing date is after expiration date!!!');
+
+define('_AM_XOOPSTUBE_ADD_SAMPLEDATA', 'Add Sample Data (will delete ALL current data)');
+define('_AM_XOOPSTUBE_SAMPLEDATA_SUCCESS', 'Sample Date uploaded successfully');
+
 

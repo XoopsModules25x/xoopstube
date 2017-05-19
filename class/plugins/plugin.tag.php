@@ -60,8 +60,7 @@ function xoopstube_tag_iteminfo(&$items)
 
     foreach (array_keys($items) as $catId) {
         foreach (array_keys($items[$catId]) as $item_id) {
-            $sql                     =
-                'SELECT l.lid, l.cid as lcid, l.title as ltitle, l.published, l.cid, l.submitter, l.description, l.item_tag, c.title as ctitle FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos')
+            $sql                     = 'SELECT l.lid, l.cid AS lcid, l.title AS ltitle, l.published, l.cid, l.submitter, l.description, l.item_tag, c.title AS ctitle FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos')
                 . ' l, ' . $GLOBALS['xoopsDB']->prefix('xoopstube_cat') . ' c WHERE l.lid=' . $item_id . ' AND l.cid=c.cid AND l.status>0 ORDER BY l.published DESC';
             $result                  = $GLOBALS['xoopsDB']->query($sql);
             $row                     = $GLOBALS['xoopsDB']->fetchArray($result);
