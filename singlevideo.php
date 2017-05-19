@@ -18,10 +18,12 @@
  * @since           1.0.6
  */
 
+use Xmf\Request;
+
 include __DIR__ . '/header.php';
 
-$lid = XoopsRequest::getInt('lid', XoopsRequest::getInt('lid', '', 'POST'), 'GET');
-$cid = XoopsRequest::getInt('cid', XoopsRequest::getInt('cid', '', 'POST'), 'GET');
+$lid = Request::getInt('lid', Request::getInt('lid', '', 'POST'), 'GET');
+$cid = Request::getInt('cid', Request::getInt('cid', '', 'POST'), 'GET');
 
 $sql2 = 'SELECT count(*) FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' a LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('xoopstube_altcat') . ' b' . ' ON b.lid = a.lid' . ' WHERE a.published > 0 AND a.published <= ' . time() . ' AND (a.expired = 0 OR a.expired > ' . time()
         . ') AND a.offline = 0' . ' AND (b.cid=a.cid OR (a.cid=' . (int)$cid . ' OR b.cid=' . (int)$cid . '))';

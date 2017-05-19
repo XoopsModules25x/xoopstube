@@ -15,13 +15,15 @@
  * @author          Michael Beck (aka Mamba)
  */
 
+use Xmf\Request;
+
 require_once __DIR__ . '/../../../mainfile.php';
 
 if (!isset($moduleDirName)) {
     $moduleDirName = basename(dirname(__DIR__));
 }
 
-$op = \Xmf\Request::getCmd('op', '');
+$op = Request::getCmd('op', '');
 
 switch ($op) {
     case 'load':

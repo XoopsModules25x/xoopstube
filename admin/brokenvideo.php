@@ -17,17 +17,19 @@
  * @since           1.0.6
  */
 
+use Xmf\Request;
+
 require_once __DIR__ . '/admin_header.php';
 
 global $xtubeImageArray, $xoopsModule;
 
-$op  = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', '', 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'op', '');
-$lid = XoopsRequest::getInt('lid', XoopsRequest::getInt('lid', 0, 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'lid', 0);
+$op  = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'op', '');
+$lid = Request::getInt('lid', Request::getInt('lid', 0, 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'lid', 0);
 
 switch (strtolower($op)) {
     case 'updatenotice':
-        $ack         = XoopsRequest::getInt('ack', 0); //xtubeCleanRequestVars($_REQUEST, 'ack', 0);
-        $con         = XoopsRequest::getInt('con', 1); //xtubeCleanRequestVars($_REQUEST, 'con', 1);
+        $ack         = Request::getInt('ack', 0); //xtubeCleanRequestVars($_REQUEST, 'ack', 0);
+        $con         = Request::getInt('con', 1); //xtubeCleanRequestVars($_REQUEST, 'con', 1);
         $update_mess = '';
 
         if ($ack && !$con) {

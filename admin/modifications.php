@@ -16,13 +16,14 @@
  * @link            http://xoops.org/
  * @since           1.0.6
  */
+use Xmf\Request;
 
 require_once __DIR__ . '/admin_header.php';
 
 global $xoopstubetree;
 
-$op        = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', '', 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'op', '');
-$requestid = XoopsRequest::getInt('requestid', XoopsRequest::getInt('requestid', 0, 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'requestid', 0);
+$op        = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'op', '');
+$requestid = Request::getInt('requestid', Request::getInt('requestid', 0, 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'requestid', 0);
 
 switch (strtolower($op)) {
     case 'listmodreqshow':
@@ -150,7 +151,7 @@ switch (strtolower($op)) {
     case 'main':
     default:
 
-        $start            = XoopsRequest::getInt('start', 0, 'GET');
+        $start            = Request::getInt('start', 0, 'GET');
         $xoopstubetree    = new XoopstubeTree($GLOBALS['xoopsDB']->prefix('xoopstube_mod'), 'requestid', 0);
         $sql              = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_mod') . ' ORDER BY requestdate DESC';
         $result           = $GLOBALS['xoopsDB']->query($sql, $GLOBALS['xoopsModuleConfig']['admin_perpage'], $start);

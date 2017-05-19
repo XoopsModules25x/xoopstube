@@ -21,22 +21,24 @@
  * @author           McDonald
  */
 
+use Xmf\Request;
+
 require_once __DIR__ . '/admin_header.php';
 
 //$op       = (isset($_REQUEST['op']) && !empty($_REQUEST['op'])) ? $_REQUEST['op'] : '';
 //$rootpath = (isset($_GET['rootpath'])) ? (int) $_GET['rootpath'] : 0;
 
-$op       = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', '', 'POST'), 'GET');
-$rootpath = XoopsRequest::getInt('rootpath', 0, 'GET');
+$op       = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET');
+$rootpath = Request::getInt('rootpath', 0, 'GET');
 
 switch (strtolower($op)) {
     case 'vupload':
         if ($_FILES['uploadfile']['name'] !== '') {
-            if (file_exists(XOOPS_ROOT_PATH . '/' . XoopsRequest::getString('uploadpath', '', 'POST') . '/' . $_FILES['uploadfile']['name'])) {
+            if (file_exists(XOOPS_ROOT_PATH . '/' . Request::getString('uploadpath', '', 'POST') . '/' . $_FILES['uploadfile']['name'])) {
                 redirect_header('vupload.php', 2, _AM_XOOPSTUBE_VUPLOAD_VIDEOEXIST);
             }
             $allowed_mimetypes = 'media/aac, media/flv, media/mp3, media/mp4';
-            XoopstubeUtility::xtubeUploadFiles($_FILES, XoopsRequest::getString('uploadpath', '', 'POST'), $allowed_mimetypes, 'vupload.php', 1, 0);
+            XoopstubeUtility::xtubeUploadFiles($_FILES, Request::getString('uploadpath', '', 'POST'), $allowed_mimetypes, 'vupload.php', 1, 0);
             redirect_header('vupload.php', 2, _AM_XOOPSTUBE_VUPLOAD_VIDEOUPLOAD);
         } else {
             redirect_header('vupload.php', 2, _AM_XOOPSTUBE_VUPLOAD_NOVIDEOEXIST);
@@ -44,8 +46,8 @@ switch (strtolower($op)) {
         break;
 
     case 'delfile':
-        if (1 == XoopsRequest::getInt('confirm', '', 'POST')) { //isset($_POST['confirm']) && $_POST['confirm'] == 1) {
-            $filetodelete = XOOPS_ROOT_PATH . '/' . XoopsRequest::getString('uploadpath', '', 'POST') . '/' . XoopsRequest::getString('videofile', '', 'POST');
+        if (1 == Request::getInt('confirm', '', 'POST')) { //isset($_POST['confirm']) && $_POST['confirm'] == 1) {
+            $filetodelete = XOOPS_ROOT_PATH . '/' . Request::getString('uploadpath', '', 'POST') . '/' . Request::getString('videofile', '', 'POST');
             if (file_exists($filetodelete)) {
                 chmod($filetodelete, 0666);
                 if (@unlink($filetodelete)) {
@@ -56,16 +58,16 @@ switch (strtolower($op)) {
             }
         } else {
             //            if (empty($_POST['videofile'])) {
-            if (!XoopsRequest::getString('videofile', '', 'POST')) {
+            if (!Request::getString('videofile', '', 'POST')) {
                 redirect_header('vupload.php', 1, _AM_XOOPSTUBE_VUPLOAD_NOFILEERROR);
             }
             xoops_cp_header();
             xoops_confirm(array(
                               'op'         => 'delfile',
-                              'uploadpath' => XoopsRequest::getString('uploadpath', '', 'POST'),
-                              'videofile'  => XoopsRequest::getString('videofile', '', 'POST'),
+                              'uploadpath' => Request::getString('uploadpath', '', 'POST'),
+                              'videofile'  => Request::getString('videofile', '', 'POST'),
                               'confirm'    => 1
-                          ), 'vupload.php', _AM_XOOPSTUBE_VUPLOAD_DELETEFILE . '<br><br>' . XoopsRequest::getString('videofile', '', 'POST'), _AM_XOOPSTUBE_BDELETE);
+                          ), 'vupload.php', _AM_XOOPSTUBE_VUPLOAD_DELETEFILE . '<br><br>' . Request::getString('videofile', '', 'POST'), _AM_XOOPSTUBE_BDELETE);
         }
         break;
 
@@ -101,7 +103,7 @@ switch (strtolower($op)) {
             $file_array       = &XoopstubeLists:: getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $dirarray[$rootpath], $type = 'media');
             $indexfile_select = new XoopsFormSelect('', 'videofile', '');
             $indexfile_select->addOptionArray($file_array);
-            $indexfile_select->setExtra("onchange='showImgSelected(\"media\", \"videofile\", \"" . $dirarray[$rootpath] . "\", \"\", \"" . XOOPS_URL . "\")'");
+            $indexfile_select->setExtra("onchange='showImgSelected(\"media\", \"videofile\", \"" . $dirarray[$rootpath] . '", "", "' . XOOPS_URL . "\")'");
             $indexfile_tray = new XoopsFormElementTray(_AM_XOOPSTUBE_VUPLOAD_FSHOWSELECTEDFILE, '&nbsp;');
             $indexfile_tray->addElement($indexfile_select);
             if (!empty($imgurl)) {

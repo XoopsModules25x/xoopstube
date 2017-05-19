@@ -17,9 +17,9 @@
  * @link            http://xoops.org/
  * @since           1.0.6
  */
+use Xmf\Request;
 
 include __DIR__ . '/../../mainfile.php';
-xoops_load('XoopsRequest');
 
 $moduleDirName = basename(__DIR__);
 $modulePath    = __DIR__;
@@ -32,9 +32,7 @@ require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/class_thum
 require_once XOOPS_ROOT_PATH . '/modules/xoopstube/class/xoopstubetree.php';
 require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
 
-if (!file_exists('language/' . $GLOBALS['xoopsConfig']['language'] . '/main.php')) {
-    include __DIR__ . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/main.php';
-}
+xoops_loadLanguage('main', $moduleDirName);
 
 require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/myts_extended.php';
 $xtubemyts = new XtubeTextSanitizer(); // MyTextSanitizer object

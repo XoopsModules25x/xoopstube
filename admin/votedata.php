@@ -17,11 +17,13 @@
  * @since           1.0.6
  */
 
+use Xmf\Request;
+
 require_once __DIR__ . '/admin_header.php';
 
-$op  = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', '', 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'op', '');
-$lid = XoopsRequest::getInt('rid', XoopsRequest::getInt('rid', 0, 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'rid', 0);
-$lid = XoopsRequest::getInt('lid', XoopsRequest::getInt('lid', 0, 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'lid', 0);
+$op  = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'op', '');
+$lid = Request::getInt('rid', Request::getInt('rid', 0, 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'rid', 0);
+$lid = Request::getInt('lid', Request::getInt('lid', 0, 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'lid', 0);
 
 switch (strtolower($op)) {
     case 'delvote':
@@ -33,7 +35,7 @@ switch (strtolower($op)) {
 
     case 'main':
     default:
-        $start = XoopsRequest::getInt('start', 0); //xtubeCleanRequestVars($_REQUEST, 'start', 0);
+        $start = Request::getInt('start', 0); //xtubeCleanRequestVars($_REQUEST, 'start', 0);
         xoops_cp_header();
         //xtubeRenderAdminMenu( _AM_XOOPSTUBE_VOTE_RATINGINFOMATION );
         $adminObject = \Xmf\Module\Admin::getInstance();

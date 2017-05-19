@@ -44,7 +44,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <h4 style="margin-top: 0px"><{$smarty.const._MD_XOOPSTUBE_MAINLISTING}></h4>
+        <h4 style="margin-top: 0;"><{$smarty.const._MD_XOOPSTUBE_MAINLISTING}></h4>
     </div>
 </div>
 <{if count($categories) gt 0}>
@@ -65,7 +65,7 @@
 <{/if}>
 <div class="row">
     <div class="col-md-12">
-        <div class="alert alert-success" style="margin-top: 15px; margin-bottom: 0px" role="alert"><{$lang_thereare}></div>
+        <div class="alert alert-success" style="margin-top: 15px; margin-bottom: 0;" role="alert"><{$lang_thereare}></div>
     </div>
 </div>
 <hr>
@@ -73,7 +73,7 @@
 <div class="row">
     <div class="col-md-12">
         <{if $showlatest}>
-            <h4 style="margin-top:0"><{$smarty.const._MD_XOOPSTUBE_LATESTLIST}></h4>
+            <h4 style="margin-top:0;"><{$smarty.const._MD_XOOPSTUBE_LATESTLIST}></h4>
             <{if $pagenav}>
                 <{$pagenav}>
             <{/if}>

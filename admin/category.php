@@ -15,6 +15,8 @@
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  */
 
+use Xmf\Request;
+
 require_once __DIR__ . '/admin_header.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsform/grouppermform.php';
 
@@ -111,7 +113,7 @@ function createCategory($cid = 0)
     $graph_array      =& XoopstubeLists::getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $GLOBALS['xoopsModuleConfig']['catimage'], $type = 'images');
     $indexImageSelect = new XoopsFormSelect('', 'imgurl', $imgurl);
     $indexImageSelect->addOptionArray($graph_array);
-    $indexImageSelect->setExtra("onchange='showImgSelected(\"image\", \"imgurl\", \"" . $GLOBALS['xoopsModuleConfig']['catimage'] . "\", \"\", \"" . XOOPS_URL . "\")'");
+    $indexImageSelect->setExtra("onchange='showImgSelected(\"image\", \"imgurl\", \"" . $GLOBALS['xoopsModuleConfig']['catimage'] . '", "", "' . XOOPS_URL . "\")'");
     $indeximage_tray = new XoopsFormElementTray(_AM_XOOPSTUBE_FCATEGORY_CIMAGE, '&nbsp;');
     $indeximage_tray->addElement($indexImageSelect);
     if ('' !== $imgurl && 1 != $imgurl) {
@@ -241,12 +243,12 @@ if (!isset($_POST['op'])) {
 }
 */
 
-$op = XoopsRequest::getString('op', XoopsRequest::getString('op', 'main', 'POST'), 'GET');
+$op = Request::getString('op', Request::getString('op', 'main', 'POST'), 'GET');
 
 switch ($op) {
     case 'move':
-        if (!XoopsRequest::getCmd('ok', '', 'POST')) {
-            $cid = XoopsRequest::getInt('cid', XoopsRequest::getInt('cid', 0, 'GET'), 'POST'); //(isset($_POST['cid'])) ? $_POST['cid'] : $_GET['cid'];
+        if (!Request::getCmd('ok', '', 'POST')) {
+            $cid = Request::getInt('cid', Request::getInt('cid', 0, 'GET'), 'POST'); //(isset($_POST['cid'])) ? $_POST['cid'] : $_GET['cid'];
 
             xoops_cp_header();
             //xtubeRenderAdminMenu(_AM_XOOPSTUBE_MCATEGORY);
@@ -272,8 +274,8 @@ switch ($op) {
             $sform->display();
             xoops_cp_footer();
         } else {
-            $source = XoopsRequest::getString('source', '', 'POST'); //$_POST['source'];
-            $target = XoopsRequest::getString('target', '', 'POST'); //$_POST['target'];
+            $source = Request::getString('source', '', 'POST'); //$_POST['source'];
+            $target = Request::getString('target', '', 'POST'); //$_POST['target'];
             if ($target === $source) {
                 redirect_header("category.php?op=move&ok=0&cid=$source", 5, _AM_XOOPSTUBE_CCATEGORY_MODIFY_FAILED);
             }
@@ -292,26 +294,26 @@ switch ($op) {
 
     case 'addCat':
 
-        $groups       = XoopsRequest::getArray('groups', array(), 'POST'); //isset($_REQUEST['groups']) ? $_REQUEST['groups'] : array();
-        $cid          = XoopsRequest::getInt('cid', 0, 'POST'); //(isset($_REQUEST['cid'])) ? $_REQUEST['cid'] : 0;
-        $pid          = XoopsRequest::getInt('pid', 0, 'POST'); //(isset($_REQUEST['pid'])) ? $_REQUEST['pid'] : 0;
-        $weight       = (XoopsRequest::getInt('weight', 0, 'POST') > 0) ? XoopsRequest::getInt('weight', 0, 'POST') : 0; //(isset($_REQUEST['weight']) && $_REQUEST['weight'] > 0) ? $_REQUEST['weight'] : 0;
-        $spotlighthis = XoopsRequest::getInt('lid', 0, 'POST'); //(isset($_REQUEST['lid'])) ? $_REQUEST['lid'] : 0;
-        $spotlighttop = (1 == XoopsRequest::getInt('spotlighttop', 0, 'POST')) ? 1 : 0; //($_REQUEST['spotlighttop'] == 1) ? 1 : 0;
-        $title        = XoopsRequest::getString('title', '', 'POST'); //$xtubemyts->addslashes($_REQUEST['title']);
-        $descriptionb = XoopsRequest::getString('description', '', 'POST'); //$xtubemyts->addslashes($_REQUEST['description']);
-        $imgurl       = XoopsRequest::getString('imgurl', '', 'POST'); // $_REQUEST['imgurl'] && $_REQUEST['imgurl'] != 'blank.gif') ? $xtubemyts->addslashes($_REQUEST['imgurl']) : '';
-        $client_id    = XoopsRequest::getInt('client_id', 0, 'POST'); //(isset($_REQUEST['client_id'])) ? $_REQUEST['client_id'] : 0;
+        $groups       = Request::getArray('groups', array(), 'POST'); //isset($_REQUEST['groups']) ? $_REQUEST['groups'] : array();
+        $cid          = Request::getInt('cid', 0, 'POST'); //(isset($_REQUEST['cid'])) ? $_REQUEST['cid'] : 0;
+        $pid          = Request::getInt('pid', 0, 'POST'); //(isset($_REQUEST['pid'])) ? $_REQUEST['pid'] : 0;
+        $weight       = (Request::getInt('weight', 0, 'POST') > 0) ? Request::getInt('weight', 0, 'POST') : 0; //(isset($_REQUEST['weight']) && $_REQUEST['weight'] > 0) ? $_REQUEST['weight'] : 0;
+        $spotlighthis = Request::getInt('lid', 0, 'POST'); //(isset($_REQUEST['lid'])) ? $_REQUEST['lid'] : 0;
+        $spotlighttop = (1 == Request::getInt('spotlighttop', 0, 'POST')) ? 1 : 0; //($_REQUEST['spotlighttop'] == 1) ? 1 : 0;
+        $title        = Request::getString('title', '', 'POST'); //$xtubemyts->addslashes($_REQUEST['title']);
+        $descriptionb = Request::getString('description', '', 'POST'); //$xtubemyts->addslashes($_REQUEST['description']);
+        $imgurl       = Request::getString('imgurl', '', 'POST'); // $_REQUEST['imgurl'] && $_REQUEST['imgurl'] != 'blank.gif') ? $xtubemyts->addslashes($_REQUEST['imgurl']) : '';
+        $client_id    = Request::getInt('client_id', 0, 'POST'); //(isset($_REQUEST['client_id'])) ? $_REQUEST['client_id'] : 0;
         if ($client_id > 0) {
             $banner_id = 0;
         } else {
-            $banner_id = XoopsRequest::getInt('banner_id', 0, 'POST'); //(isset($_REQUEST['banner_id'])) ? $_REQUEST['banner_id'] : 0;
+            $banner_id = Request::getInt('banner_id', 0, 'POST'); //(isset($_REQUEST['banner_id'])) ? $_REQUEST['banner_id'] : 0;
         }
-        $nohtml   = XoopsRequest::getInt('nohtml', 0, 'POST'); //isset($_REQUEST['nohtml']) ? $_REQUEST['nohtml'] : 0;
-        $nosmiley = XoopsRequest::getInt('nosmiley', 0, 'POST'); //isset($_REQUEST['nosmiley']) ? $_REQUEST['nosmiley'] : 0;
-        $noxcodes = XoopsRequest::getInt('noxcodes', 0, 'POST'); //isset($_REQUEST['noxcodes']) ? $_REQUEST['noxcodes'] : 0;
-        $noimages = XoopsRequest::getInt('noimages', 0, 'POST'); //isset($_REQUEST['noimages']) ? $_REQUEST['noimages'] : 0;
-        $nobreak  = XoopsRequest::getInt('nobreak', 0, 'POST'); //isset($_REQUEST['nobreak']) ? $_REQUEST['nobreak'] : 0;
+        $nohtml   = Request::getInt('nohtml', 0, 'POST'); //isset($_REQUEST['nohtml']) ? $_REQUEST['nohtml'] : 0;
+        $nosmiley = Request::getInt('nosmiley', 0, 'POST'); //isset($_REQUEST['nosmiley']) ? $_REQUEST['nosmiley'] : 0;
+        $noxcodes = Request::getInt('noxcodes', 0, 'POST'); //isset($_REQUEST['noxcodes']) ? $_REQUEST['noxcodes'] : 0;
+        $noimages = Request::getInt('noimages', 0, 'POST'); //isset($_REQUEST['noimages']) ? $_REQUEST['noimages'] : 0;
+        $nobreak  = Request::getInt('nobreak', 0, 'POST'); //isset($_REQUEST['nobreak']) ? $_REQUEST['nobreak'] : 0;
 
         if (!$cid) {
             $cid = 0;
@@ -352,9 +354,9 @@ switch ($op) {
         global $xoopsModule;
 
         //        $cid = (isset($_POST['cid']) && is_numeric($_POST['cid'])) ? (int) $_POST['cid'] : (int) $_GET['cid'];
-        $cid = XoopsRequest::getInt('cid', XoopsRequest::getInt('cid', 0, 'GET'), 'POST');
+        $cid = Request::getInt('cid', Request::getInt('cid', 0, 'GET'), 'POST');
         //        $ok            = (isset($_POST['ok']) && $_POST['ok'] == 1) ? (int) $_POST['ok'] : 0;
-        $ok            = (1 == XoopsRequest::getInt('ok', 0, 'POST')) ? 1 : 0;
+        $ok            = (1 == Request::getInt('ok', 0, 'POST')) ? 1 : 0;
         $xoopstubetree = new XoopstubeTree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
 
         if ($ok == 1) {
@@ -440,7 +442,7 @@ switch ($op) {
         break;
 
     case 'modCat':
-        $cid = XoopsRequest::getInt('cid', 0, 'POST'); //(isset($_POST['cid'])) ? $_POST['cid'] : 0;
+        $cid = Request::getInt('cid', 0, 'POST'); //(isset($_POST['cid'])) ? $_POST['cid'] : 0;
         xoops_cp_header();
         //xtubeRenderAdminMenu(_AM_XOOPSTUBE_MCATEGORY);
         createCategory($cid);

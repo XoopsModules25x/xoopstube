@@ -17,10 +17,12 @@
  * @since           1.0.6
  */
 
+use Xmf\Request;
+
 require_once __DIR__ . '/admin_header.php';
 
-$op  = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', '', 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'op', '');
-$lid = XoopsRequest::getInt('lid', XoopsRequest::getInt('lid', 0, 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'lid', 0);
+$op  = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'op', '');
+$lid = Request::getInt('lid', Request::getInt('lid', 0, 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'lid', 0);
 
 /**
  * @param  XoopstubeTree      $xt
@@ -44,7 +46,7 @@ function makeTreeCheckTable(XoopstubeTree $xt, $itemid, $title, $checks, $order 
 
     while (false !== (list($cid, $name) = $xt->db->fetchRow($result))) {
         $checked  = array_key_exists($cid, $checks) ? 'checked' : '';
-        $disabled = ($cid === XoopsRequest::getInt('cid', 0, 'GET')) ? "disabled='yes'" : '';
+        $disabled = ($cid === Request::getInt('cid', 0, 'GET')) ? "disabled='yes'" : '';
         $level    = 1;
         echo '
         <tr style="text-align: left;">
@@ -58,7 +60,7 @@ function makeTreeCheckTable(XoopstubeTree $xt, $itemid, $title, $checks, $order 
             $cat['prefix'] = str_replace('.', '-', $cat['prefix']);
             $catpath       = '&nbsp;' . $cat['prefix'] . '&nbsp;' . $xtubemyts->htmlSpecialCharsStrip($cat[$title]);
             $checked       = array_key_exists($cat['cid'], $checks) ? 'checked' : '';
-            $disabled      = ($cat['cid'] === XoopsRequest::getInt('cid', 0, 'GET')) ? "disabled='yes'" : '';
+            $disabled      = ($cat['cid'] === Request::getInt('cid', 0, 'GET')) ? "disabled='yes'" : '';
             $level         = substr_count($cat['prefix'], '-') + 1;
             //          echo "<tr><td>" . $catpath . "<input type='checkbox' name='cid-" . $cat['cid'] . "' value='0' " . $checked . " " . $disabled . "/></td></tr>\n";
             echo '

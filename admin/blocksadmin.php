@@ -17,6 +17,8 @@
  * @since           1.0.6
  */
 
+use Xmf\Request;
+
 require_once __DIR__ . '/admin_header.php';
 if (!is_object($GLOBALS['xoopsUser']) || !is_object($xoopsModule)
     || !$GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())
@@ -32,19 +34,19 @@ if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
         }
     }
     /*
-        if (XoopsRequest::getCmd('op', '')) {
+        if (Request::getCmd('op', '')) {
             if ($_GET['op'] === "edit" || $_GET['op'] === "delete" || $_GET['op'] === "delete_ok" || $_GET['op'] === "clone"
                 || $_GET['op'] === "edit"
             ) {
                 $op  = $_GET['op'];
-                $bid = XoopsRequest::getInt('bid',0 ,'GET'); //isset($_GET['bid']) ? (int) $_GET['bid'] : 0;
+                $bid = Request::getInt('bid',0 ,'GET'); //isset($_GET['bid']) ? (int) $_GET['bid'] : 0;
             }
         }
     */
 
-    $op = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', '', 'POST'), 'GET');
+    $op = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET');
     if (in_array($op, array('edit', 'delete', 'delete_ok', 'clone'))) {
-        $bid = XoopsRequest::getInt('bid', 0, 'GET');
+        $bid = Request::getInt('bid', 0, 'GET');
     }
 
     /**
@@ -326,7 +328,7 @@ if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
         $clone->setVar('weight', $bweight);
         $clone->setVar('visible', $bvisible);
         //$clone->setVar('content', $_POST['bcontent']);
-        $clone->setVar('title', XoopsRequest::getString('btitle', '', 'POST'));
+        $clone->setVar('title', Request::getString('btitle', '', 'POST'));
         $clone->setVar('bcachetime', $bcachetime);
         if (isset($options) && (count($options) > 0)) {
             $options = implode('|', $options);

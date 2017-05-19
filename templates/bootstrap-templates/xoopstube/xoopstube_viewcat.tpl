@@ -11,7 +11,7 @@
 </div>
 
 <div class="row">
-    <div class="col-sm-12" style="margin-bottom: 15px">
+    <div class="col-sm-12" style="margin-bottom: 15px;">
         <{if $catarray.imageheader != ""}>
             <div class="xoopstube-header text-center">
                 <{$catarray.imageheader}>
@@ -49,10 +49,10 @@
 </div>
 
 <div class="row">
-    <div class="col-md-12" style="text-align: center; margin-top: 15px">
+    <div class="col-md-12" style="text-align: center; margin-top: 15px;">
         <h4><{$smarty.const._MD_XOOPSTUBE_SORTBY}></h4>
     </div>
-    <div class="col-md-12" style="text-align: center">
+    <div class="col-md-12" style="text-align: center;">
         <div class="btn-group" role="group">
           <button type="button" class="btn btn-sm btn-default">
             <a href="viewcat.php?cid=<{$category_id}>&orderby=titleA">
@@ -127,7 +127,7 @@
         <{/if}>
     </div>
     
-    <div class="col-md-12" style="margin-top: 15px">
+    <div class="col-md-12" style="margin-top: 15px;">
       <{include file="db:system_notification_select.tpl"}>  
     </div>
 </div>

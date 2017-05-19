@@ -1,7 +1,7 @@
 <!--<{$video.icons}>-->
 <div class="row" style="margin-bottom: 15px;">
     <div class="col-md-12">
-    <div class="panel panel-default" style="margin-bottom: 0px">
+    <div class="panel panel-default" style="margin-bottom: 0;">
       <div class="panel-heading">
         <h3 class="panel-title">
             <a href="<{$xoops_url}>/modules/<{$video.module_dir}>/singlevideo.php?cid=<{$video.cid}>&amp;lid=<{$video.id}>" title="<{$video.title}>">

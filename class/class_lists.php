@@ -176,7 +176,7 @@ class FileList
 
         if (is_dir($_full_path) && $handle = opendir($_full_path)) {
             while (false !== ($file = readdir($handle))) {
-                if (!preg_match("/^[.]{1,2}$/", $file) && preg_match("/$types$/i", $file) && is_file($_full_path . '/' . $file)) {
+                if (!preg_match('/^[.]{1,2}$/', $file) && preg_match("/$types$/i", $file) && is_file($_full_path . '/' . $file)) {
                     if ('blank.gif' === strtolower($file)) {
                         continue;
                     }

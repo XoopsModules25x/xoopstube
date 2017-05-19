@@ -18,13 +18,15 @@
  * @since           1.0.6
  */
 
+use Xmf\Request;
+
 include __DIR__ . '/header.php';
 
 // Begin Main page Heading etc
-$cid        = XoopsRequest::getInt('cid', 0, 'GET'); //xtubeCleanRequestVars($_REQUEST, 'cid', 0);
-$selectdate = XoopsRequest::getString('selectdate', ''); //xtubeCleanRequestVars($_REQUEST, 'selectdate', '');
-$list       = XoopsRequest::getString('list', '');// xtubeCleanRequestVars($_REQUEST, 'list', '');
-$start      = XoopsRequest::getInt('start', 0, 'GET'); //xtubeCleanRequestVars($_REQUEST, 'start', 0);
+$cid        = Request::getInt('cid', 0, 'GET'); //xtubeCleanRequestVars($_REQUEST, 'cid', 0);
+$selectdate = Request::getString('selectdate', ''); //xtubeCleanRequestVars($_REQUEST, 'selectdate', '');
+$list       = Request::getString('list', '');// xtubeCleanRequestVars($_REQUEST, 'list', '');
+$start      = Request::getInt('start', 0, 'GET'); //xtubeCleanRequestVars($_REQUEST, 'start', 0);
 
 $catsort = $GLOBALS['xoopsModuleConfig']['sortcats'];
 $mytree  = new XoopstubeTree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
@@ -164,7 +166,7 @@ $xoopsTpl->assign('show_categort_title', true);
 
 $orderby0 = (isset($_REQUEST['orderby'])
              && !empty($_REQUEST['orderby'])) ? XoopstubeUtility::xtubeConvertOrderByIn(htmlspecialchars($_REQUEST['orderby'])) : XoopstubeUtility::xtubeConvertOrderByIn($GLOBALS['xoopsModuleConfig']['linkxorder']);
-$orderby  = XoopsRequest::getString('orderby', '', 'GET') ? XoopstubeUtility::xtubeConvertOrderByIn(XoopsRequest::getString('orderby', '', 'GET')) : XoopstubeUtility::xtubeConvertOrderByIn($GLOBALS['xoopsModuleConfig']['linkxorder']);
+$orderby  = Request::getString('orderby', '', 'GET') ? XoopstubeUtility::xtubeConvertOrderByIn(Request::getString('orderby', '', 'GET')) : XoopstubeUtility::xtubeConvertOrderByIn($GLOBALS['xoopsModuleConfig']['linkxorder']);
 
 if ($selectdate) {
     $d = date('j', $selectdate);
@@ -185,7 +187,6 @@ if ($selectdate) {
 
     $xoopsTpl->assign('is_selectdate', true);
     $xoopsTpl->assign('selected_date', XoopstubeUtility::xtubeGetTimestamp(formatTimestamp($selectdate, $GLOBALS['xoopsModuleConfig']['dateformat'])));
-
 } elseif ($list) {
     $query = " WHERE title LIKE '$list%' AND (published>0 AND published<=" . time() . ') AND (expired=0 OR expired>' . time() . ') AND offline=0 AND cid>0';
 

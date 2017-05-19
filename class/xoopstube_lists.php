@@ -92,7 +92,7 @@ class XoopstubeLists
         $dirlist = array();
         if (is_dir($dirname) && $handle = opendir($dirname)) {
             while (false !== ($file = readdir($handle))) {
-                if (!preg_match("/^[.]{1,2}$/", $file)) {
+                if (!preg_match('/^[.]{1,2}$/', $file)) {
                     if (strtolower($file) !== 'cvs' && is_dir($dirname . $file)) {
                         $dirlist[$file] = $file;
                     }
@@ -150,7 +150,7 @@ class XoopstubeLists
 
         if (is_dir($dirname) && $handle = opendir($dirname)) {
             while (false !== ($file = readdir($handle))) {
-                if (!preg_match("/^[.]{1,2}$/", $file) && preg_match("/$types$/i", $file) && is_file($dirname . '/' . $file)) {
+                if (!preg_match('/^[.]{1,2}$/', $file) && preg_match("/$types$/i", $file) && is_file($dirname . '/' . $file)) {
                     if ('blank.gif' === strtolower($file)) {
                         continue;
                     }

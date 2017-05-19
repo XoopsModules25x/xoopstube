@@ -36,7 +36,7 @@
     </div>
 </div>
 <br>
-<table class="table table-bordered" style="max-width: 400px">
+<table class="table table-bordered" style="max-width: 400px;">
     <thead>
     <tr>
         <th colspan="2"><{$smarty.const._MD_XOOPSTUBE_DTOTALFORLAST}> <{$newvideoshowdays}>
