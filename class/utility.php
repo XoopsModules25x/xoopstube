@@ -3447,7 +3447,7 @@ class XoopstubeUtility
     public static function xtubeGetTimestamp($time)
     {
         $moduleDirName = basename(dirname(__DIR__));
-        require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/local.php';
+        xoops_loadLanguage('local', $moduleDirName);
 
         $trans     = array(
             'Monday'    => _XOOPSTUBE_MONDAY,
