@@ -14,7 +14,7 @@ use Xmf\Request;
 /**
  * xoopstube
  *
- * @copyright   XOOPS Project (http://xoops.org)
+ * @copyright   XOOPS Project (https://xoops.org)
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
@@ -3540,7 +3540,7 @@ class XoopstubeUtility
 
     /**
      * Create download by letter choice bar/menu
-     * updated starting from this idea http://xoops.org/modules/news/article.php?storyid=6497
+     * updated starting from this idea https://xoops.org/modules/news/article.php?storyid=6497
      *
      * @return string html
      *

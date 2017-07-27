@@ -12,6 +12,6 @@ You should change it to your environment in all the test files.
 
 For a tutorial on how to create and run Selenium IDE Tests in XOOPS, plase read:
 
-http://xoops.org/modules/news/article.php?storyid=5433
+https://xoops.org/modules/news/article.php?storyid=5433
 
 Please note: these tests are running on a fresh installation of the module. Sometimes they depend on an ID of an element that could be incremented by XOOPS when you delete one and add another one. Then the test won't work. You can modify the test files accordingly, or reinstall the module and then run the tests.

@@ -12,9 +12,9 @@
  * @category        Module
  * @package         Xoopstube
  * @author          XOOPS Development Team
- * @copyright       2001-2016 XOOPS Project (http://xoops.org)
+ * @copyright       2001-2016 XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link            http://xoops.org/
+ * @link            https://xoops.org/
  * @since           1.0.6
  */
 
@@ -29,8 +29,8 @@ $modversion = array(
     'description'         => _MI_XOOPSTUBE_DESC,
     'official'            => 1, //1 indicates supported by XOOPS Dev Team, 0 means 3rd party supported
     'author'              => 'McDonald',
-    'author_mail'         => 'http://xoops.org',
-    'author_website_url'  => 'http://xoops.org',
+    'author_mail'         => 'https://xoops.org',
+    'author_website_url'  => 'https://xoops.org',
     'author_website_name' => 'XOOPS',
     'credits'             => 'WF-Projects Team. Based on the module WF-Links, thanks to the dream-team for some code snippits.',
     'license'             => 'GPL 2.0 or later',
@@ -70,9 +70,9 @@ $modversion = array(
     // About
     //    'release_date'        => "2013/10/07",
     //    'release'             => "2015-04-03",
-    'demo_site_url'       => 'http://xoops.org',
+    'demo_site_url'       => 'https://xoops.org',
     'demo_site_name'      => 'XOOPS Demo Site',
-    'support_url'         => 'http://xoops.org/modules/newbb',
+    'support_url'         => 'https://xoops.org/modules/newbb',
     'support_name'        => 'Support Forum',
     'module_website_url'  => 'www.xoops.org',
     'module_website_name' => 'XOOPS Project',

@@ -6,7 +6,7 @@
  *
  * File: blocks/xoopstube_banner.php
  *
- * @copyright        http://xoops.org/ XOOPS Project
+ * @copyright        https://xoops.org/ XOOPS Project
  * @copyright        XOOPS_copyrights.txt
  * @copyright        http://www.impresscms.org/ The ImpressCMS Project
  * @license          GNU General Public License (GPL)
