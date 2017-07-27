@@ -19,9 +19,7 @@ use Xmf\Request;
 
 require_once __DIR__ . '/../../../mainfile.php';
 
-if (!isset($moduleDirName)) {
-    $moduleDirName = basename(dirname(__DIR__));
-}
+$moduleDirName = basename(dirname(__DIR__));
 
 $op = Request::getCmd('op', '');
 
@@ -37,7 +35,7 @@ function loadSampleData()
 {
     xoops_loadLanguage('admin', $moduleDirName);
     $items = \Xmf\Yaml::readWrapped('item-data.yml');
-    $cat = \Xmf\Yaml::readWrapped('cat-data.yml');
+    $cat   = \Xmf\Yaml::readWrapped('cat-data.yml');
 
     \Xmf\Database\TableLoad::truncateTable('xoopstube_videos');
     \Xmf\Database\TableLoad::truncateTable('xoopstube_cat');

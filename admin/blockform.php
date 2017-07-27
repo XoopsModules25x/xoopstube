@@ -50,11 +50,7 @@ $form->addElement($mod_select);
 $form->addElement(new XoopsFormText(_AM_TITLE, 'btitle', 50, 255, $block['title']), false);
 if ($block['is_custom']) {
     $textarea = new XoopsFormDhtmlTextArea(_AM_SYSTEM_BLOCKS_CONTENT, 'bcontent', $block['content'], 15, 70);
-    $textarea->setDescription('<span style="font-size:x-small;font-weight:bold;">'
-                              . _AM_SYSTEM_BLOCKS_USEFULTAGS
-                              . '</span><br><span style="font-size:x-small;font-weight:normal;">'
-                              . sprintf(_AM_BLOCKTAG1, '{X_SITEURL}', XOOPS_URL . '/')
-                              . '</span>');
+    $textarea->setDescription('<span style="font-size:x-small;font-weight:bold;">' . _AM_SYSTEM_BLOCKS_USEFULTAGS . '</span><br><span style="font-size:x-small;font-weight:normal;">' . sprintf(_AM_BLOCKTAG1, '{X_SITEURL}', XOOPS_URL . '/') . '</span>');
     $form->addElement($textarea, true);
     $ctype_select = new XoopsFormSelect(_AM_SYSTEM_BLOCKS_CTYPE, 'bctype', $block['ctype']);
     $ctype_select->addOptionArray(array(
@@ -69,23 +65,11 @@ if ($block['is_custom']) {
         $tplfileHandler = xoops_getHandler('tplfile');
         $btemplate      =& $tplfileHandler->find($GLOBALS['xoopsConfig']['template_set'], 'block', $block['bid']);
         if (count($btemplate) > 0) {
-            $form->addElement(new XoopsFormLabel(_AM_SYSTEM_BLOCKS_CONTENT, '<a href="'
-                                                                            . XOOPS_URL
-                                                                            . '/modules/system/admin.php?fct=tplsets&amp;op=edittpl&amp;id='
-                                                                            . $btemplate[0]->getVar('tpl_id')
-                                                                            . '">'
-                                                                            . _AM_SYSTEM_BLOCKS_EDITTPL
-                                                                            . '</a>'));
+            $form->addElement(new XoopsFormLabel(_AM_SYSTEM_BLOCKS_CONTENT, '<a href="' . XOOPS_URL . '/modules/system/admin.php?fct=tplsets&amp;op=edittpl&amp;id=' . $btemplate[0]->getVar('tpl_id') . '">' . _AM_SYSTEM_BLOCKS_EDITTPL . '</a>'));
         } else {
             $btemplate2 =& $tplfileHandler->find('default', 'block', $block['bid']);
             if (count($btemplate2) > 0) {
-                $form->addElement(new XoopsFormLabel(_AM_SYSTEM_BLOCKS_CONTENT, '<a href="'
-                                                                                . XOOPS_URL
-                                                                                . '/modules/system/admin.php?fct=tplsets&amp;op=edittpl&amp;id='
-                                                                                . $btemplate2[0]->getVar('tpl_id')
-                                                                                . '" target="_blank">'
-                                                                                . _AM_SYSTEM_BLOCKS_EDITTPL
-                                                                                . '</a>'));
+                $form->addElement(new XoopsFormLabel(_AM_SYSTEM_BLOCKS_CONTENT, '<a href="' . XOOPS_URL . '/modules/system/admin.php?fct=tplsets&amp;op=edittpl&amp;id=' . $btemplate2[0]->getVar('tpl_id') . '" target="_blank">' . _AM_SYSTEM_BLOCKS_EDITTPL . '</a>'));
             }
         }
     }

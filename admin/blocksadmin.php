@@ -21,8 +21,7 @@ use Xmf\Request;
 
 require_once __DIR__ . '/admin_header.php';
 if (!is_object($GLOBALS['xoopsUser']) || !is_object($xoopsModule)
-    || !$GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())
-) {
+    || !$GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
     exit(_AM_XOOPSTUBE_ERROR403);
 }
 if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
@@ -34,7 +33,7 @@ if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
         }
     }
     /*
-        if (Request::getCmd('op', '')) {
+        if (Request::hasVar('op')) {
             if ($_GET['op'] === "edit" || $_GET['op'] === "delete" || $_GET['op'] === "delete_ok" || $_GET['op'] === "clone"
                 || $_GET['op'] === "edit"
             ) {
@@ -80,10 +79,9 @@ if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
         echo "
         <h4 style='text-align:left;'>" . _AM_XOOPSTUBE_BADMIN . '</h4>';
         $moduleHandler = xoops_getHandler('module');
-        echo "<form action='"
-             . $_SERVER['PHP_SELF']
-             . "' name='blockadmin' method='post'>
-        <table width='100%' class='outer' cellpadding='4' cellspacing='1'>
+        echo "<form action='" . $_SERVER['PHP_SELF'] . "' name='blockadmin' method='post'>";
+        echo $GLOBALS['xoopsSecurity']->getTokenHTML();
+        echo "<table width='100%' class='outer' cellpadding='4' cellspacing='1'>
         <tr valign='middle'><th align='center'>"
              . _AM_XOOPSTUBE_TITLE
              . "</th><th align='center' nowrap='nowrap'>"
@@ -171,24 +169,70 @@ if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
                 $title = $i->getVar('title');
             }
             $name = $i->getVar('name');
-            echo "<tr valign='top'><td class='$class' align='center'><input type='text' name='title[" . $i->getVar('bid') . "]' value='" . $title . "'></td><td class='$class' align='center' nowrap='nowrap'>
+            echo "<tr valign='top'><td class='$class' align='center'><input type='text' name='title["
+                 . $i->getVar('bid')
+                 . "]' value='"
+                 . $title
+                 . "'></td><td class='$class' align='center' nowrap='nowrap'>
                     <div align='center' >
-                    <input type='radio' name='side[" . $i->getVar('bid') . "]' value='" . XOOPS_CENTERBLOCK_LEFT . "'$ssel2 />
-                        <input type='radio' name='side[" . $i->getVar('bid') . "]' value='" . XOOPS_CENTERBLOCK_CENTER . "'$ssel3 />
-                    <input type='radio' name='side[" . $i->getVar('bid') . "]' value='" . XOOPS_CENTERBLOCK_RIGHT . "'$ssel4 />
+                    <input type='radio' name='side["
+                 . $i->getVar('bid')
+                 . "]' value='"
+                 . XOOPS_CENTERBLOCK_LEFT
+                 . "'$ssel2>
+                        <input type='radio' name='side["
+                 . $i->getVar('bid')
+                 . "]' value='"
+                 . XOOPS_CENTERBLOCK_CENTER
+                 . "'$ssel3>
+                    <input type='radio' name='side["
+                 . $i->getVar('bid')
+                 . "]' value='"
+                 . XOOPS_CENTERBLOCK_RIGHT
+                 . "'$ssel4>
                     </div>
                     <div>
-                        <span style='float:right;'><input type='radio' name='side[" . $i->getVar('bid') . "]' value='" . XOOPS_SIDEBLOCK_RIGHT . "'$ssel1 /></span>
-                    <div align='left'><input type='radio' name='side[" . $i->getVar('bid') . "]' value='" . XOOPS_SIDEBLOCK_LEFT . "'$ssel0 /></div>
+                        <span style='float:right;'><input type='radio' name='side["
+                 . $i->getVar('bid')
+                 . "]' value='"
+                 . XOOPS_SIDEBLOCK_RIGHT
+                 . "'$ssel1></span>
+                    <div align='left'><input type='radio' name='side["
+                 . $i->getVar('bid')
+                 . "]' value='"
+                 . XOOPS_SIDEBLOCK_LEFT
+                 . "'$ssel0></div>
                     </div>
                     <div align='center'>
-                    <input type='radio' name='side[" . $i->getVar('bid') . "]' value='" . XOOPS_CENTERBLOCK_BOTTOMLEFT . "'$ssel5 />
-                        <input type='radio' name='side[" . $i->getVar('bid') . "]' value='" . XOOPS_CENTERBLOCK_BOTTOM . "'$ssel7 />
-                    <input type='radio' name='side[" . $i->getVar('bid') . "]' value='" . XOOPS_CENTERBLOCK_BOTTOMRIGHT . "'$ssel6 />
+                    <input type='radio' name='side["
+                 . $i->getVar('bid')
+                 . "]' value='"
+                 . XOOPS_CENTERBLOCK_BOTTOMLEFT
+                 . "'$ssel5>
+                        <input type='radio' name='side["
+                 . $i->getVar('bid')
+                 . "]' value='"
+                 . XOOPS_CENTERBLOCK_BOTTOM
+                 . "'$ssel7>
+                    <input type='radio' name='side["
+                 . $i->getVar('bid')
+                 . "]' value='"
+                 . XOOPS_CENTERBLOCK_BOTTOMRIGHT
+                 . "'$ssel6>
                     </div>
-                </td><td class='$class' align='center'><input type='text' name='weight[" . $i->getVar('bid') . "]' value='" . $i->getVar('weight')
-                 . "' size='5' maxlength='5' /></td><td class='$class' align='center' nowrap><input type='radio' name='visible[" . $i->getVar('bid') . "]' value='1'$sel1>" . _YES
-                 . "&nbsp;<input type='radio' name='visible[" . $i->getVar('bid') . "]' value='0'$sel0>" . _NO . '</td>';
+                </td><td class='$class' align='center'><input type='text' name='weight["
+                 . $i->getVar('bid')
+                 . "]' value='"
+                 . $i->getVar('weight')
+                 . "' size='5' maxlength='5'></td><td class='$class' align='center' nowrap><input type='radio' name='visible["
+                 . $i->getVar('bid')
+                 . "]' value='1'$sel1>"
+                 . _YES
+                 . "&nbsp;<input type='radio' name='visible["
+                 . $i->getVar('bid')
+                 . "]' value='0'$sel0>"
+                 . _NO
+                 . '</td>';
 
             echo "<td class='$class' align='center'><select size='5' name='bmodule[" . $i->getVar('bid') . "][]' id='bmodule[" . $i->getVar('bid') . "][]' multiple='multiple'>";
             foreach ($module_list as $k => $v) {
@@ -208,31 +252,29 @@ if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
 
             // Actions
 
-            echo "<td class='$class' align='center'><a href='blocksadmin.php?op=edit&amp;bid=" . $i->getVar('bid') . "'><img src=" . $pathIcon16 . '/edit.png' . " alt='" . _EDIT . "' title='" . _EDIT
-                 . "' />
-                 </a> <a href='blocksadmin.php?op=clone&amp;bid=" . $i->getVar('bid') . "'><img src=" . $pathIcon16 . '/editcopy.png' . " alt='" . _CLONE . "' title='" . _CLONE . "' />
+            echo "<td class='$class' align='center'><a href='blocksadmin.php?op=edit&amp;bid=" . $i->getVar('bid') . "'><img src=" . $pathIcon16 . '/edit.png' . " alt='" . _EDIT . "' title='" . _EDIT . "'>
+                 </a> <a href='blocksadmin.php?op=clone&amp;bid=" . $i->getVar('bid') . "'><img src=" . $pathIcon16 . '/editcopy.png' . " alt='" . _CLONE . "' title='" . _CLONE . "'>
                  </a>";
             if ($i->getVar('block_type') !== 'S' && $i->getVar('block_type') !== 'M') {
-                echo "&nbsp;<a href='" . XOOPS_URL . '/modules/system/admin.php?fct=blocksadmin&amp;op=delete&amp;bid=' . $i->getVar('bid') . "'><img src=" . $pathIcon16 . '/delete.png' . " alt='"
-                     . _DELETE . "' title='" . _DELETE . "' />
+                echo "&nbsp;<a href='" . XOOPS_URL . '/modules/system/admin.php?fct=blocksadmin&amp;op=delete&amp;bid=' . $i->getVar('bid') . "'><img src=" . $pathIcon16 . '/delete.png' . " alt='" . _DELETE . "' title='" . _DELETE . "'>
                      </a>";
             }
             echo "
-            <input type='hidden' name='oldtitle[" . $i->getVar('bid') . "]' value='" . $i->getVar('title') . "' />
-            <input type='hidden' name='oldside[" . $i->getVar('bid') . "]' value='" . $i->getVar('side') . "' />
-            <input type='hidden' name='oldweight[" . $i->getVar('bid') . "]' value='" . $i->getVar('weight') . "' />
-            <input type='hidden' name='oldvisible[" . $i->getVar('bid') . "]' value='" . $i->getVar('visible') . "' />
-            <input type='hidden' name='oldgroups[" . $i->getVar('groups') . "]' value='" . $i->getVar('groups') . "' />
-            <input type='hidden' name='oldbcachetime[" . $i->getVar('bid') . "]' value='" . $i->getVar('bcachetime') . "' />
-            <input type='hidden' name='bid[" . $i->getVar('bid') . "]' value='" . $i->getVar('bid') . "' />
+            <input type='hidden' name='oldtitle[" . $i->getVar('bid') . "]' value='" . $i->getVar('title') . "'>
+            <input type='hidden' name='oldside[" . $i->getVar('bid') . "]' value='" . $i->getVar('side') . "'>
+            <input type='hidden' name='oldweight[" . $i->getVar('bid') . "]' value='" . $i->getVar('weight') . "'>
+            <input type='hidden' name='oldvisible[" . $i->getVar('bid') . "]' value='" . $i->getVar('visible') . "'>
+            <input type='hidden' name='oldgroups[" . $i->getVar('groups') . "]' value='" . $i->getVar('groups') . "'>
+            <input type='hidden' name='oldbcachetime[" . $i->getVar('bid') . "]' value='" . $i->getVar('bcachetime') . "'>
+            <input type='hidden' name='bid[" . $i->getVar('bid') . "]' value='" . $i->getVar('bid') . "'>
             </td></tr>
             ";
             $class = ('even' === $class) ? 'odd' : 'even';
         }
         echo "<tr><td class='foot' align='center' colspan='7'>
-        <input type='hidden' name='op' value='order' />
+        <input type='hidden' name='op' value='order'>
         " . $GLOBALS['xoopsSecurity']->getTokenHTML() . "
-        <input type='submit' name='submit' value='" . _SUBMIT . "' />
+        <input type='submit' name='submit' value='" . _SUBMIT . "'>
         </td></tr></table>
         </form>
         <br><br>";
@@ -508,8 +550,7 @@ if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
         foreach (array_keys($bid) as $i) {
             if ($oldtitle[$i] !== $title[$i] || $oldweight[$i] !== $weight[$i] || $oldvisible[$i] !== $visible[$i]
                 || $oldside[$i] !== $side[$i]
-                || $oldbcachetime[$i] !== $bcachetime[$i]
-            ) {
+                || $oldbcachetime[$i] !== $bcachetime[$i]) {
                 xtubeSetOrder($bid[$i], $title[$i], $weight[$i], $visible[$i], $side[$i], $bcachetime[$i], $bmodule[$i]);
             }
             if (!empty($bmodule[$i]) && count($bmodule[$i]) > 0) {
@@ -529,8 +570,7 @@ if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
             $GLOBALS['xoopsDB']->query($sql);
             if (!empty($groups[$i])) {
                 foreach ($groups[$i] as $grp) {
-                    $sql = sprintf("INSERT INTO %s (gperm_groupid, gperm_itemid, gperm_modid, gperm_name) VALUES (%u, %u, 1, 'block_read')", $GLOBALS['xoopsDB']->prefix('group_permission'), $grp,
-                                   $bid[$i]);
+                    $sql = sprintf("INSERT INTO %s (gperm_groupid, gperm_itemid, gperm_modid, gperm_name) VALUES (%u, %u, 1, 'block_read')", $GLOBALS['xoopsDB']->prefix('group_permission'), $grp, $bid[$i]);
                     $GLOBALS['xoopsDB']->query($sql);
                 }
             }

@@ -23,17 +23,15 @@ require_once __DIR__ . '/../../../include/cp_header.php';
 //require_once __DIR__ . '/../class/utility.php';
 require_once __DIR__ . '/../include/common.php';
 
-if (!isset($moduleDirName)) {
-    $moduleDirName = basename(dirname(__DIR__));
-}
+$moduleDirName = basename(dirname(__DIR__));
 if (false !== ($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName))) {
 } else {
     $moduleHelper = Xmf\Module\Helper::getHelper('system');
 }
 $adminObject = \Xmf\Module\Admin::getInstance();
 
-$pathIcon16      = \Xmf\Module\Admin::iconUrl('', 16);
-$pathIcon32      = \Xmf\Module\Admin::iconUrl('', 32);
+$pathIcon16    = \Xmf\Module\Admin::iconUrl('', 16);
+$pathIcon32    = \Xmf\Module\Admin::iconUrl('', 32);
 $pathModIcon16 = $moduleHelper->getModule()->getInfo('modicons16');
 $pathModIcon32 = $moduleHelper->getModule()->getInfo('modicons32');
 
@@ -48,7 +46,6 @@ if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof XoopsTpl))
     require_once $GLOBALS['xoops']->path('class/template.php');
     $xoopsTpl = new XoopsTpl();
 }
-xoops_load('XoopsRequest');
 
 //include $moduleDirName . '/include/config.php';
 require_once __DIR__ . '/../class/utility.php';

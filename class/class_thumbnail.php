@@ -183,6 +183,7 @@ class XtubeThumbsNails
         }
 
         $image = $this->resizeThumbnail();
+
         return false === $image ? DEFAULT_PATH : $image;
     }
 
@@ -247,11 +248,7 @@ class XtubeThumbsNails
                         $src_file_im = escapeshellarg($this->_source_image);
                         $new_file_im = escapeshellarg($this->_save_image);
                     }
-                    $magick_command = $GLOBALS['xoopsModuleConfig']['path_magick']
-                                      . '/convert -quality {$GLOBALS["xoopsModuleConfig"]["imagequality"]} -antialias -sample {$newWidth}x{$newHeight} {$src_file_im} +profile "*" ' . str_replace('\\',
-                                                                                                                                                                                                   '/',
-                                                                                                                                                                                                   $new_file_im)
-                                      . '';
+                    $magick_command = $GLOBALS['xoopsModuleConfig']['path_magick'] . '/convert -quality {$GLOBALS["xoopsModuleConfig"]["imagequality"]} -antialias -sample {$newWidth}x{$newHeight} {$src_file_im} +profile "*" ' . str_replace('\\', '/', $new_file_im) . '';
                     passthru($magick_command);
 
                     return $this->_source_url . "/{$this->_img_savepath}/{$savefile}";
@@ -263,7 +260,7 @@ class XtubeThumbsNails
 
             case 'gd1':
             case 'gd2':
-            default :
+            default:
 
                 $imageCreateFunction = (function_exists('imagecreatetruecolor') && 'gd2' === $this->_image_type) ? 'imagecreatetruecolor' : 'imagecreate';
                 $imageCopyfunction   = (function_exists('ImageCopyResampled') && 'gd2' === $this->_image_type) ? 'imagecopyresampled' : 'imagecopyresized';

@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="<{$smarty.const.xoopstube_url}>/assets/css/xtubestyle.css"/>
+<link rel="stylesheet" type="text/css" href="<{$smarty.const.xoopstube_url}>/assets/css/xtubestyle.css">
 
 <{if $catarray.imageheader != ""}>
     <br>
@@ -24,9 +24,10 @@
             <br>
 
             <form method="post" action="ratevideo.php">
-                <input type="hidden" name="lid" value="<{$video.id}>"/>
-                <input type="hidden" name="cid" value="<{$video.cid}>"/>
-                <input type="hidden" name="title" value="<{$video.title}>"/>
+                <{securityToken}><{*//mb*}>
+                <input type="hidden" name="lid" value="<{$video.id}>">
+                <input type="hidden" name="cid" value="<{$video.cid}>">
+                <input type="hidden" name="title" value="<{$video.title}>">
                 <select name="rating">
                     <option>--</option>
                     <option>10</option>
@@ -41,10 +42,10 @@
                     <option>1</option>
                 </select>&nbsp;&nbsp;
                 <input type="submit" name="submit" value="<{$smarty.const._MD_XOOPSTUBE_RATEIT}>"
-                       title="<{$smarty.const._MD_XOOPSTUBE_RATEIT}>" alt="<{$smarty.const._MD_XOOPSTUBE_RATEIT}>"/>
+                       title="<{$smarty.const._MD_XOOPSTUBE_RATEIT}>" alt="<{$smarty.const._MD_XOOPSTUBE_RATEIT}>">
                 <input type="button" value="<{$smarty.const._CANCEL}>" title="<{$smarty.const._CANCEL}>"
                        alt="<{$smarty.const._CANCEL}>"
-                       onclick="location='<{$xoops_url}>/modules/<{$module_dir}>/singlevideo.php?cid=<{$video.cid}>&amp;lid=<{$video.id}>'"/>
+                       onclick="location='<{$xoops_url}>/modules/<{$module_dir}>/singlevideo.php?cid=<{$video.cid}>&amp;lid=<{$video.id}>'">
             </form>
         </td>
     </tr>

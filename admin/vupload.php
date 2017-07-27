@@ -58,7 +58,7 @@ switch (strtolower($op)) {
             }
         } else {
             //            if (empty($_POST['videofile'])) {
-            if (!Request::getString('videofile', '', 'POST')) {
+            if (!Request::hasVar('videofile', 'POST')) {
                 redirect_header('vupload.php', 1, _AM_XOOPSTUBE_VUPLOAD_NOFILEERROR);
             }
             xoops_cp_header();
@@ -91,7 +91,7 @@ switch (strtolower($op)) {
         $pathlist = isset($listarray[$rootpath]) ? $namearray[$rootpath] : '';
         $namelist = isset($listarray[$rootpath]) ? $namearray[$rootpath] : '';
 
-        $iform = new XoopsThemeForm(_AM_XOOPSTUBE_VUPLOAD_FUPLOADVIDEOTO . $pathlist, 'op', xoops_getenv('PHP_SELF'));
+        $iform = new XoopsThemeForm(_AM_XOOPSTUBE_VUPLOAD_FUPLOADVIDEOTO . $pathlist, 'op', xoops_getenv('PHP_SELF'), 'post', true);
         $iform->setExtra('enctype="multipart/form-data"');
         ob_start();
         $iform->addElement(new XoopsFormHidden('dir', $rootpath));
@@ -107,9 +107,9 @@ switch (strtolower($op)) {
             $indexfile_tray = new XoopsFormElementTray(_AM_XOOPSTUBE_VUPLOAD_FSHOWSELECTEDFILE, '&nbsp;');
             $indexfile_tray->addElement($indexfile_select);
             if (!empty($imgurl)) {
-                $indexfile_tray->addElement(new XoopsFormLabel('', '<br><br><img src="' . XOOPS_URL . '/' . $dirarray[$rootpath] . '/' . $videofile . '" name="image" id="image" alt="" />'));
+                $indexfile_tray->addElement(new XoopsFormLabel('', '<br><br><img src="' . XOOPS_URL . '/' . $dirarray[$rootpath] . '/' . $videofile . '" name="image" id="image" alt="">'));
             } else {
-                $indexfile_tray->addElement(new XoopsFormLabel('', '<br><br><img src="' . XOOPS_URL . '/uploads/blank.gif" name="image" id="image" alt="" />'));
+                $indexfile_tray->addElement(new XoopsFormLabel('', '<br><br><img src="' . XOOPS_URL . '/uploads/blank.gif" name="image" id="image" alt="">'));
             }
             $iform->addElement($indexfile_tray);
 

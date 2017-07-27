@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="<{$smarty.const.xoopstube_url}>/assets/css/xtubestyle.css"/>
+<link rel="stylesheet" type="text/css" href="<{$smarty.const.xoopstube_url}>/assets/css/xtubestyle.css">
 <{if $video.imageheader != ""}>
     <div class="xoopstube_header"><{$video.imageheader}></div>
 <{/if}>
@@ -47,7 +47,7 @@
             <span style="font-size: small;">
                 <span style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_RATINGC}></span>&nbsp;<img
                         src="<{$xoops_url}>/modules/<{$video.module_dir}>/assets/images/icon/<{$video.rateimg}>" alt=""
-                        align="middle"/>&nbsp;&nbsp;(<{$video.votes}>)
+                        align="middle">&nbsp;&nbsp;(<{$video.votes}>)
             </span>
         <{/if}>
 

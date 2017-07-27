@@ -60,7 +60,7 @@ class XoopsMediaUploader
     public function __construct($uploadDir, $allowedMimeTypes = 0, $maxFileSize, $maxWidth = 0, $maxHeight = 0)
     {
         if (is_array($allowedMimeTypes)) {
-            $this->allowedMimeTypes = &$allowedMimeTypes;
+            $this->allowedMimeTypes =& $allowedMimeTypes;
         }
         $this->uploadDir   = $uploadDir;
         $this->maxFileSize = (int)$maxFileSize;
@@ -121,7 +121,7 @@ class XoopsMediaUploader
 
             return false;
         }
-        if ('' == $this->mediaName) {
+        if ('' === $this->mediaName) {
             $this->setErrors(_AM_XOOPSTUBE_FILENAMEEMPTY);
 
             return false;
@@ -250,7 +250,7 @@ class XoopsMediaUploader
      */
     public function upload($chmod = 0644)
     {
-        if ('' == $this->uploadDir) {
+        if ('' === $this->uploadDir) {
             $this->setErrors(_AM_XOOPSTUBE_NOUPLOADDIR);
 
             return false;

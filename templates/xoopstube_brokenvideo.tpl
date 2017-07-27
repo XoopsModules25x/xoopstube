@@ -43,13 +43,14 @@
             <br>
 
             <form action="brokenvideo.php" method="POST">
-                <input type="hidden" name="lid" value="<{$video_id}>"/>
-                <input type="hidden" name="title" value="<{$video.title}>"/>
+                <{securityToken}><{*//mb*}>
+                <input type="hidden" name="lid" value="<{$video_id}>">
+                <input type="hidden" name="title" value="<{$video.title}>">
                 <input type="submit" name="op" value="<{$smarty.const._MD_XOOPSTUBE_SUBMITBROKEN}>"
-                       title="<{$smarty.const._MD_XOOPSTUBE_SUBMITBROKEN}>" alt="<{$smarty.const._MD_XOOPSTUBE_SUBMITBROKEN}>"/>
+                       title="<{$smarty.const._MD_XOOPSTUBE_SUBMITBROKEN}>" alt="<{$smarty.const._MD_XOOPSTUBE_SUBMITBROKEN}>">
                 &nbsp;<input type="button" value="<{$smarty.const._MD_XOOPSTUBE_CANCEL}>"
                              title="<{$smarty.const._MD_XOOPSTUBE_CANCEL}>" alt="<{$smarty.const._MD_XOOPSTUBE_CANCEL}>"
-                             onclick="history.go(-1)"/>
+                             onclick="history.go(-1)">
             </form>
         </div>
     </div>

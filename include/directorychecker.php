@@ -8,6 +8,7 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 /**
  * WF-Downloads module
  *
@@ -52,19 +53,25 @@ class DirectoryChecker
             return false;
         }
         if (!@is_dir($path)) {
-            $path_status = "<img src='" . $pathIcon16 . "/0.png'   >" . $path . ' ( ' . $languageConstants[1] . ' ) ' . '<a href=' . $_SERVER['PHP_SELF']
-                           . "?op=dashboard&dircheck=createdir&amp;path=$path&amp;redirect=$redirectFile&amp;languageConstants=$myWords1>" . $languageConstants[2] . '</a>';
+            $path_status = "<img src='" . $pathIcon16 . "/0.png'   >" . $path . ' ( ' . $languageConstants[1] . ' ) ' . '<a href=' . $_SERVER['PHP_SELF'] . "?op=dashboard&dircheck=createdir&amp;path=$path&amp;redirect=$redirectFile&amp;languageConstants=$myWords1>" . $languageConstants[2] . '</a>';
         } elseif (@is_writable($path)) {
             $path_status = "<img src='" . $pathIcon16 . "/1.png'   >" . $path . ' ( ' . $languageConstants[0] . ' ) ';
             $currentMode = substr(decoct(fileperms($path)), 2);
             if ($currentMode !== decoct($mode)) {
-                $path_status = "<img src='" . $pathIcon16 . "/0.png'   >" . $path . sprintf($languageConstants[3], decoct($mode), $currentMode) . '<a href=' . $_SERVER['PHP_SELF']
-                               . "?op=dashboard&dircheck=setperm&amp;mode=$mode&amp;path=$path&amp;redirect=$redirectFile&amp;languageConstants=$myWords2> " . $languageConstants[4] . '</a>';
+                $path_status = "<img src='"
+                               . $pathIcon16
+                               . "/0.png'   >"
+                               . $path
+                               . sprintf($languageConstants[3], decoct($mode), $currentMode)
+                               . '<a href='
+                               . $_SERVER['PHP_SELF']
+                               . "?op=dashboard&dircheck=setperm&amp;mode=$mode&amp;path=$path&amp;redirect=$redirectFile&amp;languageConstants=$myWords2> "
+                               . $languageConstants[4]
+                               . '</a>';
             }
         } else {
             $currentMode = substr(decoct(fileperms($path)), 2);
-            $path_status = "<img src='" . $pathIcon16 . "/0.png'   >" . $path . sprintf($languageConstants[3], decoct($mode), $currentMode) . '<a href=' . $_SERVER['PHP_SELF']
-                           . "?mode&amp;path=$path&amp;redirect=$redirectFile&amp;languageConstants=$myWords2> " . $languageConstants[4] . '</a>';
+            $path_status = "<img src='" . $pathIcon16 . "/0.png'   >" . $path . sprintf($languageConstants[3], decoct($mode), $currentMode) . '<a href=' . $_SERVER['PHP_SELF'] . "?mode&amp;path=$path&amp;redirect=$redirectFile&amp;languageConstants=$myWords2> " . $languageConstants[4] . '</a>';
         }
 
         return $path_status;
@@ -118,13 +125,13 @@ $dircheck = Request::getString('dircheck', '', 'GET') ? filter_input(INPUT_GET, 
 switch ($dircheck) {
     case 'createdir':
         $languageConstants = array();
-        if (Request::getString('path', '', 'GET')) {
+        if (Request::hasVar('path', 'GET')) {
             $path = filter_input(INPUT_GET, 'path', FILTER_SANITIZE_STRING);
         }
-        if (Request::getString('redirect', '', 'GET')) {
+        if (Request::hasVar('redirect', 'GET')) {
             $redirect = filter_input(INPUT_GET, 'redirect', FILTER_SANITIZE_STRING);
         }
-        if (Request::getString('languageConstants', '', 'GET')) {
+        if (Request::hasVar('languageConstants', 'GET')) {
             $languageConstants = json_decode(Request::getString('languageConstants', '', 'GET'));
         }
         $result = DirectoryChecker::createDirectory($path);
@@ -134,16 +141,16 @@ switch ($dircheck) {
         break;
     case 'setperm':
         $languageConstants = array();
-        if (Request::getString('path', '', 'GET')) {
+        if (Request::hasVar('path', 'GET')) {
             $path = filter_input(INPUT_GET, 'path', FILTER_SANITIZE_STRING);
         }
-        if (Request::getString('mode', '', 'GET')) {
+        if (Request::hasVar('mode', 'GET')) {
             $mode = filter_input(INPUT_GET, 'mode', FILTER_SANITIZE_STRING);
         }
-        if (Request::getString('redirect', '', 'GET')) {
+        if (Request::hasVar('redirect', 'GET')) {
             $redirect = filter_input(INPUT_GET, 'redirect', FILTER_SANITIZE_STRING);
         }
-        if (Request::getString('languageConstants', '', 'GET')) {
+        if (Request::hasVar('languageConstants', 'GET')) {
             $languageConstants = json_decode(Request::getString('languageConstants', '', 'GET'));
         }
         $result = DirectoryChecker::setDirectoryPermissions($path, $mode);

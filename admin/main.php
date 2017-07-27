@@ -75,8 +75,7 @@ function edit($lid = 0)
               <td style="width: 25%; border-right: #E8E8E8 1px solid; vertical-align: top; padding-left: 10px;">
                <div><b>' . _AM_XOOPSTUBE_VIDEO_ID . ' </b>' . $lid . '</div>
                <div><b>' . _AM_XOOPSTUBE_MINDEX_SUBMITTED . ': </b>' . XoopstubeUtility::xtubeGetTimestamp(formatTimestamp($video_array['date'], $GLOBALS['xoopsModuleConfig']['dateformat'])) . '</div>
-               <div><b>' . _AM_XOOPSTUBE_MOD_MODIFYSUBMITTER . ' </b>' . XoopstubeUtility::xtubeGetLinkedUserNameFromId($video_array['submitter']) . '</div><div><b>' . _AM_XOOPSTUBE_VIDEO_IP
-                      . ' </b>' . $ipaddress . '</div>
+               <div><b>' . _AM_XOOPSTUBE_MOD_MODIFYSUBMITTER . ' </b>' . XoopstubeUtility::xtubeGetLinkedUserNameFromId($video_array['submitter']) . '</div><div><b>' . _AM_XOOPSTUBE_VIDEO_IP . ' </b>' . $ipaddress . '</div>
                <div><b>' . _AM_XOOPSTUBE_VIDEO_VIEWS . ' </b>' . $video_array['hits'] . '</div>
               </td>
               <td style="width: 25%; border-right: #E8E8E8 1px solid; vertical-align: top; padding-left: 10px;">
@@ -107,7 +106,7 @@ function edit($lid = 0)
 
     $caption = $lid ? _AM_XOOPSTUBE_VIDEO_MODIFYFILE : _AM_XOOPSTUBE_VIDEO_CREATENEWFILE;
 
-    $sform = new XoopsThemeForm($caption, 'storyform', xoops_getenv('PHP_SELF'));
+    $sform = new XoopsThemeForm($caption, 'storyform', xoops_getenv('PHP_SELF'), 'post', true);
     $sform->setExtra('enctype="multipart / form - data"');
 
     // Video title
@@ -207,8 +206,7 @@ function edit($lid = 0)
 
     // Video Expire Date
     $isexpired           = ($expired > time()) ? 1 : 0;
-    $expiredates         = ($expired > time()) ? _AM_XOOPSTUBE_VIDEO_EXPIREDATESET . XoopstubeUtility::xtubeGetTimestamp(formatTimestamp($expired,
-                                                                                                                                         $GLOBALS['xoopsModuleConfig']['dateformat'])) : _AM_XOOPSTUBE_VIDEO_SETDATETIMEEXPIRE;
+    $expiredates         = ($expired > time()) ? _AM_XOOPSTUBE_VIDEO_EXPIREDATESET . XoopstubeUtility::xtubeGetTimestamp(formatTimestamp($expired, $GLOBALS['xoopsModuleConfig']['dateformat'])) : _AM_XOOPSTUBE_VIDEO_SETDATETIMEEXPIRE;
     $warning             = ($published > $expired && $expired > time()) ? _AM_XOOPSTUBE_VIDEO_EXPIREWARNING : '';
     $expiredate_checkbox = new XoopsFormCheckBox('', 'expiredateactivate', $isexpired);
     $expiredate_checkbox->addOption(1, $expiredates . ' <br> <br> ');
@@ -327,7 +325,7 @@ switch (strtolower($op)) {
         if (1 == $approved && empty($publishdate)) {
             $publishdate = time();
         }
-        //        if (Request::getBool('expiredateactivate', false, 'POST')) {
+        //        if (Request::hasVar('expiredateactivate', 'POST')) {
         //PHP 5.3
         $expiredate0 = Request::getArray('expired', array(), 'POST');
         $expiredate  = strtotime($expiredate0['date']) + $expiredate0['time'];
@@ -335,7 +333,7 @@ switch (strtolower($op)) {
         //        $expiredate = strtotime(Request::getArray('expired', array(), 'POST')['date']) + Request::getArray('expired', array(), 'POST')['time'];
         //        }
 
-        if (Request::getBool('clearexpire', false, 'POST')) {
+        if (Request::hasVar('clearexpire', 'POST')) {
             $expiredate = '0';
         }
 
@@ -344,12 +342,14 @@ switch (strtolower($op)) {
             $date        = time();
             $publishdate = time();
             $ipaddress   = $_SERVER['REMOTE_ADDR'];
-            $sql         = 'INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos')
+            $sql         = 'INSERT INTO '
+                           . $GLOBALS['xoopsDB']->prefix('xoopstube_videos')
                            . ' (lid, cid, title, vidid, screenshot, submitter, publisher, status, date, hits, rating, votes, comments, vidsource, published, expired, updated, offline, description, ipaddress, notifypub, vidrating, time, keywords, item_tag, picurl )';
             $sql         .= " VALUES    (NULL, $cid, '$title', '$vidid', '', '$submitter', '$publisher', '$status', '$date', 0, 0, 0, 0, '$vidsource', '$published', '$expiredate', '$updated', '$offline', '$descriptionb', '$ipaddress', '0', '$vidrating', '$time', '$keywords', '$item_tag', '$picurl')";
             //    $newid = $GLOBALS['xoopsDB'] -> getInsertId();
         } else {
-            $sql = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos')
+            $sql = 'UPDATE '
+                   . $GLOBALS['xoopsDB']->prefix('xoopstube_videos')
                    . " SET cid = $cid, title='$title', vidid='$vidid', screenshot='', publisher='$publisher', status='$status', vidsource='$vidsource', published='$published', expired='$expiredate', updated='$updated', offline='$offline', description='$descriptionb', vidrating='$vidrating', time='$time', keywords='$keywords', item_tag='$item_tag', picurl='$picurl' WHERE lid="
                    . $lid;
         }
@@ -400,7 +400,7 @@ switch (strtolower($op)) {
         $message = (!$lid) ? _AM_XOOPSTUBE_VIDEO_NEWFILEUPLOAD : _AM_XOOPSTUBE_VIDEO_FILEMODIFIEDUPDATE;
         $message = ($lid && !Request::getBool('was_published', false, 'POST') && $approved) ? _AM_XOOPSTUBE_VIDEO_FILEAPPROVED : $message;
 
-        if (Request::getInt('delbroken', 0)) { //xtubeCleanRequestVars($_REQUEST, 'delbroken', 0)) {
+        if (Request::hasVar('delbroken')) { //xtubeCleanRequestVars($_REQUEST, 'delbroken', 0)) {
             $sql = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_broken') . ' WHERE lid=' . $lid;
             if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
                 XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
@@ -414,7 +414,7 @@ switch (strtolower($op)) {
         break;
 
     case 'delete':
-        if (Request::getInt('confirm', 0)) { // (xtubeCleanRequestVars($_REQUEST, 'confirm', 0)) {
+        if (Request::hasVar('confirm')) { // (xtubeCleanRequestVars($_REQUEST, 'confirm', 0)) {
             $title = Request::getString('title', 0); //xtubeCleanRequestVars($_REQUEST, 'title', 0);
 
             // delete video
@@ -472,7 +472,7 @@ switch (strtolower($op)) {
         break;
 
     case 'toggle':
-        if (Request::getInt('lid', 0, 'GET') > 0) {
+        if (Request::hasVar('lid', 'GET') > 0) {
             $a = (null === Request::getInt('offline', null, 'GET'));
             $b = null === Request::getInt('offzzline', null, 'GET');
             $c = null === Request::getInt('offline', '', 'GET');
@@ -537,7 +537,7 @@ switch (strtolower($op)) {
 
         xoops_cp_header();
 
-        $adminObject  = \Xmf\Module\Admin::getInstance();
+        $adminObject = \Xmf\Module\Admin::getInstance();
         $adminObject->displayNavigation(basename(__FILE__));
         $adminObject->addItemButton(_MI_XOOPSTUBE_ADD_VIDEO, 'main.php?op=edit', 'add', '');
         $adminObject->addItemButton(_MI_XOOPSTUBE_ADD_CATEGORY, 'category.php', 'add', '');

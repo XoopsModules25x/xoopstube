@@ -22,7 +22,7 @@ use Xmf\Request;
 require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
-$adminObject  = \Xmf\Module\Admin::getInstance();
+$adminObject = \Xmf\Module\Admin::getInstance();
 
 $start     = Request::getInt('start', 0, 'POST');// xtubeCleanRequestVars($_REQUEST, 'start', 0);
 $start1    = Request::getInt('start1', 0, 'POST');// xtubeCleanRequestVars($_REQUEST, 'start1', 0);
@@ -68,8 +68,7 @@ if ($totalmodrequests > 0) {
 }
 
 if ($totalbrokenvideos > 0) {
-    $adminObject->addInfoBoxLine(sprintf('<infolabel>' . '<a href="brokenvideo.php">' . _AM_XOOPSTUBE_SBROKENSUBMIT . '</a><b>' . '</infolabel><infotext>',
-                                $totalbrokenvideos . '</infotext>'), '', 'Red');
+    $adminObject->addInfoBoxLine(sprintf('<infolabel>' . '<a href="brokenvideo.php">' . _AM_XOOPSTUBE_SBROKENSUBMIT . '</a><b>' . '</infolabel><infotext>', $totalbrokenvideos . '</infotext>'), '', 'Red');
 } else {
     $adminObject->addInfoBoxLine(sprintf('<infolabel>' . _AM_XOOPSTUBE_SBROKENSUBMIT . '</infolabel><infotext>', $totalbrokenvideos . '</infotext>'), '', 'Red');
 }

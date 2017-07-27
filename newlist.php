@@ -24,7 +24,7 @@ include __DIR__ . '/header.php';
 
 $GLOBALS['xoopsOption']['template_main'] = 'xoopstube_newlistindex.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
-$xoTheme->addStylesheet('modules/'.$moduleDirName.'/assets/css/xtubestyle.css');
+$xoTheme->addStylesheet('modules/' . $moduleDirName . '/assets/css/xtubestyle.css');
 
 global $xoopsModule;
 
@@ -34,12 +34,12 @@ if (!isset($_GET['newvideoshowdays'])) {
     redirect_header('newlist.php?newvideoshowdays=7', 1, '');
 }
 
-if (Request::getInt('newvideoshowdays', '', 'GET')) {
+if (Request::hasVar('newvideoshowdays', 'GET')) {
     $newvideoshowdays = Request::getInt('newvideoshowdays', 7, 'GET');
     if ($newvideoshowdays !== 7) {
         if ($newvideoshowdays !== 14) {
             if ($newvideoshowdays !== 30) {
-                redirect_header('newlist.php?newvideoshowdays=7', 5, _MD_XOOPSTUBE_STOPIT . '<br><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/security.png" />');
+                redirect_header('newlist.php?newvideoshowdays=7', 5, _MD_XOOPSTUBE_STOPIT . '<br><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/security.png">');
             }
         }
     }
@@ -48,7 +48,17 @@ if (Request::getInt('newvideoshowdays', '', 'GET')) {
     $duration_week  = ($time_cur - (86400 * 7));
     $allmonthvideos = 0;
     $allweekvideos  = 0;
-    $result         = $GLOBALS['xoopsDB']->query('SELECT lid, cid, published, updated FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE (published >= ' . $duration . ' AND published <= ' . $time_cur . ') OR updated >= ' . $duration . ' AND (expired = 0 OR expired > ' . $time_cur . ') AND offline = 0');
+    $result         = $GLOBALS['xoopsDB']->query('SELECT lid, cid, published, updated FROM '
+                                                 . $GLOBALS['xoopsDB']->prefix('xoopstube_videos')
+                                                 . ' WHERE (published >= '
+                                                 . $duration
+                                                 . ' AND published <= '
+                                                 . $time_cur
+                                                 . ') OR updated >= '
+                                                 . $duration
+                                                 . ' AND (expired = 0 OR expired > '
+                                                 . $time_cur
+                                                 . ') AND offline = 0');
 
     while (false !== ($myrow = $GLOBALS['xoopsDB']->fetcharray($result))) {
         $published = ($myrow['updated'] > 0) ? $myrow['updated'] : $myrow['published'];
@@ -76,9 +86,19 @@ if (Request::getInt('newvideoshowdays', '', 'GET')) {
 }
 
 $duration = ($time_cur - (86400 * ($newvideoshowdays - 1)));
-$result   =
-    $GLOBALS['xoopsDB']->query('SELECT lid, cid, published, updated FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE (published > ' . $duration . ' AND published <= ' . $time_cur . ') OR (updated >= ' . $duration . ' AND updated <= ' . $time_cur . ') AND (expired = 0 OR expired > '
-                               . $time_cur . ') AND offline = 0');
+$result   = $GLOBALS['xoopsDB']->query('SELECT lid, cid, published, updated FROM '
+                                       . $GLOBALS['xoopsDB']->prefix('xoopstube_videos')
+                                       . ' WHERE (published > '
+                                       . $duration
+                                       . ' AND published <= '
+                                       . $time_cur
+                                       . ') OR (updated >= '
+                                       . $duration
+                                       . ' AND updated <= '
+                                       . $time_cur
+                                       . ') AND (expired = 0 OR expired > '
+                                       . $time_cur
+                                       . ') AND offline = 0');
 while (false !== ($myrow = $GLOBALS['xoopsDB']->fetcharray($result))) {
     $published = ($myrow['updated'] > 0) ? date($GLOBALS['xoopsModuleConfig']['dateformat'], $myrow['updated']) : date($GLOBALS['xoopsModuleConfig']['dateformat'], $myrow['published']);
     $d         = date('j', $published);
@@ -104,6 +124,6 @@ while (false !== ($video_arr = $GLOBALS['xoopsDB']->fetchArray($result))) {
     include XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/include/videoloadinfo.php';
 }
 
-$xoopsTpl->assign('back', '<a href="javascript:history.go(-1)"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/back.png" /></a>');
+$xoopsTpl->assign('back', '<a href="javascript:history.go(-1)"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/back.png"></a>');
 $xoopsTpl->assign('module_dir', $xoopsModule->getVar('dirname'));
 include XOOPS_ROOT_PATH . '/footer.php';

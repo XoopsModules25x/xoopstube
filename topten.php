@@ -24,7 +24,7 @@ include __DIR__ . '/header.php';
 
 $GLOBALS['xoopsOption']['template_main'] = 'xoopstube_topten.tpl';
 include XOOPS_ROOT_PATH . '/header.php';
-$xoTheme->addStylesheet('modules/'.$moduleDirName.'/assets/css/xtubestyle.css');
+$xoTheme->addStylesheet('modules/' . $moduleDirName . '/assets/css/xtubestyle.css');
 
 $mytree = new XoopstubeTree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
 
@@ -81,7 +81,7 @@ while (false !== (list($cid, $ctitle) = $GLOBALS['xoopsDB']->fetchRow($result)))
         }
     }
 }
-$xoopsTpl->assign('back', '<a href="javascript:history.go(-1)"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/back.png" /></a>');
+$xoopsTpl->assign('back', '<a href="javascript:history.go(-1)"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/back.png"></a>');
 $xoopsTpl->assign('lang_sortby', $lang_array[$sort_arr]);
 $xoopsTpl->assign('rankings', $rankings);
 $xoopsTpl->assign('module_dir', $xoopsModule->getVar('dirname'));

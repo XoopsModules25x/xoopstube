@@ -25,11 +25,11 @@ $op  = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET'); //xtubeC
 $lid = Request::getInt('lid', Request::getInt('lid', 0, 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'lid', 0);
 
 /**
- * @param  XoopstubeTree      $xt
- * @param int       $itemid
- * @param        $title
- * @param        $checks
- * @param string $order
+ * @param  XoopstubeTree $xt
+ * @param int            $itemid
+ * @param                $title
+ * @param                $checks
+ * @param string         $order
  */
 function makeTreeCheckTable(XoopstubeTree $xt, $itemid, $title, $checks, $order = '')
 {
@@ -52,7 +52,7 @@ function makeTreeCheckTable(XoopstubeTree $xt, $itemid, $title, $checks, $order 
         <tr style="text-align: left;">
          <td width="30%" class="head">' . $name . '</td>
          <td class="head">
-             <input type="checkbox" name="cid-' . $cid . '" value="0" ' . $checked . ' ' . $disabled . '/>
+             <input type="checkbox" name="cid-' . $cid . '" value="0" ' . $checked . ' ' . $disabled . '>
          </td>
         </tr>';
         $arr = $xt->getChildTreeArray($cid, $order);
@@ -62,12 +62,12 @@ function makeTreeCheckTable(XoopstubeTree $xt, $itemid, $title, $checks, $order 
             $checked       = array_key_exists($cat['cid'], $checks) ? 'checked' : '';
             $disabled      = ($cat['cid'] === Request::getInt('cid', 0, 'GET')) ? "disabled='yes'" : '';
             $level         = substr_count($cat['prefix'], '-') + 1;
-            //          echo "<tr><td>" . $catpath . "<input type='checkbox' name='cid-" . $cat['cid'] . "' value='0' " . $checked . " " . $disabled . "/></td></tr>\n";
+            //          echo "<tr><td>" . $catpath . "<input type='checkbox' name='cid-" . $cat['cid'] . "' value='0' " . $checked . " " . $disabled . "></td></tr>\n";
             echo '
         <tr style="text-align: left;">
          <td width="30%" class="even">' . $catpath . '</td>
          <td class="even">
-             <input type="checkbox" name="cid-' . $cat['cid'] . '" value="0" ' . $checked . ' ' . $disabled . '/>
+             <input type="checkbox" name="cid-' . $cat['cid'] . '" value="0" ' . $checked . ' ' . $disabled . '>
          </td>
         </tr>';
         }
@@ -75,9 +75,9 @@ function makeTreeCheckTable(XoopstubeTree $xt, $itemid, $title, $checks, $order 
     echo '<tr>
            <td width="30%"></td>
            <td style="text-align: left;">
-            <input type="submit" class="mainbutton" value="save" />
-            <input type="hidden" name="op" value="save" />
-            <input type="hidden" name="lid" value="' . $itemid . '" />
+            <input type="submit" class="mainbutton" value="save">
+            <input type="hidden" name="op" value="save">
+            <input type="hidden" name="lid" value="' . $itemid . '">
             </td>
           </tr>';
     echo '</table></form></div>';

@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="<{$smarty.const.xoopstube_url}>/assets/css/xtubestyle.css"/>
+<link rel="stylesheet" type="text/css" href="<{$smarty.const.xoopstube_url}>/assets/css/xtubestyle.css">
 <{if $catarray.imageheader != ""}>
     <br>
     <div align="center"><{$catarray.imageheader}></div>
@@ -16,7 +16,7 @@
                     <{foreach item=subcat from=$subcategories}>
                     <td>
                         <a href="viewcat.php?cid=<{$subcat.id}>"><img src="<{$subcat.image}>" title="<{$subcat.alttext}>"
-                                                                      alt="<{$subcat.alttext}>" align="middle"/></a>
+                                                                      alt="<{$subcat.alttext}>" align="middle"></a>
                         <a href="viewcat.php?cid=<{$subcat.id}>"><{$subcat.title}></a>&nbsp;(<{$subcat.totalvideos}>)<br>
                         <{if $subcat.infercategories}>
                             &nbsp;&nbsp;<{$subcat.infercategories}>
@@ -38,30 +38,30 @@
     <div align="center" style="vertical-align: middle; font-size: smaller;">
         <span style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_SORTBY}></span>&nbsp;<{$smarty.const._MD_XOOPSTUBE_TITLE}> (
         <a href="viewcat.php?cid=<{$category_id}>&amp;orderby=titleA">
-            <img src="<{xoModuleIcons16 up.png}>" align="middle" alt=""/></a>
+            <img src="<{xoModuleIcons16 up.png}>" align="middle" alt=""></a>
         <a href="viewcat.php?cid=<{$category_id}>&amp;orderby=titleD">
-            <img src="<{xoModuleIcons16 down.png}>" align="middle" alt=""/></a>
+            <img src="<{xoModuleIcons16 down.png}>" align="middle" alt=""></a>
         )
         &nbsp;
         <{$smarty.const._MD_XOOPSTUBE_DATE}> (
         <a href="viewcat.php?cid=<{$category_id}>&amp;orderby=dateA">
-            <img src="<{xoModuleIcons16 up.png}>" align="middle" alt=""/></a>
+            <img src="<{xoModuleIcons16 up.png}>" align="middle" alt=""></a>
         <a href="viewcat.php?cid=<{$category_id}>&amp;orderby=dateD">
-            <img src="<{xoModuleIcons16 down.png}>" align="middle" alt=""/></a>
+            <img src="<{xoModuleIcons16 down.png}>" align="middle" alt=""></a>
         )
         &nbsp;
         <{$smarty.const._MD_XOOPSTUBE_RATING}> (
         <a href="viewcat.php?cid=<{$category_id}>&amp;orderby=ratingA">
-            <img src="<{xoModuleIcons16 up.png}>" align="middle" alt=""/></a>
+            <img src="<{xoModuleIcons16 up.png}>" align="middle" alt=""></a>
         <a href="viewcat.php?cid=<{$category_id}>&amp;orderby=ratingD">
-            <img src="<{xoModuleIcons16 down.png}>" align="middle" alt=""/></a>
+            <img src="<{xoModuleIcons16 down.png}>" align="middle" alt=""></a>
         )
         &nbsp;
         <{$smarty.const._MD_XOOPSTUBE_POPULARITY}> (
         <a href="viewcat.php?cid=<{$category_id}>&amp;orderby=hitsA">
-            <img src="<{xoModuleIcons16 up.png}>" align="middle" alt=""/></a>
+            <img src="<{xoModuleIcons16 up.png}>" align="middle" alt=""></a>
         <a href="viewcat.php?cid=<{$category_id}>&amp;orderby=hitsD">
-            <img src="<{xoModuleIcons16 down.png}>" align="middle" alt=""/></a>
+            <img src="<{xoModuleIcons16 down.png}>" align="middle" alt=""></a>
         )
         <br>
         <span style="font-weight: bold;"><{$lang_cursortedby}></span><br><br>

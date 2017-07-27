@@ -94,7 +94,7 @@ function xtubeReturnSource($returnsource)
  */
 function xtubeGetVideoThumb($vidid, $title, $source, $picurl, $screenshot, $width = '', $height = '')
 {
-    if ('' == $width || '' == $height) {
+    if ('' === $width || '' === $height) {
         $width  = $GLOBALS['xoopsModuleConfig']['shotwidth'];
         $height = $GLOBALS['xoopsModuleConfig']['shotheight'];
     }
@@ -102,29 +102,29 @@ function xtubeGetVideoThumb($vidid, $title, $source, $picurl, $screenshot, $widt
     switch ($source) {
         // YouTube
         case 0:
-            $thumb = '<img src="http://img.youtube.com/vi/' . $vidid . '/default.jpg"  title="' . $title . '" alt="' . $title . '" width="' . $width . '" height="' . $height . '" style="padding: 0px; border-style: none;" />';
+            $thumb = '<img src="http://img.youtube.com/vi/' . $vidid . '/default.jpg"  title="' . $title . '" alt="' . $title . '" width="' . $width . '" height="' . $height . '" style="padding: 0px; border-style: none;">';
             break;
 
         // MetaCafe
         case 1:
             list($metaclip) = explode('[/]', $vidid);
             $videothumb['metathumb'] = $metaclip;
-            $thumb                   = '<img src="http://www.metacafe.com/thumb/' . $videothumb['metathumb'] . '.jpg" title="' . $title . '" alt="' . $title . '" width="' . $width . '" height="' . $height . '" style="padding: 0px; border-style: none;" />';
+            $thumb                   = '<img src="http://www.metacafe.com/thumb/' . $videothumb['metathumb'] . '.jpg" title="' . $title . '" alt="' . $title . '" width="' . $width . '" height="' . $height . '" style="padding: 0px; border-style: none;">';
             break;
 
         // iFilm/Spike
         case 2:
-            $thumb = '<img src="http://img3.ifilmpro.com/resize/image/stills/films/resize/istd/' . $vidid . '.jpg?width=' . $width . '"  title="' . $title . '" alt="' . $title . '" style="padding: 0px; border-style: none;" />';
+            $thumb = '<img src="http://img3.ifilmpro.com/resize/image/stills/films/resize/istd/' . $vidid . '.jpg?width=' . $width . '"  title="' . $title . '" alt="' . $title . '" style="padding: 0px; border-style: none;">';
             break;
 
         // Photobucket
         case 3:
-            $thumb = '<img src="http://i153.photobucket.com/albums/' . $vidid . '.jpg" width="' . $width . '" height="' . $height . '"  title="' . $title . '" alt="' . $title . '" style="padding: 0px; border-style: none;" />';
+            $thumb = '<img src="http://i153.photobucket.com/albums/' . $vidid . '.jpg" width="' . $width . '" height="' . $height . '"  title="' . $title . '" alt="' . $title . '" style="padding: 0px; border-style: none;">';
             break;
 
         // Photobucket
         case 4:
-            $thumb = '<img src="http://cdn-thumbs.viddler.com/thumbnail_2_' . $vidid . '.jpg" width="' . $width . '" height="' . $height . '"  title="' . $title . '" alt="' . $title . '" style="padding: 0px; border-style: none;" />';
+            $thumb = '<img src="http://cdn-thumbs.viddler.com/thumbnail_2_' . $vidid . '.jpg" width="' . $width . '" height="' . $height . '"  title="' . $title . '" alt="' . $title . '" style="padding: 0px; border-style: none;">';
             break;
 
         // Google Video, MySpace TV, DailyMotion, BrightCove, Blip.tv, ClipFish, LiveLeak, Maktoob, Veoh
@@ -138,12 +138,12 @@ function xtubeGetVideoThumb($vidid, $title, $source, $picurl, $screenshot, $widt
         case 107:
         case 108:
         case 109:
-            $thumb = '<img src="' . $picurl . '" width="' . $width . '" height="' . $height . '"  title="' . $title . '" alt="' . $title . '" style="padding: 0px; border-style: none;" />';
+            $thumb = '<img src="' . $picurl . '" width="' . $width . '" height="' . $height . '"  title="' . $title . '" alt="' . $title . '" style="padding: 0px; border-style: none;">';
             break;
 
         // Determine if video source is XoopsTube for thumbnail
         case 200:
-            $thumb = '<img src="' . XOOPS_URL . '/' . $screenshot . '" width="' . $width . '" height="' . $height . '"  title="' . $title . '" alt="' . $title . '" style="padding: 0px; border-style: none;" />';
+            $thumb = '<img src="' . XOOPS_URL . '/' . $screenshot . '" width="' . $width . '" height="' . $height . '"  title="' . $title . '" alt="' . $title . '" style="padding: 0px; border-style: none;">';
             break;
     }
 
@@ -277,13 +277,17 @@ function xtubeShowVideo($vidid, $source, $screenshot, $picurl)
 
         // MetaCafe
         case 1:
-            $showvideo =
-                '<embed flashVars="playerVars=showStats=no|autoPlay=' . $autoplay2 . '" src="http://www.metacafe.com/fplayer/' . $vidid . '.swf" width="480" height="295" wmode="transparent" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash"></embed>';
+            $showvideo = '<embed flashVars="playerVars=showStats=no|autoPlay='
+                         . $autoplay2
+                         . '" src="http://www.metacafe.com/fplayer/'
+                         . $vidid
+                         . '.swf" width="480" height="295" wmode="transparent" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash"></embed>';
             break;
 
         // iFilm/Spike
         case 2:
-            $showvideo = '<embed width="480" height="295" src="http://www.spike.com/efp" quality="high" bgcolor="000000" name="efp" align="middle" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="flvbaseclip=' . $vidid
+            $showvideo = '<embed width="480" height="295" src="http://www.spike.com/efp" quality="high" bgcolor="000000" name="efp" align="middle" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="flvbaseclip='
+                         . $vidid
                          . '" allowfullscreen="true"> </embed>';
             break;
 
@@ -320,7 +324,10 @@ function xtubeShowVideo($vidid, $source, $screenshot, $picurl)
 
         // ClipFish
         case 104:
-            $showvideo = '<embed src="http://www.clipfish.de/videoplayer.swf?as=' . $autoplay . '&videoid=' . $vidid
+            $showvideo = '<embed src="http://www.clipfish.de/videoplayer.swf?as='
+                         . $autoplay
+                         . '&videoid='
+                         . $vidid
                          . '==&r=1&c=0067B3" quality="high" bgcolor="#0067B3" width="464" height="380" name="player" align="middle" allowFullScreen="true" allowScriptAccess="always"  type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"></embed>'; // Change c=0067B3 for different player color
             break;
 
@@ -331,26 +338,39 @@ function xtubeShowVideo($vidid, $source, $screenshot, $picurl)
 
         // Maktoob
         case 106:
-            $showvideo =
-                '<embed width="448" height="320" align="middle" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" name="flvplayer" bgcolor="#ffffff" devicefont="true" wmode="transparent" quality="high" src="http://clipat.maktoob.com/flvplayerOurJS.swf?file=http://'
-                . $vidid . '.flv&enablejs=true&image=' . $picurl . '&lightcolor=0x557722&backcolor=0x000000&frontcolor=0xCCCCCC&showfsbutton=true&autostart=' . $autoplay3 . '&logo=http://clipat.maktoob.com/language/ar_sa/images/clipat-icon.png&displaywidth=448" />';
+            $showvideo = '<embed width="448" height="320" align="middle" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" name="flvplayer" bgcolor="#ffffff" devicefont="true" wmode="transparent" quality="high" src="http://clipat.maktoob.com/flvplayerOurJS.swf?file=http://'
+                         . $vidid
+                         . '.flv&enablejs=true&image='
+                         . $picurl
+                         . '&lightcolor=0x557722&backcolor=0x000000&frontcolor=0xCCCCCC&showfsbutton=true&autostart='
+                         . $autoplay3
+                         . '&logo=http://clipat.maktoob.com/language/ar_sa/images/clipat-icon.png&displaywidth=448">';
             break;
 
         // Veoh
         case 107:
-            $showvideo = '<embed src="http://www.veoh.com/veohplayer.swf?permalinkId=' . $vidid . '&id=anonymous&player=videodetailsembedded&affiliateId=&videoAutoPlay=' . $autoplay
+            $showvideo = '<embed src="http://www.veoh.com/veohplayer.swf?permalinkId='
+                         . $vidid
+                         . '&id=anonymous&player=videodetailsembedded&affiliateId=&videoAutoPlay='
+                         . $autoplay
                          . '" allowFullScreen="true" width="480" height="295" bgcolor="#FFFFFF" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"></embed>';
             break;
 
         // Vimeo
         case 108:
-            $showvideo = '<embed src="http://vimeo.com/moogaloop.swf?clip_id=' . $vidid . '&server=vimeo.com&show_title=1&show_byline=1&show_portrait=0&color=&fullscreen=1&autoplay=' . $autoplay
+            $showvideo = '<embed src="http://vimeo.com/moogaloop.swf?clip_id='
+                         . $vidid
+                         . '&server=vimeo.com&show_title=1&show_byline=1&show_portrait=0&color=&fullscreen=1&autoplay='
+                         . $autoplay
                          . '" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" quality="best" width="400" height="321"></embed>';
             break;
 
         // Megavideo
         case 109:
-            $showvideo = '<object width="640" height="363"><param name="movie" value="http://www.megavideo.com/v/' . $vidid . '"></param><param name="allowFullScreen" value="true"></param><embed src="http://www.megavideo.com/v/' . $vidid
+            $showvideo = '<object width="640" height="363"><param name="movie" value="http://www.megavideo.com/v/'
+                         . $vidid
+                         . '"></param><param name="allowFullScreen" value="true"></param><embed src="http://www.megavideo.com/v/'
+                         . $vidid
                          . '" type="application/x-shockwave-flash" allowfullscreen="true" width="640" height="363"></embed></object>';
             break;
 

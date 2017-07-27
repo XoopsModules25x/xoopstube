@@ -25,8 +25,22 @@ include __DIR__ . '/header.php';
 $lid = Request::getInt('lid', Request::getInt('lid', '', 'POST'), 'GET');
 $cid = Request::getInt('cid', Request::getInt('cid', '', 'POST'), 'GET');
 
-$sql2 = 'SELECT count(*) FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' a LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('xoopstube_altcat') . ' b' . ' ON b.lid = a.lid' . ' WHERE a.published > 0 AND a.published <= ' . time() . ' AND (a.expired = 0 OR a.expired > ' . time()
-        . ') AND a.offline = 0' . ' AND (b.cid=a.cid OR (a.cid=' . (int)$cid . ' OR b.cid=' . (int)$cid . '))';
+$sql2 = 'SELECT count(*) FROM '
+        . $GLOBALS['xoopsDB']->prefix('xoopstube_videos')
+        . ' a LEFT JOIN '
+        . $GLOBALS['xoopsDB']->prefix('xoopstube_altcat')
+        . ' b'
+        . ' ON b.lid = a.lid'
+        . ' WHERE a.published > 0 AND a.published <= '
+        . time()
+        . ' AND (a.expired = 0 OR a.expired > '
+        . time()
+        . ') AND a.offline = 0'
+        . ' AND (b.cid=a.cid OR (a.cid='
+        . (int)$cid
+        . ' OR b.cid='
+        . (int)$cid
+        . '))';
 list($count) = $GLOBALS['xoopsDB']->fetchRow($GLOBALS['xoopsDB']->query($sql2));
 
 if (false === XoopstubeUtility::xtubeCheckGroups($cid) || $count === 0) {
@@ -48,9 +62,7 @@ if (!is_array($video_arr)) {
 $GLOBALS['xoopsOption']['template_main'] = 'xoopstube_singlevideo.tpl';
 
 include XOOPS_ROOT_PATH . '/header.php';
-$xoTheme->addStylesheet('modules/'.$moduleDirName.'/assets/css/xtubestyle.css');
-
-$xoTheme->addStylesheet('modules/'.$moduleDirName.'/assets/css/xtubestyle.css');
+$xoTheme->addStylesheet('modules/' . $moduleDirName . '/assets/css/xtubestyle.css');
 
 // tags support
 if (XoopstubeUtility::xtubeIsModuleTagInstalled()) {
@@ -158,7 +170,7 @@ $video['showsbookmarx']  = $GLOBALS['xoopsModuleConfig']['showsbookmarks'];
 $video['othervideox']    = $GLOBALS['xoopsModuleConfig']['othervideos'];
 $xoopsTpl->assign('video', $video);
 
-$xoopsTpl->assign('back', '<a href="javascript:history.go(-1)"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/back.png" /></a>'); // Displays Back button
+$xoopsTpl->assign('back', '<a href="javascript:history.go(-1)"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/back.png"></a>'); // Displays Back button
 $xoopsTpl->assign('module_dir', $xoopsModule->getVar('dirname'));
 
 require_once XOOPS_ROOT_PATH . '/include/comment_view.php';

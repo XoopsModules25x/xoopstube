@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="<{$smarty.const.xoopstube_url}>/assets/css/xtubestyle.css"/>
+<link rel="stylesheet" type="text/css" href="<{$smarty.const.xoopstube_url}>/assets/css/xtubestyle.css">
 <{if $catarray.imageheader != ""}>
     <br>
     <div class="xoopstube_header"><{$catarray.imageheader}></div>
@@ -19,7 +19,7 @@
             <{foreach item=category from=$categories}>
             <td width="5%" style="text-align: center;">
                 <a href="<{$xoops_url}>/modules/<{$module_dir}>/viewcat.php?cid=<{$category.id}>"><img
-                            src="<{$category.image}>" title="<{$category.alttext}>" alt="<{$category.alttext}>" align="middle"/></a>
+                            src="<{$category.image}>" title="<{$category.alttext}>" alt="<{$category.alttext}>" align="middle"></a>
             </td>
             <td width="35%" style="text-align: left; vertical-align: middle;">
                 <a href="<{$xoops_url}>/modules/<{$module_dir}>/viewcat.php?cid=<{$category.id}>"
@@ -42,13 +42,13 @@
     <div class="odd" style="text-align: left; font-size: smaller;"><{$lang_thereare}></div>
     <div class="xoopstube_legend">
         <img src="<{$xoops_url}>/modules/<{$module_dir}>/assets/images/icon/linkload1_small.png"
-             title="<{$smarty.const._MD_XOOPSTUBE_LEGENDTEXTNEW}>" alt="" align="middle"/>&nbsp;<{$smarty.const._MD_XOOPSTUBE_LEGENDTEXTNEW}>
+             title="<{$smarty.const._MD_XOOPSTUBE_LEGENDTEXTNEW}>" alt="" align="middle">&nbsp;<{$smarty.const._MD_XOOPSTUBE_LEGENDTEXTNEW}>
         <img src="<{$xoops_url}>/modules/<{$module_dir}>/assets/images/icon/linkload2_small.png"
-             title="<{$smarty.const._MD_XOOPSTUBE_LEGENDTEXTNEWTHREE}>" alt="" align="middle"/>&nbsp;<{$smarty.const._MD_XOOPSTUBE_LEGENDTEXTNEWTHREE}>
+             title="<{$smarty.const._MD_XOOPSTUBE_LEGENDTEXTNEWTHREE}>" alt="" align="middle">&nbsp;<{$smarty.const._MD_XOOPSTUBE_LEGENDTEXTNEWTHREE}>
         <img src="<{$xoops_url}>/modules/<{$module_dir}>/assets/images/icon/linkload3_small.png"
-             title="<{$smarty.const._MD_XOOPSTUBE_LEGENDTEXTTHISWEEK}>" alt="" align="middle"/>&nbsp;<{$smarty.const._MD_XOOPSTUBE_LEGENDTEXTTHISWEEK}>
+             title="<{$smarty.const._MD_XOOPSTUBE_LEGENDTEXTTHISWEEK}>" alt="" align="middle">&nbsp;<{$smarty.const._MD_XOOPSTUBE_LEGENDTEXTTHISWEEK}>
         <img src="<{$xoops_url}>/modules/<{$module_dir}>/assets/images/icon/linkload4_small.png"
-             title="<{$smarty.const._MD_XOOPSTUBE_LEGENDTEXTNEWLAST}>" alt="" align="middle"/>&nbsp;<{$smarty.const._MD_XOOPSTUBE_LEGENDTEXTNEWLAST}>
+             title="<{$smarty.const._MD_XOOPSTUBE_LEGENDTEXTNEWLAST}>" alt="" align="middle">&nbsp;<{$smarty.const._MD_XOOPSTUBE_LEGENDTEXTNEWLAST}>
     </div>
 <{/if}>
 <div style="padding-bottom: 12px;text-align: <{$catarray.indexfooteralign}>;"><{$catarray.indexfooter}></div>

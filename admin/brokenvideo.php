@@ -153,7 +153,7 @@ switch (strtolower($op)) {
                 $result4 = $GLOBALS['xoopsDB']->query('SELECT uname, email FROM ' . $GLOBALS['xoopsDB']->prefix('users') . '  WHERE uid=' . $sender);
                 list($ownername, $owneremail) = $GLOBALS['xoopsDB']->fetchRow($result4);
 
-                if ('' == $ownername) {
+                if ('' === $ownername) {
                     $ownername = '&nbsp;';
                 }
 
@@ -163,15 +163,14 @@ switch (strtolower($op)) {
 
                 echo '<tr style="text-align: center;">';
                 echo '<td class="head">' . $reportid . '</td>';
-                echo '<td class="even" style="text-align: left;"><a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/singlevideo.php?cid=' . $cid . '&amp;lid=' . $lid
-                     . '" target="_blank">' . $videoshowname . '</a></td>';
+                echo '<td class="even" style="text-align: left;"><a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/singlevideo.php?cid=' . $cid . '&amp;lid=' . $lid . '" target="_blank">' . $videoshowname . '</a></td>';
 
-                if ('' == $email) {
+                if ('' === $email) {
                     echo '<td class="even">' . XoopsUserUtility::getUnameFromId($sender) . ' (' . $ip . ')</td>';
                 } else {
                     echo '<td class="even"><a href="mailto:' . $email . '">' . XoopsUserUtility::getUnameFromId($sender) . '</a> (' . $ip . ')</td>';
                 }
-                if ('' == $owneremail) {
+                if ('' === $owneremail) {
                     echo '<td class="even">' . $ownername . '</td>';
                 } else {
                     echo '<td class="even"><a href="mailto:' . $owneremail . '">' . $ownername . '</a></td>';

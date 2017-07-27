@@ -16,6 +16,7 @@
  * @link            https://xoops.org/
  * @since           1.0.6
  */
+
 use Xmf\Request;
 
 require_once __DIR__ . '/admin_header.php';
@@ -31,17 +32,11 @@ switch (strtolower($op)) {
         xoops_cp_header();
         //    xtubeRenderAdminMenu(_AM_XOOPSTUBE_MOD_MODREQUESTS);
 
-        $sql       = 'SELECT modifysubmitter, requestid, lid, cid, title, vidid, submitter, publisher, vidsource, description, time, keywords, item_tag, picurl FROM '
-                     . $GLOBALS['xoopsDB']->prefix('xoopstube_mod')
-                     . ' WHERE requestid='
-                     . $requestid;
+        $sql       = 'SELECT modifysubmitter, requestid, lid, cid, title, vidid, submitter, publisher, vidsource, description, time, keywords, item_tag, picurl FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_mod') . ' WHERE requestid=' . $requestid;
         $mod_array = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
         unset($sql);
 
-        $sql        = 'SELECT submitter, lid, cid, title, vidid, submitter, publisher, vidsource, description, time, keywords, item_tag, picurl FROM '
-                      . $GLOBALS['xoopsDB']->prefix('xoopstube_videos')
-                      . ' WHERE lid='
-                      . $mod_array['lid'];
+        $sql        = 'SELECT submitter, lid, cid, title, vidid, submitter, publisher, vidsource, description, time, keywords, item_tag, picurl FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE lid=' . $mod_array['lid'];
         $orig_array = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
         unset($sql);
 
@@ -134,7 +129,8 @@ switch (strtolower($op)) {
         $time         = $video_array['time'];
         $updated      = time();
 
-        $GLOBALS['xoopsDB']->query('UPDATE ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos')
+        $GLOBALS['xoopsDB']->query('UPDATE '
+                                   . $GLOBALS['xoopsDB']->prefix('xoopstube_videos')
                                    . " SET cid = $cid, title='$title', vidid='$vidid', screenshot='', publisher='$publisher', vidsource='$vidsource', description='$descriptionb', time='$time', keywords='$keywords', item_tag='$item_tag', picurl='$picurl', updated='$updated' WHERE lid = "
                                    . $lid);
         $sql    = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_mod') . ' WHERE requestid=' . $requestid;

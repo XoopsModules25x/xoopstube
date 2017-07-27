@@ -55,6 +55,7 @@ class XoopstubeTree
     }
 
     // returns an array of first child objects for a given id($selectId)
+
     /**
      * @param        $selectId
      * @param string $order
@@ -82,6 +83,7 @@ class XoopstubeTree
     }
 
     // returns an array of all FIRST child ids of a given id($selectId)
+
     /**
      * @param $selectId
      *
@@ -104,6 +106,7 @@ class XoopstubeTree
     }
 
     //returns an array of ALL child ids for a given id($selectId)
+
     /**
      * @param        $selectId
      * @param string $order
@@ -132,6 +135,7 @@ class XoopstubeTree
     }
 
     //returns an array of ALL parent ids for a given id($selectId)
+
     /**
      * @param        $selectId
      * @param string $order
@@ -198,7 +202,7 @@ class XoopstubeTree
      */
     public function makeMySelBox($title, $order = '', $preset_id = 0, $none = 0, $sel_name = '', $onchange = '')
     {
-        if ('' == $sel_name) {
+        if ('' === $sel_name) {
             $sel_name = $this->id;
         }
         $myts = MyTextSanitizer::getInstance();
@@ -237,6 +241,7 @@ class XoopstubeTree
     }
 
     //generates nicely formatted linked path from the root id to a given id
+
     /**
      * @param        $selectId
      * @param        $title
@@ -247,7 +252,7 @@ class XoopstubeTree
      */
     public function getNicePathFromId($selectId, $title, $funcURL, $path = '')
     {
-        $path     = !empty($path) ?  $path : $path;
+        $path     = !empty($path) ? $path : $path;
         $selectId = (int)$selectId;
         $sql      = 'SELECT ' . $this->pid . ', ' . $title . ' FROM ' . $this->table . ' WHERE ' . $this->id . "=$selectId";
         $result   = $this->db->query($sql);

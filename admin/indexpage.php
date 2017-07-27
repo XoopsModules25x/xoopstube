@@ -48,7 +48,8 @@ switch (strtolower($op)) {
         $indexfooteralign = Request::getString('indexfooteralign', '', 'POST'); //$xtubemyts->addslashes($_REQUEST['indexfooteralign']);
         $lastvideosyn     = Request::getInt('lastvideosyn', 0, 'POST'); //$_REQUEST['lastvideosyn'];
         $lastvideostotal  = Request::getString('lastvideostotal', '', 'POST'); //$xtubemyts->addslashes($_REQUEST['lastvideostotal']);
-        $sql              = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('xoopstube_indexpage')
+        $sql              = 'UPDATE '
+                            . $GLOBALS['xoopsDB']->prefix('xoopstube_indexpage')
                             . " SET indexheading='$indexheading', indexheader='$indexheader', indexfooter='$indexfooter', indeximage='$indeximage', indexheaderalign='$indexheaderalign', indexfooteralign='$indexfooteralign', nohtml='$nohtml', nosmiley='$nosmiley', noxcodes='$noxcodes', noimages='$noimages', nobreak='$nobreak', lastvideosyn='$lastvideosyn', lastvideostotal='$lastvideostotal'";
         if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
             XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
@@ -59,8 +60,7 @@ switch (strtolower($op)) {
         break;
 
     default:
-        $sql = 'SELECT indeximage, indexheading, indexheader, indexfooter, nohtml, nosmiley, noxcodes, noimages, nobreak, indexheaderalign, indexfooteralign, lastvideosyn, lastvideostotal FROM '
-               . $GLOBALS['xoopsDB']->prefix('xoopstube_indexpage');
+        $sql = 'SELECT indeximage, indexheading, indexheader, indexfooter, nohtml, nosmiley, noxcodes, noimages, nobreak, indexheaderalign, indexfooteralign, lastvideosyn, lastvideostotal FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_indexpage');
         if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
             XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
@@ -77,11 +77,11 @@ switch (strtolower($op)) {
          <fieldset style="border: #e8e8e8 1px solid;">
          <legend style="display: inline; font-weight: bold; color: #0A3760;">' . _AM_XOOPSTUBE_IPAGE_INFORMATION . '</legend>
          <div style="padding: 8px;">
-         <img src="' . XOOPS_URL . '/modules/' . $moduleDirName . '/assets/images/icon/indexpage.png" alt="" style="float: left; padding-right: 10px;" />
+         <img src="' . XOOPS_URL . '/modules/' . $moduleDirName . '/assets/images/icon/indexpage.png" alt="" style="float: left; padding-right: 10px;">
          ' . _AM_XOOPSTUBE_MINDEX_PAGEINFOTXT . '</div>
          </fieldset><br>';
 
-        $sform = new XoopsThemeForm(_AM_XOOPSTUBE_IPAGE_MODIFY, 'op', xoops_getenv('PHP_SELF'));
+        $sform = new XoopsThemeForm(_AM_XOOPSTUBE_IPAGE_MODIFY, 'op', xoops_getenv('PHP_SELF'), 'post', true);
         $sform->addElement(new XoopsFormText(_AM_XOOPSTUBE_IPAGE_CTITLE, 'indexheading', 60, 60, $indexheading), false);
         $graph_array      = &XoopstubeLists:: getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $GLOBALS['xoopsModuleConfig']['mainimagedir'], $type = 'images');
         $indexImageSelect = new XoopsFormSelect('', 'indeximage', $indeximage);
@@ -90,15 +90,9 @@ switch (strtolower($op)) {
         $indeximage_tray = new XoopsFormElementTray(_AM_XOOPSTUBE_IPAGE_CIMAGE, '&nbsp;');
         $indeximage_tray->addElement($indexImageSelect);
         if (!empty($indeximage)) {
-            $indeximage_tray->addElement(new XoopsFormLabel('', '<br><br><img src="'
-                                                                . XOOPS_URL
-                                                                . '/'
-                                                                . $GLOBALS['xoopsModuleConfig']['mainimagedir']
-                                                                . '/'
-                                                                . $indeximage
-                                                                . '" name="image" id="image" alt="" />'));
+            $indeximage_tray->addElement(new XoopsFormLabel('', '<br><br><img src="' . XOOPS_URL . '/' . $GLOBALS['xoopsModuleConfig']['mainimagedir'] . '/' . $indeximage . '" name="image" id="image" alt="">'));
         } else {
-            $indeximage_tray->addElement(new XoopsFormLabel('', '<br><br><img src="' . XOOPS_URL . '/uploads/blank.gif" name="image" id="image" alt="" />'));
+            $indeximage_tray->addElement(new XoopsFormLabel('', '<br><br><img src="' . XOOPS_URL . '/uploads/blank.gif" name="image" id="image" alt="">'));
         }
         $sform->addElement($indeximage_tray);
 
