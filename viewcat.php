@@ -41,9 +41,9 @@ if (is_array($arr) > 0 && !$list && !$selectdate) {
 $GLOBALS['xoopsOption']['template_main'] = 'xoopstube_viewcat.tpl';
 
 include XOOPS_ROOT_PATH . '/header.php';
-$xoTheme->addStylesheet('modules/'.$moduleDirName.'/assets/css/xtubestyle.css');
+$xoTheme->addStylesheet('modules/' . $moduleDirName . '/assets/css/xtubestyle.css');
 global $xoopsModule;
-$catarray['letters']     = XoopstubeUtility::xtubeGetLetters();
+$catarray['letters'] = XoopstubeUtility::xtubeGetLetters();
 //$catarray['letters']     = XoopstubeUtility::xoopstubeLettersChoice();
 $catarray['imageheader'] = XoopstubeUtility::xtubeRenderImageHeader();
 $xoopsTpl->assign('catarray', $catarray);

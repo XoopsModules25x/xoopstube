@@ -25,8 +25,8 @@ function xtubeShowBannerB($options)
 {
     $moduleDirName = basename(dirname(__DIR__));
 
-    $block                 = array();
-    $time                  = time();
+    $block = array();
+    $time  = time();
     /** @var XoopsModuleHandler $moduleHandler */
     $moduleHandler         = xoops_getHandler('module');
     $xoopstubeModule       = $moduleHandler->getByDirname($moduleDirName);

@@ -82,7 +82,7 @@ function xtubeSearch($queryarray, $andor, $limit, $offset, $userid)
         }
         $sql .= ') ';
     }
-    $sql .= 'ORDER BY published DESC';
+    $sql    .= 'ORDER BY published DESC';
     $result = $GLOBALS['xoopsDB']->query($sql, $limit, $offset);
     $ret    = array();
     $i      = 0;

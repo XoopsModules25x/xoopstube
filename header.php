@@ -17,6 +17,7 @@
  * @link            https://xoops.org/
  * @since           1.0.6
  */
+
 use Xmf\Request;
 
 include __DIR__ . '/../../mainfile.php';
