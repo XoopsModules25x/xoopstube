@@ -80,8 +80,17 @@ if (!empty(Request::getString('submit', ''))) {
     // All is well.  Add to Line Item Rate to DB.
     $newid    = $GLOBALS['xoopsDB']->genId($GLOBALS['xoopsDB']->prefix('xoopstube_votedata') . '_ratingid_seq');
     $datetime = time();
-    $sql      = sprintf('INSERT INTO %s (ratingid, lid, ratinguser, rating, ratinghostname, ratingtimestamp, title) VALUES (%u, %u, %u, %u, %s, %u, %s)', $GLOBALS['xoopsDB']->prefix('xoopstube_votedata'), $newid, (int)$lid, $ratinguser, $rating, $GLOBALS['xoopsDB']->quoteString($ip), $datetime,
-                        $GLOBALS['xoopsDB']->quoteString($title));
+    $sql      = sprintf(
+        'INSERT INTO %s (ratingid, lid, ratinguser, rating, ratinghostname, ratingtimestamp, title) VALUES (%u, %u, %u, %u, %s, %u, %s)',
+        $GLOBALS['xoopsDB']->prefix('xoopstube_votedata'),
+        $newid,
+        (int)$lid,
+        $ratinguser,
+        $rating,
+        $GLOBALS['xoopsDB']->quoteString($ip),
+        $datetime,
+                        $GLOBALS['xoopsDB']->quoteString($title)
+    );
     if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
         $ratemessage = _MD_XOOPSTUBE_ERROR;
     } else {
@@ -103,11 +112,11 @@ if (!empty(Request::getString('submit', ''))) {
 
     $result = $GLOBALS['xoopsDB']->query('SELECT title FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE lid=' . (int)$lid);
     list($title) = $GLOBALS['xoopsDB']->fetchRow($result);
-    $xoopsTpl->assign('video', array(
+    $xoopsTpl->assign('video', [
         'id'    => (int)$lid,
         'cid'   => (int)$cid,
         'title' => $xtubemyts->htmlSpecialCharsStrip($title)
-    ));
+    ]);
 
     XoopstubeUtility::xtubeSetNoIndexNoFollow();
 

@@ -75,7 +75,7 @@ if (Request::hasVar('newvideoshowdays', 'GET')) {
     $newvideoshowdays = (int)Request::getInt('newvideoshowdays', 7, 'GET');
     $xoopsTpl->assign('newvideoshowdays', $newvideoshowdays);
 
-    $dailyvideos = array();
+    $dailyvideos = [];
     for ($i = 0; $i < $newvideoshowdays; ++$i) {
         $key                                 = $newvideoshowdays - $i - 1;
         $time                                = $time_cur - (86400 * $key);

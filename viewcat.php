@@ -66,7 +66,7 @@ if (is_array($arr) > 0 && !$list && !$selectdate) {
         if (false === XoopstubeUtility::xtubeCheckGroups($ele['cid'])) {
             continue;
         }
-        $sub_arr         = array();
+        $sub_arr         = [];
         $sub_arr         = $mytree->getFirstChild($ele['cid'], $catsort);
         $space           = 1;
         $chcount         = 1;
@@ -119,7 +119,7 @@ if (is_array($arr) > 0 && !$list && !$selectdate) {
         * End
         */
 
-        $xoopsTpl->append('subcategories', array(
+        $xoopsTpl->append('subcategories', [
             'title'           => $xtubemyts->htmlSpecialCharsStrip($ele['title']),
             'id'              => $ele['cid'],
             'image'           => XOOPS_URL . "/$imgurl",
@@ -129,7 +129,7 @@ if (is_array($arr) > 0 && !$list && !$selectdate) {
             'totalvideos'     => $totalvideos['count'],
             'count'           => $scount,
             'alttext'         => $ele['description']
-        ));
+        ]);
         ++$scount;
     }
 }

@@ -18,7 +18,7 @@
  * @author          trabis <lusopoemas@gmail.com>
  * @author          Harry Fuecks (PHP Anthology Volume II)
  */
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 require_once __DIR__ . '/../include/common.php';
 
@@ -90,7 +90,7 @@ class XoopstubeSession
      */
     public function destroy()
     {
-        $_SESSION = array();
+        $_SESSION = [];
         session_destroy();
     }
 

@@ -28,10 +28,10 @@ if (false !== ($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName))) {
 } else {
     $moduleHelper = Xmf\Module\Helper::getHelper('system');
 }
-$adminObject = \Xmf\Module\Admin::getInstance();
+$adminObject = Xmf\Module\Admin::getInstance();
 
-$pathIcon16    = \Xmf\Module\Admin::iconUrl('', 16);
-$pathIcon32    = \Xmf\Module\Admin::iconUrl('', 32);
+$pathIcon16    = Xmf\Module\Admin::iconUrl('', 16);
+$pathIcon32    = Xmf\Module\Admin::iconUrl('', 32);
 $pathModIcon16 = $moduleHelper->getModule()->getInfo('modicons16');
 $pathModIcon32 = $moduleHelper->getModule()->getInfo('modicons32');
 
@@ -59,7 +59,7 @@ require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
 $xtubemyts = new XtubeTextSanitizer(); // MyTextSanitizer object
 
-$xtubeImageArray = array(
+$xtubeImageArray = [
     'editimg'     => "<img src='$pathIcon16/edit.png' alt='" . _AM_XOOPSTUBE_ICO_EDIT . "' align='middle'>",
     'deleteimg'   => "<img src='$pathIcon16/delete.png' alt='" . _AM_XOOPSTUBE_ICO_DELETE . "' align='middle'>",
     'altcat'      => "<img src='$pathIcon16/folder_add.png' alt='" . _AM_XOOPSTUBE_ALTCAT_CREATEF . "' align='middle'>",
@@ -76,4 +76,4 @@ $xtubeImageArray = array(
     'con_yes'     => "<img src='$pathIcon16/1.png' alt='" . _AM_XOOPSTUBE_ICO_CONFIRM . "' align='middle'>",
     'con_no'      => "<img src='$pathIcon16/0.png' alt='" . _AM_XOOPSTUBE_ICO_CONBROKEN . "' align='middle'>",
     'view'        => "<img src='$pathIcon16/search.png' alt='" . _AM_XOOPSTUBE_ICO_VIEW . "' align='middle'>"
-);
+];

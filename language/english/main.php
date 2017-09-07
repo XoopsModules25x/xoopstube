@@ -231,7 +231,7 @@ define('_MD_XOOPSTUBE_XOOPSTUBE', 'XoopsTube');
  */
 function getXtubeAlphabet()
 {
-    $xtubeAlphabet = array(
+    $xtubeAlphabet = [
         '0',
         '1',
         '2',
@@ -268,7 +268,7 @@ function getXtubeAlphabet()
         'X',
         'Y',
         'Z'
-    );
+    ];
 
     return $xtubeAlphabet;
 }

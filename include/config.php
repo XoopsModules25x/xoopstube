@@ -70,9 +70,9 @@ define('XOOPSTUBE_UPLOAD_URL', XOOPS_UPLOAD_URL . '/' . XOOPSTUBE_DIRNAME); // W
 //define("XOOPSTUBE_UPLOAD_PATH", $img_dir); // WITHOUT Trailing slash
 define('XOOPSTUBE_UPLOAD_PATH', XOOPS_UPLOAD_PATH . '/' . XOOPSTUBE_DIRNAME); // WITHOUT Trailing slash
 
-$uploadFolders = array(
+$uploadFolders = [
     XOOPSTUBE_UPLOAD_PATH,
     XOOPSTUBE_UPLOAD_PATH . '/category',
     XOOPSTUBE_UPLOAD_PATH . '/videos',
     XOOPSTUBE_UPLOAD_PATH . '/screenshots'
-);
+];

@@ -19,7 +19,7 @@
  */
 class FileList
 {
-    public $filelist = array();
+    public $filelist = [];
 
     public $value;
     public $selected;
@@ -138,7 +138,7 @@ class FileList
      */
     public function &getListTypeAsArray()
     {
-        $filelist = array();
+        $filelist = [];
         switch (trim($this->type)) {
             case 'images':
                 $types = '[.gif|.jpg|.png]';

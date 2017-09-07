@@ -23,7 +23,7 @@ if (isset($block['name'])) {
     $form->addElement(new XoopsFormLabel(_AM_SYSTEM_BLOCKS_NAME, $block['name']));
 }
 $side_select = new XoopsFormSelect(_AM_SYSTEM_BLOCKS_TYPE, 'bside', $block['side']);
-$side_select->addOptionArray(array(
+$side_select->addOptionArray([
                                  0 => _AM_SYSTEM_BLOCKS_SBLEFT,
                                  1 => _AM_SYSTEM_BLOCKS_SBRIGHT,
                                  3 => _AM_SYSTEM_BLOCKS_CBLEFT,
@@ -32,7 +32,7 @@ $side_select->addOptionArray(array(
                                  7 => _AM_SYSTEM_BLOCKS_CBBOTTOMLEFT,
                                  8 => _AM_SYSTEM_BLOCKS_CBBOTTOMRIGHT,
                                  9 => _AM_SYSTEM_BLOCKS_CBBOTTOM
-                             ));
+                             ]);
 $form->addElement($side_select);
 $form->addElement(new XoopsFormText(_AM_XOOPSTUBE_WEIGHT, 'bweight', 2, 5, $block['weight']));
 $form->addElement(new XoopsFormRadioYN(_AM_XOOPSTUBE_VISIBLE, 'bvisible', $block['visible']));
@@ -53,12 +53,12 @@ if ($block['is_custom']) {
     $textarea->setDescription('<span style="font-size:x-small;font-weight:bold;">' . _AM_SYSTEM_BLOCKS_USEFULTAGS . '</span><br><span style="font-size:x-small;font-weight:normal;">' . sprintf(_AM_BLOCKTAG1, '{X_SITEURL}', XOOPS_URL . '/') . '</span>');
     $form->addElement($textarea, true);
     $ctype_select = new XoopsFormSelect(_AM_SYSTEM_BLOCKS_CTYPE, 'bctype', $block['ctype']);
-    $ctype_select->addOptionArray(array(
+    $ctype_select->addOptionArray([
                                       'H' => _AM_SYSTEM_BLOCKS_HTML,
                                       'P' => _AM_SYSTEM_BLOCKS_PHP,
                                       'S' => _AM_SYSTEM_BLOCKS_AFWSMILE,
                                       'T' => _AM_SYSTEM_BLOCKS_AFNOSMILE
-                                  ));
+                                  ]);
     $form->addElement($ctype_select);
 } else {
     if ($block['template'] !== '') {
@@ -78,7 +78,7 @@ if ($block['is_custom']) {
     }
 }
 $cache_select = new XoopsFormSelect(_AM_SYSTEM_BLOCKS_BCACHETIME, 'bcachetime', $block['bcachetime']);
-$cache_select->addOptionArray(array(
+$cache_select->addOptionArray([
                                   '0'       => _NOCACHE,
                                   '30'      => sprintf(_SECONDS, 30),
                                   '60'      => _MINUTE,
@@ -90,7 +90,7 @@ $cache_select->addOptionArray(array(
                                   '259200'  => sprintf(_DAYS, 3),
                                   '604800'  => _WEEK,
                                   '2592000' => _MONTH
-                              ));
+                              ]);
 $form->addElement($cache_select);
 
 $grouppermHandler = xoops_getHandler('groupperm');

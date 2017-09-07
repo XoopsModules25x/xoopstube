@@ -25,7 +25,7 @@ function xtubeShowBannerB($options)
 {
     $moduleDirName = basename(dirname(__DIR__));
 
-    $block = array();
+    $block = [];
     $time  = time();
     /** @var XoopsModuleHandler $moduleHandler */
     $moduleHandler         = xoops_getHandler('module');
@@ -43,7 +43,7 @@ function xtubeShowBannerB($options)
         $impmade    = $myrow['impmade'];
         $clicks     = $myrow['clicks'];
         $imptotal   = $myrow['imptotal'];
-        $bannerload = array();
+        $bannerload = [];
         $result2    = $GLOBALS['xoopsDB']->query('SELECT name FROM ' . $GLOBALS['xoopsDB']->prefix('bannerclient') . ' WHERE cid=' . (int)$myrow['cid']);
         $myclient   = $GLOBALS['xoopsDB']->fetchArray($result2);
         if ($impmade == 0) {

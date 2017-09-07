@@ -71,7 +71,7 @@ class XoopstubeUtility
     {
         global $xoopsModuleConfig, $xoopsModule;
         $repmodule = self::MODULE_NAME;
-        static $options = array();
+        static $options = [];
         if (is_array($options) && array_key_exists($option, $options) && $withCache) {
             return $options[$option];
         }
@@ -170,7 +170,7 @@ class XoopstubeUtility
         } elseif (!empty($_SERVER['HTTP_COMING_FROM'])) {
             $proxy_ip = $_SERVER['HTTP_COMING_FROM'];
         }
-        $regs = array();
+        $regs = [];
         //if (!empty($proxy_ip) && $is_ip = ereg('^([0-9]{1,3}\.){3,3}[0-9]{1,3}', $proxy_ip, $regs) && count($regs) > 0) {
         if (!empty($proxy_ip) && filter_var($proxy_ip, FILTER_VALIDATE_IP) && count($regs) > 0) {
             $the_IP = $regs[0];
@@ -293,7 +293,7 @@ class XoopstubeUtility
     {
         global $xoopsModule;
         $folder  = $xoopsModule->getVar('dirname');
-        $tpllist = array();
+        $tpllist = [];
         require_once XOOPS_ROOT_PATH . '/class/xoopsblock.php';
         require_once XOOPS_ROOT_PATH . '/class/template.php';
         $tplfileHandler = xoops_getHandler('tplfile');
@@ -303,7 +303,7 @@ class XoopstubeUtility
         foreach ($tpllist as $onetemplate) { // Remove cache for each page.
             if ('module' === $onetemplate->getVar('tpl_type')) {
                 //  Note, I've been testing all the other methods (like the one of Smarty) and none of them run, that's why I have used this code
-                $files_del = array();
+                $files_del = [];
                 $files_del = glob(XOOPS_CACHE_PATH . '/*' . $onetemplate->getVar('tpl_file') . '*');
                 if (count($files_del) > 0 && is_array($files_del)) {
                     foreach ($files_del as $one_file) {
@@ -326,7 +326,6 @@ class XoopstubeUtility
     public static function redirect($message = '', $url = 'index.php', $time = 2)
     {
         redirect_header($url, $time, $message);
-        exit();
     }
 
     /**
@@ -390,7 +389,7 @@ class XoopstubeUtility
      */
     public static function getUsersFromGroup($groupId)
     {
-        $users         = array();
+        $users         = [];
         $memberHandler = xoops_getHandler('member');
         $users         = $memberHandler->getUsersByGroup($groupId, true);
 
@@ -407,7 +406,7 @@ class XoopstubeUtility
      */
     public static function getEmailsFromGroup($groupId)
     {
-        $ret   = array();
+        $ret   = [];
         $users = self::getUsersFromGroup($groupId);
         foreach ($users as $user) {
             $ret[] = $user->getVar('email');
@@ -540,11 +539,11 @@ class XoopstubeUtility
     public static function &formMarkRequiredFields(XoopsObject $sform)
     {
         if (self::needsAsterisk()) {
-            $required = array();
+            $required = [];
             foreach ($sform->getRequired() as $item) {
                 $required[] = $item->_name;
             }
-            $elements = array();
+            $elements = [];
             $elements = $sform->getElements();
             $cnt      = count($elements);
             for ($i = 0; $i < $cnt; ++$i) {
@@ -617,7 +616,7 @@ class XoopstubeUtility
      */
     public static function unhtml($chaine)
     {
-        $search = $replace = array();
+        $search = $replace = [];
         $chaine = html_entity_decode($chaine);
 
         for ($i = 0; $i <= 255; ++$i) {
@@ -941,7 +940,7 @@ class XoopstubeUtility
         $keywordscount = self::getModuleOption('metagen_maxwords');
         $keywordsorder = self::getModuleOption('metagen_order');
 
-        $tmp = array();
+        $tmp = [];
         // Search for the "Minimum keyword length"
         if (isset($_SESSION['oledrion_keywords_limit'])) {
             $limit = $_SESSION['oledrion_keywords_limit'];
@@ -956,8 +955,8 @@ class XoopstubeUtility
         $content         = $myts->undoHtmlSpecialChars($content);
         $content         = strip_tags($content);
         $content         = strtolower($content);
-        $search_pattern  = array('&nbsp;', "\t", "\r\n", "\r", "\n", ',', '.', "'", ';', ':', ')', '(', '"', '?', '!', '{', '}', '[', ']', '<', '>', '/', '+', '-', '_', '\\', '*');
-        $replace_pattern = array(' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
+        $search_pattern  = ['&nbsp;', "\t", "\r\n", "\r", "\n", ',', '.', "'", ';', ':', ')', '(', '"', '?', '!', '{', '}', '[', ']', '<', '>', '/', '+', '-', '_', '\\', '*'];
+        $replace_pattern = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''];
         $content         = str_replace($search_pattern, $replace_pattern, $content);
         $keywords        = explode(' ', $content);
         switch ($keywordsorder) {
@@ -1153,7 +1152,7 @@ class XoopstubeUtility
     public static function breadcrumb($path, $raquo = ' &raquo; ')
     {
         $breadcrumb        = '';
-        $workingBreadcrumb = array();
+        $workingBreadcrumb = [];
         if (is_array($path)) {
             $moduleName          = self::getModuleName();
             $workingBreadcrumb[] = "<a href='" . OLEDRION_URL . "' title='" . self::makeHrefTitle($moduleName) . "'>" . $moduleName . '</a>';
@@ -1185,7 +1184,7 @@ class XoopstubeUtility
 
             // match closed tags
             if (preg_match_all('/<\/([a-z]+)>/', $string, $end_tags)) {
-                $complete_tags = array();
+                $complete_tags = [];
                 $end_tags      = $end_tags[1];
 
                 foreach ($start_tags as $key => $val) {
@@ -1331,7 +1330,7 @@ class XoopstubeUtility
      */
     public static function getAmountWithVat($product_price, $vat_id)
     {
-        static $vats = array();
+        static $vats = [];
         $vat_rate = null;
         if (is_array($vats) && in_array($vat_id, $vats)) {
             $vat_rate = $vats[$vat_id];
@@ -1424,7 +1423,7 @@ class XoopstubeUtility
      */
     public static function getUsersFromIds($xoopsUsersIDs)
     {
-        $users = array();
+        $users = [];
         if (is_array($xoopsUsersIDs) && count($xoopsUsersIDs) > 0) {
             $xoopsUsersIDs = array_unique($xoopsUsersIDs);
             sort($xoopsUsersIDs);
@@ -1461,7 +1460,7 @@ class XoopstubeUtility
      */
     public static function getMemberGroups($uid = 0)
     {
-        static $buffer = array();
+        static $buffer = [];
         if ($uid == 0) {
             $uid = self::getCurrentUserID();
         }
@@ -1473,7 +1472,7 @@ class XoopstubeUtility
                 $memberHandler = xoops_getHandler('member');
                 $buffer[$uid]  = $memberHandler->getGroupsByUser($uid, false); // Renvoie un tableau d'ID (de groupes)
             } else {
-                $buffer[$uid] = array(XOOPS_GROUP_ANONYMOUS);
+                $buffer[$uid] = [XOOPS_GROUP_ANONYMOUS];
             }
         }
 
@@ -1490,7 +1489,7 @@ class XoopstubeUtility
      */
     public static function isMemberOfGroup($group = 0, $uid = 0)
     {
-        static $buffer = array();
+        static $buffer = [];
         $retval = false;
         if ($uid == 0) {
             $uid = self::getCurrentUserID();
@@ -1622,7 +1621,7 @@ class XoopstubeUtility
      */
     public static function htmlSelectOptions($array, $default = 0, $withNull = true)
     {
-        $ret      = array();
+        $ret      = [];
         $selected = '';
         if ($withNull) {
             if (0 === $default) {
@@ -1959,7 +1958,7 @@ class XoopstubeUtility
      */
     public static function xtubeCalculateVoteData($sel_id = 0)
     {
-        $ret                  = array();
+        $ret                  = [];
         $ret['useravgrating'] = 0;
 
         $sql = 'SELECT rating FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_votedata');
@@ -2001,7 +2000,7 @@ class XoopstubeUtility
         unset($array['usercookie'], $array['PHPSESSID']);
 
         if (is_array($array) && null === $name) {
-            $globals = array();
+            $globals = [];
             foreach (array_keys($array) as $k) {
                 $value = strip_tags(trim($array[$k]));
                 if (strlen($value >= $lengthcheck)) {
@@ -2364,7 +2363,7 @@ class XoopstubeUtility
         $count          = 0;
         $published_date = 0;
 
-        $arr    = array();
+        $arr    = [];
         $result = $GLOBALS['xoopsDB']->query($sql);
         while (false !== (list($lid, $cid, $published) = $GLOBALS['xoopsDB']->fetchRow($result))) {
             if (true === XoopstubeUtility::xtubeCheckGroups()) {
@@ -2558,7 +2557,7 @@ class XoopstubeUtility
 
         if (empty($menu)) {
             // You can change this part to suit your own module. Defining this here will save you form having to do this each time.
-            $menu = array(
+            $menu = [
                 _AM_XOOPSTUBE_MVIDEOS   => 'main.php?op=edit',
                 _AM_XOOPSTUBE_MCATEGORY => 'category.php',
                 _AM_XOOPSTUBE_INDEXPAGE => 'indexpage.php',
@@ -2567,7 +2566,7 @@ class XoopstubeUtility
                 _AM_XOOPSTUBE_VUPLOADS  => 'vupload.php',
                 _AM_XOOPSTUBE_MVOTEDATA => 'votedata.php',
                 _AM_XOOPSTUBE_MCOMMENTS => '../../system/admin.php?module=' . $xoopsModule->getVar('mid') . '&status=0&limit=100&fct=comments&selsubmit=Go'
-            );
+            ];
         }
 
         if (!is_array($menu)) {
@@ -2577,7 +2576,7 @@ class XoopstubeUtility
             return false;
         }
 
-        $oddnum = array(
+        $oddnum = [
             1  => '1',
             3  => '3',
             5  => '5',
@@ -2585,7 +2584,7 @@ class XoopstubeUtility
             9  => '9',
             11 => '11',
             13 => '13'
-        );
+        ];
         // number of rows per menu
         $menurows = count($menu) / $scount;
         // total amount of rows to complete menu
@@ -2594,7 +2593,7 @@ class XoopstubeUtility
         $rowcount = $menurow / ceil($menurows);
         $count    = 0;
         for ($i = count($menu); $i < $menurow; ++$i) {
-            $tempArray = array(1 => null);
+            $tempArray = [1 => null];
             $menu      = array_merge($menu, $tempArray);
             ++$count;
         }
@@ -2794,7 +2793,7 @@ class XoopstubeUtility
     ) {
         global $FILES, $xoopsModule;
 
-        $down = array();
+        $down = [];
         //       include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/class/uploader.php';
         include __DIR__ . '/uploader.php';
         //        include_once(XOOPS_ROOT_PATH . '/class/uploader.php');
@@ -3081,7 +3080,7 @@ class XoopstubeUtility
         // and white space. It will also convert some
         // common HTML entities to their text equivalent.
         // Credits : newbb2
-        $search = array(
+        $search = [
             "'<script[^>]*?>.*?</script>'si", // Strip out javascript
             "'<img.*?>'si", // Strip out img tags
             "'<[\/\!]*?[^<>]*?>'si", // Strip out HTML tags
@@ -3095,9 +3094,9 @@ class XoopstubeUtility
             "'&(cent|#162);'i",
             "'&(pound|#163);'i",
             "'&(copy|#169);'i"
-        ); // evaluate as php
+        ]; // evaluate as php
 
-        $replace = array(
+        $replace = [
             '',
             '',
             '',
@@ -3111,7 +3110,7 @@ class XoopstubeUtility
             chr(162),
             chr(163),
             chr(169)
-        );
+        ];
 
         $text = preg_replace($search, $replace, $document);
 
@@ -3335,7 +3334,7 @@ class XoopstubeUtility
         $moduleDirName = basename(dirname(__DIR__));
         xoops_loadLanguage('local', $moduleDirName);
 
-        $trans     = array(
+        $trans     = [
             'Monday'    => _XOOPSTUBE_MONDAY,
             'Tuesday'   => _XOOPSTUBE_TUESDAY,
             'Wednesday' => _XOOPSTUBE_WEDNESDAY,
@@ -3374,7 +3373,7 @@ class XoopstubeUtility
             'Oct'       => _XOOPSTUBE_OCT,
             'Nov'       => _XOOPSTUBE_NOV,
             'Dec'       => _XOOPSTUBE_DEC
-        );
+        ];
         $timestamp = strtr($time, $trans);
 
         return $timestamp;
@@ -3478,7 +3477,7 @@ class XoopstubeUtility
         $alphabet              = getXtubeAlphabet();
         $num                   = count($alphabet) - 1;
         $counter               = 0;
-        $distinctDbLetters_arr = array();
+        $distinctDbLetters_arr = [];
         $sql                   = 'SELECT DISTINCT (UPPER(LEFT(title, 1))) AS letter FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos WHERE expired = 0 AND offline = 0');
         if ($result = $GLOBALS['xoopsDB']->query($sql)) {
             while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
@@ -3526,9 +3525,9 @@ class XoopstubeUtility
         $countsByLetters = $xoopstube->getHandler($moduleDirName)->getCounts($criteria);
         // Fill alphabet array
         $alphabet       = getXtubeAlphabet();
-        $alphabet_array = array();
+        $alphabet_array = [];
         foreach ($alphabet as $letter) {
-            $letter_array = array();
+            $letter_array = [];
             if (isset($countsByLetters[$letter])) {
                 $letter_array['letter'] = $letter;
                 $letter_array['count']  = $countsByLetters[$letter];
@@ -3578,11 +3577,11 @@ class XoopstubeUtility
         $criteria->setGroupby('UPPER(LEFT(title,1))');
         $countsByLetters = $xoopstube->getHandler('xoopstube')->getCounts($criteria);
         // Fill alphabet array
-        $alphabet       = array();
+        $alphabet       = [];
         $alphabet       = getXtubeAlphabet();
-        $alphabet_array = array();
+        $alphabet_array = [];
         foreach ($alphabet as $letter) {
-            $letter_array = array();
+            $letter_array = [];
             if (isset($countsByLetters[$letter])) {
                 $letter_array['letter'] = $letter;
                 $letter_array['count']  = $countsByLetters[$letter];

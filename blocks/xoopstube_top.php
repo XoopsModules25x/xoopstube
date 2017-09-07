@@ -77,7 +77,7 @@ function xtubeCheckBlockGroups($cid = 0, $permType = 'XTubeCatPerm', $redirect =
  *
  * @return string
  */
-function getThumbsTopVideoBlock($bvidid, $btitle, $bsource, $bpicurl, $size = array())
+function getThumbsTopVideoBlock($bvidid, $btitle, $bsource, $bpicurl, $size = [])
 {
     $thumbb = '';
     /** @var XoopsModuleHandler $moduleHandler */
@@ -140,7 +140,7 @@ function getThumbsTopVideoBlock($bvidid, $btitle, $bsource, $bpicurl, $size = ar
 function getSpotlightVideos($options)
 {
     require_once __DIR__ . '/../include/video.php';
-    $block = array();
+    $block = [];
     /** @var XoopsModuleHandler $moduleHandler */
     $moduleHandler     = xoops_getHandler('module');
     $xtubeModule       = $moduleHandler->getByDirname('xoopstube');
@@ -167,7 +167,7 @@ function getSpotlightVideos($options)
         if (false === xtubeCheckBlockGroups($myrow['cid'])) {
             exit;
         }
-        $videoload = array();
+        $videoload = [];
         $title     = $xtubemyts->htmlSpecialChars($xtubemyts->stripSlashesGPC($myrow['title']));
         if (!XOOPS_USE_MULTIBYTES) {
             if (strlen($myrow['title']) >= $options[2]) {
@@ -183,7 +183,7 @@ function getSpotlightVideos($options)
             $videoload['hits'] = $myrow['hits'];
         }
 
-        $size               = array();
+        $size               = [];
         $rate               = 425 / 350;
         $size['shotwidth']  = '100';
         $size['shotheight'] = (int)($size['shotwidth'] / $rate);
@@ -234,7 +234,7 @@ function getSpotlightVideos($options)
 function showTopVideoBlock($options)
 {
     $moduleDirName = basename(dirname(__DIR__));
-    $block         = array();
+    $block         = [];
     /** @var XoopsModuleHandler $moduleHandler */
     $moduleHandler     = xoops_getHandler('module');
     $xtubeModule       = $moduleHandler->getByDirname($moduleDirName);
@@ -271,7 +271,7 @@ function showTopVideoBlock($options)
             exit;
         }
 
-        $videoload = array();
+        $videoload = [];
         $title     = $xtubemyts->htmlSpecialChars($xtubemyts->stripSlashesGPC($myrow['title']));
         if (!XOOPS_USE_MULTIBYTES) {
             if (strlen($myrow['title']) >= $options[2]) {
@@ -308,7 +308,7 @@ function getRandomVideo($options)
 {
     global $xtubemyts;
     $moduleDirName = basename(dirname(__DIR__));
-    $block         = array();
+    $block         = [];
     /** @var XoopsModuleHandler $moduleHandler */
     $moduleHandler     = xoops_getHandler('module');
     $xtubeModule       = $moduleHandler->getByDirname($moduleDirName);
@@ -338,7 +338,7 @@ function getRandomVideo($options)
         if (false === checkBlockGroups($myrow['cid']) || 0 == $myrow['cid']) {
             continue;
         }
-        $videorandom = array();
+        $videorandom = [];
         $title       = $xtubemyts->htmlSpecialChars($xtubemyts->stripSlashesGPC($myrow['title']));
         if (!XOOPS_USE_MULTIBYTES) {
             if (strlen($myrow['title']) >= $options[2]) {
@@ -372,7 +372,7 @@ function getRandomVideoForHorizontalBlock($options)
 {
     global $xtubemyts;
     $moduleDirName = basename(dirname(__DIR__));
-    $block         = array();
+    $block         = [];
     /** @var XoopsModuleHandler $moduleHandler */
     $moduleHandler     = xoops_getHandler('module');
     $xtubeModule       = $moduleHandler->getByDirname($moduleDirName);
@@ -402,7 +402,7 @@ function getRandomVideoForHorizontalBlock($options)
         if (false === checkBlockGroups($myrow['cid']) || 0 == $myrow['cid']) {
             continue;
         }
-        $videorandomh            = array();
+        $videorandomh            = [];
         $title                   = $xtubemyts->htmlSpecialChars($xtubemyts->stripSlashesGPC($myrow['title']));
         $videorandomh['balloon'] = $myrow['title'];
         if (!XOOPS_USE_MULTIBYTES) {
@@ -455,7 +455,7 @@ function editTopVideoBlock($options)
     $form .= '&nbsp;<br>' . _MB_XOOPSTUBE_CHARS . "&nbsp;<input type='text' name='options[]' value='" . $options[2] . "'>&nbsp;" . _MB_XOOPSTUBE_LENGTH . '';
     $form .= '&nbsp;<br>' . _MB_XOOPSTUBE_DATEFORMAT . "&nbsp;<input type='text' name='options[]' value='" . $options[3] . "'>&nbsp;" . _MB_XOOPSTUBE_DATEFORMATMANUAL;
 
-    $cat_arr = array();
+    $cat_arr = [];
     require_once XOOPS_ROOT_PATH . '/modules/xoopstube/class/xoopstubetree.php';
     $xt      = new XoopstubeTree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
     $cat_arr = $xt->getChildTreeArray(0, 'title');

@@ -70,7 +70,7 @@ while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
     if (XoopstubeUtility::xtubeCheckGroups($myrow['cid'])) {
         $title = $xtubemyts->htmlSpecialCharsStrip($myrow['title']);
 
-        $arr = array();
+        $arr = [];
         $arr = $mytree->getFirstChild($myrow['cid'], 'title');
 
         $space         = 1;
@@ -116,7 +116,7 @@ while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
         }
         // End
 
-        $xoopsTpl->append('categories', array(
+        $xoopsTpl->append('categories', [
             'image'         => XOOPS_URL . "/$imgurl",
             'id'            => $myrow['cid'],
             'title'         => $title,
@@ -126,7 +126,7 @@ while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
             'height'        => $_height,
             'count'         => $count,
             'alttext'       => $myrow['description']
-        ));
+        ]);
         ++$count;
     }
 }

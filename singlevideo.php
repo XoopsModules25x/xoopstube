@@ -90,9 +90,9 @@ $video['sbmarks'] = getSocialBookmarks($video_arr['lid']);
 global $xoopsTpl, $xoTheme;
 
 $maxWords = 100;
-$words    = array();
+$words    = [];
 $words    = explode(' ', XoopstubeUtility::xtubeConvertHtml2Text($video_arr['description']));
-$newWords = array();
+$newWords = [];
 $i        = 0;
 while ($i < $maxWords - 1 && $i < count($words)) {
     if (isset($words[$i])) {

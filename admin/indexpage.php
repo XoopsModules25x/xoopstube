@@ -117,19 +117,19 @@ switch (strtolower($op)) {
         $sform->addElement($optionsTrayNote, false);
 
         $headeralign_select = new XoopsFormSelect(_AM_XOOPSTUBE_IPAGE_CHEADINGA, 'indexheaderalign', $indexheaderalign);
-        $headeralign_select->addOptionArray(array(
+        $headeralign_select->addOptionArray([
                                                 'left'   => _AM_XOOPSTUBE_IPAGE_CLEFT,
                                                 'right'  => _AM_XOOPSTUBE_IPAGE_CRIGHT,
                                                 'center' => _AM_XOOPSTUBE_IPAGE_CCENTER
-                                            ));
+                                            ]);
         $sform->addElement($headeralign_select);
         $sform->addElement(new XoopsFormTextArea(_AM_XOOPSTUBE_IPAGE_CFOOTER, 'indexfooter', $indexfooter, 10, 60));
         $footeralign_select = new XoopsFormSelect(_AM_XOOPSTUBE_IPAGE_CFOOTERA, 'indexfooteralign', $indexfooteralign);
-        $footeralign_select->addOptionArray(array(
+        $footeralign_select->addOptionArray([
                                                 'left'   => _AM_XOOPSTUBE_IPAGE_CLEFT,
                                                 'right'  => _AM_XOOPSTUBE_IPAGE_CRIGHT,
                                                 'center' => _AM_XOOPSTUBE_IPAGE_CCENTER
-                                            ));
+                                            ]);
         $sform->addElement($footeralign_select);
 
         $options_tray = new XoopsFormElementTray(_AM_XOOPSTUBE_TEXTOPTIONS, '<br>');

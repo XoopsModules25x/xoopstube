@@ -84,7 +84,7 @@ function xtubeSearch($queryarray, $andor, $limit, $offset, $userid)
     }
     $sql    .= 'ORDER BY published DESC';
     $result = $GLOBALS['xoopsDB']->query($sql, $limit, $offset);
-    $ret    = array();
+    $ret    = [];
     $i      = 0;
 
     while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {

@@ -18,7 +18,7 @@
  * @since           1.0.6
  */
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 $i = 0;
 //Make changes to table xoopstube_videos

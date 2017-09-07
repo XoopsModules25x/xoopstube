@@ -44,7 +44,7 @@ if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
     */
 
     $op = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET');
-    if (in_array($op, array('edit', 'delete', 'delete_ok', 'clone'))) {
+    if (in_array($op, ['edit', 'delete', 'delete_ok', 'clone'])) {
         $bid = Request::getInt('bid', 0, 'GET');
     }
 
@@ -109,7 +109,7 @@ if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
         $block_arr   = XoopsBlock::getByModule($xoopsModule->mid());
         $block_count = count($block_arr);
         $class       = 'even';
-        $cachetimes  = array(
+        $cachetimes  = [
             '0'       => _NOCACHE,
             '30'      => sprintf(_SECONDS, 30),
             '60'      => _MINUTE,
@@ -121,12 +121,12 @@ if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
             '259200'  => sprintf(_DAYS, 3),
             '604800'  => _WEEK,
             '2592000' => _MONTH
-        );
+        ];
         foreach ($block_arr as $i) {
             $groups_perms =& $grouppermHandler->getGroupIds('block_read', $i->getVar('bid'));
             $sql          = 'SELECT module_id FROM ' . $db->prefix('block_module_link') . ' WHERE block_id=' . $i->getVar('bid');
             $result       = $db->query($sql);
-            $modules      = array();
+            $modules      = [];
             while (false !== ($row = $db->fetchArray($result))) {
                 $modules[] = (int)$row['module_id'];
             }
@@ -307,12 +307,12 @@ if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
         $db      = XoopsDatabaseFactory::getDatabaseConnection();
         $sql     = 'SELECT module_id FROM ' . $db->prefix('block_module_link') . ' WHERE block_id=' . (int)$bid;
         $result  = $db->query($sql);
-        $modules = array();
+        $modules = [];
         while (false !== ($row = $db->fetchArray($result))) {
             $modules[] = (int)$row['module_id'];
         }
         $is_custom = ('C' === $myblock->getVar('block_type') || 'E' === $myblock->getVar('block_type')) ? true : false;
-        $block     = array(
+        $block     = [
             'title'      => $myblock->getVar('title') . ' Clone',
             'form_title' => _AM_XOOPSTUBE_BLOCKS_CLONEBLOCK,
             'name'       => $myblock->getVar('name'),
@@ -329,7 +329,7 @@ if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
             'edit_form'  => $myblock->getOptions(),
             'template'   => $myblock->getVar('template'),
             'options'    => $myblock->getVar('options')
-        );
+        ];
         echo '<a href="blocksadmin.php">' . _AM_BADMIN . '</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . _AM_SYSTEM_BLOCKS_CLONEBLOCK . '<br><br>';
         include __DIR__ . '/blockform.php';
         $form->display();
@@ -459,12 +459,12 @@ if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
         $db      = XoopsDatabaseFactory::getDatabaseConnection();
         $sql     = 'SELECT module_id FROM ' . $db->prefix('block_module_link') . ' WHERE block_id=' . (int)$bid;
         $result  = $db->query($sql);
-        $modules = array();
+        $modules = [];
         while (false !== ($row = $db->fetchArray($result))) {
             $modules[] = (int)$row['module_id'];
         }
         $is_custom = ('C' === $myblock->getVar('block_type') || 'E' === $myblock->getVar('block_type')) ? true : false;
-        $block     = array(
+        $block     = [
             'title'      => $myblock->getVar('title'),
             'form_title' => _AM_XOOPSTUBE_BLOCKS_EDITBLOCK,
             //        'name'       => $myblock->getVar('name'),
@@ -481,7 +481,7 @@ if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
             'edit_form'  => $myblock->getOptions(),
             'template'   => $myblock->getVar('template'),
             'options'    => $myblock->getVar('options')
-        );
+        ];
         echo '<a href="blocksadmin.php">' . _AM_BADMIN . '</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . _AM_SYSTEM_BLOCKS_EDITBLOCK . '<br><br>';
         include __DIR__ . '/blockform.php';
         $form->display();

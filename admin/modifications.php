@@ -45,7 +45,7 @@ switch (strtolower($op)) {
         $submitteremail = $orig_user::getUnameFromId('email');
 
         echo '<div><b>' . _AM_XOOPSTUBE_MOD_MODPOSTER . '</b> ' . $submittername . '</div>';
-        $not_allowed = array('lid', 'submitter', 'requestid', 'modifysubmitter');
+        $not_allowed = ['lid', 'submitter', 'requestid', 'modifysubmitter'];
         $sform       = new XoopsThemeForm(_AM_XOOPSTUBE_MOD_ORIGINAL, 'storyform', 'index.php');
         foreach ($orig_array as $key => $content) {
             if (in_array($key, $not_allowed)) {

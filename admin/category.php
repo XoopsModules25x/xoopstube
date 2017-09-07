@@ -147,7 +147,7 @@ function createCategory($cid = 0)
     $client_select   = new XoopsFormSelect(_AM_XOOPSTUBE_CATSPONSOR, 'client_id', $client_id, false);
     $sql             = 'SELECT cid, name FROM ' . $GLOBALS['xoopsDB']->prefix('bannerclient') . ' ORDER BY name ASC';
     $result          = $GLOBALS['xoopsDB']->query($sql);
-    $client_array    = array();
+    $client_array    = [];
     $client_array[0] = '&nbsp;';
     while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $client_array[$myrow['cid']] = $myrow['name'];
@@ -161,7 +161,7 @@ function createCategory($cid = 0)
     $banner_select   = new XoopsFormSelect(_AM_XOOPSTUBE_BANNERID, 'banner_id', $banner_id, false);
     $sql             = 'SELECT bid, cid FROM ' . $GLOBALS['xoopsDB']->prefix('banner') . ' ORDER BY bid ASC';
     $result          = $GLOBALS['xoopsDB']->query($sql);
-    $banner_array    = array();
+    $banner_array    = [];
     $banner_array[0] = '&nbsp;';
     while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $banner_array[$myrow['bid']] = $myrow['bid'];
@@ -293,7 +293,7 @@ switch ($op) {
 
     case 'addCat':
 
-        $groups       = Request::getArray('groups', array(), 'POST'); //isset($_REQUEST['groups']) ? $_REQUEST['groups'] : array();
+        $groups       = Request::getArray('groups', [], 'POST'); //isset($_REQUEST['groups']) ? $_REQUEST['groups'] : array();
         $cid          = Request::getInt('cid', 0, 'POST'); //(isset($_REQUEST['cid'])) ? $_REQUEST['cid'] : 0;
         $pid          = Request::getInt('pid', 0, 'POST'); //(isset($_REQUEST['pid'])) ? $_REQUEST['pid'] : 0;
         $weight       = (Request::getInt('weight', 0, 'POST') > 0) ? Request::getInt('weight', 0, 'POST') : 0; //(isset($_REQUEST['weight']) && $_REQUEST['weight'] > 0) ? $_REQUEST['weight'] : 0;
@@ -326,7 +326,7 @@ switch ($op) {
             // Notify of new category
 
             global $xoopsModule;
-            $tags                  = array();
+            $tags                  = [];
             $tags['CATEGORY_NAME'] = $title;
             $tags['CATEGORY_URL']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewcat.php?cid=' . $newid;
             $notificationHandler   = xoops_getHandler('notification');
@@ -433,11 +433,11 @@ switch ($op) {
             redirect_header('category.php', 1, _AM_XOOPSTUBE_CCATEGORY_DELETED);
         } else {
             xoops_cp_header();
-            xoops_confirm(array(
+            xoops_confirm([
                               'op'  => 'del',
                               'cid' => (int)$cid,
                               'ok'  => 1
-                          ), 'category.php', _AM_XOOPSTUBE_CCATEGORY_AREUSURE);
+                          ], 'category.php', _AM_XOOPSTUBE_CCATEGORY_AREUSURE);
             xoops_cp_footer();
         }
         break;

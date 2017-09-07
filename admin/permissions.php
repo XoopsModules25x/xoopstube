@@ -28,7 +28,7 @@ $adminObject = \Xmf\Module\Admin::getInstance();
 $adminObject->displayNavigation(basename(__FILE__));
 
 $permtoset                = Request::getInt('permtoset', 1, 'POST');// isset($_POST['permtoset']) ? (int) $_POST['permtoset'] : 1;
-$selected                 = array('', '', '', '', '');
+$selected                 = ['', '', '', '', ''];
 $selected[$permtoset - 1] = ' selected';
 echo "<form method='post' name='fselperm' action='permissions.php'><table border=0><tr><td><select name='permtoset' onChange='document.fselperm.submit()'>
 <option value='1'" . $selected[0] . '>' . _AM_XOOPSTUBE_PERM_CPERMISSIONS . "</option>

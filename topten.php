@@ -28,13 +28,13 @@ $xoTheme->addStylesheet('modules/' . $moduleDirName . '/assets/css/xtubestyle.cs
 
 $mytree = new XoopstubeTree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
 
-$action_array = array(
+$action_array = [
     'hit'  => 0,
     'rate' => 1
-);
-$list_array   = array('hits', 'rating');
-$lang_array   = array(_MD_XOOPSTUBE_HITS, _MD_XOOPSTUBE_RATING);
-$rankings     = array();
+];
+$list_array   = ['hits', 'rating'];
+$lang_array   = [_MD_XOOPSTUBE_HITS, _MD_XOOPSTUBE_RATING];
+$rankings     = [];
 
 $sort     = in_array(Request::getString('list', '', 'GET'), $action_array) ? Request::getString('list', '', 'GET') : 'rate';
 $sort_arr = $action_array[$sort];
@@ -43,7 +43,7 @@ $sortDB   = $list_array[$sort_arr];
 $catarray['imageheader'] = XoopstubeUtility::xtubeRenderImageHeader();
 $xoopsTpl->assign('catarray', $catarray);
 
-$arr    = array();
+$arr    = [];
 $result = $GLOBALS['xoopsDB']->query('SELECT cid, title, pid FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_cat') . ' WHERE pid=0 ORDER BY ' . $GLOBALS['xoopsModuleConfig']['sortcats']);
 
 $e = 0;
@@ -65,7 +65,7 @@ while (false !== (list($cid, $ctitle) = $GLOBALS['xoopsDB']->fetchRow($result)))
             while (false !== (list($did, $dcid, $dtitle, $hits, $rating, $votes) = $GLOBALS['xoopsDB']->fetchRow($result2))) {
                 $catpath                = basename($mytree->getPathFromId($dcid, 'title'));
                 $dtitle                 = $xtubemyts->htmlSpecialCharsStrip($dtitle);
-                $rankings[$e]['file'][] = array(
+                $rankings[$e]['file'][] = [
                     'id'       => $did,
                     'cid'      => $dcid,
                     'rank'     => $rank,
@@ -74,7 +74,7 @@ while (false !== (list($cid, $ctitle) = $GLOBALS['xoopsDB']->fetchRow($result)))
                     'hits'     => $hits,
                     'rating'   => number_format($rating, 2),
                     'votes'    => $votes
-                );
+                ];
                 ++$rank;
             }
             ++$e;

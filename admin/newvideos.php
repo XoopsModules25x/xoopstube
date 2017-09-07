@@ -52,7 +52,7 @@ switch (strtolower($op)) {
             return false;
         }
 
-        $tags               = array();
+        $tags               = [];
         $tags['VIDEO_NAME'] = $title;
         $tags['VIDEO_URL']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/singlevideo.php?cid=' . $cid . '&amp;lid=' . $lid;
 

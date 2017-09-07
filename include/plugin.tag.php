@@ -48,7 +48,7 @@ function xoopstube_tag_iteminfo(&$items)
     global $xoopsDB;
     $myts = MyTextSanitizer::getInstance();
 
-    $items_id = array();
+    $items_id = [];
 
     foreach (array_keys($items) as $catId) {
         // Some handling here to build the link upon catid
@@ -71,14 +71,14 @@ function xoopstube_tag_iteminfo(&$items)
             $result                  = $xoopsDB->query($sql);
             $row                     = $xoopsDB->fetchArray($result);
             $lcid                    = $row['lcid'];
-            $items[$catId][$item_id] = array(
+            $items[$catId][$item_id] = [
                 'title'   => $row['ltitle'],
                 'uid'     => $row['submitter'],
                 'link'    => "singlevideo.php?cid=$lcid&amp;lid=$item_id",
                 'time'    => $row['published'],
                 'tags'    => $row['item_tag'],
                 'content' => $row['description']
-            );
+            ];
         }
     }
 

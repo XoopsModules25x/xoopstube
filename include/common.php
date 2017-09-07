@@ -18,7 +18,7 @@
  * @since           1.0.6
  */
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 require_once __DIR__ . '/config.php';
 
@@ -38,7 +38,6 @@ require_once XOOPSTUBE_ROOT_PATH . '/class/utility.php';
 //require_once XOOPSTUBE_ROOT_PATH . '/include/config.php';
 require_once XOOPSTUBE_ROOT_PATH . '/class/session.php';
 require_once XOOPSTUBE_ROOT_PATH . '/class/xoopstube.php';
-require_once XOOPSTUBE_ROOT_PATH . '/class/utility.php';
 
 //require_once XOOPSTUBE_ROOT_PATH . '/class/request.php';
 //require_once XOOPSTUBE_ROOT_PATH . '/class/breadcrumb.php';

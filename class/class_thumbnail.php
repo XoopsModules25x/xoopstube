@@ -51,7 +51,7 @@ class XtubeThumbsNails
     public $img_aspect  = 1;
 
     // @access private
-    public $_img_info = array();
+    public $_img_info = [];
 
     /**
      * Constructor

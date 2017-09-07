@@ -118,7 +118,7 @@ switch (strtolower($op)) {
         echo '<div style="text-align: left;"><h3> ' . $_REQUEST['title'] . ' </h3></div>';
         // Get an array of all alternate categories for this topic
         $sql     = $GLOBALS['xoopsDB']->query('SELECT cid FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_altcat') . ' WHERE lid="' . $lid . '" ORDER BY lid');
-        $altcats = array();
+        $altcats = [];
         while (false !== ($altcat = $GLOBALS['xoopsDB']->fetchArray($sql))) {
             $altcats[$altcat['cid']] = true;
         }

@@ -62,12 +62,12 @@ switch (strtolower($op)) {
                 redirect_header('vupload.php', 1, _AM_XOOPSTUBE_VUPLOAD_NOFILEERROR);
             }
             xoops_cp_header();
-            xoops_confirm(array(
+            xoops_confirm([
                               'op'         => 'delfile',
                               'uploadpath' => Request::getString('uploadpath', '', 'POST'),
                               'videofile'  => Request::getString('videofile', '', 'POST'),
                               'confirm'    => 1
-                          ), 'vupload.php', _AM_XOOPSTUBE_VUPLOAD_DELETEFILE . '<br><br>' . Request::getString('videofile', '', 'POST'), _AM_XOOPSTUBE_BDELETE);
+                          ], 'vupload.php', _AM_XOOPSTUBE_VUPLOAD_DELETEFILE . '<br><br>' . Request::getString('videofile', '', 'POST'), _AM_XOOPSTUBE_BDELETE);
         }
         break;
 
@@ -78,9 +78,9 @@ switch (strtolower($op)) {
         $adminObject = \Xmf\Module\Admin::getInstance();
         $adminObject->displayNavigation(basename(__FILE__));
 
-        $dirarray  = array(1 => $GLOBALS['xoopsModuleConfig']['videodir']);
-        $namearray = array(1 => _AM_XOOPSTUBE_VUPLOAD_CATVIDEO);
-        $listarray = array(1 => _AM_XOOPSTUBE_VUPLOAD_FCATVIDEO);
+        $dirarray  = [1 => $GLOBALS['xoopsModuleConfig']['videodir']];
+        $namearray = [1 => _AM_XOOPSTUBE_VUPLOAD_CATVIDEO];
+        $listarray = [1 => _AM_XOOPSTUBE_VUPLOAD_FCATVIDEO];
 
         //xtubeRenderAdminMenu( _AM_XOOPSTUBE_VUPLOADS );
 

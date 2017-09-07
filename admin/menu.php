@@ -23,24 +23,24 @@ if (false !== ($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName))) {
 } else {
     $moduleHelper = Xmf\Module\Helper::getHelper('system');
 }
-$adminObject = \Xmf\Module\Admin::getInstance();
+
 
 $pathIcon32 = \Xmf\Module\Admin::menuIconPath('');
-//$pathModIcon32 = $moduleHelper->getModule()->getInfo('modicons32');
+$pathModIcon32 = $moduleHelper->getModule()->getInfo('modicons32');
 
 $moduleHelper->loadLanguage('modinfo');
 
-$adminmenu[] = array(
+$adminmenu[] = [
     'title' => _AM_MODULEADMIN_HOME,
     'link'  => 'admin/index.php',
     'icon'  => $pathIcon32 . '/home.png'
-);
+];
 
-$adminmenu[] = array(
+$adminmenu[] = [
     'title' => _MI_XOOPSTUBE_BINDEX,
     'link'  => 'admin/main.php',
     'icon'  => $pathIcon32 . '/manage.png'
-);
+];
 
 //++$i;
 //$adminmenu[$i]['title'] = _MI_XOOPSTUBE_MCATEGORY;
@@ -51,59 +51,59 @@ $adminmenu[] = array(
 //$adminmenu[$i]['link']  = "admin/xoopstube.php?op=edit";
 //$adminmenu[$i]["icon"]  = $pathIcon32 . '/marquee.png';
 
-$adminmenu[] = array(
+$adminmenu[] = [
     'title' => _MI_XOOPSTUBE_SNEWFILESVAL,
     'link'  => 'admin/newvideos.php',
     'icon'  => $pathIcon32 . '/add.png'
-);
+];
 
-$adminmenu[] = array(
+$adminmenu[] = [
     'title' => _MI_XOOPSTUBE_SMODREQUEST,
     'link'  => 'admin/modifications.php',
     'icon'  => $pathIcon32 . '/update.png'
-);
+];
 
-$adminmenu[] = array(
+$adminmenu[] = [
     'title' => _MI_XOOPSTUBE_SBROKENSUBMIT,
     'link'  => 'admin/brokenvideo.php',
     'icon'  => $pathIcon32 . '/link_break.png'
-);
+];
 
-$adminmenu[] = array(
+$adminmenu[] = [
     'title' => _MI_XOOPSTUBE_MUPLOADS,
     'link'  => 'admin/upload.php',
     'icon'  => $pathIcon32 . '/photo.png'
-);
+];
 
-$adminmenu[] = array(
+$adminmenu[] = [
     'title' => _MI_XOOPSTUBE_VUPLOADS,
     'link'  => 'admin/vupload.php',
     'icon'  => $pathIcon32 . '/marquee.png'
-);
+];
 
-$adminmenu[] = array(
+$adminmenu[] = [
     'title' => _MI_XOOPSTUBE_PERMISSIONS,
     'link'  => 'admin/permissions.php',
     'icon'  => $pathIcon32 . '/permissions.png'
-);
+];
 
-$adminmenu[] = array(
+$adminmenu[] = [
     'title' => _MI_XOOPSTUBE_MVOTEDATA,
     'link'  => 'admin/votedata.php',
     'icon'  => $pathIcon32 . '/poll.png'
-);
+];
 
-$adminmenu[] = array(
+$adminmenu[] = [
     'title' => _MI_XOOPSTUBE_INDEXPAGE,
     'link'  => 'admin/indexpage.php',
     'icon'  => $pathIcon32 . '/index.png'
-);
+];
 
-$adminmenu[] = array(
+$adminmenu[] = [
     'title' => _AM_MODULEADMIN_ABOUT,
     'link'  => 'admin/about.php',
     'icon'  => $pathIcon32 . '/about.png'
-);
+];
 
 //++$i;
 //$adminmenu[$i]['title'] = _MI_XOOPSTUBE_BLOCKADMIN;

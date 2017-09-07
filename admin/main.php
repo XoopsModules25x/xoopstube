@@ -113,7 +113,7 @@ function edit($lid = 0)
     $sform->addElement(new XoopsFormText(_AM_XOOPSTUBE_VIDEO_TITLE, 'title', 70, 255, $title), true);
 
     // Video source
-    $vidsource_array  = array(
+    $vidsource_array  = [
         0   => _AM_XOOPSTUBE_YOUTUBE,
         1   => _AM_XOOPSTUBE_METACAFE,
         2   => _AM_XOOPSTUBE_IFILM,
@@ -130,7 +130,7 @@ function edit($lid = 0)
         108 => _AM_XOOPSTUBE_VIMEO,
         109 => _MD_XOOPSTUBE_MEGAVIDEO,
         200 => _MD_XOOPSTUBE_XOOPSTUBE
-    ); // #200 is reserved for XoopsTube's internal FLV player
+    ]; // #200 is reserved for XoopsTube's internal FLV player
     $vidsource_select = new XoopsFormSelect(_AM_XOOPSTUBE_VIDSOURCE, 'vidsource', $vidsource);
     $vidsource_select->addOptionArray($vidsource_array);
     $sform->addElement($vidsource_select);
@@ -279,7 +279,7 @@ switch (strtolower($op)) {
 
     case 'save':
 
-        $groups    = Request::getArray('groups', array(), 'POST'); //isset($_POST['groups']) ? $_POST['groups'] : array();
+        $groups    = Request::getArray('groups', [], 'POST'); //isset($_POST['groups']) ? $_POST['groups'] : array();
         $lid       = Request::getInt('lid', 0, 'POST');// (!empty($_POST['lid'])) ? $_POST['lid'] : 0;
         $cid       = Request::getInt('cid', 0, 'POST');// (!empty($_POST['cid'])) ? $_POST['cid'] : 0;
         $vidrating = Request::getInt('vidrating', 6, 'POST');// (!empty($_POST['vidrating'])) ? $_POST['vidrating'] : 6;
@@ -327,7 +327,7 @@ switch (strtolower($op)) {
         }
         //        if (Request::hasVar('expiredateactivate', 'POST')) {
         //PHP 5.3
-        $expiredate0 = Request::getArray('expired', array(), 'POST');
+        $expiredate0 = Request::getArray('expired', [], 'POST');
         $expiredate  = strtotime($expiredate0['date']) + $expiredate0['time'];
         //PHP 5.4
         //        $expiredate = strtotime(Request::getArray('expired', array(), 'POST')['date']) + Request::getArray('expired', array(), 'POST')['time'];
@@ -371,7 +371,7 @@ switch (strtolower($op)) {
 
         // Send notifications
         if (!$lid) {
-            $tags                  = array();
+            $tags                  = [];
             $tags['VIDEO_NAME']    = $title;
             $tags['VIDEO_URL']     = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/singlevideo.php?cid=' . $cid . '&amp;lid=' . $newid;
             $sql                   = 'SELECT title FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_cat') . ' WHERE cid=' . $cid;
@@ -384,7 +384,7 @@ switch (strtolower($op)) {
             $notificationHandler->triggerEvent('category', $cid, 'new_video', $tags);
         }
         if ($lid && $approved && $notifypub) {
-            $tags                  = array();
+            $tags                  = [];
             $tags['VIDEO_NAME']    = $title;
             $tags['VIDEO_URL']     = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/singlevideo.php?cid=' . $cid . '&amp;lid=' . $lid;
             $sql                   = 'SELECT title FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_cat') . ' WHERE cid=' . $cid;
@@ -457,12 +457,12 @@ switch (strtolower($op)) {
             xoops_cp_header();
             //xtubeRenderAdminMenu( _AM_XOOPSTUBE_BINDEX );
 
-            xoops_confirm(array(
+            xoops_confirm([
                               'op'      => 'delete',
                               'lid'     => $lid,
                               'confirm' => 1,
                               'title'   => $title
-                          ), 'main.php', _AM_XOOPSTUBE_VIDEO_REALLYDELETEDTHIS . '<br><br>' . $title, _DELETE);
+                          ], 'main.php', _AM_XOOPSTUBE_VIDEO_REALLYDELETEDTHIS . '<br><br>' . $title, _DELETE);
 
             // Remove item_tag from Tag-module
             $tagupdate = XoopstubeUtility::xtubeUpdateTag($lid, $item_tag);

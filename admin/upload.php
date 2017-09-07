@@ -33,14 +33,14 @@ switch (strtolower($op)) {
             if (file_exists(XOOPS_ROOT_PATH . '/' . Request::getString('uploadpath', '', 'POST') . '/' . $_FILES['uploadfile']['name'])) {
                 redirect_header('upload.php', 2, _AM_XOOPSTUBE_VIDEO_IMAGEEXIST);
             }
-            $allowed_mimetypes = array(
+            $allowed_mimetypes = [
                 'image/gif',
                 'image/jpeg',
                 'image/pjpeg',
                 'image/x-png',
                 'image/png',
                 'media/flv'
-            );
+            ];
             XoopstubeUtility::xtubeUploadFiles($_FILES, Request::getString('uploadpath', '', 'POST'), $allowed_mimetypes, 'upload.php', 1, 0);
             redirect_header('upload.php', 2, _AM_XOOPSTUBE_VIDEO_IMAGEUPLOAD);
         } else {
@@ -66,12 +66,12 @@ switch (strtolower($op)) {
                 redirect_header('upload.php', 1, _AM_XOOPSTUBE_VIDEO_NOFILEERROR);
             }
             xoops_cp_header();
-            xoops_confirm(array(
+            xoops_confirm([
                               'op'         => 'delfile',
                               'uploadpath' => Request::getString('uploadpath', '', 'POST'),
                               'videofile'  => Request::getString('videofile', '', 'POST'),
                               'confirm'    => 1
-                          ), 'upload.php', _AM_XOOPSTUBE_VIDEO_DELETEFILE . '<br><br>' . Request::getString('videofile', '', 'POST'), _AM_XOOPSTUBE_BDELETE);
+                          ], 'upload.php', _AM_XOOPSTUBE_VIDEO_DELETEFILE . '<br><br>' . Request::getString('videofile', '', 'POST'), _AM_XOOPSTUBE_BDELETE);
         }
         break;
 
@@ -82,21 +82,21 @@ switch (strtolower($op)) {
         $adminObject = \Xmf\Module\Admin::getInstance();
         $adminObject->displayNavigation(basename(__FILE__));
 
-        $dirarray  = array(
+        $dirarray  = [
             1 => $GLOBALS['xoopsModuleConfig']['catimage'],
             2 => $GLOBALS['xoopsModuleConfig']['mainimagedir'],
             3 => $GLOBALS['xoopsModuleConfig']['videoimgdir']
-        );
-        $namearray = array(
+        ];
+        $namearray = [
             1 => _AM_XOOPSTUBE_VIDEO_CATIMAGE,
             2 => _AM_XOOPSTUBE_VIDEO_MAINIMAGEDIR,
             3 => _AM_XOOPSTUBE_VIDEO_CATVIDEOIMG
-        );
-        $listarray = array(
+        ];
+        $listarray = [
             1 => _AM_XOOPSTUBE_VIDEO_FCATIMAGE,
             2 => _AM_XOOPSTUBE_VIDEO_FMAINIMAGEDIR,
             3 => _AM_XOOPSTUBE_VIDEO_FCATVIDEOIMG
-        );
+        ];
 
         //    $dirarray  = array(
         //        1 => $GLOBALS['xoopsModuleConfig']['catimage'],

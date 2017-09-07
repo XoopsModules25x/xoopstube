@@ -115,8 +115,10 @@ define('_AM_XOOPSTUBE_IPAGE_CRIGHT', 'Align Right');
  * Permissions defines
  */
 define('_AM_XOOPSTUBE_PERM_MANAGEMENT', 'Permissions Management');
-define('_AM_XOOPSTUBE_PERM_PERMSNOTE',
-       "<div><span style='font-weight: bold;'>NOTE:</span> Please be aware that even if you've set correct viewing permissions here, a group might not see the articles or blocks if you don't also grant that group permissions to access the module. To do that, go to <span style='font-weight: bold;'>System admin > Groups</span>, choose the appropriate group and click the checkboxes to grant its members the access.</div>");
+define(
+    '_AM_XOOPSTUBE_PERM_PERMSNOTE',
+       "<div><span style='font-weight: bold;'>NOTE:</span> Please be aware that even if you've set correct viewing permissions here, a group might not see the articles or blocks if you don't also grant that group permissions to access the module. To do that, go to <span style='font-weight: bold;'>System admin > Groups</span>, choose the appropriate group and click the checkboxes to grant its members the access.</div>"
+);
 define('_AM_XOOPSTUBE_PERM_CPERMISSIONS', 'Category Permissions');
 define('_AM_XOOPSTUBE_PERM_CSELECTPERMISSIONS', 'Select categories that each group is allowed to view');
 define('_AM_XOOPSTUBE_PERM_CNOCATEGORY', "Cannot set permission's: No Categories's have been created yet!");

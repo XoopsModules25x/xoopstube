@@ -19,7 +19,7 @@
  * @since           1.0.6
  */
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 /**
  * Abstract base class for forms
@@ -65,7 +65,7 @@ class XoopstubeTree
     public function getFirstChild($selectId, $order = '')
     {
         $selectId = (int)$selectId;
-        $arr      = array();
+        $arr      = [];
         $sql      = 'SELECT * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $selectId . '';
         if ($order !== '') {
             $sql .= " ORDER BY $order";
@@ -92,7 +92,7 @@ class XoopstubeTree
     public function getFirstChildId($selectId)
     {
         $selectId = (int)$selectId;
-        $idarray  = array();
+        $idarray  = [];
         $result   = $this->db->query('SELECT ' . $this->id . ' FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $selectId . '');
         $count    = $this->db->getRowsNum($result);
         if (0 == $count) {
@@ -114,7 +114,7 @@ class XoopstubeTree
      *
      * @return array
      */
-    public function getAllChildId($selectId, $order = '', $idarray = array())
+    public function getAllChildId($selectId, $order = '', $idarray = [])
     {
         $selectId = (int)$selectId;
         $sql      = 'SELECT ' . $this->id . ' FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $selectId . '';
@@ -143,7 +143,7 @@ class XoopstubeTree
      *
      * @return array
      */
-    public function getAllParentId($selectId, $order = '', $idarray = array())
+    public function getAllParentId($selectId, $order = '', $idarray = [])
     {
         $selectId = (int)$selectId;
         $sql      = 'SELECT ' . $this->pid . ' FROM ' . $this->table . ' WHERE ' . $this->id . '=' . $selectId . '';
@@ -305,7 +305,7 @@ class XoopstubeTree
      *
      * @return array
      */
-    public function getAllChild($selectId = 0, $order = '', $parray = array())
+    public function getAllChild($selectId = 0, $order = '', $parray = [])
     {
         $selectId = (int)$selectId;
         $sql      = 'SELECT * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $selectId . '';
@@ -335,7 +335,7 @@ class XoopstubeTree
      *
      * @return array
      */
-    public function getChildTreeArray($selectId = 0, $order = '', $parray = array(), $r_prefix = '')
+    public function getChildTreeArray($selectId = 0, $order = '', $parray = [], $r_prefix = '')
     {
         $selectId = (int)$selectId;
         $sql      = 'SELECT * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $selectId . '';
