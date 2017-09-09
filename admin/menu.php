@@ -42,14 +42,17 @@ $adminmenu[] = [
     'icon'  => $pathIcon32 . '/manage.png'
 ];
 
-//++$i;
-//$adminmenu[$i]['title'] = _MI_XOOPSTUBE_MCATEGORY;
-//$adminmenu[$i]['link']  = "admin/category.php";
+//$adminmenu[] = [
+//'title' =>  _MI_XOOPSTUBE_MCATEGORY,
+//'link' =>  "admin/category.php",
 //$adminmenu[$i]["icon"]  = $pathIcon32 . '/category.png';
-//++$i;
-//$adminmenu[$i]['title'] = _MI_XOOPSTUBE_MVIDEOS;
-//$adminmenu[$i]['link']  = "admin/xoopstube.php?op=edit";
+//];
+
+//$adminmenu[] = [
+//'title' =>  _MI_XOOPSTUBE_MVIDEOS,
+//'link' => edit",
 //$adminmenu[$i]["icon"]  = $pathIcon32 . '/marquee.png';
+//];
 
 $adminmenu[] = [
     'title' => _MI_XOOPSTUBE_SNEWFILESVAL,
@@ -106,6 +109,6 @@ $adminmenu[] = [
 ];
 
 //++$i;
-//$adminmenu[$i]['title'] = _MI_XOOPSTUBE_BLOCKADMIN;
-//$adminmenu[$i]['link']  = 'admin/blocksadmin.php';
+//'title' =>  _MI_XOOPSTUBE_BLOCKADMIN,
+//'link' =>  'admin/blocksadmin.php',
 //$adminmenu[$i]["icon"]  = $pathIcon32 . '/block.png';
