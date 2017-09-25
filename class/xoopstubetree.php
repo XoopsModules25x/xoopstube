@@ -67,7 +67,7 @@ class XoopstubeTree
         $selectId = (int)$selectId;
         $arr      = [];
         $sql      = 'SELECT * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $selectId . '';
-        if ($order !== '') {
+        if ('' !== $order) {
             $sql .= " ORDER BY $order";
         }
         $result = $this->db->query($sql);
@@ -118,7 +118,7 @@ class XoopstubeTree
     {
         $selectId = (int)$selectId;
         $sql      = 'SELECT ' . $this->id . ' FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $selectId . '';
-        if ($order !== '') {
+        if ('' !== $order) {
             $sql .= " ORDER BY $order";
         }
         $result = $this->db->query($sql);
@@ -147,7 +147,7 @@ class XoopstubeTree
     {
         $selectId = (int)$selectId;
         $sql      = 'SELECT ' . $this->pid . ' FROM ' . $this->table . ' WHERE ' . $this->id . '=' . $selectId . '';
-        if ($order !== '') {
+        if ('' !== $order) {
             $sql .= " ORDER BY $order";
         }
         $result = $this->db->query($sql);
@@ -207,12 +207,12 @@ class XoopstubeTree
         }
         $myts = MyTextSanitizer::getInstance();
         echo "<select name='" . $sel_name . "'";
-        if ($onchange !== '') {
+        if ('' !== $onchange) {
             echo " onchange='" . $onchange . "'";
         }
         echo ">\n";
         $sql = 'SELECT ' . $this->id . ', ' . $title . ' FROM ' . $this->table . ' WHERE ' . $this->pid . '=0';
-        if ($order !== '') {
+        if ('' !== $order) {
             $sql .= " ORDER BY $order";
         }
         $result = $this->db->query($sql);
@@ -309,7 +309,7 @@ class XoopstubeTree
     {
         $selectId = (int)$selectId;
         $sql      = 'SELECT * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $selectId . '';
-        if ($order !== '') {
+        if ('' !== $order) {
             $sql .= " ORDER BY $order";
         }
         $result = $this->db->query($sql);
@@ -339,7 +339,7 @@ class XoopstubeTree
     {
         $selectId = (int)$selectId;
         $sql      = 'SELECT * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $selectId . '';
-        if ($order !== '') {
+        if ('' !== $order) {
             $sql .= " ORDER BY $order";
         }
         $result = $this->db->query($sql);

@@ -53,13 +53,13 @@ switch (strtolower($op)) {
             }
             $lang_def = constant('_AM_XOOPSTUBE_MOD_' . strtoupper($key));
 
-            if ($key === 'cid') {
+            if ('cid' === $key) {
                 $sql     = 'SELECT title FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_cat') . ' WHERE cid=' . $content;
                 $row     = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
                 $content = $row['title'];
             }
 
-            if ($key === 'vidsource') {
+            if ('vidsource' === $key) {
                 require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/include/video.php';
                 $content = xtubeReturnSource($content);
             }
@@ -79,13 +79,13 @@ switch (strtolower($op)) {
             }
             $lang_def = constant('_AM_XOOPSTUBE_MOD_' . strtoupper($key));
 
-            if ($key === 'cid') {
+            if ('cid' === $key) {
                 $sql     = 'SELECT title FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_cat') . ' WHERE cid=' . $content;
                 $row     = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
                 $content = $row['title'];
             }
 
-            if ($key === 'vidsource') {
+            if ('vidsource' === $key) {
                 require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/include/video.php';
                 $content = xtubeReturnSource($content);
             }

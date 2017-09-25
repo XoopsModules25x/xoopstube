@@ -87,7 +87,7 @@ switch (strtolower($op)) {
         $results = $GLOBALS['xoopsDB']->query($sql, $GLOBALS['xoopsModuleConfig']['admin_perpage'], $start);
         $votes   = $GLOBALS['xoopsDB']->getRowsNum($GLOBALS['xoopsDB']->query($sql));
 
-        if ($votes == 0) {
+        if (0 == $votes) {
             echo '<tr><td style="text-align: center;" colspan="7" class="head">' . _AM_XOOPSTUBE_VOTE_NOVOTES . '</td></tr>';
         } else {
             while (false !== (list($ratingid, $lid, $ratinguser, $rating, $ratinghostname, $ratingtimestamp, $title) = $GLOBALS['xoopsDB']->fetchRow($results))) {

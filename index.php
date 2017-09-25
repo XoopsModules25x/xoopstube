@@ -78,7 +78,7 @@ while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $subcategories = '';
         foreach ($arr as $ele) {
             if (true === XoopstubeUtility::xtubeCheckGroups($ele['cid'])) {
-                if ($GLOBALS['xoopsModuleConfig']['subcats'] == 1) {
+                if (1 == $GLOBALS['xoopsModuleConfig']['subcats']) {
                     $chtitle = $xtubemyts->htmlSpecialCharsStrip($ele['title']);
                     if ($chcount > 5) {
                         $subcategories .= '...';
@@ -97,7 +97,7 @@ while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
         // This code is copyright WF-Projects
         // Using this code without our permission or removing this code voids the license agreement
         $_image = $myrow['imgurl'] ? urldecode($myrow['imgurl']) : '';
-        if ($_image !== '' && $GLOBALS['xoopsModuleConfig']['usethumbs']) {
+        if ('' !== $_image && $GLOBALS['xoopsModuleConfig']['usethumbs']) {
             $_thumb_image = new XtubeThumbsNails($_image, $GLOBALS['xoopsModuleConfig']['catimage'], 'thumbs');
             if ($_thumb_image) {
                 $_thumb_image->setUseThumbs(1);
@@ -144,7 +144,7 @@ $time = time();
 $sql        = $GLOBALS['xoopsDB']->query('SELECT lastvideosyn, lastvideostotal FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_indexpage'));
 $lastvideos = $GLOBALS['xoopsDB']->fetchArray($sql);
 
-if ($lastvideos['lastvideosyn'] == 1 && $lastvideos['lastvideostotal'] > 0) {
+if (1 == $lastvideos['lastvideosyn'] && $lastvideos['lastvideostotal'] > 0) {
     $result = $GLOBALS['xoopsDB']->query('SELECT COUNT(*) FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE published > 0
                                 AND published <= ' . $time . '
                                 AND (expired = 0 OR expired > ' . $time . ')
@@ -152,7 +152,7 @@ if ($lastvideos['lastvideosyn'] == 1 && $lastvideos['lastvideostotal'] > 0) {
                                 ORDER BY published DESC', 0, 0);
     list($count) = $GLOBALS['xoopsDB']->fetchRow($result);
 
-    $count = (($count > $lastvideos['lastvideostotal']) && ($lastvideos['lastvideostotal'] !== 0)) ? $lastvideos['lastvideostotal'] : $count;
+    $count = (($count > $lastvideos['lastvideostotal']) && (0 !== $lastvideos['lastvideostotal'])) ? $lastvideos['lastvideostotal'] : $count;
     $limit = (($start + $GLOBALS['xoopsModuleConfig']['perpage']) > $count) ? ($count - $start) : $GLOBALS['xoopsModuleConfig']['perpage'];
 
     $result = $GLOBALS['xoopsDB']->query('SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE published > 0

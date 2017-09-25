@@ -319,7 +319,7 @@ switch ($op) {
             $sql = 'INSERT INTO '
                    . $GLOBALS['xoopsDB']->prefix('xoopstube_cat')
                    . " (cid, pid, title, imgurl, description, nohtml, nosmiley, noxcodes, noimages, nobreak, weight, spotlighttop, spotlighthis, client_id, banner_id ) VALUES ($cid, $pid, '$title', '$imgurl', '$descriptionb', '$nohtml', '$nosmiley', '$noxcodes', '$noimages', '$nobreak', '$weight',  $spotlighttop, $spotlighthis, $client_id, $banner_id )";
-            if ($cid == 0) {
+            if (0 == $cid) {
                 $newid = $GLOBALS['xoopsDB']->getInsertId();
             }
 
@@ -360,7 +360,7 @@ switch ($op) {
         $ok            = (1 == Request::getInt('ok', 0, 'POST')) ? 1 : 0;
         $xoopstubetree = new XoopstubeTree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
 
-        if ($ok == 1) {
+        if (1 == $ok) {
             // get all subcategories under the specified category
             $arr    = $xoopstubetree->getAllChildId($cid);
             $lcount = count($arr);

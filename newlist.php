@@ -36,9 +36,9 @@ if (!isset($_GET['newvideoshowdays'])) {
 
 if (Request::hasVar('newvideoshowdays', 'GET')) {
     $newvideoshowdays = Request::getInt('newvideoshowdays', 7, 'GET');
-    if ($newvideoshowdays !== 7) {
-        if ($newvideoshowdays !== 14) {
-            if ($newvideoshowdays !== 30) {
+    if (7 !== $newvideoshowdays) {
+        if (14 !== $newvideoshowdays) {
+            if (30 !== $newvideoshowdays) {
                 redirect_header('newlist.php?newvideoshowdays=7', 5, _MD_XOOPSTUBE_STOPIT . '<br><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/security.png">');
             }
         }

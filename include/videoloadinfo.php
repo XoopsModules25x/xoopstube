@@ -48,8 +48,8 @@ $video['videothumb'] = xtubeGetVideoThumb($video_arr['vidid'], $video_arr['title
 $video['publisher']  = xtubeGetVideoPublisher($video_arr['vidid'], $video_arr['publisher'], $video_arr['vidsource']);
 
 if (0 == $moderate) {
-    $time       = ($video_arr['updated'] !== 0) ? $video_arr['updated'] : $video_arr['published'];
-    $is_updated = ($video_arr['updated'] !== 0) ? _MD_XOOPSTUBE_UPDATEDON : _MD_XOOPSTUBE_PUBLISHDATE;
+    $time       = (0 !== $video_arr['updated']) ? $video_arr['updated'] : $video_arr['published'];
+    $is_updated = (0 !== $video_arr['updated']) ? _MD_XOOPSTUBE_UPDATEDON : _MD_XOOPSTUBE_PUBLISHDATE;
     $xoopsTpl->assign('lang_subdate', $is_updated);
 } else {
     $time       = $video_arr['date'];

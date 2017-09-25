@@ -68,7 +68,7 @@ function xtubeSearch($queryarray, $andor, $limit, $offset, $userid)
     $sql = 'SELECT lid, cid, title, submitter, published, description FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos');
     $sql .= ' WHERE published > 0 AND published <= ' . time() . ' AND ( expired = 0 OR expired > ' . time() . ') AND offline = 0 AND cid > 0';
 
-    if ($userid !== 0) {
+    if (0 !== $userid) {
         $sql .= ' AND submitter=' . $userid . ' ';
     }
 

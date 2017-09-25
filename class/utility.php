@@ -123,7 +123,7 @@ class XoopstubeUtility
     {
         $x20 = false;
         $xv  = str_replace('XOOPS ', '', XOOPS_VERSION);
-        if (substr($xv, 2, 1) == '0') {
+        if ('0' == substr($xv, 2, 1)) {
             $x20 = true;
         }
 
@@ -232,7 +232,7 @@ class XoopstubeUtility
                 return false;
             }
         } else {
-            if (count($recipients) == 0) {
+            if (0 == count($recipients)) {
                 return false;
             }
         }
@@ -338,7 +338,7 @@ class XoopstubeUtility
         static $mymodule;
         if (!isset($mymodule)) {
             global $xoopsModule;
-            if (isset($xoopsModule) && is_object($xoopsModule) && $xoopsModule->getVar('dirname') == OLEDRION_DIRNAME) {
+            if (isset($xoopsModule) && is_object($xoopsModule) && OLEDRION_DIRNAME == $xoopsModule->getVar('dirname')) {
                 $mymodule = $xoopsModule;
             } else {
                 $hModule  = xoops_getHandler('module');
@@ -462,7 +462,7 @@ class XoopstubeUtility
      */
     public static function SQLDateToHuman($date, $format = 'l')
     {
-        if ($date != '0000-00-00' && xoops_trim($date) != '') {
+        if ('0000-00-00' != $date && '' != xoops_trim($date)) {
             return formatTimestamp(strtotime($date), $format);
         } else {
             return '';
@@ -515,7 +515,7 @@ class XoopstubeUtility
         if (self::isX23()) {
             return false;
         }
-        if (strpos(strtolower(XOOPS_VERSION), 'impresscms') !== false) {
+        if (false !== strpos(strtolower(XOOPS_VERSION), 'impresscms')) {
             return false;
         }
         if (false === strpos(strtolower(XOOPS_VERSION), 'legacy')) {
@@ -581,7 +581,7 @@ class XoopstubeUtility
     public static function createUploadName($folder, $fileName, $trimName = false)
     {
         $workingfolder = $folder;
-        if (xoops_substr($workingfolder, strlen($workingfolder) - 1, 1) !== '/') {
+        if ('/' !== xoops_substr($workingfolder, strlen($workingfolder) - 1, 1)) {
             $workingfolder .= '/';
         }
         $ext  = basename($fileName);
@@ -975,7 +975,7 @@ class XoopstubeUtility
                 break;
         }
         // Remove black listed words
-        if (xoops_trim(self::getModuleOption('metagen_blacklist')) !== '') {
+        if ('' !== xoops_trim(self::getModuleOption('metagen_blacklist'))) {
             $metagen_blacklist = str_replace("\r", '', self::getModuleOption('metagen_blacklist'));
             $metablack         = explode("\n", $metagen_blacklist);
             array_walk($metablack, 'trim');
@@ -1030,7 +1030,7 @@ class XoopstubeUtility
             $fldname = '';
             $fldname = $_FILES[$_POST['xoops_upload_file'][$indice]];
             $fldname = $fldname['name'];
-            if (xoops_trim($fldname !== '')) {
+            if (xoops_trim('' !== $fldname)) {
                 $destname = self::createUploadName($dstpath, $fldname, true);
                 if (null === $mimeTypes) {
                     $permittedtypes = explode("\n", str_replace("\r", '', self::getModuleOption('mimetypes')));
@@ -1133,7 +1133,7 @@ class XoopstubeUtility
      */
     public static function addDaysToDate($duration = 1, $startingDate = 0)
     {
-        if ($startingDate == 0) {
+        if (0 == $startingDate) {
             $startingDate = time();
         }
         $endingDate = $startingDate + ($duration * 86400);
@@ -1218,7 +1218,7 @@ class XoopstubeUtility
      */
     public static function truncate_tagsafe($string, $length = 80, $etc = '...', $break_words = false)
     {
-        if ($length == 0) {
+        if (0 == $length) {
             return '';
         }
 
@@ -1461,7 +1461,7 @@ class XoopstubeUtility
     public static function getMemberGroups($uid = 0)
     {
         static $buffer = [];
-        if ($uid == 0) {
+        if (0 == $uid) {
             $uid = self::getCurrentUserID();
         }
 
@@ -1491,7 +1491,7 @@ class XoopstubeUtility
     {
         static $buffer = [];
         $retval = false;
-        if ($uid == 0) {
+        if (0 == $uid) {
             $uid = self::getCurrentUserID();
         }
         if (is_array($buffer) && array_key_exists($group, $buffer)) {
@@ -1675,7 +1675,7 @@ class XoopstubeUtility
     public static function getId($string, $separator = '_')
     {
         $pos = strrpos($string, $separator);
-        if ($pos === false) {
+        if (false === $pos) {
             return $string;
         } else {
             return (int)substr($string, $pos + 1);
@@ -1962,7 +1962,7 @@ class XoopstubeUtility
         $ret['useravgrating'] = 0;
 
         $sql = 'SELECT rating FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_votedata');
-        if ($sel_id !== 0) {
+        if (0 !== $sel_id) {
             $sql .= ' WHERE lid=' . $sel_id;
         }
         if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
@@ -2987,15 +2987,15 @@ class XoopstubeUtility
         $publish      = ($published['published'] > 0) ? XoopstubeUtility::xtubeGetTimestamp(formatTimestamp($published['published'], $GLOBALS['xoopsModuleConfig']['dateformatadmin'])) : 'Not Published';
         $expires      = $published['expired'] ? XoopstubeUtility::xtubeGetTimestamp(formatTimestamp($published['expired'], $GLOBALS['xoopsModuleConfig']['dateformatadmin'])) : _AM_XOOPSTUBE_MINDEX_NOTSET;
 
-        if ((($published['expired'] && $published['expired'] > time()) || $published['expired'] === 0)
+        if ((($published['expired'] && $published['expired'] > time()) || 0 === $published['expired'])
             && ($published['published'] && $published['published'] < time())
-            && $published['offline'] === 0) {
+            && 0 === $published['offline']) {
             //        $published_status = $xtubeImageArray['online'];
             $published_status = '<a href="main.php?op=toggle&amp;lid=' . $lid . '&amp;offline=' . $published['offline'] . '"><img src="' . $pathIcon16 . '/1.png' . '"></a>';
-        } elseif (($published['expired'] && $published['expired'] < time()) && $published['offline'] === 0) {
+        } elseif (($published['expired'] && $published['expired'] < time()) && 0 === $published['offline']) {
             $published_status = $xtubeImageArray['expired'];
         } else {
-            $published_status = ($published['published'] === 0) ? '<a href="newvideos.php">' . $xtubeImageArray['offline'] . '</a>' : '<a href="main.php?op=toggle&amp;lid=' . $lid . '&amp;offline=' . $published['offline'] . '"><img src="' . $pathIcon16 . '/0.png' . '"></a>';
+            $published_status = (0 === $published['published']) ? '<a href="newvideos.php">' . $xtubeImageArray['offline'] . '</a>' : '<a href="main.php?op=toggle&amp;lid=' . $lid . '&amp;offline=' . $published['offline'] . '"><img src="' . $pathIcon16 . '/0.png' . '"></a>';
         }
 
         if (200 == $published['vidsource']) {

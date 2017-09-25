@@ -43,7 +43,7 @@ $sql2 = 'SELECT count(*) FROM '
         . '))';
 list($count) = $GLOBALS['xoopsDB']->fetchRow($GLOBALS['xoopsDB']->query($sql2));
 
-if (false === XoopstubeUtility::xtubeCheckGroups($cid) || $count === 0) {
+if (false === XoopstubeUtility::xtubeCheckGroups($cid) || 0 === $count) {
     redirect_header('index.php', 1, _MD_XOOPSTUBE_MUSTREGFIRST);
 }
 
@@ -107,14 +107,14 @@ if (is_object($GLOBALS['xoTheme'])) {
         $GLOBALS['xoTheme']->addMeta('meta', 'keywords', $video_arr['keywords']);
     }
     $GLOBALS['xoTheme']->addMeta('meta', 'title', $video_arr['title']);
-    if ($GLOBALS['xoopsModuleConfig']['usemetadescr'] == 1) {
+    if (1 == $GLOBALS['xoopsModuleConfig']['usemetadescr']) {
         $GLOBALS['xoTheme']->addMeta('meta', 'description', $video_meta_description);
     }
 } else {
     if ($video_arr['keywords']) {
         $xoopsTpl->assign('xoops_meta_keywords', $video_arr['keywords']);
     }
-    if ($GLOBALS['xoopsModuleConfig']['usemetadescr'] == 1) {
+    if (1 == $GLOBALS['xoopsModuleConfig']['usemetadescr']) {
         $GLOBALS['xoTheme']->assign('xoops_meta_description', $video_meta_description);
     }
 }
@@ -125,7 +125,7 @@ $moderate = 0;
 require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/include/videoloadinfo.php';
 
 $xoopsTpl->assign('show_screenshot', false);
-if (isset($GLOBALS['xoopsModuleConfig']['screenshot']) && $GLOBALS['xoopsModuleConfig']['screenshot'] == 1) {
+if (isset($GLOBALS['xoopsModuleConfig']['screenshot']) && 1 == $GLOBALS['xoopsModuleConfig']['screenshot']) {
     $xoopsTpl->assign('shotwidth', $GLOBALS['xoopsModuleConfig']['shotwidth']);
     $xoopsTpl->assign('shotheight', $GLOBALS['xoopsModuleConfig']['shotheight']);
     $xoopsTpl->assign('show_screenshot', true);
@@ -154,12 +154,12 @@ while (false !== ($arr = $GLOBALS['xoopsDB']->fetchArray($result))) {
 }
 
 // Copyright notice
-if (isset($GLOBALS['xoopsModuleConfig']['copyright']) && $GLOBALS['xoopsModuleConfig']['copyright'] == 1) {
+if (isset($GLOBALS['xoopsModuleConfig']['copyright']) && 1 == $GLOBALS['xoopsModuleConfig']['copyright']) {
     $xoopsTpl->assign('lang_copyright', '' . $video['publisher'] . ' &#0169; ' . _MD_XOOPSTUBE_COPYRIGHT . ' ' . formatTimestamp(time(), 'Y') . ' - ' . XOOPS_URL);
 }
 
 // Show other videos by submitter
-if (isset($GLOBALS['xoopsModuleConfig']['othervideos']) && $GLOBALS['xoopsModuleConfig']['othervideos'] == 1) {
+if (isset($GLOBALS['xoopsModuleConfig']['othervideos']) && 1 == $GLOBALS['xoopsModuleConfig']['othervideos']) {
     $xoopsTpl->assign('other_videos', '<b>' . _MD_XOOPSTUBE_OTHERBYUID . '</b>' . $video['submitter'] . '<br>');
 } else {
     $xoopsTpl->assign('other_videos', '<b>' . _MD_XOOPSTUBE_NOOTHERBYUID . '</b>' . $video['submitter'] . '<br>');

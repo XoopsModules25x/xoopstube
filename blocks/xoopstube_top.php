@@ -96,29 +96,29 @@ function getThumbsTopVideoBlock($bvidid, $btitle, $bsource, $bpicurl, $size = []
         $thumbb = '<img src="http://img.youtube.com/vi/' . $bvidid . '/default.jpg" title="' . $btitle . '" alt="' . $btitle . '" width="' . $xtubeModuleConfig['shotwidth'] . '" height="' . $xtubeModuleConfig['shotheight'] . '"  border="0">';
     }
     // Determine if video source MetaCafe
-    if ($bsource == 1) {
+    if (1 == $bsource) {
         list($metaclip) = explode('[/]', $bvidid);
         $videothumb['metathumb'] = $metaclip;
         $thumbb                  = '<img src="http://www.metacafe.com/thumb/' . $videothumb['metathumb'] . '.jpg" title="' . $btitle . '" alt="' . $btitle . '" width="' . $xtubeModuleConfig['shotwidth'] . '" height="' . $xtubeModuleConfig['shotheight'] . '"  border="0">';
     }
     // Determine if video source iFilm/Spike
-    if ($bsource == 2) {
+    if (2 == $bsource) {
         $thumbb = '<img src="http://img2.ifilmpro.com/resize/image/stills/films/resize/istd/' . $bvidid . '.jpg?width=' . $xtubeModuleConfig['shotwidth'] . ' title="' . $btitle . '" alt="' . $btitle . '" border="0">';
     }
     // Determine if video source Photobucket
-    if ($bsource == 3) {
+    if (3 == $bsource) {
         $thumbb = '<img src="http://i153.photobucket.com/albums/' . $bvidid . '.jpg" title="' . $btitle . '" alt="' . $btitle . '" width="' . $xtubeModuleConfig['shotwidth'] . '" height="' . $xtubeModuleConfig['shotheight'] . '"  border="0">';
     }
     // Determine if video source Google Video / MySpace TV / DailyMotion
-    if ($bsource == 100) {
+    if (100 == $bsource) {
         $thumbb = '<img src="' . $bpicurl . '" title="' . $btitle . '" alt="' . $btitle . '" width="' . $xtubeModuleConfig['shotwidth'] . '" height="' . $xtubeModuleConfig['shotheight'] . '"  border="0">';
     }
     // Determine if video source MySpace TV
-    if ($bsource == 101) {
+    if (101 == $bsource) {
         $thumbb = '<img src="' . $bpicurl . '" title="' . $btitle . '" alt="' . $btitle . '" width="' . $xtubeModuleConfig['shotwidth'] . '" height="' . $xtubeModuleConfig['shotheight'] . '"  border="0">';
     }
     // Determine if video source DailyMotion
-    if ($bsource == 102) {
+    if (102 == $bsource) {
         $thumbb = '<img src="' . $bpicurl . '" title="' . $btitle . '" alt="' . $btitle . '" width="' . $xtubeModuleConfig['shotwidth'] . '" height="' . $xtubeModuleConfig['shotheight'] . '"  border="0">';
     }
 
@@ -161,7 +161,7 @@ function getSpotlightVideos($options)
 
     $i = 0;
     while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
-        if (false === checkBlockGroups($myrow['cid']) || $myrow['cid'] == 0) {
+        if (false === checkBlockGroups($myrow['cid']) || 0 == $myrow['cid']) {
             continue;
         }
         if (false === xtubeCheckBlockGroups($myrow['cid'])) {
@@ -177,7 +177,7 @@ function getSpotlightVideos($options)
         $videoload['id']    = (int)$myrow['lid'];
         $videoload['cid']   = (int)$myrow['cid'];
         $videoload['title'] = $title;
-        if ($options[0] === 'date') {
+        if ('date' === $options[0]) {
             $videoload['date'] = formatTimestamp($myrow['date'], $xtubeModuleConfig['dateformat']);
         } elseif ('hits' === $options[0]) {
             $videoload['hits'] = $myrow['hits'];

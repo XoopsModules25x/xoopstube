@@ -122,8 +122,8 @@ switch (strtolower($op)) {
             $broken['id']           = $broke_arr['reportid'];
             $broken['reporter']     = XoopsUserUtility::getUnameFromId($broke_arr['sender']);
             $broken['date']         = XoopstubeUtility::xtubeGetTimestamp(formatTimestamp($broke_arr['date'], $GLOBALS['xoopsModuleConfig']['dateformat']));
-            $broken['acknowledged'] = ($broke_arr['acknowledged'] == 1) ? _YES : _NO;
-            $broken['confirmed']    = ($broke_arr['confirmed'] == 1) ? _YES : _NO;
+            $broken['acknowledged'] = (1 == $broke_arr['acknowledged']) ? _YES : _NO;
+            $broken['confirmed']    = (1 == $broke_arr['confirmed']) ? _YES : _NO;
             $xoopsTpl->assign('broken', $broken);
             $xoopsTpl->assign('brokenreport', true);
         } else {
@@ -136,7 +136,7 @@ switch (strtolower($op)) {
             $video['title']   = $xtubemyts->htmlSpecialCharsStrip($video_arr['title']);
             $time             = ($video_arr['published'] > 0) ? $video_arr['published'] : $link_arr['updated'];
             $video['updated'] = XoopstubeUtility::xtubeGetTimestamp(formatTimestamp($time, $GLOBALS['xoopsModuleConfig']['dateformat']));
-            $is_updated       = ($video_arr['updated'] !== 0) ? _MD_XOOPSTUBE_UPDATEDON : _MD_XOOPSTUBE_SUBMITDATE;
+            $is_updated       = (0 !== $video_arr['updated']) ? _MD_XOOPSTUBE_UPDATEDON : _MD_XOOPSTUBE_SUBMITDATE;
 
             $video['publisher'] = XoopsUserUtility::getUnameFromId($video_arr['submitter']);
 

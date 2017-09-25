@@ -146,7 +146,7 @@ switch (strtolower($op)) {
                 $email      = '';
                 $sendername = '';
 
-                if ($sender !== 0) {
+                if (0 !== $sender) {
                     $result3 = $GLOBALS['xoopsDB']->query('SELECT uname, email FROM ' . $GLOBALS['xoopsDB']->prefix('users') . ' WHERE uid=' . $sender);
                     list($sendername, $email) = $GLOBALS['xoopsDB']->fetchRow($result3);
                 }

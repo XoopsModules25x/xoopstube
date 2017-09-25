@@ -190,7 +190,7 @@ function edit($lid = 0)
     // Insert tags if Tag-module is installed
     if (XoopstubeUtility::xtubeIsModuleTagInstalled()) {
         require_once XOOPS_ROOT_PATH . '/modules/tag/include/formtag.php';
-        $text_tags = new XoopsFormTag('item_tag', 70, 255, $video_array['item_tag'], 0);
+        $text_tags = new TagFormTag('item_tag', 70, 255, $video_array['item_tag'], 0);
         $sform->addElement($text_tags);
     } else {
         $sform->addElement(new XoopsFormHidden('item_tag', $video_array['item_tag']));
@@ -233,8 +233,8 @@ function edit($lid = 0)
         $sform->addElement($editmess_radio);
     }
 
-    if ($lid && $published == 0) {
-        $approved         = ($published == 0) ? 0 : 1;
+    if ($lid && 0 == $published) {
+        $approved         = (0 == $published) ? 0 : 1;
         $approve_checkbox = new XoopsFormCheckBox(_AM_XOOPSTUBE_VIDEO_EDITAPPROVE, 'approved', 1);
         $approve_checkbox->addOption(1, ' ');
         $sform->addElement($approve_checkbox);

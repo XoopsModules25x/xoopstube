@@ -89,7 +89,7 @@ if (true === XoopstubeUtility::xtubeCheckGroups($cid, 'XTubeSubPerm')) {
             $newid = $GLOBALS['xoopsDB']->getInsertId();
 
             // Add item_tag to Tag-module
-            if ($lid == 0) {
+            if (0 == $lid) {
                 $tagupdate = XoopstubeUtility::xtubeUpdateTag($newid, $item_tag);
             } else {
                 $tagupdate = XoopstubeUtility::xtubeUpdateTag($lid, $item_tag);
@@ -123,7 +123,7 @@ if (true === XoopstubeUtility::xtubeCheckGroups($cid, 'XTubeSubPerm')) {
                 redirect_header('index.php', 2, _MD_XOOPSTUBE_THANKSFORINFO);
             }
         } else {
-            if (true === XoopstubeUtility::xtubeCheckGroups($cid, 'XTubeAutoApp') || $approve === 1) {
+            if (true === XoopstubeUtility::xtubeCheckGroups($cid, 'XTubeAutoApp') || 1 === $approve) {
                 $updated = time();
                 $sql     = 'UPDATE '
                            . $GLOBALS['xoopsDB']->prefix('xoopstube_videos')
@@ -318,11 +318,11 @@ if (true === XoopstubeUtility::xtubeCheckGroups($cid, 'XTubeSubPerm')) {
         $keywords->setDescription('<br><span style="font-size: smaller;">' . _MD_XOOPSTUBE_KEYWORDS_NOTE . '</span>');
         $sform->addElement($keywords);
 
-        if ($GLOBALS['xoopsModuleConfig']['usercantag'] == 1) {
+        if (1 == $GLOBALS['xoopsModuleConfig']['usercantag']) {
             // Insert tags if Tag-module is installed
             if (XoopstubeUtility::xtubeIsModuleTagInstalled()) {
                 require_once XOOPS_ROOT_PATH . '/modules/tag/include/formtag.php';
-                $text_tags = new XoopsFormTag('item_tag', 70, 255, $video_array['item_tag'], 0);
+                $text_tags = new TagFormTag('item_tag', 70, 255, $video_array['item_tag'], 0);
                 $sform->addElement($text_tags);
             }
         } else {

@@ -93,7 +93,7 @@ class XoopstubeLists
         if (is_dir($dirname) && $handle = opendir($dirname)) {
             while (false !== ($file = readdir($handle))) {
                 if (!preg_match('/^[.]{1,2}$/', $file)) {
-                    if (strtolower($file) !== 'cvs' && is_dir($dirname . $file)) {
+                    if ('cvs' !== strtolower($file) && is_dir($dirname . $file)) {
                         $dirlist[$file] = $file;
                     }
                 }

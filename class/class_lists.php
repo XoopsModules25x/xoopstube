@@ -72,7 +72,7 @@ class FileList
 
     public function setEmptySelect($value = 0)
     {
-        $this->emptySelect = ((int)$value !== 1) ? 0 : 1;
+        $this->emptySelect = (1 !== (int)$value) ? 0 : 1;
     }
 
     /**
@@ -80,7 +80,7 @@ class FileList
      */
     public function setNoSelection($value = 0)
     {
-        $this->noSelection = ((int)$value !== 1) ? 0 : 1;
+        $this->noSelection = (1 !== (int)$value) ? 0 : 1;
     }
 
     /**
@@ -88,7 +88,7 @@ class FileList
      */
     public function setPrefix($value = '')
     {
-        $this->prefix = ((string)$value) !== '' ? (string)$value : '';
+        $this->prefix = '' !== ((string)$value) ? (string)$value : '';
     }
 
     /**
@@ -96,7 +96,7 @@ class FileList
      */
     public function setSuffix($value = '')
     {
-        $this->suffix = ((string)$value) !== '' ? (string)$value : '';
+        $this->suffix = '' !== ((string)$value) ? (string)$value : '';
     }
 
     /**

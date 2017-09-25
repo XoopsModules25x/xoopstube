@@ -46,12 +46,12 @@ function xtubeShowBannerB($options)
         $bannerload = [];
         $result2    = $GLOBALS['xoopsDB']->query('SELECT name FROM ' . $GLOBALS['xoopsDB']->prefix('bannerclient') . ' WHERE cid=' . (int)$myrow['cid']);
         $myclient   = $GLOBALS['xoopsDB']->fetchArray($result2);
-        if ($impmade == 0) {
+        if (0 == $impmade) {
             $percent = 0;
         } else {
             $percent = substr(100 * $clicks / $impmade, 0, 5);
         }
-        if ($imptotal == 0) {
+        if (0 == $imptotal) {
             $left = 'Unlimited';
         } else {
             $left = (int)$imptotal - (int)$impmade;

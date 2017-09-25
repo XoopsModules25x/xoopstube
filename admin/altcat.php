@@ -39,7 +39,7 @@ function makeTreeCheckTable(XoopstubeTree $xt, $itemid, $title, $checks, $order 
     echo '<form name="altcat" method="post" action="' . xoops_getenv('PHP_SELF') . '">';
     echo '<table width="100%" callspacing="1" class="outer">';
     $sql = 'SELECT ' . $xt->id . ', ' . $title . ' FROM ' . $xt->table . ' WHERE ' . $xt->pid . '=0' . ' ORDER BY ' . $title;
-    if ($order !== '') {
+    if ('' !== $order) {
         $sql .= ' ORDER BY ' . $order;
     }
     $result = $xt->db->query($sql);

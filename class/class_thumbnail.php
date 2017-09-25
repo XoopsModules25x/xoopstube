@@ -234,7 +234,7 @@ class XtubeThumbsNails
         $this->_save_image = "{$this->_save_path}/{$savefile}";
 
         if (0 == $this->img_update && file_exists($this->_save_image)) {
-            return $this->_return_fullpath == 1 ? $this->_source_url . "/{$this->_img_savepath}/{$savefile}" : "{$this->_img_savepath}/{$savefile}";
+            return 1 == $this->_return_fullpath ? $this->_source_url . "/{$this->_img_savepath}/{$savefile}" : "{$this->_img_savepath}/{$savefile}";
         }
 
         switch ($this->_image_type) {

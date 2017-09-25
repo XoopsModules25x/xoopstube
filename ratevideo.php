@@ -35,7 +35,7 @@ if (0 == $GLOBALS['xoopsModuleConfig']['showrating'] || '' == $lid) {
     redirect_header('index.php', 4, $ratemessage);
 }
 
-if ($ratinguser !== 0) {
+if (0 !== $ratinguser) {
     $result = $GLOBALS['xoopsDB']->query('SELECT cid, submitter FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE lid=' . (int)$lid);
     while (false !== (list($cid, $ratinguserDB) = $GLOBALS['xoopsDB']->fetchRow($result))) {
         if ($ratinguserDB === $ratinguser) {

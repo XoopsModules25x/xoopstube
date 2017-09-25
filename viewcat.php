@@ -97,7 +97,7 @@ if (is_array($arr) > 0 && !$list && !$selectdate) {
         // Using this code without our permission or removing this code voids the license agreement
 
         $_image = $ele['imgurl'] ? urldecode($ele['imgurl']) : '';
-        if ($_image !== '' && $GLOBALS['xoopsModuleConfig']['usethumbs']) {
+        if ('' !== $_image && $GLOBALS['xoopsModuleConfig']['usethumbs']) {
             $_thumb_image = new XtubeThumbsNails($_image, $GLOBALS['xoopsModuleConfig']['catimage'], 'thumbs');
             if ($_thumb_image) {
                 $_thumb_image->setUseThumbs(1);
@@ -224,7 +224,7 @@ if ($count > 0) {
 
     // Show order box
     $xoopsTpl->assign('show_videos', false);
-    if ($count > 1 && $cid !== 0) {
+    if ($count > 1 && 0 !== $cid) {
         $xoopsTpl->assign('show_videos', true);
         $orderbyTrans = XoopstubeUtility::xtubeConvertOrderByTrans($orderby);
         $xoopsTpl->assign('lang_cursortedby', sprintf(_MD_XOOPSTUBE_CURSORTBY, XoopstubeUtility::xtubeConvertOrderByTrans($orderby)));
@@ -233,7 +233,7 @@ if ($count > 0) {
 
     // Screenshots display
     $xoopsTpl->assign('show_screenshot', false);
-    if (isset($GLOBALS['xoopsModuleConfig']['screenshot']) && $GLOBALS['xoopsModuleConfig']['screenshot'] == 1) {
+    if (isset($GLOBALS['xoopsModuleConfig']['screenshot']) && 1 == $GLOBALS['xoopsModuleConfig']['screenshot']) {
         $xoopsTpl->assign('shotwidth', $GLOBALS['xoopsModuleConfig']['shotwidth']);
         $xoopsTpl->assign('shotheight', $GLOBALS['xoopsModuleConfig']['shotheight']);
         $xoopsTpl->assign('show_screenshot', true);

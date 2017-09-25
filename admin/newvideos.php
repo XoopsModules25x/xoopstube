@@ -66,7 +66,7 @@ switch (strtolower($op)) {
             $notificationHandler   = xoops_getHandler('notification');
             $notificationHandler->triggerEvent('global', 0, 'new_video', $tags);
             $notificationHandler->triggerEvent('category', $cid, 'new_video', $tags);
-            if ((int)$notifypub == 1) {
+            if (1 == (int)$notifypub) {
                 $notificationHandler->triggerEvent('video', $lid, 'approve', $tags);
             }
         }

@@ -29,7 +29,7 @@ $rootpath = Request::getInt('rootpath', 0, 'GET');
 
 switch (strtolower($op)) {
     case 'upload':
-        if ($_FILES['uploadfile']['name'] !== '') {
+        if ('' !== $_FILES['uploadfile']['name']) {
             if (file_exists(XOOPS_ROOT_PATH . '/' . Request::getString('uploadpath', '', 'POST') . '/' . $_FILES['uploadfile']['name'])) {
                 redirect_header('upload.php', 2, _AM_XOOPSTUBE_VIDEO_IMAGEEXIST);
             }
