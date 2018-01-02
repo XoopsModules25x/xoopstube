@@ -1,4 +1,5 @@
-<?php
+<?php namespace Xoopsmodules\xoopstube;
+
 /**
  * Module: XoopsTube
  *
@@ -17,6 +18,9 @@
  * @since           1.0.6
  */
 
+use Xoopsmodules\xoopstube;
+use Xoopsmodules\xoopstube\common;
+
 if (!defined('_PATH')) {
     define('_PATH', XOOPS_ROOT_PATH);
 }
@@ -26,9 +30,9 @@ if (!defined('DEFAULT_PATH')) {
 }
 
 /**
- * Class XtubeThumbsNails
+ * Class Thumbnails
  */
-class XtubeThumbsNails
+class Thumbnails
 {
     public $_imgName      = 'blank.gif';
     public $_img_path     = 'uploads';
@@ -63,7 +67,6 @@ class XtubeThumbsNails
      * @internal param string $_imgName
      * @internal param string $_img_path
      * @internal param string $_img_savepath
-     * @return \XtubeThumbsNails
      */
     public function __construct($img_name = null, $img_path = null, $img_savepath = null)
     {

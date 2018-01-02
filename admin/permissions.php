@@ -18,6 +18,7 @@
  */
 
 use Xmf\Request;
+use Xoopsmodules\xoopstube;
 
 require_once __DIR__ . '/admin_header.php';
 require_once __DIR__ . '/../../../include/cp_header.php';
@@ -67,7 +68,7 @@ switch ($permtoset) {
         break;
 }
 
-$permform = new XoopsGroupPermForm($title_of_form, $module_id, $perm_name, $perm_desc, 'admin/permissions.php');
+$permform = new \XoopsGroupPermForm($title_of_form, $module_id, $perm_name, $perm_desc, 'admin/permissions.php');
 $result   = $GLOBALS['xoopsDB']->query('SELECT cid, pid, title FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_cat') . ' ORDER BY title ASC');
 if ($GLOBALS['xoopsDB']->getRowsNum($result)) {
     while (false !== ($permrow = $GLOBALS['xoopsDB']->fetcharray($result))) {

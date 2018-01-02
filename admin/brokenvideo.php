@@ -18,6 +18,7 @@
  */
 
 use Xmf\Request;
+use Xoopsmodules\xoopstube;
 
 require_once __DIR__ . '/admin_header.php';
 
@@ -175,7 +176,7 @@ switch (strtolower($op)) {
                 } else {
                     echo '<td class="even"><a href="mailto:' . $owneremail . '">' . $ownername . '</a></td>';
                 }
-                echo '<td class="even" style="text-align: center;">' . XoopstubeUtility::xtubeGetTimestamp(formatTimestamp($date, $GLOBALS['xoopsModuleConfig']['dateformatadmin'])) . '</td>';
+                echo '<td class="even" style="text-align: center;">' . xoopstube\Utility::xtubeGetTimestamp(formatTimestamp($date, $GLOBALS['xoopsModuleConfig']['dateformatadmin'])) . '</td>';
                 echo '<td class="even"><a href="brokenvideo.php?op=updateNotice&amp;lid=' . $lid . '&ack=' . (int)$acknowledged . '">' . $ack_image . ' </a></td>';
                 echo '<td class="even"><a href="brokenvideo.php?op=updateNotice&amp;lid=' . $lid . '&con=' . (int)$confirmed . '">' . $con_image . '</a></td>';
                 echo '<td class="even" style="text-align: center;" nowrap>';

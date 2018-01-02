@@ -1,4 +1,4 @@
-<?php
+<?php namespace Xoopsmodules\xoopstube;
 
 /**
  * Module: XoopsTube
@@ -17,7 +17,15 @@
  * @link            https://xoops.org/
  * @since           1.0.6
  */
-class XtubeTextSanitizer extends MyTextSanitizer
+
+use Xoopsmodules\xoopstube;
+use Xoopsmodules\xoopstube\common;
+
+/**
+ * Class XtubeTextSanitizer
+ * @package Xoopsmodules\xoopstube
+ */
+class XtubeTextSanitizer extends \MyTextSanitizer
 {
     /**
      * @param $text
@@ -29,3 +37,5 @@ class XtubeTextSanitizer extends MyTextSanitizer
         return $this->htmlSpecialChars($this->stripSlashesGPC($text));
     }
 }
+
+

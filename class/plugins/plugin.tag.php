@@ -45,7 +45,7 @@ function xoopstube_tag_iteminfo(&$items)
         return false;
     }
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
 
     $items_id = [];
 

@@ -1,4 +1,4 @@
-<?php
+<?php namespace Xoopsmodules\xoopstube;
 
 /**
  * Module: XoopsTube
@@ -19,6 +19,9 @@
  * @since           1.0.6
  */
 
+use Xoopsmodules\xoopstube;
+use Xoopsmodules\xoopstube\common;
+
 // defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 /**
@@ -30,7 +33,7 @@
  * @package   xoopstubetree
  * @access    public
  */
-class XoopstubeTree
+class Tree
 {
     public $table; //table with parent-child structure
     public $id; //name of unique id for records in table $table
@@ -48,7 +51,7 @@ class XoopstubeTree
      */
     public function __construct($tableName, $idName, $pidName)
     {
-        $this->db    = XoopsDatabaseFactory::getDatabaseConnection();
+        $this->db    = \XoopsDatabaseFactory::getDatabaseConnection();
         $this->table = $tableName;
         $this->id    = $idName;
         $this->pid   = $pidName;
@@ -178,7 +181,7 @@ class XoopstubeTree
             return $path;
         }
         list($parentid, $name) = $this->db->fetchRow($result);
-        $myts = MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
         $name = $myts->htmlspecialchars($name);
         $path = '/' . $name . $path . '';
         if (0 == $parentid) {
@@ -205,7 +208,7 @@ class XoopstubeTree
         if ('' === $sel_name) {
             $sel_name = $this->id;
         }
-        $myts = MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
         echo "<select name='" . $sel_name . "'";
         if ('' !== $onchange) {
             echo " onchange='" . $onchange . "'";
@@ -260,7 +263,7 @@ class XoopstubeTree
             return $path;
         }
         list($parentid, $name) = $this->db->fetchRow($result);
-        $myts = MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
         $name = $myts->htmlspecialchars($name);
         $path = "<li><a href='" . $funcURL . '&amp;' . $this->id . '=' . $selectId . "'>" . $name . '</a></li>' . $path . '';
         if (0 == $parentid) {

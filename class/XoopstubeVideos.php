@@ -1,4 +1,5 @@
-<?php
+<?php namespace Xoopsmodules\xoopstube;
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -18,12 +19,16 @@
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  */
+
+use Xoopsmodules\xoopstube;
+use Xoopsmodules\xoopstube\common;
+
 // defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 /**
- * Class XoopstubeXoopstube
+ * Class XoopstubeVideos
  */
-class XoopstubeXoopstube
+class XoopstubeVideos
 {
     public $dirname;
     public $module;
@@ -44,7 +49,7 @@ class XoopstubeXoopstube
     /**
      * @param bool $debug
      *
-     * @return XoopstubeXoopstube
+     * @return \Xoopsmodules\xoopstube\XoopstubeVideos
      */
     public static function getInstance($debug = false)
     {
@@ -163,49 +168,5 @@ class XoopstubeXoopstube
         if ($this->debug && is_object($GLOBALS['xoopsLogger'])) {
             $GLOBALS['xoopsLogger']->addExtra($this->module->name(), $log);
         }
-    }
-}
-
-/**
- * Class XoopstubeXoopstubeHandler
- */
-class XoopstubeXoopstubeHandler extends XoopsPersistableObjectHandler
-{
-    /**
-     * @var XoopstubeXoopstube
-     * @access public
-     */
-    public $xoopstube = null;
-
-    /**
-     * @param null|XoopsDatabase $db
-     */
-    public function __construct(XoopsDatabase $db)
-    {
-        parent::__construct($db, 'xoopstube_videos', 'XoopstubeXoopstube', 'lid', 'title');
-        $this->xoopstube = XoopstubeXoopstube::getInstance();
-    }
-
-    /**
-     * Get criteria for active videos
-     *
-     * @return CriteriaElement
-     */
-    public function getActiveCriteria()
-    {
-        $gpermHandler = xoops_getHandler('groupperm');
-
-        $criteria = new CriteriaCompo(new Criteria('offline', false));
-        $criteria->add(new Criteria('published', 0, '>'));
-        $criteria->add(new Criteria('published', time(), '<='));
-        $expiredCriteria = new CriteriaCompo(new Criteria('expired', 0));
-        $expiredCriteria->add(new Criteria('expired', time(), '>='), 'OR');
-        $criteria->add($expiredCriteria);
-        // add criteria for categories that the user has permissions for
-        $groups                   = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : [0 => XOOPS_GROUP_ANONYMOUS];
-        $allowedDownCategoriesIds = $gpermHandler->getItemIds('XTubeCatPerm', $groups, $this->xoopstube->getModule()->mid());
-        $criteria->add(new Criteria('cid', '(' . implode(',', $allowedDownCategoriesIds) . ')', 'IN'));
-
-        return $criteria;
     }
 }

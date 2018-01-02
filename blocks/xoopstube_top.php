@@ -17,6 +17,8 @@
  * @since           1.0.6
  */
 
+use Xoopsmodules\xoopstube;
+
 /**
  * @param int    $cid
  * @param string $permType
@@ -260,7 +262,7 @@ function showTopVideoBlock($options)
     }
 
     require_once XOOPS_ROOT_PATH . '/modules/' . $xtubeModule->getVar('dirname') . '/include/video.php';
-    require_once XOOPS_ROOT_PATH . '/modules/' . $xtubeModule->getVar('dirname') . '/class/utility.php';
+    require_once XOOPS_ROOT_PATH . '/modules/' . $xtubeModule->getVar('dirname') . '/class/Utility.php';
 
     while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
         if (false === checkBlockGroups($myrow['cid']) || 0 == $myrow['cid']) {
@@ -282,7 +284,7 @@ function showTopVideoBlock($options)
         $videoload['cid']   = (int)$myrow['cid'];
         $videoload['title'] = $title;
         if ('published' === $options[0]) {
-            $videoload['date'] = XoopstubeUtility::xtubeGetTimestamp(formatTimestamp($myrow['published'], $options[3]));
+            $videoload['date'] = xoopstube\Utility::xtubeGetTimestamp(formatTimestamp($myrow['published'], $options[3]));
         } elseif ('hits' === $options[0]) {
             $videoload['hits'] = $myrow['hits'];
         }
@@ -332,7 +334,7 @@ function getRandomVideo($options)
     }
 
     require_once XOOPS_ROOT_PATH . '/modules/' . $xtubeModule->getVar('dirname') . '/include/video.php';
-    require_once XOOPS_ROOT_PATH . '/modules/' . $xtubeModule->getVar('dirname') . '/class/utility.php';
+    require_once XOOPS_ROOT_PATH . '/modules/' . $xtubeModule->getVar('dirname') . '/class/Utility.php';
 
     while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result2))) {
         if (false === checkBlockGroups($myrow['cid']) || 0 == $myrow['cid']) {
@@ -349,7 +351,7 @@ function getRandomVideo($options)
         $videorandom['cid']   = (int)$myrow['cid'];
         $videorandom['title'] = $title;
         if (isset($options[3])) {
-            $videorandom['date'] = XoopstubeUtility::xtubeGetTimestamp(formatTimestamp($myrow['published'], $options[3]));
+            $videorandom['date'] = xoopstube\Utility::xtubeGetTimestamp(formatTimestamp($myrow['published'], $options[3]));
         }
         $videorandom['videothumb'] = xtubeGetVideoThumb($myrow['vidid'], $myrow['title'], $myrow['vidsource'], $myrow['picurl'], $xtubeModuleConfig['videoimgdir'] . '/' . $myrow['screenshot'], $xtubeModuleConfig['shotwidth'], $xtubeModuleConfig['shotheight']);
         $videorandom['dirname']    = $xtubeModule->getVar('dirname');
@@ -396,7 +398,7 @@ function getRandomVideoForHorizontalBlock($options)
     }
 
     require_once XOOPS_ROOT_PATH . '/modules/' . $xtubeModule->getVar('dirname') . '/include/video.php';
-    require_once XOOPS_ROOT_PATH . '/modules/' . $xtubeModule->getVar('dirname') . '/class/utility.php';
+    require_once XOOPS_ROOT_PATH . '/modules/' . $xtubeModule->getVar('dirname') . '/class/Utility.php';
 
     while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result2))) {
         if (false === checkBlockGroups($myrow['cid']) || 0 == $myrow['cid']) {
@@ -414,7 +416,7 @@ function getRandomVideoForHorizontalBlock($options)
         $videorandomh['cid']   = (int)$myrow['cid'];
         $videorandomh['title'] = $title;
         if (isset($options[3])) {
-            $videorandomh['date'] = XoopstubeUtility::xtubeGetTimestamp(formatTimestamp($myrow['published'], $options[3]));
+            $videorandomh['date'] = xoopstube\Utility::xtubeGetTimestamp(formatTimestamp($myrow['published'], $options[3]));
         }
         require_once XOOPS_ROOT_PATH . '/modules/' . $xtubeModule->getVar('dirname') . '/include/video.php';
         $videorandomh['videothumb'] = xtubeGetVideoThumb($myrow['vidid'], $myrow['title'], $myrow['vidsource'], $myrow['picurl'], $xtubeModuleConfig['videoimgdir'] . '/' . $myrow['screenshot'], $xtubeModuleConfig['shotwidth'], $xtubeModuleConfig['shotheight']);
@@ -456,8 +458,8 @@ function editTopVideoBlock($options)
     $form .= '&nbsp;<br>' . _MB_XOOPSTUBE_DATEFORMAT . "&nbsp;<input type='text' name='options[]' value='" . $options[3] . "'>&nbsp;" . _MB_XOOPSTUBE_DATEFORMATMANUAL;
 
     $cat_arr = [];
-    require_once XOOPS_ROOT_PATH . '/modules/xoopstube/class/xoopstubetree.php';
-    $xt      = new XoopstubeTree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
+    require_once XOOPS_ROOT_PATH . '/modules/xoopstube/class/Tree.php';
+    $xt      = new xoopstube\Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
     $cat_arr = $xt->getChildTreeArray(0, 'title');
 
     $form .= '<br>' . _MB_XOOPSTUBE_SELECTCAT . '<br><select name="options[]" multiple="multiple" size="5">';

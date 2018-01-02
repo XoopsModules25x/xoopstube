@@ -22,6 +22,7 @@
  */
 
 use Xmf\Request;
+use Xoopsmodules\xoopstube;
 
 require_once __DIR__ . '/admin_header.php';
 
@@ -38,7 +39,7 @@ switch (strtolower($op)) {
                 redirect_header('vupload.php', 2, _AM_XOOPSTUBE_VUPLOAD_VIDEOEXIST);
             }
             $allowed_mimetypes = 'media/aac, media/flv, media/mp3, media/mp4';
-            XoopstubeUtility::xtubeUploadFiles($_FILES, Request::getString('uploadpath', '', 'POST'), $allowed_mimetypes, 'vupload.php', 1, 0);
+            xoopstube\Utility::xtubeUploadFiles($_FILES, Request::getString('uploadpath', '', 'POST'), $allowed_mimetypes, 'vupload.php', 1, 0);
             redirect_header('vupload.php', 2, _AM_XOOPSTUBE_VUPLOAD_VIDEOUPLOAD);
         } else {
             redirect_header('vupload.php', 2, _AM_XOOPSTUBE_VUPLOAD_NOVIDEOEXIST);
@@ -91,20 +92,20 @@ switch (strtolower($op)) {
         $pathlist = isset($listarray[$rootpath]) ? $namearray[$rootpath] : '';
         $namelist = isset($listarray[$rootpath]) ? $namearray[$rootpath] : '';
 
-        $iform = new XoopsThemeForm(_AM_XOOPSTUBE_VUPLOAD_FUPLOADVIDEOTO . $pathlist, 'op', xoops_getenv('PHP_SELF'), 'post', true);
+        $iform = new \XoopsThemeForm(_AM_XOOPSTUBE_VUPLOAD_FUPLOADVIDEOTO . $pathlist, 'op', xoops_getenv('PHP_SELF'), 'post', true);
         $iform->setExtra('enctype="multipart/form-data"');
         ob_start();
         $iform->addElement(new XoopsFormHidden('dir', $rootpath));
-        XoopstubeUtility::xtubeVGetDirSelectOption($namelist, $dirarray, $namearray);
+        xoopstube\Utility::xtubeVGetDirSelectOption($namelist, $dirarray, $namearray);
         $iform->addElement(new XoopsFormLabel(_AM_XOOPSTUBE_VUPLOAD_FOLDERSELECTION, ob_get_contents()));
         ob_end_clean();
 
         if ($rootpath > 0) {
             $file_array       = &XoopstubeLists:: getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $dirarray[$rootpath], $type = 'media');
-            $indexfile_select = new XoopsFormSelect('', 'videofile', '');
+            $indexfile_select = new \XoopsFormSelect('', 'videofile', '');
             $indexfile_select->addOptionArray($file_array);
             $indexfile_select->setExtra("onchange='showImgSelected(\"media\", \"videofile\", \"" . $dirarray[$rootpath] . '", "", "' . XOOPS_URL . "\")'");
-            $indexfile_tray = new XoopsFormElementTray(_AM_XOOPSTUBE_VUPLOAD_FSHOWSELECTEDFILE, '&nbsp;');
+            $indexfile_tray = new \XoopsFormElementTray(_AM_XOOPSTUBE_VUPLOAD_FSHOWSELECTEDFILE, '&nbsp;');
             $indexfile_tray->addElement($indexfile_select);
             if (!empty($imgurl)) {
                 $indexfile_tray->addElement(new XoopsFormLabel('', '<br><br><img src="' . XOOPS_URL . '/' . $dirarray[$rootpath] . '/' . $videofile . '" name="image" id="image" alt="">'));
@@ -113,19 +114,19 @@ switch (strtolower($op)) {
             }
             $iform->addElement($indexfile_tray);
 
-            $file_tray = new XoopsFormFile(_AM_XOOPSTUBE_VUPLOAD_FUPLOADVIDEO, 'uploadfile', 0);
+            $file_tray = new \XoopsFormFile(_AM_XOOPSTUBE_VUPLOAD_FUPLOADVIDEO, 'uploadfile', 0);
             $file_tray->setDescription('<span style="font-size: small;">' . _AM_XOOPSTUBE_VUPLOAD_FSHOWSELECTEDFILEDSC . '</span>');
             $iform->addElement($file_tray);
             $iform->addElement(new XoopsFormHidden('uploadpath', $dirarray[$rootpath]));
             $iform->addElement(new XoopsFormHidden('rootnumber', $rootpath));
 
-            $dup_tray = new XoopsFormElementTray('', '');
+            $dup_tray = new \XoopsFormElementTray('', '');
             $dup_tray->addElement(new XoopsFormHidden('op', 'vupload'));
-            $butt_dup = new XoopsFormButton('', '', _AM_XOOPSTUBE_BUPLOAD, 'submit');
+            $butt_dup = new \XoopsFormButton('', '', _AM_XOOPSTUBE_BUPLOAD, 'submit');
             $butt_dup->setExtra('onclick="this.form.elements.op.value=\'vupload\'"');
             $dup_tray->addElement($butt_dup);
 
-            $butt_dupct = new XoopsFormButton('', '', _AM_XOOPSTUBE_BDELETEVIDEO, 'submit');
+            $butt_dupct = new \XoopsFormButton('', '', _AM_XOOPSTUBE_BDELETEVIDEO, 'submit');
             $butt_dupct->setExtra('onclick="this.form.elements.op.value=\'delfile\'"');
             $dup_tray->addElement($butt_dupct);
             $iform->addElement($dup_tray);

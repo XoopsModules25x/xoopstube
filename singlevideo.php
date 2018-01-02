@@ -19,6 +19,7 @@
  */
 
 use Xmf\Request;
+use Xoopsmodules\xoopstube;
 
 include __DIR__ . '/header.php';
 
@@ -37,17 +38,17 @@ $sql2 = 'SELECT count(*) FROM '
         . time()
         . ') AND a.offline = 0'
         . ' AND (b.cid=a.cid OR (a.cid='
-        . (int)$cid
+        . $cid
         . ' OR b.cid='
-        . (int)$cid
+        . $cid
         . '))';
 list($count) = $GLOBALS['xoopsDB']->fetchRow($GLOBALS['xoopsDB']->query($sql2));
 
-if (false === XoopstubeUtility::xtubeCheckGroups($cid) || 0 === $count) {
+if (false === xoopstube\Utility::xtubeCheckGroups($cid) || 0 === $count) {
     redirect_header('index.php', 1, _MD_XOOPSTUBE_MUSTREGFIRST);
 }
 
-$sql       = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE lid=' . (int)$lid . '
+$sql       = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE lid=' . $lid . '
         AND (published > 0 AND published <= ' . time() . ')
         AND (expired = 0 OR expired > ' . time() . ')
         AND offline = 0
@@ -65,18 +66,18 @@ include XOOPS_ROOT_PATH . '/header.php';
 $xoTheme->addStylesheet('modules/' . $moduleDirName . '/assets/css/xtubestyle.css');
 
 // tags support
-if (XoopstubeUtility::xtubeIsModuleTagInstalled()) {
+if (xoopstube\Utility::xtubeIsModuleTagInstalled()) {
     require_once XOOPS_ROOT_PATH . '/modules/tag/include/tagbar.php';
     $xoopsTpl->assign('tagbar', tagBar($video_arr['lid'], 0));
 }
 
-$video['imageheader']  = XoopstubeUtility::xtubeRenderImageHeader();
+$video['imageheader']  = xoopstube\Utility::xtubeRenderImageHeader();
 $video['id']           = $video_arr['lid'];
 $video['cid']          = $video_arr['cid'];
 $video['vidid']        = $video_arr['vidid'];
 $video['description2'] = $xtubemyts->displayTarea($video_arr['description'], 1, 1, 1, 1, 1);
 
-$mytree        = new XoopstubeTree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
+$mytree        = new xoopstube\Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
 $pathstring    = '<a href="index.php">' . _MD_XOOPSTUBE_MAIN . '</a>&nbsp;:&nbsp;';
 $pathstring    .= $mytree->getNicePathFromId($cid, 'title', 'viewcat.php?op=');
 $video['path'] = $pathstring;
@@ -91,7 +92,7 @@ global $xoopsTpl, $xoTheme;
 
 $maxWords = 100;
 $words    = [];
-$words    = explode(' ', XoopstubeUtility::xtubeConvertHtml2Text($video_arr['description']));
+$words    = explode(' ', xoopstube\Utility::xtubeConvertHtml2Text($video_arr['description']));
 $newWords = [];
 $i        = 0;
 while ($i < $maxWords - 1 && $i < count($words)) {
@@ -132,7 +133,7 @@ if (isset($GLOBALS['xoopsModuleConfig']['screenshot']) && 1 == $GLOBALS['xoopsMo
 }
 
 if (false === $video['isadmin']) {
-    $count = XoopstubeUtility::xtubeUpdateCounter($lid);
+    $count = xoopstube\Utility::xtubeUpdateCounter($lid);
 }
 
 // Show other author videos
@@ -144,11 +145,11 @@ $sql    = 'SELECT lid, cid, title, published FROM ' . $GLOBALS['xoopsDB']->prefi
 $result = $GLOBALS['xoopsDB']->query($sql, 10, 0);
 
 while (false !== ($arr = $GLOBALS['xoopsDB']->fetchArray($result))) {
-    if (true === XoopstubeUtility::xtubeCheckGroups($arr['cid'])) {
+    if (true === xoopstube\Utility::xtubeCheckGroups($arr['cid'])) {
         $videouid['title']     = $xtubemyts->htmlSpecialCharsStrip($arr['title']);
         $videouid['lid']       = $arr['lid'];
         $videouid['cid']       = $arr['cid'];
-        $videouid['published'] = XoopstubeUtility::xtubeGetTimestamp(formatTimestamp($arr['published'], $GLOBALS['xoopsModuleConfig']['dateformat']));
+        $videouid['published'] = xoopstube\Utility::xtubeGetTimestamp(formatTimestamp($arr['published'], $GLOBALS['xoopsModuleConfig']['dateformat']));
         $xoopsTpl->append('video_uid', $videouid);
     }
 }

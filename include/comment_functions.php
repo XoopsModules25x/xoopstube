@@ -24,7 +24,7 @@
 
 function xtubeUpdateComment($videoload_id, $total_num)
 {
-    $db  = XoopsDatabaseFactory::getDatabaseConnection();
+    $db  = \XoopsDatabaseFactory::getDatabaseConnection();
     $sql = 'UPDATE ' . $db->prefix('xoopstube_videos') . ' SET comments=' . $total_num . ' WHERE lid=' . $videoload_id;
     $db->query($sql);
 }

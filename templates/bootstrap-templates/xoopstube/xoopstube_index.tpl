@@ -35,6 +35,7 @@
     <div class="col-md-12">
         <div class="text-center xoopstube-navigation">
         <{$catarray.letters}>
+            <{$catarray.letters2}>
         </div><!-- .xoopstube-navigation -->
     </div>
     

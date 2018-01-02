@@ -1,4 +1,5 @@
-<?php
+<?php namespace Xoopsmodules\xoopstube;
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -10,6 +11,9 @@
 */
 
 use Xmf\Request;
+use Xoopsmodules\xoopstube;
+use Xoopsmodules\xoopstube\common;
+use WideImage\WideImage;
 
 /**
  * xoopstube
@@ -32,19 +36,29 @@ use Xmf\Request;
 
 // defined('XOOPS_ROOT_PATH') || die('XOOPS Root Path not defined');
 
-use WideImage\WideImage;
+
+
+require_once __DIR__ . '/../include/common.php';
 
 /**
- * Class XoopstubeUtility
+ * Class Utility
  */
-class XoopstubeUtility
+class Utility
 {
+    use common\VersionChecks; //checkVerXoops, checkVerPhp Traits
+
+    use common\ServerStats; // getServerStats Trait
+
+    use common\FilesManagement; // Files Management Trait
+
+    //--------------- Custom module methods -----------------------------
+
     const MODULE_NAME = 'xoopstube';
 
     /**
      * Access the only instance of this class
      *
-     * @return XoopsObject
+     * @return \Xoopsmodules\xoopstube\Utility
      *
      * @static
      * @staticvar   object
@@ -418,7 +432,7 @@ class XoopstubeUtility
     /**
      * Vérifie que l'utilisateur courant fait partie du groupe des administrateurs
      *
-     * @return booleean Admin or not
+     * @return bool Admin or not
      */
     public static function isAdmin()
     {
@@ -515,10 +529,10 @@ class XoopstubeUtility
         if (self::isX23()) {
             return false;
         }
-        if (false !== strpos(strtolower(XOOPS_VERSION), 'impresscms')) {
+        if (false !== stripos(XOOPS_VERSION, 'impresscms')) {
             return false;
         }
-        if (false === strpos(strtolower(XOOPS_VERSION), 'legacy')) {
+        if (false === stripos(XOOPS_VERSION, 'legacy')) {
             $xv = xoops_trim(str_replace('XOOPS ', '', XOOPS_VERSION));
             if ((int)substr($xv, 4, 2) >= 17) {
                 return false;
@@ -950,7 +964,7 @@ class XoopstubeUtility
             $limit                               = $xoopsConfigSearch['keyword_min'];
             $_SESSION['oledrion_keywords_limit'] = $limit;
         }
-        $myts            = MyTextSanitizer::getInstance();
+        $myts            = \MyTextSanitizer::getInstance();
         $content         = str_replace('<br>', ' ', $content);
         $content         = $myts->undoHtmlSpecialChars($content);
         $content         = strip_tags($content);
@@ -1039,7 +1053,7 @@ class XoopstubeUtility
                     $permittedtypes = $mimeTypes;
                 }
                 $uploadSize = null === $uploadMaxSize ? self::getModuleOption('maxuploadsize') : $uploadMaxSize;
-                $uploader   = new XoopsMediaUploader($dstpath, $permittedtypes, $uploadSize, $maxWidth, $maxHeight);
+                $uploader   = new \XoopsMediaUploader($dstpath, $permittedtypes, $uploadSize, $maxWidth, $maxHeight);
                 //$uploader->allowUnknownTypes = true;
                 $uploader->setTargetFileName($destname);
                 if ($uploader->fetchMedia($_POST['xoops_upload_file'][$indice])) {
@@ -1246,7 +1260,7 @@ class XoopstubeUtility
         $ret      = '';
         $infotips = self::getModuleOption('infotips');
         if ($infotips > 0) {
-            $myts = MyTextSanitizer::getInstance();
+            $myts = \MyTextSanitizer::getInstance();
             $ret  = $myts->htmlSpecialChars(xoops_substr(strip_tags($text), 0, $infotips));
         }
 
@@ -1378,7 +1392,7 @@ class XoopstubeUtility
     /**
      * Returns the mime type of a file using first finfo then mime_content
      *     
-     * @param string $ filename The file (with full path) that you want to know the mime type
+     * @param $filename
      * @return string
      */
     public static function getMimeType($filename)
@@ -1509,7 +1523,7 @@ class XoopstubeUtility
     /**
      * Function responsible for verifying that a directory exists, we can write in and create an index.html file
      *
-     * @param string $ folder The full directory to verify
+     * @param $folder
      */
     public static function prepareFolder($folder)
     {
@@ -1704,7 +1718,7 @@ class XoopstubeUtility
      *
      * @param float $amount
      *
-     * @return float
+     * @return void
      */
     public static function doNotAcceptNegativeAmounts(&$amount)
     {
@@ -2044,7 +2058,7 @@ class XoopstubeUtility
     public static function xtubeRenderToolbar($cid = 0)
     {
         $toolbar = '[ ';
-        if (true === XoopstubeUtility::xtubeCheckGroups($cid, 'XTubeSubPerm')) {
+        if (true === self::xtubeCheckGroups($cid, 'XTubeSubPerm')) {
             $toolbar .= '<a href="submit.php?cid=' . $cid . '">' . _MD_XOOPSTUBE_SUBMITVIDEO . '</a> | ';
         }
         $toolbar .= '<a href="newlist.php?newvideoshowdays=7">' . _MD_XOOPSTUBE_LATESTLIST . '</a> | <a href="topten.php?list=hit">' . _MD_XOOPSTUBE_POPULARITY . '</a> | <a href="topten.php?list=rate">' . _MD_XOOPSTUBE_TOPRATED . '</a> ]';
@@ -2311,7 +2325,7 @@ class XoopstubeUtility
         $result     = $GLOBALS['xoopsDB']->query($sql);
         $catlisting = 0;
         while (false !== (list($cid) = $GLOBALS['xoopsDB']->fetchRow($result))) {
-            if (XoopstubeUtility::xtubeCheckGroups($cid)) {
+            if (self::xtubeCheckGroups($cid)) {
                 ++$catlisting;
             }
         }
@@ -2366,7 +2380,7 @@ class XoopstubeUtility
         $arr    = [];
         $result = $GLOBALS['xoopsDB']->query($sql);
         while (false !== (list($lid, $cid, $published) = $GLOBALS['xoopsDB']->fetchRow($result))) {
-            if (true === XoopstubeUtility::xtubeCheckGroups()) {
+            if (true === self::xtubeCheckGroups()) {
                 ++$count;
                 $published_date = ($published > $published_date) ? $published : $published_date;
             }
@@ -2425,7 +2439,7 @@ class XoopstubeUtility
 
         $image = '';
         if (!empty($indeximage)) {
-            $image = XoopstubeUtility::xtubeDisplayImage($indeximage, 'index.php', $GLOBALS['xoopsModuleConfig']['mainimagedir'], $indexheading);
+            $image = self::xtubeDisplayImage($indeximage, 'index.php', $GLOBALS['xoopsModuleConfig']['mainimagedir'], $indexheading);
         }
 
         return $image;
@@ -2743,10 +2757,9 @@ class XoopstubeUtility
         echo "<select size='1' name='workd' onchange='location.href=\"upload.php?rootpath=\"+this.options[this.selectedIndex].value'>";
         echo "<option value=''>--------------------------------------</option>";
         foreach ($namearray as $namearray => $workd) {
+            $opt_selected = '';
             if ($workd == $selected) {
                 $opt_selected = 'selected';
-            } else {
-                $opt_selected = '';
             }
             echo '<option value="' . htmlspecialchars($namearray, ENT_QUOTES) . '" $opt_selected>' . $workd . '</option>';
         }
@@ -2763,10 +2776,9 @@ class XoopstubeUtility
         echo "<select size='1' name='workd' onchange='location.href=\"vupload.php?rootpath=\"+this.options[this.selectedIndex].value'>";
         echo "<option value=''>--------------------------------------</option>";
         foreach ($namearray as $namearray => $workd) {
+            $opt_selected = '';
             if ($workd == $selected) {
                 $opt_selected = 'selected';
-            } else {
-                $opt_selected = '';
             }
             echo '<option value="' . htmlspecialchars($namearray, ENT_QUOTES) . '" $opt_selected>' . $workd . '</option>';
         }
@@ -2799,7 +2811,7 @@ class XoopstubeUtility
         //        include_once(XOOPS_ROOT_PATH . '/class/uploader.php');
 
         if (empty($allowed_mimetypes)) {
-            $allowed_mimetypes = xtube_retmime($FILES['userfile']['name'], $usertype);
+            $allowed_mimetypes = xtube_getmime($FILES['userfile']['name'], $usertype);
         }
         $upload_dir = XOOPS_ROOT_PATH . '/' . $uploaddir . '/';
 
@@ -2808,7 +2820,7 @@ class XoopstubeUtility
         $maxfilewidth  = $GLOBALS['xoopsModuleConfig']['maximgwidth'];
         $maxfileheight = $GLOBALS['xoopsModuleConfig']['maximgheight'];
 
-        $uploader = new XoopsMediaUploader($upload_dir, $allowed_mimetypes, $maxfilesize, $maxfilewidth, $maxfileheight);
+        $uploader = new \XoopsMediaUploader($upload_dir, $allowed_mimetypes, $maxfilesize, $maxfilewidth, $maxfileheight);
         $uploader->noAdminSizeCheck(1);
         //if ($uploader->fetchMedia(Request::getArray('xoops_upload_file[0]', array(), 'POST'))) {
         if ($uploader->fetchMedia(Request::getArray('xoops_upload_file', '', 'POST')[0])) {
@@ -2869,12 +2881,12 @@ class XoopstubeUtility
 
         $title        = '<a href="../singlevideo.php?cid=' . $published['cid'] . '&amp;lid=' . $published['lid'] . '">' . $xtubemyts->htmlSpecialCharsStrip(trim($published['title'])) . '</a>';
         $maintitle    = urlencode($xtubemyts->htmlSpecialChars(trim($published['title'])));
-        $cattitle     = '<a href="../viewcat.php?cid=' . $published['cid'] . '">' . XoopstubeUtility::xtubeGetCategoryTitle($published['cid']) . '</a>';
-        $submitter    = XoopstubeUtility::xtubeGetLinkedUserNameFromId($published['submitter']);
+        $cattitle     = '<a href="../viewcat.php?cid=' . $published['cid'] . '">' . self::xtubeGetCategoryTitle($published['cid']) . '</a>';
+        $submitter    = self::xtubeGetLinkedUserNameFromId($published['submitter']);
         $returnsource = xtubeReturnSource($published['vidsource']);
-        $submitted    = XoopstubeUtility::xtubeGetTimestamp(formatTimestamp($published['date'], $GLOBALS['xoopsModuleConfig']['dateformatadmin']));
-        $publish      = ($published['published'] > 0) ? XoopstubeUtility::xtubeGetTimestamp(formatTimestamp($published['published'], $GLOBALS['xoopsModuleConfig']['dateformatadmin'])) : 'Not Published';
-        $expires      = $published['expired'] ? XoopstubeUtility::xtubeGetTimestamp(formatTimestamp($published['expired'], $GLOBALS['xoopsModuleConfig']['dateformatadmin'])) : _AM_XOOPSTUBE_MINDEX_NOTSET;
+        $submitted    = self::xtubeGetTimestamp(formatTimestamp($published['date'], $GLOBALS['xoopsModuleConfig']['dateformatadmin']));
+        $publish      = ($published['published'] > 0) ? self::xtubeGetTimestamp(formatTimestamp($published['published'], $GLOBALS['xoopsModuleConfig']['dateformatadmin'])) : 'Not Published';
+        $expires      = $published['expired'] ? self::xtubeGetTimestamp(formatTimestamp($published['expired'], $GLOBALS['xoopsModuleConfig']['dateformatadmin'])) : _AM_XOOPSTUBE_MINDEX_NOTSET;
 
         if ((($published['expired'] && $published['expired'] > time()) || 0 == $published['expired'])
             && ($published['published'] && $published['published'] < time())
@@ -2930,7 +2942,7 @@ class XoopstubeUtility
         }
         // Display Page Nav if published is > total display pages amount.
         require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
-        $pagenav = new XoopsPageNav($pubrowamount, $GLOBALS['xoopsModuleConfig']['admin_perpage'], $start, 'st' . $art, $_this);
+        $pagenav = new \XoopsPageNav($pubrowamount, $GLOBALS['xoopsModuleConfig']['admin_perpage'], $start, 'st' . $art, $_this);
         echo '<div style="text-align: ' . $align . '; padding: 8px;">' . $pagenav->renderNav() . '</div>';
 
         return null;
@@ -2980,12 +2992,12 @@ class XoopstubeUtility
 
         $title        = '<a href="../singlevideo.php?cid=' . $published['cid'] . '&amp;lid=' . $published['lid'] . '">' . $xtubemyts->htmlSpecialCharsStrip(trim($published['title'])) . '</a>';
         $maintitle    = urlencode($xtubemyts->htmlSpecialChars(trim($published['title'])));
-        $cattitle     = '<a href="../viewcat.php?cid=' . $published['cid'] . '">' . XoopstubeUtility::xtubeGetCategoryTitle($published['cid']) . '</a>';
-        $submitter    = XoopstubeUtility::xtubeGetLinkedUserNameFromId($published['submitter']);
+        $cattitle     = '<a href="../viewcat.php?cid=' . $published['cid'] . '">' . self::xtubeGetCategoryTitle($published['cid']) . '</a>';
+        $submitter    = self::xtubeGetLinkedUserNameFromId($published['submitter']);
         $returnsource = xtubeReturnSource($published['vidsource']);
-        $submitted    = XoopstubeUtility::xtubeGetTimestamp(formatTimestamp($published['date'], $GLOBALS['xoopsModuleConfig']['dateformatadmin']));
-        $publish      = ($published['published'] > 0) ? XoopstubeUtility::xtubeGetTimestamp(formatTimestamp($published['published'], $GLOBALS['xoopsModuleConfig']['dateformatadmin'])) : 'Not Published';
-        $expires      = $published['expired'] ? XoopstubeUtility::xtubeGetTimestamp(formatTimestamp($published['expired'], $GLOBALS['xoopsModuleConfig']['dateformatadmin'])) : _AM_XOOPSTUBE_MINDEX_NOTSET;
+        $submitted    = self::xtubeGetTimestamp(formatTimestamp($published['date'], $GLOBALS['xoopsModuleConfig']['dateformatadmin']));
+        $publish      = ($published['published'] > 0) ? self::xtubeGetTimestamp(formatTimestamp($published['published'], $GLOBALS['xoopsModuleConfig']['dateformatadmin'])) : 'Not Published';
+        $expires      = $published['expired'] ? self::xtubeGetTimestamp(formatTimestamp($published['expired'], $GLOBALS['xoopsModuleConfig']['dateformatadmin'])) : _AM_XOOPSTUBE_MINDEX_NOTSET;
 
         if ((($published['expired'] && $published['expired'] > time()) || 0 === $published['expired'])
             && ($published['published'] && $published['published'] < time())
@@ -3061,7 +3073,7 @@ class XoopstubeUtility
         }
         // Display Page Nav if published is > total display pages amount.
         require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
-        $pagenav = new XoopsPageNav($pubrowamount, $GLOBALS['xoopsModuleConfig']['admin_perpage'], $start, 'st' . $art, $_this);
+        $pagenav = new \XoopsPageNav($pubrowamount, $GLOBALS['xoopsModuleConfig']['admin_perpage'], $start, 'st' . $art, $_this);
         echo '<div style="text-align: ' . $align . '; padding: 8px;">' . $pagenav->renderNav() . '</div>';
 
         return null;
@@ -3152,7 +3164,7 @@ class XoopstubeUtility
     public static function xtubeUpdateTag($lid, $item_tag)
     {
         global $xoopsModule;
-        if (XoopstubeUtility::xtubeIsModuleTagInstalled()) {
+        if (self::xtubeIsModuleTagInstalled()) {
             require_once XOOPS_ROOT_PATH . '/modules/tag/include/formtag.php';
             $tagHandler = xoops_getModuleHandler('tag', 'tag');
             $tagHandler->updateByItem($item_tag, $lid, $xoopsModule->getVar('dirname'), 0);
@@ -3176,7 +3188,7 @@ class XoopstubeUtility
     public static function xtubeGetBannerFromBannerId($banner_id)
     {
         ###### Hack by www.stefanosilvestrini.com ######
-        $db      = XoopsDatabaseFactory::getDatabaseConnection();
+        $db      = \XoopsDatabaseFactory::getDatabaseConnection();
         $bresult = $db->query('SELECT COUNT(*) FROM ' . $db->prefix('banner') . ' WHERE bid=' . $banner_id);
         list($numrows) = $db->fetchRow($bresult);
         if ($numrows > 1) {
@@ -3237,7 +3249,7 @@ class XoopstubeUtility
     public static function xtubeGetBannerFromClientId($client_id)
     {
         ###### Hack by www.stefanosilvestrini.com ######
-        $db      = XoopsDatabaseFactory::getDatabaseConnection();
+        $db      = \XoopsDatabaseFactory::getDatabaseConnection();
         $bresult = $db->query('SELECT COUNT(*) FROM ' . $db->prefix('banner') . ' WHERE cid=' . $client_id);
         list($numrows) = $db->fetchRow($bresult);
         if ($numrows > 1) {
@@ -3514,15 +3526,15 @@ class XoopstubeUtility
 
         $moduleDirName = $xoopsModule->getVar('dirname');
         require_once XOOPS_ROOT_PATH . "/modules/$moduleDirName/class/$moduleDirName.php";
-        $xoopstube = XoopstubeXoopstube::getInstance();
+        $helper = xoopstube\Helper::getInstance();
 
-        $a             = $xoopstube->getHandler('xoopstube');
+        $a             = $helper->getHandler('xoopstube');
         $b             = $a->getActiveCriteria();
         $moduleDirName = basename(dirname(__DIR__));
 
-        $criteria = $xoopstube->getHandler('xoopstube')->getActiveCriteria();
+        $criteria = $helper->getHandler('xoopstube')->getActiveCriteria();
         $criteria->setGroupby('UPPER(LEFT(title,1))');
-        $countsByLetters = $xoopstube->getHandler($moduleDirName)->getCounts($criteria);
+        $countsByLetters = $helper->getHandler($moduleDirName)->getCounts($criteria);
         // Fill alphabet array
         $alphabet       = getXtubeAlphabet();
         $alphabet_array = [];
@@ -3546,10 +3558,10 @@ class XoopstubeUtility
             $GLOBALS['xoTheme'] = new xos_opal_Theme();
         }
         require_once $GLOBALS['xoops']->path('class/template.php');
-        $letterschoiceTpl          = new XoopsTpl();
+        $letterschoiceTpl          = new \XoopsTpl();
         $letterschoiceTpl->caching = false; // Disable cache
         $letterschoiceTpl->assign('alphabet', $alphabet_array);
-        $html = $letterschoiceTpl->fetch('db:' . $xoopstube->getModule()->dirname() . '_common_letterschoice.tpl');
+        $html = $letterschoiceTpl->fetch('db:' . $helper->getModule()->dirname() . '_common_letterschoice.tpl');
         unset($letterschoiceTpl);
 
         return $html;
@@ -3571,11 +3583,11 @@ class XoopstubeUtility
         $moduleDirName = $xoopsModule->getVar('dirname');
         include_once XOOPS_ROOT_PATH . "/modules/$moduleDirName/class/$moduleDirName.php";
 
-        $xoopstube = XoopstubeXoopstube::getInstance();
+        $helper = xoopstube\Helper::getInstance();
 
-        $criteria = $xoopstube->getHandler('xoopstube')->getActiveCriteria();
+        $criteria = $helper->getHandler('xoopstube')->getActiveCriteria();
         $criteria->setGroupby('UPPER(LEFT(title,1))');
-        $countsByLetters = $xoopstube->getHandler('xoopstube')->getCounts($criteria);
+        $countsByLetters = $helper->getHandler('xoopstube')->getCounts($criteria);
         // Fill alphabet array
         $alphabet       = [];
         $alphabet       = getXtubeAlphabet();
@@ -3585,7 +3597,7 @@ class XoopstubeUtility
             if (isset($countsByLetters[$letter])) {
                 $letter_array['letter'] = $letter;
                 $letter_array['count']  = $countsByLetters[$letter];
-                $letter_array['url']    = XOOPS_URL . "/modules/{$xoopstube->getModule()->dirname()}/viewcat.php?list={$letter}";
+                $letter_array['url']    = XOOPS_URL . "/modules/{$helper->getModule()->dirname()}/viewcat.php?list={$letter}";
             } else {
                 $letter_array['letter'] = $letter;
                 $letter_array['count']  = 0;
@@ -3600,10 +3612,10 @@ class XoopstubeUtility
             $GLOBALS['xoTheme'] = new xos_opal_Theme();
         }
         require_once $GLOBALS['xoops']->path('class/template.php');
-        $letterschoiceTpl          = new XoopsTpl();
+        $letterschoiceTpl          = new \XoopsTpl();
         $letterschoiceTpl->caching = false; // Disable cache
         $letterschoiceTpl->assign('alphabet', $alphabet_array);
-        $html = $letterschoiceTpl->fetch("db:{$xoopstube->getModule()->dirname()}_co_letterschoice.tpl");
+        $html = $letterschoiceTpl->fetch("db:{$helper->getModule()->dirname()}_co_letterschoice.tpl");
         unset($letterschoiceTpl);
 
         return $html;
@@ -3617,7 +3629,7 @@ class XoopstubeUtility
      */
     public static function xtubeUserIsAdmin()
     {
-        $xoopstube = XoopstubeXoopstube::getInstance();
+        $helper = xoopstube\Helper::getInstance();
 
         static $xtubeIsAdmin;
 
@@ -3628,7 +3640,7 @@ class XoopstubeUtility
         if (!$GLOBALS['xoopsUser']) {
             $xtubeIsAdmin = false;
         } else {
-            $xtubeIsAdmin = $GLOBALS['xoopsUser']->isAdmin($xoopstube->getModule()->getVar('mid'));
+            $xtubeIsAdmin = $GLOBALS['xoopsUser']->isAdmin($helper->getModule()->getVar('mid'));
         }
 
         return $xtubeIsAdmin;

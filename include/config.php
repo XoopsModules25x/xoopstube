@@ -20,12 +20,13 @@
 // WARNING: ONCE SET DO NOT CHANGE! Improper use will render this module useless and unworkable.
 // Only Change if you know what you are doing.
 
-require_once __DIR__ . '/../../../mainfile.php';
+require_once __DIR__ . '/common.php';
 
 $moduleDirName = basename(dirname(__DIR__));
+$capsDirName   = strtoupper($moduleDirName);
 
 //These are names of the current tables
-
+/*
 if (!defined('xoopstube_broken')) {
     define('xoopstube_broken', 'xoopstube_broken');
 }
@@ -61,18 +62,63 @@ if (!defined('XOOPSTUBE_MODULE_PATH')) {
     define('XOOPSTUBE_ROOT_PATH', XOOPS_ROOT_PATH . '/modules/' . XOOPSTUBE_DIRNAME);
     define('XOOPSTUBE_AUTHOR_LOGOIMG', XOOPSTUBE_URL . '/assets/images/logo_module.png');
 }
-
+*/
 // Define here the place where main upload path
 
 //$moduleUploadsPath = $GLOBALS['xoopsModuleConfig']['uploaddir'];
 
-define('XOOPSTUBE_UPLOAD_URL', XOOPS_UPLOAD_URL . '/' . XOOPSTUBE_DIRNAME); // WITHOUT Trailing slash
+//define('XOOPSTUBE_UPLOAD_URL', XOOPS_UPLOAD_URL . '/' . XOOPSTUBE_DIRNAME); // WITHOUT Trailing slash
 //define("XOOPSTUBE_UPLOAD_PATH", $img_dir); // WITHOUT Trailing slash
-define('XOOPSTUBE_UPLOAD_PATH', XOOPS_UPLOAD_PATH . '/' . XOOPSTUBE_DIRNAME); // WITHOUT Trailing slash
+//define('XOOPSTUBE_UPLOAD_PATH', XOOPS_UPLOAD_PATH . '/' . XOOPSTUBE_DIRNAME); // WITHOUT Trailing slash
 
-$uploadFolders = [
-    XOOPSTUBE_UPLOAD_PATH,
-    XOOPSTUBE_UPLOAD_PATH . '/category',
-    XOOPSTUBE_UPLOAD_PATH . '/videos',
-    XOOPSTUBE_UPLOAD_PATH . '/screenshots'
+
+//Configurator
+return (object)[
+    'name'          => strtoupper($moduleDirName) . ' Module Configurator',
+    'paths'         => [
+        'dirname'    => $moduleDirName,
+        'admin'      => XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/admin',
+        'modPath'    => XOOPS_ROOT_PATH . '/modules/' . $moduleDirName,
+        'modUrl'     => XOOPS_URL . '/modules/' . $moduleDirName,
+        'uploadPath' => XOOPS_UPLOAD_PATH . '/' . $moduleDirName,
+        'uploadUrl'  => XOOPS_UPLOAD_URL . '/' . $moduleDirName,
+    ],
+    'uploadFolders' => [
+        constant($capsDirName . '_UPLOAD_PATH'),
+        constant($capsDirName . '_UPLOAD_PATH') . '/category',
+        constant($capsDirName . '_UPLOAD_PATH') . '/videos',
+        constant($capsDirName . '_UPLOAD_PATH') . '/screenshots',
+        //        XOOPS_UPLOAD_PATH . '/flags'
+    ],
+    'blankFiles'    => [
+        constant($capsDirName . '_UPLOAD_PATH'),
+        constant($capsDirName . '_UPLOAD_PATH') . '/category',
+        constant($capsDirName . '_UPLOAD_PATH') . '/videos',
+        constant($capsDirName . '_UPLOAD_PATH') . '/screenshots',
+        //        XOOPS_UPLOAD_PATH . '/flags'
+    ],
+
+    'templateFolders' => [
+        '/templates/',
+        '/templates/blocks/',
+        '/templates/admin/'
+
+    ],
+    'oldFiles'        => [
+        '/class/request.php',
+        '/class/registry.php',
+        '/class/utilities.php',
+        '/class/util.php',
+        '/include/constants.php',
+        '/include/functions.php',
+        '/ajaxrating.txt',
+    ],
+    'oldFolders'      => [
+        '/images',
+        '/css',
+        '/js',
+        '/fpdf',
+    ],
+    'modCopyright'    => "<a href='https://xoops.org' title='XOOPS Project' target='_blank'>
+                     <img src='" . constant($capsDirName . '_AUTHOR_LOGOIMG') . '\' alt=\'XOOPS Project\' /></a>',
 ];

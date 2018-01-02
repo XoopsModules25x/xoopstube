@@ -1,4 +1,4 @@
-<?php
+<?php namespace Xoopsmodules\xoopstube;
 
 /**
  * Module: XoopsTube
@@ -16,6 +16,14 @@
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @link            https://xoops.org/
  * @since           1.0.6
+ */
+
+use Xoopsmodules\xoopstube;
+use Xoopsmodules\xoopstube\common;
+
+/**
+ * Class FileList
+ * @package Xoopsmodules\xoopstube
  */
 class FileList
 {
@@ -43,7 +51,6 @@ class FileList
      * @internal param int $type
      * @internal param string $prefix
      * @internal param string $suffix
-     * @return \fileList
      */
     public function __construct($path = 'uploads', $value = null, $selected = '', $size = 1)
     {

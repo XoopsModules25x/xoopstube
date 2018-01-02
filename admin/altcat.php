@@ -18,6 +18,7 @@
  */
 
 use Xmf\Request;
+use Xoopsmodules\xoopstube;
 
 require_once __DIR__ . '/admin_header.php';
 
@@ -25,13 +26,13 @@ $op  = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET'); //xtubeC
 $lid = Request::getInt('lid', Request::getInt('lid', 0, 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'lid', 0);
 
 /**
- * @param  XoopstubeTree $xt
+ * @param \Tree          $xt
  * @param int            $itemid
  * @param                $title
  * @param                $checks
  * @param string         $order
  */
-function makeTreeCheckTable(XoopstubeTree $xt, $itemid, $title, $checks, $order = '')
+function makeTreeCheckTable(Tree $xt, $itemid, $title, $checks, $order = '')
 {
     global $xtubemyts;
 
@@ -122,7 +123,7 @@ switch (strtolower($op)) {
         while (false !== ($altcat = $GLOBALS['xoopsDB']->fetchArray($sql))) {
             $altcats[$altcat['cid']] = true;
         }
-        $mytree = new XoopstubeTree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
+        $mytree = new xoopstube\Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
         makeTreeCheckTable($mytree, $lid, 'title', $altcats);
         xoops_cp_footer();
 }

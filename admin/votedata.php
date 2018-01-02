@@ -18,6 +18,7 @@
  */
 
 use Xmf\Request;
+use Xoopsmodules\xoopstube;
 
 require_once __DIR__ . '/admin_header.php';
 
@@ -29,7 +30,7 @@ switch (strtolower($op)) {
     case 'delvote':
         $sql    = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_votedata') . ' WHERE ratingid=' . $rid;
         $result = $GLOBALS['xoopsDB']->queryF($sql);
-        XoopstubeUtility::xtubeUpdateRating($lid);
+        xoopstube\Utility::xtubeUpdateRating($lid);
         redirect_header('votedata.php', 1, _AM_XOOPSTUBE_VOTEDELETED);
         break;
 
@@ -40,7 +41,7 @@ switch (strtolower($op)) {
         //xtubeRenderAdminMenu( _AM_XOOPSTUBE_VOTE_RATINGINFOMATION );
         $adminObject = \Xmf\Module\Admin::getInstance();
         $adminObject->displayNavigation(basename(__FILE__));
-        $_vote_data = XoopstubeUtility::xtubeGetVoteDetails($lid);
+        $_vote_data = xoopstube\Utility::xtubeGetVoteDetails($lid);
 
         $text_info = '
         <table width="100%">
@@ -91,7 +92,7 @@ switch (strtolower($op)) {
             echo '<tr><td style="text-align: center;" colspan="7" class="head">' . _AM_XOOPSTUBE_VOTE_NOVOTES . '</td></tr>';
         } else {
             while (false !== (list($ratingid, $lid, $ratinguser, $rating, $ratinghostname, $ratingtimestamp, $title) = $GLOBALS['xoopsDB']->fetchRow($results))) {
-                $formatted_date = XoopstubeUtility::xtubeGetTimestamp(formatTimestamp($ratingtimestamp, $GLOBALS['xoopsModuleConfig']['dateformat']));
+                $formatted_date = xoopstube\Utility::xtubeGetTimestamp(formatTimestamp($ratingtimestamp, $GLOBALS['xoopsModuleConfig']['dateformat']));
                 $ratinguname    = XoopsUser::getUnameFromId($ratinguser);
                 echo '
                     <tr>
@@ -109,7 +110,7 @@ switch (strtolower($op)) {
         // Include page navigation
         require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
         $page    = ($votes > $GLOBALS['xoopsModuleConfig']['admin_perpage']) ? _AM_XOOPSTUBE_MINDEX_PAGE : '';
-        $pagenav = new XoopsPageNav($page, $GLOBALS['xoopsModuleConfig']['admin_perpage'], $start, 'start');
+        $pagenav = new \XoopsPageNav($page, $GLOBALS['xoopsModuleConfig']['admin_perpage'], $start, 'start');
         echo '<div align="right" style="padding: 8px;">' . $pagenav->renderNav() . '</div>';
         break;
 }

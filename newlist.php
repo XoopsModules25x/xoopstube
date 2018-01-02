@@ -19,6 +19,7 @@
  */
 
 use Xmf\Request;
+use Xoopsmodules\xoopstube;
 
 include __DIR__ . '/header.php';
 
@@ -28,7 +29,7 @@ $xoTheme->addStylesheet('modules/' . $moduleDirName . '/assets/css/xtubestyle.cs
 
 global $xoopsModule;
 
-$catarray['imageheader'] = XoopstubeUtility::xtubeRenderImageHeader();
+$catarray['imageheader'] = xoopstube\Utility::xtubeRenderImageHeader();
 $xoopsTpl->assign('catarray', $catarray);
 if (!isset($_GET['newvideoshowdays'])) {
     redirect_header('newlist.php?newvideoshowdays=7', 1, '');
@@ -80,7 +81,7 @@ if (Request::hasVar('newvideoshowdays', 'GET')) {
         $key                                 = $newvideoshowdays - $i - 1;
         $time                                = $time_cur - (86400 * $key);
         $dailyvideos[$key]['newvideodayRaw'] = $time;
-        $dailyvideos[$key]['newvideoView']   = XoopstubeUtility::xtubeGetTimestamp(formatTimestamp($time, $GLOBALS['xoopsModuleConfig']['dateformat']));
+        $dailyvideos[$key]['newvideoView']   = xoopstube\Utility::xtubeGetTimestamp(formatTimestamp($time, $GLOBALS['xoopsModuleConfig']['dateformat']));
         $dailyvideos[$key]['totalvideos']    = 0;
     }
 }
@@ -112,7 +113,7 @@ reset($dailyvideos);
 $xoopsTpl->assign('dailyvideos', $dailyvideos);
 unset($dailyvideos);
 
-$mytree = new XoopstubeTree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
+$mytree = new xoopstube\Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
 $sql    = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos');
 $sql    .= 'WHERE (published > 0 AND published <= ' . $time_cur . ')
          OR (updated > 0 AND updated <= ' . $time_cur . ')

@@ -49,6 +49,8 @@ define('_MI_XOOPSTUBE_MUPLOADS', 'Image Upload');
 define('_MI_XOOPSTUBE_PERMISSIONS', 'Permissions');
 define('_MI_XOOPSTUBE_BLOCKADMIN', 'Block Settings');
 define('_MI_XOOPSTUBE_MVOTEDATA', 'Votes');
+define('_MI_XOOPSTUBE_HOME', 'Home');
+define('_MI_XOOPSTUBE_ABOUT', 'About');
 
 // Title of config items
 define('_MI_XOOPSTUBE_POPULAR', 'video Popular Count');

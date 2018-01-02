@@ -18,15 +18,16 @@
  */
 
 use Xmf\Request;
+use Xoopsmodules\xoopstube;
 
 require_once __DIR__ . '/admin_header.php';
 
-//xoopstubeUtility::prepareFolder(XOOPSTUBE_UPLOAD_PATH);
-//xoopstubeUtility::prepareFolder(XOOPSTUBE_ATTACHED_FILES_PATH);
-//xoopstubeUtility::prepareFolder(XOOPSTUBE_PICTURES_PATH);
-//xoopstubeUtility::prepareFolder(XOOPSTUBE_CSV_PATH);
-//xoopstubeUtility::prepareFolder(XOOPSTUBE_CACHE_PATH);
-//xoopstubeUtility::prepareFolder(XOOPSTUBE_TEXT_PATH);
+//xoopstube\Utility::prepareFolder(XOOPSTUBE_UPLOAD_PATH);
+//xoopstube\Utility::prepareFolder(XOOPSTUBE_ATTACHED_FILES_PATH);
+//xoopstube\Utility::prepareFolder(XOOPSTUBE_PICTURES_PATH);
+//xoopstube\Utility::prepareFolder(XOOPSTUBE_CSV_PATH);
+//xoopstube\Utility::prepareFolder(XOOPSTUBE_CACHE_PATH);
+//xoopstube\Utility::prepareFolder(XOOPSTUBE_TEXT_PATH);
 
 $op = $op = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'op', '');
 //$cid = xtubeCleanRequestVars( $_REQUEST, 'cid', 0 );
@@ -81,13 +82,13 @@ switch (strtolower($op)) {
          ' . _AM_XOOPSTUBE_MINDEX_PAGEINFOTXT . '</div>
          </fieldset><br>';
 
-        $sform = new XoopsThemeForm(_AM_XOOPSTUBE_IPAGE_MODIFY, 'op', xoops_getenv('PHP_SELF'), 'post', true);
+        $sform = new \XoopsThemeForm(_AM_XOOPSTUBE_IPAGE_MODIFY, 'op', xoops_getenv('PHP_SELF'), 'post', true);
         $sform->addElement(new XoopsFormText(_AM_XOOPSTUBE_IPAGE_CTITLE, 'indexheading', 60, 60, $indexheading), false);
-        $graph_array      = &XoopstubeLists:: getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $GLOBALS['xoopsModuleConfig']['mainimagedir'], $type = 'images');
-        $indexImageSelect = new XoopsFormSelect('', 'indeximage', $indeximage);
+        $graph_array      = xoopstube\XoopstubeLists:: getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $GLOBALS['xoopsModuleConfig']['mainimagedir'], $type = 'images');
+        $indexImageSelect = new \XoopsFormSelect('', 'indeximage', $indeximage);
         $indexImageSelect->addOptionArray($graph_array);
         $indexImageSelect->setExtra("onchange='showImgSelected(\"image\", \"indeximage\", \"" . $GLOBALS['xoopsModuleConfig']['mainimagedir'] . '", "", "' . XOOPS_URL . "\")'");
-        $indeximage_tray = new XoopsFormElementTray(_AM_XOOPSTUBE_IPAGE_CIMAGE, '&nbsp;');
+        $indeximage_tray = new \XoopsFormElementTray(_AM_XOOPSTUBE_IPAGE_CIMAGE, '&nbsp;');
         $indeximage_tray->addElement($indexImageSelect);
         if (!empty($indeximage)) {
             $indeximage_tray->addElement(new XoopsFormLabel('', '<br><br><img src="' . XOOPS_URL . '/' . $GLOBALS['xoopsModuleConfig']['mainimagedir'] . '/' . $indeximage . '" name="image" id="image" alt="">'));
@@ -99,7 +100,7 @@ switch (strtolower($op)) {
         //        $editor = xtube_getWysiwygForm(_AM_XOOPSTUBE_IPAGE_CHEADING, 'indexheader', $indexheader, 15, 60, '');
         //        $sform->addElement($editor, false);
 
-        $optionsTrayNote = new XoopsFormElementTray(_AM_XOOPSTUBE_IPAGE_CHEADING, '<br>');
+        $optionsTrayNote = new \XoopsFormElementTray(_AM_XOOPSTUBE_IPAGE_CHEADING, '<br>');
         if (class_exists('XoopsFormEditor')) {
             $options['name']   = 'indexheader';
             $options['value']  = $indexheader;
@@ -107,16 +108,16 @@ switch (strtolower($op)) {
             $options['cols']   = '100%';
             $options['width']  = '100%';
             $options['height'] = '200px';
-            $editor            = new XoopsFormEditor('', $GLOBALS['xoopsModuleConfig']['form_optionsuser'], $options, $nohtml = false, $onfailure = 'textarea');
+            $editor            = new \XoopsFormEditor('', $GLOBALS['xoopsModuleConfig']['form_optionsuser'], $options, $nohtml = false, $onfailure = 'textarea');
             $optionsTrayNote->addElement($editor);
         } else {
-            $editor = new XoopsFormDhtmlTextArea('', 'indexheader', $item->getVar('indexheader', 'e'), '100%', '100%');
+            $editor = new \XoopsFormDhtmlTextArea('', 'indexheader', $item->getVar('indexheader', 'e'), '100%', '100%');
             $optionsTrayNote->addElement($editor);
         }
 
         $sform->addElement($optionsTrayNote, false);
 
-        $headeralign_select = new XoopsFormSelect(_AM_XOOPSTUBE_IPAGE_CHEADINGA, 'indexheaderalign', $indexheaderalign);
+        $headeralign_select = new \XoopsFormSelect(_AM_XOOPSTUBE_IPAGE_CHEADINGA, 'indexheaderalign', $indexheaderalign);
         $headeralign_select->addOptionArray([
                                                 'left'   => _AM_XOOPSTUBE_IPAGE_CLEFT,
                                                 'right'  => _AM_XOOPSTUBE_IPAGE_CRIGHT,
@@ -124,7 +125,7 @@ switch (strtolower($op)) {
                                             ]);
         $sform->addElement($headeralign_select);
         $sform->addElement(new XoopsFormTextArea(_AM_XOOPSTUBE_IPAGE_CFOOTER, 'indexfooter', $indexfooter, 10, 60));
-        $footeralign_select = new XoopsFormSelect(_AM_XOOPSTUBE_IPAGE_CFOOTERA, 'indexfooteralign', $indexfooteralign);
+        $footeralign_select = new \XoopsFormSelect(_AM_XOOPSTUBE_IPAGE_CFOOTERA, 'indexfooteralign', $indexfooteralign);
         $footeralign_select->addOptionArray([
                                                 'left'   => _AM_XOOPSTUBE_IPAGE_CLEFT,
                                                 'right'  => _AM_XOOPSTUBE_IPAGE_CRIGHT,
@@ -132,37 +133,37 @@ switch (strtolower($op)) {
                                             ]);
         $sform->addElement($footeralign_select);
 
-        $options_tray = new XoopsFormElementTray(_AM_XOOPSTUBE_TEXTOPTIONS, '<br>');
+        $options_tray = new \XoopsFormElementTray(_AM_XOOPSTUBE_TEXTOPTIONS, '<br>');
         //html option
-        $html_checkbox = new XoopsFormCheckBox('', 'nohtml', $nohtml);
+        $html_checkbox = new \XoopsFormCheckBox('', 'nohtml', $nohtml);
         $html_checkbox->addOption(1, _AM_XOOPSTUBE_DISABLEHTML);
         $options_tray->addElement($html_checkbox);
         //smiley option
-        $smiley_checkbox = new XoopsFormCheckBox('', 'nosmiley', $nosmiley);
+        $smiley_checkbox = new \XoopsFormCheckBox('', 'nosmiley', $nosmiley);
         $smiley_checkbox->addOption(1, _AM_XOOPSTUBE_DISABLESMILEY);
         $options_tray->addElement($smiley_checkbox);
         //xcodes option
-        $xcodes_checkbox = new XoopsFormCheckBox('', 'noxcodes', $noxcodes);
+        $xcodes_checkbox = new \XoopsFormCheckBox('', 'noxcodes', $noxcodes);
         $xcodes_checkbox->addOption(1, _AM_XOOPSTUBE_DISABLEXCODE);
         $options_tray->addElement($xcodes_checkbox);
         //noimages option
-        $noimages_checkbox = new XoopsFormCheckBox('', 'noimages', $noimages);
+        $noimages_checkbox = new \XoopsFormCheckBox('', 'noimages', $noimages);
         $noimages_checkbox->addOption(1, _AM_XOOPSTUBE_DISABLEIMAGES);
         $options_tray->addElement($noimages_checkbox);
         //breaks option
-        $breaks_checkbox = new XoopsFormCheckBox('', 'nobreak', $nobreak);
+        $breaks_checkbox = new \XoopsFormCheckBox('', 'nobreak', $nobreak);
         $breaks_checkbox->addOption(1, _AM_XOOPSTUBE_DISABLEBREAK);
         $options_tray->addElement($breaks_checkbox);
         $sform->addElement($options_tray);
 
         $sform->addElement(new XoopsFormRadioYN(_AM_XOOPSTUBE_IPAGE_SHOWLATEST, 'lastvideosyn', $lastvideosyn, ' ' . _YES . '', ' ' . _NO . ''));
 
-        $lastvideostotalform = new XoopsFormText(_AM_XOOPSTUBE_IPAGE_LATESTTOTAL, 'lastvideostotal', 2, 2, $lastvideostotal);
+        $lastvideostotalform = new \XoopsFormText(_AM_XOOPSTUBE_IPAGE_LATESTTOTAL, 'lastvideostotal', 2, 2, $lastvideostotal);
         $lastvideostotalform->setDescription('<span style="font-size: small;">' . _AM_XOOPSTUBE_IPAGE_LATESTTOTAL_DSC . '</span>');
         $sform->addElement($lastvideostotalform, false);
 
-        $button_tray = new XoopsFormElementTray('', '');
-        $hidden      = new XoopsFormHidden('op', 'save');
+        $button_tray = new \XoopsFormElementTray('', '');
+        $hidden      = new \XoopsFormHidden('op', 'save');
         $button_tray->addElement($hidden);
         $button_tray->addElement(new XoopsFormButton('', 'post', _AM_XOOPSTUBE_BSAVE, 'submit'));
         $sform->addElement($button_tray);

@@ -18,6 +18,7 @@
  */
 
 use Xmf\Request;
+use Xoopsmodules\xoopstube;
 
 require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
@@ -30,7 +31,7 @@ $start2    = Request::getInt('start2', 0, 'POST');// xtubeCleanRequestVars($_REQ
 $start3    = Request::getInt('start3', 0, 'POST');// xtubeCleanRequestVars($_REQUEST, 'start3', 0);
 $start4    = Request::getInt('start4', 0, 'POST');// xtubeCleanRequestVars($_REQUEST, 'start4', 0);
 $start5    = Request::getInt('start5', 0, 'POST');// xtubeCleanRequestVars($_REQUEST, 'start5', 0);
-$totalcats = XoopstubeUtility::xtubeGetTotalCategoryCount();
+$totalcats = xoopstube\Utility::xtubeGetTotalCategoryCount();
 
 $result = $GLOBALS['xoopsDB']->query('SELECT COUNT(*) FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_broken'));
 list($totalbrokenvideos) = $GLOBALS['xoopsDB']->fetchRow($result);
@@ -76,9 +77,9 @@ if ($totalbrokenvideos > 0) {
 //------ create directories ---------------
 /*
 $folderMode = $GLOBALS['xoopsModuleConfig']['dirmode'];
-//require_once __DIR__ . '/../class/utility.php';
+//require_once __DIR__ . '/../class/Utility.php';
 foreach (array_keys($uploadFolders) as $i) {
-    XoopstubeUtility::prepareFolder($uploadFolders[$i], $folderMode);
+    xoopstube\Utility::prepareFolder($uploadFolders[$i], $folderMode);
     $adminObject->addConfigBoxLine($uploadFolders[$i], 'folder');
     //    $adminObject->addConfigBoxLine(array($uploadFolders[$i], $folderMode), 'chmod');
 }
@@ -130,5 +131,7 @@ $adminObject->addConfigBoxLine(DirectoryChecker::getDirectoryStatus($path, 0777,
 xtubeFileChecks();
 
 */
+
+echo $utility::getServerStats();
 
 require_once __DIR__ . '/admin_footer.php';

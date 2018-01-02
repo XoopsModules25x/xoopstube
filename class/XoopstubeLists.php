@@ -1,4 +1,4 @@
-<?php
+<?php namespace Xoopsmodules\xoopstube;
 
 /**
  * Module: XoopsTube
@@ -16,6 +16,14 @@
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @link            https://xoops.org/
  * @since           1.0.6
+ */
+
+use Xoopsmodules\xoopstube;
+use Xoopsmodules\xoopstube\common;
+
+/**
+ * Class XoopstubeLists
+ * @package Xoopsmodules\xoopstube
  */
 class XoopstubeLists
 {
@@ -61,7 +69,7 @@ class XoopstubeLists
      *
      * @return string
      */
-    public function &getarray($this_array)
+    public function getarray($this_array)
     {
         $ret = "<select size='" . $this->size() . "' name='$this->value()'>";
         if ($this->emptyselect) {
@@ -87,7 +95,7 @@ class XoopstubeLists
      *
      * @return array
      */
-    public function &getDirListAsArray($dirname)
+    public function getDirListAsArray($dirname)
     {
         $dirlist = [];
         if (is_dir($dirname) && $handle = opendir($dirname)) {
@@ -114,7 +122,7 @@ class XoopstubeLists
      *
      * @return array
      */
-    public static function &getListTypeAsArray($dirname, $type = '', $prefix = '', $noselection = 1)
+    public static function getListTypeAsArray($dirname, $type = '', $prefix = '', $noselection = 1)
     {
         $filelist = [];
         switch (trim($type)) {

@@ -18,6 +18,7 @@
  */
 
 use Xmf\Request;
+use Xoopsmodules\xoopstube;
 
 require_once __DIR__ . '/admin_header.php';
 
@@ -115,9 +116,9 @@ switch (strtolower($op)) {
                 $title        = $xtubemyts->htmlSpecialCharsStrip($new['title']);
                 $vidid        = urldecode($xtubemyts->htmlSpecialCharsStrip($new['vidid']));
                 $logourl      = $xtubemyts->htmlSpecialCharsStrip($new['screenshot']);
-                $submitter    = XoopstubeUtility::xtubeGetLinkedUserNameFromId($new['submitter']);
+                $submitter    = xoopstube\Utility::xtubeGetLinkedUserNameFromId($new['submitter']);
                 $returnsource = xtubeReturnSource($new['vidsource']);
-                $datetime     = XoopstubeUtility::xtubeGetTimestamp(formatTimestamp($new['date'], $GLOBALS['xoopsModuleConfig']['dateformatadmin']));
+                $datetime     = xoopstube\Utility::xtubeGetTimestamp(formatTimestamp($new['date'], $GLOBALS['xoopsModuleConfig']['dateformatadmin']));
 
                 $icon = $new['published'] ? $approved : '<a href="newvideos.php?op=approve&amp;lid=' . $lid . '">' . $xtubeImageArray['approve'] . ' </a>';
                 $icon .= '<a href="main.php?op=edit&amp;lid=' . $lid . '">' . $xtubeImageArray['editimg'] . ' </a>';
@@ -139,7 +140,7 @@ switch (strtolower($op)) {
 
         require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
         //        $page = ( $new_array_count > $GLOBALS['xoopsModuleConfig']['admin_perpage'] ) ? _AM_XOOPSTUBE_MINDEX_PAGE : '';
-        $pagenav = new XoopsPageNav($new_array_count, $GLOBALS['xoopsModuleConfig']['admin_perpage'], $start, 'start');
+        $pagenav = new \XoopsPageNav($new_array_count, $GLOBALS['xoopsModuleConfig']['admin_perpage'], $start, 'start');
         echo '<div align="right" style="padding: 8px;">' . $pagenav->renderNav() . '</div>';
         require_once __DIR__ . '/admin_footer.php';
         break;

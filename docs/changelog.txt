@@ -1,3 +1,7 @@
+<h5>1.08 Beta 1       [NOT RELEASED]</h5>  Dev: Xoops 2.5.9, PHP 7.2.0
+<hr>
+- namespaces (mamba)
+
 <h5>1.07 RC 1       [NOT RELEASED]</h5>
 <hr>
 - fixed rating images (cesagonchu/mamba)

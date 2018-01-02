@@ -1,4 +1,5 @@
-<?php
+<?php namespace Xoopsmodules\xoopstube;
+
 /**
  * Module: XoopsTube
  *
@@ -16,6 +17,9 @@
  * @link            https://xoops.org/
  * @since           1.0.6
  */
+
+use Xoopsmodules\xoopstube;
+use Xoopsmodules\xoopstube\common;
 
 mt_srand((double)microtime() * 1000000);
 

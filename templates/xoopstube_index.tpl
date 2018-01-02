@@ -30,7 +30,7 @@
                     </div>
                 <{/if}>
             </td>
-            <{if $category.count % $cat_columns == 0}>
+            <{if $cat_columns != 0 && $category.count % $cat_columns == 0}>
         </tr>
         <tr><{/if}> <{/foreach}>
             <!-- End category loop -->

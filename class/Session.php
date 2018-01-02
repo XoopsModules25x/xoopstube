@@ -1,4 +1,4 @@
-<?php
+<?php namespace Xoopsmodules\xoopstube;
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -9,7 +9,7 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 /**
- *  XoopstubeSession class
+ *  Session class
  *
  * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
@@ -20,12 +20,15 @@
  */
 // defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
+use Xoopsmodules\xoopstube;
+use Xoopsmodules\xoopstube\common;
+
 require_once __DIR__ . '/../include/common.php';
 
 /**
- * Class XoopstubeSession
+ * Class Session
  */
-class XoopstubeSession
+class Session
 {
     /**
      * Session constructor<br>
@@ -95,15 +98,16 @@ class XoopstubeSession
     }
 
     /**
-     * @return XoopstubeSession
+     * @return Session
      */
     public static function getInstance()
     {
-        static $_sess;
-        if (!isset($_sess)) {
-            $_sess = new XoopstubeSession();
+        static $instance;
+        if (null === $instance) {
+            $instance = new static();
         }
 
-        return $_sess;
+
+        return $instance;
     }
 }

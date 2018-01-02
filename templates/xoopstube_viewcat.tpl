@@ -22,7 +22,7 @@
                             &nbsp;&nbsp;<{$subcat.infercategories}>
                         <{/if}>
                     </td>
-                    <{if $subcat.count % $cat_columns == 0}>
+                    <{if $cat_columns != 0 && $subcat.count % $cat_columns == 0}>
                 </tr>
                 <tr>
                     <{/if}>

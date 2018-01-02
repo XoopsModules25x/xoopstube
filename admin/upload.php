@@ -18,6 +18,7 @@
  */
 
 use Xmf\Request;
+use Xoopsmodules\xoopstube;
 
 require_once __DIR__ . '/admin_header.php';
 
@@ -41,7 +42,7 @@ switch (strtolower($op)) {
                 'image/png',
                 'media/flv'
             ];
-            XoopstubeUtility::xtubeUploadFiles($_FILES, Request::getString('uploadpath', '', 'POST'), $allowed_mimetypes, 'upload.php', 1, 0);
+            xoopstube\Utility::xtubeUploadFiles($_FILES, Request::getString('uploadpath', '', 'POST'), $allowed_mimetypes, 'upload.php', 1, 0);
             redirect_header('upload.php', 2, _AM_XOOPSTUBE_VIDEO_IMAGEUPLOAD);
         } else {
             redirect_header('upload.php', 2, _AM_XOOPSTUBE_VIDEO_NOIMAGEEXIST);
@@ -112,7 +113,7 @@ switch (strtolower($op)) {
         //    );
 
         //xtubeRenderAdminMenu( _AM_XOOPSTUBE_MUPLOADS );
-        XoopstubeUtility::xtubeGetServerStatistics();
+        xoopstube\Utility::xtubeGetServerStatistics();
         if ($rootpath > 0) {
             echo '<div><b>' . _AM_XOOPSTUBE_VIDEO_FUPLOADPATH . '</b> ' . XOOPS_ROOT_PATH . '/' . $dirarray[$rootpath] . '</div>';
             echo '<div><b>' . _AM_XOOPSTUBE_VIDEO_FUPLOADURL . '</b> ' . XOOPS_URL . '/' . $dirarray[$rootpath] . '</div><br>';
@@ -120,20 +121,20 @@ switch (strtolower($op)) {
         $pathlist = isset($listarray[$rootpath]) ? $namearray[$rootpath] : '';
         $namelist = isset($listarray[$rootpath]) ? $namearray[$rootpath] : '';
 
-        $iform = new XoopsThemeForm(_AM_XOOPSTUBE_VIDEO_FUPLOADIMAGETO . $pathlist, 'op', xoops_getenv('PHP_SELF'), 'post', true);
+        $iform = new \XoopsThemeForm(_AM_XOOPSTUBE_VIDEO_FUPLOADIMAGETO . $pathlist, 'op', xoops_getenv('PHP_SELF'), 'post', true);
         $iform->setExtra('enctype="multipart/form-data"');
         ob_start();
         $iform->addElement(new XoopsFormHidden('dir', $rootpath));
-        XoopstubeUtility::xtubeGetDirSelectOption($namelist, $dirarray, $namearray);
+        xoopstube\Utility::xtubeGetDirSelectOption($namelist, $dirarray, $namearray);
         $iform->addElement(new XoopsFormLabel(_AM_XOOPSTUBE_VIDEO_FOLDERSELECTION, ob_get_contents()));
         ob_end_clean();
 
         if ($rootpath > 0) {
             $graph_array      = &XoopstubeLists:: getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $dirarray[$rootpath], $type = 'images');
-            $indexImageSelect = new XoopsFormSelect('', 'videofile', '');
+            $indexImageSelect = new \XoopsFormSelect('', 'videofile', '');
             $indexImageSelect->addOptionArray($graph_array);
             $indexImageSelect->setExtra("onchange='showImgSelected(\"image\", \"videofile\", \"" . $dirarray[$rootpath] . '", "", "' . XOOPS_URL . "\")'");
-            $indeximage_tray = new XoopsFormElementTray(_AM_XOOPSTUBE_VIDEO_FSHOWSELECTEDIMAGE, '&nbsp;');
+            $indeximage_tray = new \XoopsFormElementTray(_AM_XOOPSTUBE_VIDEO_FSHOWSELECTEDIMAGE, '&nbsp;');
             $indeximage_tray->addElement($indexImageSelect);
             if (!empty($imgurl)) {
                 $indeximage_tray->addElement(new XoopsFormLabel('', '<br><br><img src="' . XOOPS_URL . '/' . $dirarray[$rootpath] . '/' . $videofile . '" name="image" id="image" alt"">'));
@@ -146,13 +147,13 @@ switch (strtolower($op)) {
             $iform->addElement(new XoopsFormHidden('uploadpath', $dirarray[$rootpath]));
             $iform->addElement(new XoopsFormHidden('rootnumber', $rootpath));
 
-            $dup_tray = new XoopsFormElementTray('', '');
+            $dup_tray = new \XoopsFormElementTray('', '');
             $dup_tray->addElement(new XoopsFormHidden('op', 'upload'));
-            $butt_dup = new XoopsFormButton('', '', _AM_XOOPSTUBE_BUPLOAD, 'submit');
+            $butt_dup = new \XoopsFormButton('', '', _AM_XOOPSTUBE_BUPLOAD, 'submit');
             $butt_dup->setExtra('onclick="this.form.elements.op.value=\'upload\'"');
             $dup_tray->addElement($butt_dup);
 
-            $butt_dupct = new XoopsFormButton('', '', _AM_XOOPSTUBE_BDELETEIMAGE, 'submit');
+            $butt_dupct = new \XoopsFormButton('', '', _AM_XOOPSTUBE_BDELETEIMAGE, 'submit');
             $butt_dupct->setExtra('onclick="this.form.elements.op.value=\'delfile\'"');
             $dup_tray->addElement($butt_dupct);
             $iform->addElement($dup_tray);

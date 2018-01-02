@@ -18,38 +18,73 @@
  * @since           1.0.6
  */
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+use Xoopsmodules\xoopstube;
 
-require_once __DIR__ . '/config.php';
+$moduleDirName = basename(dirname(__DIR__));
 
-//define("XOOPSTUBE_DIRNAME", basename(dirname(__DIR__)));
-//define("XOOPSTUBE_URL", XOOPS_URL . '/modules/' . XOOPSTUBE_DIRNAME);
-//define("XOOPSTUBE_IMAGES_URL", XOOPSTUBE_URL . '/assets/images');
-//define("XOOPSTUBE_ADMIN_URL", XOOPSTUBE_URL . '/admin');
-//define("XOOPSTUBE_ROOT_PATH", XOOPS_ROOT_PATH . '/modules/' . XOOPSTUBE_DIRNAME);
+require_once __DIR__ . '/../class/Helper.php';
+require_once __DIR__ . '/../class/Utility.php';
 
-//xoops_load("xoopsuserutility");
-//xoops_load("XoopsCache");
-//xoops_load("XoopsFile");
 
-xoops_loadLanguage('common', XOOPSTUBE_DIRNAME);
+if (!defined('XOOPSTUBE_MODULE_PATH')) {
+    define('XOOPSTUBE_DIRNAME', basename(dirname(__DIR__)));
+    define('XOOPSTUBE_URL', XOOPS_URL . '/modules/' . XOOPSTUBE_DIRNAME);
+    define('XOOPSTUBE_IMAGE_URL', XOOPSTUBE_URL . '/assets/images/');
+    define('XOOPSTUBE_ROOT_PATH', XOOPS_ROOT_PATH . '/modules/' . XOOPSTUBE_DIRNAME);
+    define('XOOPSTUBE_IMAGE_PATH', XOOPSTUBE_ROOT_PATH . '/assets/images');
+    define('XOOPSTUBE_ADMIN_URL', XOOPSTUBE_URL . '/admin/');
+    define('XOOPSTUBE_UPLOAD_URL', XOOPS_UPLOAD_URL . '/' . XOOPSTUBE_DIRNAME);
+    define('XOOPSTUBE_UPLOAD_PATH', XOOPS_UPLOAD_PATH . '/' . XOOPSTUBE_DIRNAME);
+    define('XOOPSTUBE_AUTHOR_LOGOIMG', XOOPSTUBE_URL . '/assets/images/logoModule.png');
+}
 
-require_once XOOPSTUBE_ROOT_PATH . '/class/utility.php';
-//require_once XOOPSTUBE_ROOT_PATH . '/include/config.php';
-require_once XOOPSTUBE_ROOT_PATH . '/class/session.php';
-require_once XOOPSTUBE_ROOT_PATH . '/class/xoopstube.php';
+require_once XOOPSTUBE_ROOT_PATH . '/class/Session.php';
+require_once XOOPSTUBE_ROOT_PATH . '/class/XoopstubeVideos.php';
 
-//require_once XOOPSTUBE_ROOT_PATH . '/class/request.php';
-//require_once XOOPSTUBE_ROOT_PATH . '/class/breadcrumb.php';
+/** @var \XoopsDatabase $db */
+/** @var xoopstube\Helper $helper */
+/** @var xoopstube\Utility $utility */
+$db           = \XoopsDatabaseFactory::getDatabase();
+$helper       = xoopstube\Helper::getInstance();
+$utility      = new xoopstube\Utility();
+$configurator = new xoopstube\common\Configurator();
 
-$debug     = false;
-$xoopstube = XoopstubeXoopstube::getInstance($debug);
+$helper->loadLanguage('common');
+
+$helper = xoopstube\Helper::getInstance();
 
 //This is needed or it will not work in blocks.
-global $xtubeIsAdmin;
+//global $xtubeIsAdmin;
 
 // Load only if module is installed
-if (is_object($xoopstube->getModule())) {
+if (is_object($helper->getModule())) {
     // Find if the user is admin of the module
-    $xtubeIsAdmin = XoopstubeUtility::xtubeUserIsAdmin();
+    $xtubeIsAdmin = $helper->isUserAdmin();
 }
+
+
+//handlers
+//$entriesHandler     = new xoopstube\EntriesHandler($db);
+//$categoriesHandler     = new xoopstube\CategoriesHandler($db);
+
+$pathIcon16    = Xmf\Module\Admin::iconUrl('', 16);
+$pathIcon32    = Xmf\Module\Admin::iconUrl('', 32);
+$pathModIcon16 = $helper->getModule()->getInfo('modicons16');
+$pathModIcon32 = $helper->getModule()->getInfo('modicons32');
+
+$icons = [
+    'edit'    => "<img src='" . $pathIcon16 . "/edit.png'  alt=" . _EDIT . "' align='middle'>",
+    'delete'  => "<img src='" . $pathIcon16 . "/delete.png' alt='" . _DELETE . "' align='middle'>",
+    'clone'   => "<img src='" . $pathIcon16 . "/editcopy.png' alt='" . _CLONE . "' align='middle'>",
+    'preview' => "<img src='" . $pathIcon16 . "/view.png' alt='" . _PREVIEW . "' align='middle'>",
+    'print'   => "<img src='" . $pathIcon16 . "/printer.png' alt='" . _CLONE . "' align='middle'>",
+    'pdf'     => "<img src='" . $pathIcon16 . "/pdf.png' alt='" . _CLONE . "' align='middle'>",
+    'add'     => "<img src='" . $pathIcon16 . "/add.png' alt='" . _ADD . "' align='middle'>",
+    '0'       => "<img src='" . $pathIcon16 . "/0.png' alt='" . _ADD . "' align='middle'>",
+    '1'       => "<img src='" . $pathIcon16 . "/1.png' alt='" . _ADD . "' align='middle'>",
+];
+
+// MyTextSanitizer object
+$myts = \MyTextSanitizer::getInstance();
+
+$debug = false;

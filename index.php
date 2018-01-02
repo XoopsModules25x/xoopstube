@@ -19,6 +19,7 @@
  */
 
 use Xmf\Request;
+use Xoopsmodules\xoopstube;
 
 include __DIR__ . '/header.php';
 
@@ -27,13 +28,13 @@ $start = Request::getInt('start', Request::getInt('start', 0, 'POST'), 'GET');
 $GLOBALS['xoopsOption']['template_main'] = 'xoopstube_index.tpl';
 include XOOPS_ROOT_PATH . '/header.php';
 
-$mytree = new XoopstubeTree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
+$mytree = new xoopstube\Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
 
 // Begin Main page Heading etc
 $sql      = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_indexpage');
 $head_arr = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
 
-$catarray['imageheader']      = XoopstubeUtility::xtubeRenderImageHeader($head_arr['indeximage'], $head_arr['indexheading']);
+$catarray['imageheader']      = xoopstube\Utility::xtubeRenderImageHeader($head_arr['indeximage'], $head_arr['indexheading']);
 $catarray['indexheaderalign'] = $xtubemyts->htmlSpecialCharsStrip($head_arr['indexheaderalign']);
 $catarray['indexfooteralign'] = $xtubemyts->htmlSpecialCharsStrip($head_arr['indexfooteralign']);
 
@@ -46,7 +47,17 @@ $breaks = $head_arr['nobreak'] ? 1 : 0;
 $catarray['indexheading'] = $xtubemyts->displayTarea($head_arr['indexheading'], $html, $smiley, $xcodes, $images, $breaks);
 $catarray['indexheader']  = $xtubemyts->displayTarea($head_arr['indexheader'], $html, $smiley, $xcodes, $images, $breaks);
 $catarray['indexfooter']  = $xtubemyts->displayTarea($head_arr['indexfooter'], $html, $smiley, $xcodes, $images, $breaks);
-$catarray['letters']      = XoopstubeUtility::xtubeGetLetters();
+$catarray['letters']      = xoopstube\Utility::xtubeGetLetters();
+
+
+/** @var \XoopsDatabase $db */
+/*
+$db           = \XoopsDatabaseFactory::getDatabase();
+$objHandler = new xoopstube\DownloadHandler($db);
+$choicebyletter = new xoopstube\common\ChoiceByLetter($objHandler, null, null, range('a', 'z'), 'letter');
+$catarray['letters2']  = $choicebyletter->render();
+*/
+
 $xoopsTpl->assign('catarray', $catarray);
 // End main page Headers
 
@@ -55,9 +66,9 @@ $chcount = 0;
 $countin = 0;
 
 // Begin Main page linkload info
-$listings = XoopstubeUtility::xtubeGetTotalItems();
+$listings = xoopstube\Utility::xtubeGetTotalItems();
 // get total amount of categories
-$total_cat = XoopstubeUtility::xtubeGetTotalCategoryCount();
+$total_cat = xoopstube\Utility::xtubeGetTotalCategoryCount();
 
 $catsort = $GLOBALS['xoopsModuleConfig']['sortcats'];
 $sql     = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_cat') . ' WHERE pid=0 ORDER BY ' . $catsort;
@@ -65,9 +76,9 @@ $result  = $GLOBALS['xoopsDB']->query($sql);
 while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
     ++$countin;
     $subtotalvideoload = 0;
-    $totalvideoload    = XoopstubeUtility::xtubeGetTotalItems($myrow['cid'], 1);
-    $indicator         = XoopstubeUtility::xtubeIsNewImage($totalvideoload['published']);
-    if (XoopstubeUtility::xtubeCheckGroups($myrow['cid'])) {
+    $totalvideoload    = xoopstube\Utility::xtubeGetTotalItems($myrow['cid'], 1);
+    $indicator         = xoopstube\Utility::xtubeIsNewImage($totalvideoload['published']);
+    if (xoopstube\Utility::xtubeCheckGroups($myrow['cid'])) {
         $title = $xtubemyts->htmlSpecialCharsStrip($myrow['title']);
 
         $arr = [];
@@ -77,7 +88,7 @@ while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $chcount       = 1;
         $subcategories = '';
         foreach ($arr as $ele) {
-            if (true === XoopstubeUtility::xtubeCheckGroups($ele['cid'])) {
+            if (true === xoopstube\Utility::xtubeCheckGroups($ele['cid'])) {
                 if (1 == $GLOBALS['xoopsModuleConfig']['subcats']) {
                     $chtitle = $xtubemyts->htmlSpecialCharsStrip($ele['title']);
                     if ($chcount > 5) {
@@ -162,7 +173,7 @@ if (1 == $lastvideos['lastvideosyn'] && $lastvideos['lastvideostotal'] > 0) {
                                 ORDER BY published DESC', $limit, $start);
 
     while (false !== ($video_arr = $GLOBALS['xoopsDB']->fetchArray($result))) {
-        if (true === XoopstubeUtility::xtubeCheckGroups($video_arr['cid'])) {
+        if (true === xoopstube\Utility::xtubeCheckGroups($video_arr['cid'])) {
             $res_type = 0;
             $moderate = 0;
             $cid      = $video_arr['cid'];
@@ -171,7 +182,7 @@ if (1 == $lastvideos['lastvideosyn'] && $lastvideos['lastvideostotal'] > 0) {
         }
     }
 
-    $pagenav = new XoopsPageNav($count, $GLOBALS['xoopsModuleConfig']['perpage'], $start, 'start');
+    $pagenav = new \XoopsPageNav($count, $GLOBALS['xoopsModuleConfig']['perpage'], $start, 'start');
     $xoopsTpl->assign('pagenav', $pagenav->renderNav());
     $xoopsTpl->assign('showlatest', $lastvideos['lastvideosyn']);
 }

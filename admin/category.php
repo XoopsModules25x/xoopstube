@@ -16,6 +16,7 @@
  */
 
 use Xmf\Request;
+use Xoopsmodules\xoopstube;
 
 require_once __DIR__ . '/admin_header.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsform/grouppermform.php';
@@ -60,7 +61,7 @@ function createCategory($cid = 0)
     $client_id    = 0;
     $banner_id    = 0;
     $heading      = _AM_XOOPSTUBE_CCATEGORY_CREATENEW;
-    $totalcats    = XoopstubeUtility::xtubeGetTotalCategoryCount();
+    $totalcats    = xoopstube\Utility::xtubeGetTotalCategoryCount();
 
     if ($cid > 0) {
         $sql          = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_cat') . ' WHERE cid=' . (int)$cid;
@@ -90,20 +91,20 @@ function createCategory($cid = 0)
         $groups = true;
     }
     echo '<br><br>';
-    $sform = new XoopsThemeForm($heading, 'op', xoops_getenv('PHP_SELF'), 'post', true);
+    $sform = new \XoopsThemeForm($heading, 'op', xoops_getenv('PHP_SELF'), 'post', true);
     $sform->setExtra('enctype="multipart/form-data"');
 
     $sform->addElement(new XoopsFormText(_AM_XOOPSTUBE_FCATEGORY_TITLE, 'title', 50, 80, $title), true);
     $sform->addElement(new XoopsFormText(_AM_XOOPSTUBE_FCATEGORY_WEIGHT, 'weight', 10, 80, $weight), false);
 
     if ($totalcats > 0 && $cid) {
-        $mytreechose = new XoopstubeTree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
+        $mytreechose = new xoopstube\Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
         ob_start();
         $mytreechose->makeMySelBox('title', 'title', $cat_arr['pid'], 1, 'pid');
         $sform->addElement(new XoopsFormLabel(_AM_XOOPSTUBE_FCATEGORY_SUBCATEGORY, ob_get_contents()));
         ob_end_clean();
     } else {
-        $mytreechose = new XoopstubeTree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
+        $mytreechose = new xoopstube\Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
         ob_start();
         $mytreechose->makeMySelBox('title', 'title', $cid, 1, 'pid');
         $sform->addElement(new XoopsFormLabel(_AM_XOOPSTUBE_FCATEGORY_SUBCATEGORY, ob_get_contents()));
@@ -111,10 +112,10 @@ function createCategory($cid = 0)
     }
 
     $graph_array      =& XoopstubeLists::getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $GLOBALS['xoopsModuleConfig']['catimage'], $type = 'images');
-    $indexImageSelect = new XoopsFormSelect('', 'imgurl', $imgurl);
+    $indexImageSelect = new \XoopsFormSelect('', 'imgurl', $imgurl);
     $indexImageSelect->addOptionArray($graph_array);
     $indexImageSelect->setExtra("onchange='showImgSelected(\"image\", \"imgurl\", \"" . $GLOBALS['xoopsModuleConfig']['catimage'] . '", "", "' . XOOPS_URL . "\")'");
-    $indeximage_tray = new XoopsFormElementTray(_AM_XOOPSTUBE_FCATEGORY_CIMAGE, '&nbsp;');
+    $indeximage_tray = new \XoopsFormElementTray(_AM_XOOPSTUBE_FCATEGORY_CIMAGE, '&nbsp;');
     $indeximage_tray->addElement($indexImageSelect);
     if ('' !== $imgurl && 1 != $imgurl) {
         $indeximage_tray->addElement(new XoopsFormLabel('', "<br><br><img src='" . XOOPS_URL . '/' . $GLOBALS['xoopsModuleConfig']['catimage'] . '/' . $imgurl . "' name='image' id='image' alt=''>"));
@@ -126,7 +127,7 @@ function createCategory($cid = 0)
     //    $editor = xtube_getWysiwygForm(_AM_XOOPSTUBE_FCATEGORY_DESCRIPTION, 'description', $description, 15, 60, '');
     //    $sform->addElement($editor, false);
 
-    $optionsTrayNote = new XoopsFormElementTray(_AM_XOOPSTUBE_FCATEGORY_DESCRIPTION, '<br>');
+    $optionsTrayNote = new \XoopsFormElementTray(_AM_XOOPSTUBE_FCATEGORY_DESCRIPTION, '<br>');
     if (class_exists('XoopsFormEditor')) {
         $options['name']   = 'description';
         $options['value']  = $description;
@@ -134,17 +135,17 @@ function createCategory($cid = 0)
         $options['cols']   = '100%';
         $options['width']  = '100%';
         $options['height'] = '200px';
-        $editor            = new XoopsFormEditor('', $GLOBALS['xoopsModuleConfig']['form_optionsuser'], $options, $nohtml = false, $onfailure = 'textarea');
+        $editor            = new \XoopsFormEditor('', $GLOBALS['xoopsModuleConfig']['form_optionsuser'], $options, $nohtml = false, $onfailure = 'textarea');
         $optionsTrayNote->addElement($editor);
     } else {
-        $editor = new XoopsFormDhtmlTextArea('', 'description', $item->getVar('description', 'e'), '100%', '100%');
+        $editor = new \XoopsFormDhtmlTextArea('', 'description', $item->getVar('description', 'e'), '100%', '100%');
         $optionsTrayNote->addElement($editor);
     }
 
     $sform->addElement($optionsTrayNote, false);
 
     // Select Client/Sponsor
-    $client_select   = new XoopsFormSelect(_AM_XOOPSTUBE_CATSPONSOR, 'client_id', $client_id, false);
+    $client_select   = new \XoopsFormSelect(_AM_XOOPSTUBE_CATSPONSOR, 'client_id', $client_id, false);
     $sql             = 'SELECT cid, name FROM ' . $GLOBALS['xoopsDB']->prefix('bannerclient') . ' ORDER BY name ASC';
     $result          = $GLOBALS['xoopsDB']->query($sql);
     $client_array    = [];
@@ -158,7 +159,7 @@ function createCategory($cid = 0)
     $sform->addElement($client_select);
 
     // Select Banner
-    $banner_select   = new XoopsFormSelect(_AM_XOOPSTUBE_BANNERID, 'banner_id', $banner_id, false);
+    $banner_select   = new \XoopsFormSelect(_AM_XOOPSTUBE_BANNERID, 'banner_id', $banner_id, false);
     $sql             = 'SELECT bid, cid FROM ' . $GLOBALS['xoopsDB']->prefix('banner') . ' ORDER BY bid ASC';
     $result          = $GLOBALS['xoopsDB']->query($sql);
     $banner_array    = [];
@@ -170,25 +171,25 @@ function createCategory($cid = 0)
     $banner_select->setDescription(_AM_XOOPSTUBE_BANNERIDDSC);
     $sform->addElement($banner_select);
 
-    $options_tray = new XoopsFormElementTray(_AM_XOOPSTUBE_TEXTOPTIONS, '<br>');
+    $options_tray = new \XoopsFormElementTray(_AM_XOOPSTUBE_TEXTOPTIONS, '<br>');
 
-    $html_checkbox = new XoopsFormCheckBox('', 'nohtml', $nohtml);
+    $html_checkbox = new \XoopsFormCheckBox('', 'nohtml', $nohtml);
     $html_checkbox->addOption(1, _AM_XOOPSTUBE_DISABLEHTML);
     $options_tray->addElement($html_checkbox);
 
-    $smiley_checkbox = new XoopsFormCheckBox('', 'nosmiley', $nosmiley);
+    $smiley_checkbox = new \XoopsFormCheckBox('', 'nosmiley', $nosmiley);
     $smiley_checkbox->addOption(1, _AM_XOOPSTUBE_DISABLESMILEY);
     $options_tray->addElement($smiley_checkbox);
 
-    $xcodes_checkbox = new XoopsFormCheckBox('', 'noxcodes', $noxcodes);
+    $xcodes_checkbox = new \XoopsFormCheckBox('', 'noxcodes', $noxcodes);
     $xcodes_checkbox->addOption(1, _AM_XOOPSTUBE_DISABLEXCODE);
     $options_tray->addElement($xcodes_checkbox);
 
-    $noimages_checkbox = new XoopsFormCheckBox('', 'noimages', $noimages);
+    $noimages_checkbox = new \XoopsFormCheckBox('', 'noimages', $noimages);
     $noimages_checkbox->addOption(1, _AM_XOOPSTUBE_DISABLEIMAGES);
     $options_tray->addElement($noimages_checkbox);
 
-    $breaks_checkbox = new XoopsFormCheckBox('', 'nobreak', $nobreak);
+    $breaks_checkbox = new \XoopsFormCheckBox('', 'nobreak', $nobreak);
     $breaks_checkbox->addOption(1, _AM_XOOPSTUBE_DISABLEBREAK);
     $options_tray->addElement($breaks_checkbox);
     $sform->addElement($options_tray);
@@ -199,31 +200,31 @@ function createCategory($cid = 0)
 
     $sform->addElement(new XoopsFormHidden('spotlighttop', (int)$cid));
 
-    $button_tray = new XoopsFormElementTray('', '');
-    $hidden      = new XoopsFormHidden('op', 'save');
+    $button_tray = new \XoopsFormElementTray('', '');
+    $hidden      = new \XoopsFormHidden('op', 'save');
     $button_tray->addElement($hidden);
 
     if (!$cid) {
-        $butt_create = new XoopsFormButton('', '', _AM_XOOPSTUBE_BSAVE, 'submit');
+        $butt_create = new \XoopsFormButton('', '', _AM_XOOPSTUBE_BSAVE, 'submit');
         $butt_create->setExtra('onclick="this.form.elements.op.value=\'addCat\'"');
         $button_tray->addElement($butt_create);
 
-        $butt_clear = new XoopsFormButton('', '', _AM_XOOPSTUBE_BRESET, 'reset');
+        $butt_clear = new \XoopsFormButton('', '', _AM_XOOPSTUBE_BRESET, 'reset');
         $button_tray->addElement($butt_clear);
 
-        $butt_cancel = new XoopsFormButton('', '', _AM_XOOPSTUBE_BCANCEL, 'button');
+        $butt_cancel = new \XoopsFormButton('', '', _AM_XOOPSTUBE_BCANCEL, 'button');
         $butt_cancel->setExtra('onclick="history.go(-1)"');
         $button_tray->addElement($butt_cancel);
     } else {
-        $butt_create = new XoopsFormButton('', '', _AM_XOOPSTUBE_BMODIFY, 'submit');
+        $butt_create = new \XoopsFormButton('', '', _AM_XOOPSTUBE_BMODIFY, 'submit');
         $butt_create->setExtra('onclick="this.form.elements.op.value=\'addCat\'"');
         $button_tray->addElement($butt_create);
 
-        $butt_delete = new XoopsFormButton('', '', _AM_XOOPSTUBE_BDELETE, 'submit');
+        $butt_delete = new \XoopsFormButton('', '', _AM_XOOPSTUBE_BDELETE, 'submit');
         $butt_delete->setExtra('onclick="this.form.elements.op.value=\'del\'"');
         $button_tray->addElement($butt_delete);
 
-        $butt_cancel = new XoopsFormButton('', '', _AM_XOOPSTUBE_BCANCEL, 'button');
+        $butt_cancel = new \XoopsFormButton('', '', _AM_XOOPSTUBE_BCANCEL, 'button');
         $butt_cancel->setExtra('onclick="history.go(-1)"');
         $button_tray->addElement($butt_cancel);
     }
@@ -253,20 +254,20 @@ switch ($op) {
             //xtubeRenderAdminMenu(_AM_XOOPSTUBE_MCATEGORY);
 
             require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-            $xoopstubetree = new XoopstubeTree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
-            $sform         = new XoopsThemeForm(_AM_XOOPSTUBE_CCATEGORY_MOVE, 'move', xoops_getenv('PHP_SELF'), 'post', true);
+            $xoopstubetree = new xoopstube\Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
+            $sform         = new \XoopsThemeForm(_AM_XOOPSTUBE_CCATEGORY_MOVE, 'move', xoops_getenv('PHP_SELF'), 'post', true);
             ob_start();
             $xoopstubetree->makeMySelBox('title', 'title', 0, 0, 'target');
             $sform->addElement(new XoopsFormLabel(_AM_XOOPSTUBE_BMODIFY, ob_get_contents()));
             ob_end_clean();
-            $create_tray = new XoopsFormElementTray('', '');
+            $create_tray = new \XoopsFormElementTray('', '');
             $create_tray->addElement(new XoopsFormHidden('source', $cid));
             $create_tray->addElement(new XoopsFormHidden('ok', 1));
             $create_tray->addElement(new XoopsFormHidden('op', 'move'));
-            $butt_save = new XoopsFormButton('', '', _AM_XOOPSTUBE_BMOVE, 'submit');
+            $butt_save = new \XoopsFormButton('', '', _AM_XOOPSTUBE_BMOVE, 'submit');
             $butt_save->setExtra('onclick="this.form.elements.op.value=\'move\'"');
             $create_tray->addElement($butt_save);
-            $butt_cancel = new XoopsFormButton('', '', _AM_XOOPSTUBE_BCANCEL, 'submit');
+            $butt_cancel = new \XoopsFormButton('', '', _AM_XOOPSTUBE_BCANCEL, 'submit');
             $butt_cancel->setExtra('onclick="this.form.elements.op.value=\'cancel\'"');
             $create_tray->addElement($butt_cancel);
             $sform->addElement($create_tray);
@@ -339,7 +340,7 @@ switch ($op) {
             $sql           = 'UPDATE '
                              . $GLOBALS['xoopsDB']->prefix('xoopstube_cat')
                              . " SET title ='$title', imgurl='$imgurl', pid =$pid, description='$descriptionb', spotlighthis='$spotlighthis' , spotlighttop='$spotlighttop', nohtml='$nohtml', nosmiley='$nosmiley', noxcodes='$noxcodes', noimages='$noimages', nobreak='$nobreak', weight='$weight', client_id='$client_id', banner_id='$banner_id' WHERE cid="
-                             . (int)$cid;
+                             . $cid;
             $database_mess = _AM_XOOPSTUBE_CCATEGORY_MODIFIED;
         }
         if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
@@ -358,7 +359,7 @@ switch ($op) {
         $cid = Request::getInt('cid', Request::getInt('cid', 0, 'GET'), 'POST');
         //        $ok            = (isset($_POST['ok']) && $_POST['ok'] == 1) ? (int) $_POST['ok'] : 0;
         $ok            = (1 == Request::getInt('ok', 0, 'POST')) ? 1 : 0;
-        $xoopstubetree = new XoopstubeTree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
+        $xoopstubetree = new xoopstube\Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
 
         if (1 == $ok) {
             // get all subcategories under the specified category
@@ -386,7 +387,7 @@ switch ($op) {
                 $GLOBALS['xoopsDB']->query($sql);
             }
             // all subcategory and associated data are deleted, now delete category data and its associated data
-            $result = $GLOBALS['xoopsDB']->query('SELECT lid FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE cid=' . (int)$cid);
+            $result = $GLOBALS['xoopsDB']->query('SELECT lid FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE cid=' . $cid);
             while (false !== (list($lid) = $GLOBALS['xoopsDB']->fetchRow($result))) {
                 $sql = sprintf('DELETE FROM %s WHERE lid = %u', $GLOBALS['xoopsDB']->prefix('xoopstube_videos'), (int)$lid);
                 $GLOBALS['xoopsDB']->query($sql);
@@ -397,13 +398,13 @@ switch ($op) {
             }
 
             // delete altcat entries
-            $sql = sprintf('DELETE FROM %s WHERE cid = %u', $GLOBALS['xoopsDB']->prefix('xoopstube_altcat'), (int)$cid);
+            $sql = sprintf('DELETE FROM %s WHERE cid = %u', $GLOBALS['xoopsDB']->prefix('xoopstube_altcat'), $cid);
             $GLOBALS['xoopsDB']->query($sql);
 
             // delete category
-            $sql   = sprintf('DELETE FROM %s WHERE cid = %u', $GLOBALS['xoopsDB']->prefix('xoopstube_cat'), (int)$cid);
+            $sql   = sprintf('DELETE FROM %s WHERE cid = %u', $GLOBALS['xoopsDB']->prefix('xoopstube_cat'), $cid);
             $error = _AM_XOOPSTUBE_DBERROR . ': <br><br>' . $sql;
-            xoops_groupperm_deletebymoditem($xoopsModule->getVar('mid'), 'XTubeCatPerm', (int)$cid);
+            xoops_groupperm_deletebymoditem($xoopsModule->getVar('mid'), 'XTubeCatPerm', $cid);
             if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
                 trigger_error($error, E_USER_ERROR);
             }
@@ -435,7 +436,7 @@ switch ($op) {
             xoops_cp_header();
             xoops_confirm([
                               'op'  => 'del',
-                              'cid' => (int)$cid,
+                              'cid' => $cid,
                               'ok'  => 1
                           ], 'category.php', _AM_XOOPSTUBE_CCATEGORY_AREUSURE);
             xoops_cp_footer();
@@ -456,24 +457,24 @@ switch ($op) {
         //xtubeRenderAdminMenu(_AM_XOOPSTUBE_MCATEGORY);
 
         //        require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-        $xoopstubetree = new XoopstubeTree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
-        $sform         = new XoopsThemeForm(_AM_XOOPSTUBE_CCATEGORY_MODIFY, 'category', xoops_getenv('PHP_SELF'), 'post', true);
-        $totalcats     = XoopstubeUtility::xtubeGetTotalCategoryCount();
+        $xoopstubetree = new xoopstube\Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
+        $sform         = new \XoopsThemeForm(_AM_XOOPSTUBE_CCATEGORY_MODIFY, 'category', xoops_getenv('PHP_SELF'), 'post', true);
+        $totalcats     = xoopstube\Utility::xtubeGetTotalCategoryCount();
 
         if ($totalcats > 0) {
             ob_start();
             $xoopstubetree->makeMySelBox('title', 'title');
             $sform->addElement(new XoopsFormLabel(_AM_XOOPSTUBE_CCATEGORY_MODIFY_TITLE, ob_get_contents()));
             ob_end_clean();
-            $dup_tray = new XoopsFormElementTray('', '');
+            $dup_tray = new \XoopsFormElementTray('', '');
             $dup_tray->addElement(new XoopsFormHidden('op', 'modCat'));
-            $butt_dup = new XoopsFormButton('', '', _AM_XOOPSTUBE_BMODIFY, 'submit');
+            $butt_dup = new \XoopsFormButton('', '', _AM_XOOPSTUBE_BMODIFY, 'submit');
             $butt_dup->setExtra('onclick="this.form.elements.op.value=\'modCat\'"');
             $dup_tray->addElement($butt_dup);
-            $butt_move = new XoopsFormButton('', '', _AM_XOOPSTUBE_BMOVE, 'submit');
+            $butt_move = new \XoopsFormButton('', '', _AM_XOOPSTUBE_BMOVE, 'submit');
             $butt_move->setExtra('onclick="this.form.elements.op.value=\'move\'"');
             $dup_tray->addElement($butt_move);
-            $butt_dupct = new XoopsFormButton('', '', _AM_XOOPSTUBE_BDELETE, 'submit');
+            $butt_dupct = new \XoopsFormButton('', '', _AM_XOOPSTUBE_BDELETE, 'submit');
             $butt_dupct->setExtra('onclick="this.form.elements.op.value=\'del\'"');
             $dup_tray->addElement($butt_dupct);
             $sform->addElement($dup_tray);

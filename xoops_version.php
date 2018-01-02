@@ -18,13 +18,15 @@
  * @since           1.0.6
  */
 
+require_once __DIR__ . '/preloads/autoloader.php';
+
 $moduleDirName = basename(__DIR__);
 
 // ------------------- Informations ------------------- //
 $modversion = [
-    'version'             => 1.07,
+    'version'             => 1.08,
     'module_status'       => 'Beta 1',
-    'release_date'        => '2017/05/14',
+    'release_date'        => '2017/12/14',
     'name'                => _MI_XOOPSTUBE_NAME,
     'description'         => _MI_XOOPSTUBE_DESC,
     'official'            => 1, //1 indicates supported by XOOPS Dev Team, 0 means 3rd party supported

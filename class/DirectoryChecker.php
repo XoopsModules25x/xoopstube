@@ -1,4 +1,5 @@
-<?php
+<?php namespace Xoopsmodules\xoopstube;
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -10,7 +11,7 @@
  */
 
 /**
- * WF-Downloads module
+ * Xoopstube module
  *
  * @copyright       XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
