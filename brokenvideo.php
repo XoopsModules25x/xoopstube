@@ -19,7 +19,7 @@
  */
 
 use Xmf\Request;
-use Xoopsmodules\xoopstube;
+use XoopsModules\Xoopstube;
 
 require_once __DIR__ . '/header.php';
 
@@ -108,7 +108,7 @@ switch (strtolower($op)) {
         $GLOBALS['xoopsOption']['template_main'] = 'xoopstube_brokenvideo.tpl';
         include XOOPS_ROOT_PATH . '/header.php';
 
-        $catarray['imageheader'] = xoopstube\Utility::xtubeRenderImageHeader();
+        $catarray['imageheader'] = Xoopstube\Utility::renderImageHeader();
         $xoopsTpl->assign('catarray', $catarray);
 
         $sql       = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE lid=' . $lid;
@@ -122,7 +122,7 @@ switch (strtolower($op)) {
             $broken['title']        = $xtubemyts->htmlSpecialCharsStrip($video_arr['title']);
             $broken['id']           = $broke_arr['reportid'];
             $broken['reporter']     = XoopsUserUtility::getUnameFromId($broke_arr['sender']);
-            $broken['date']         = xoopstube\Utility::xtubeGetTimestamp(formatTimestamp($broke_arr['date'], $GLOBALS['xoopsModuleConfig']['dateformat']));
+            $broken['date']         = Xoopstube\Utility::getTimestamp(formatTimestamp($broke_arr['date'], $GLOBALS['xoopsModuleConfig']['dateformat']));
             $broken['acknowledged'] = (1 == $broke_arr['acknowledged']) ? _YES : _NO;
             $broken['confirmed']    = (1 == $broke_arr['confirmed']) ? _YES : _NO;
             $xoopsTpl->assign('broken', $broken);
@@ -136,7 +136,7 @@ switch (strtolower($op)) {
             // file info
             $video['title']   = $xtubemyts->htmlSpecialCharsStrip($video_arr['title']);
             $time             = ($video_arr['published'] > 0) ? $video_arr['published'] : $link_arr['updated'];
-            $video['updated'] = xoopstube\Utility::xtubeGetTimestamp(formatTimestamp($time, $GLOBALS['xoopsModuleConfig']['dateformat']));
+            $video['updated'] = Xoopstube\Utility::getTimestamp(formatTimestamp($time, $GLOBALS['xoopsModuleConfig']['dateformat']));
             $is_updated       = (0 !== $video_arr['updated']) ? _MD_XOOPSTUBE_UPDATEDON : _MD_XOOPSTUBE_SUBMITDATE;
 
             $video['publisher'] = XoopsUserUtility::getUnameFromId($video_arr['submitter']);
@@ -146,7 +146,7 @@ switch (strtolower($op)) {
             $xoopsTpl->assign('video', $video);
         }
 
-        xoopstube\Utility::xtubeSetNoIndexNoFollow();
+        Xoopstube\Utility::setNoIndexNoFollow();
 
         $xoopsTpl->assign('module_dir', $xoopsModule->getVar('dirname'));
         include XOOPS_ROOT_PATH . '/footer.php';

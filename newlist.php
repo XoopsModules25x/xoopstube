@@ -19,7 +19,7 @@
  */
 
 use Xmf\Request;
-use Xoopsmodules\xoopstube;
+use XoopsModules\Xoopstube;
 
 include __DIR__ . '/header.php';
 
@@ -29,7 +29,7 @@ $xoTheme->addStylesheet('modules/' . $moduleDirName . '/assets/css/xtubestyle.cs
 
 global $xoopsModule;
 
-$catarray['imageheader'] = xoopstube\Utility::xtubeRenderImageHeader();
+$catarray['imageheader'] = Xoopstube\Utility::renderImageHeader();
 $xoopsTpl->assign('catarray', $catarray);
 if (!isset($_GET['newvideoshowdays'])) {
     redirect_header('newlist.php?newvideoshowdays=7', 1, '');
@@ -72,7 +72,7 @@ if (Request::hasVar('newvideoshowdays', 'GET')) {
     $xoopsTpl->assign('allmonthvideos', $allmonthvideos);
 
     // List Last VARIABLE Days of videos
-    //  $newvideoshowdays = xtubeCleanRequestVars($_REQUEST, 'newvideoshowdays', 7 );
+    //  $newvideoshowdays = cleanRequestVars($_REQUEST, 'newvideoshowdays', 7 );
     $newvideoshowdays = (int)Request::getInt('newvideoshowdays', 7, 'GET');
     $xoopsTpl->assign('newvideoshowdays', $newvideoshowdays);
 
@@ -81,7 +81,7 @@ if (Request::hasVar('newvideoshowdays', 'GET')) {
         $key                                 = $newvideoshowdays - $i - 1;
         $time                                = $time_cur - (86400 * $key);
         $dailyvideos[$key]['newvideodayRaw'] = $time;
-        $dailyvideos[$key]['newvideoView']   = xoopstube\Utility::xtubeGetTimestamp(formatTimestamp($time, $GLOBALS['xoopsModuleConfig']['dateformat']));
+        $dailyvideos[$key]['newvideoView']   = Xoopstube\Utility::getTimestamp(formatTimestamp($time, $GLOBALS['xoopsModuleConfig']['dateformat']));
         $dailyvideos[$key]['totalvideos']    = 0;
     }
 }
@@ -113,7 +113,7 @@ reset($dailyvideos);
 $xoopsTpl->assign('dailyvideos', $dailyvideos);
 unset($dailyvideos);
 
-$mytree = new xoopstube\Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
+$mytree = new Xoopstube\Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
 $sql    = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos');
 $sql    .= 'WHERE (published > 0 AND published <= ' . $time_cur . ')
          OR (updated > 0 AND updated <= ' . $time_cur . ')

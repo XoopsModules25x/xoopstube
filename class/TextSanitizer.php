@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\xoopstube;
+<?php namespace XoopsModules\Xoopstube;
 
 /**
  * Module: XoopsTube
@@ -18,14 +18,14 @@
  * @since           1.0.6
  */
 
-use Xoopsmodules\xoopstube;
-use Xoopsmodules\xoopstube\common;
+use XoopsModules\Xoopstube;
+use XoopsModules\Xoopstube\Common;
 
 /**
- * Class XtubeTextSanitizer
- * @package Xoopsmodules\xoopstube
+ * Class TextSanitizer
+ * @package XoopsModules\Xoopstube
  */
-class XtubeTextSanitizer extends \MyTextSanitizer
+class TextSanitizer extends \MyTextSanitizer
 {
     /**
      * @param $text

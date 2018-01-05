@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\xoopstube;
+<?php namespace XoopsModules\Xoopstube;
 
 /**
  * Module: XoopsTube
@@ -18,15 +18,15 @@
  * @since           1.0.6
  */
 
-use Xoopsmodules\xoopstube;
-use Xoopsmodules\xoopstube\common;
+use XoopsModules\Xoopstube;
+use XoopsModules\Xoopstube\Common;
 
 mt_srand((double)microtime() * 1000000);
 
 /**
- * Class XoopsMediaUploader
+ * Class MediaUploader
  */
-class XoopsMediaUploader
+class MediaUploader
 {
     public $mediaName;
     public $mediaType;

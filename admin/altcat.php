@@ -18,21 +18,21 @@
  */
 
 use Xmf\Request;
-use Xoopsmodules\xoopstube;
+use XoopsModules\Xoopstube;
 
 require_once __DIR__ . '/admin_header.php';
 
-$op  = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'op', '');
-$lid = Request::getInt('lid', Request::getInt('lid', 0, 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'lid', 0);
+$op  = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET'); //cleanRequestVars($_REQUEST, 'op', '');
+$lid = Request::getInt('lid', Request::getInt('lid', 0, 'POST'), 'GET'); //cleanRequestVars($_REQUEST, 'lid', 0);
 
 /**
- * @param \Tree          $xt
+ * @param Xoopstube\Tree          $xt
  * @param int            $itemid
  * @param                $title
  * @param                $checks
  * @param string         $order
  */
-function makeTreeCheckTable(Tree $xt, $itemid, $title, $checks, $order = '')
+function makeTreeCheckTable(Xoopstube\Tree $xt, $itemid, $title, $checks, $order = '')
 {
     global $xtubemyts;
 
@@ -111,7 +111,7 @@ switch (strtolower($op)) {
     case 'main':
     default:
         xoops_cp_header();
-        //xtubeRenderAdminMenu(_AM_XOOPSTUBE_MALTCAT);
+        //renderAdminMenu(_AM_XOOPSTUBE_MALTCAT);
         echo '<fieldset><legend style="font-weight: bold; color: #0A3760;">' . _AM_XOOPSTUBE_ALTCAT_MODIFYF . '</legend>
           <div style="padding: 8px;">' . _AM_XOOPSTUBE_ALTCAT_INFOTEXT . '</div>
           </fieldset>';
@@ -123,7 +123,7 @@ switch (strtolower($op)) {
         while (false !== ($altcat = $GLOBALS['xoopsDB']->fetchArray($sql))) {
             $altcats[$altcat['cid']] = true;
         }
-        $mytree = new xoopstube\Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
+        $mytree = new Xoopstube\Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
         makeTreeCheckTable($mytree, $lid, 'title', $altcats);
         xoops_cp_footer();
 }

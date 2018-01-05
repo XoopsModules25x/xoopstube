@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\xoopstube\common;
+<?php namespace XoopsModules\Xoopstube\Common;
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -19,11 +19,11 @@
  * @version     $Id:$
  *
  * Example:
- * $choicebyletter = new xoopstube\ChoiceByLetter($objHandler, null, null, range('a', 'z'), 'letter');
+ * $choicebyletter = new Xoopstube\ChoiceByLetter($objHandler, null, null, range('a', 'z'), 'letter');
  * echo $choicebyletter->render();
  */
 
-use Xoopsmodules\xoopstube;
+use XoopsModules\Xoopstube;
 
 defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
 require_once __DIR__ . '/../../include/common.php';
@@ -59,8 +59,8 @@ class ChoiceByLetter
     /**
      * Constructor
      *
-     * @param XoopsPersistableObjectHandler $objHandler {@link XoopsPersistableObjectHandler}
-     * @param CriteriaElement               $criteria   {@link CriteriaElement}
+     * @param \XoopsPersistableObjectHandler $objHandler {@link XoopsPersistableObjectHandler}
+     * @param \CriteriaElement               $criteria   {@link CriteriaElement}
      * @param string                        $field_name search by field
      * @param array                         $alphabet   array of alphabet letters
      * @param string                        $arg_name   item on the current page
@@ -78,7 +78,7 @@ class ChoiceByLetter
         $extra_arg = '',
         $caseSensitive = false
     ) {
-        $this->helper = xoopstube\Helper::getInstance();
+        $this->helper = Xoopstube\Helper::getInstance();
         $this->objHandler  = $objHandler;
         $this->criteria    = null === $criteria ? new \CriteriaCompo() : $criteria;
         $this->field_name  = null === $field_name ? $this->objHandler->identifierName : $field_name;
@@ -139,7 +139,7 @@ class ChoiceByLetter
         // render output
         if (!isset($GLOBALS['xoTheme']) || !is_object($GLOBALS['xoTheme'])) {
             require_once $GLOBALS['xoops']->path('/class/theme.php');
-            $GLOBALS['xoTheme'] = new xos_opal_Theme();
+            $GLOBALS['xoTheme'] = new \xos_opal_Theme();
         }
         require_once $GLOBALS['xoops']->path('/class/template.php');
         $choiceByLetterTpl          = new \XoopsTpl();

@@ -550,7 +550,7 @@ define('_AM_XOOPSTUBE_TOGGLE', 'Toggle Value ');
 _MD_XOOPSTUBE_COUNTRYLTOH
 _MD_XOOPSTUBE_COUNTRYHTOL
 
-//xoopstube\admin\blockform.php
+//Xoopstube\admin\blockform.php
 _AM_NAME
 _AM_BLKTYPE
 _AM_SBLEFT

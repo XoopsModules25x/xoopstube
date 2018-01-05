@@ -18,7 +18,7 @@
  */
 
 use Xmf\Request;
-use Xoopsmodules\xoopstube;
+use XoopsModules\Xoopstube;
 
 require_once __DIR__ . '/admin_header.php';
 
@@ -42,7 +42,7 @@ switch (strtolower($op)) {
                 'image/png',
                 'media/flv'
             ];
-            xoopstube\Utility::xtubeUploadFiles($_FILES, Request::getString('uploadpath', '', 'POST'), $allowed_mimetypes, 'upload.php', 1, 0);
+            Xoopstube\Utility::uploadFiles($_FILES, Request::getString('uploadpath', '', 'POST'), $allowed_mimetypes, 'upload.php', 1, 0);
             redirect_header('upload.php', 2, _AM_XOOPSTUBE_VIDEO_IMAGEUPLOAD);
         } else {
             redirect_header('upload.php', 2, _AM_XOOPSTUBE_VIDEO_NOIMAGEEXIST);
@@ -112,8 +112,8 @@ switch (strtolower($op)) {
         //        2 => _AM_XOOPSTUBE_VIDEO_FMAINIMAGEDIR
         //    );
 
-        //xtubeRenderAdminMenu( _AM_XOOPSTUBE_MUPLOADS );
-        xoopstube\Utility::xtubeGetServerStatistics();
+        //renderAdminMenu( _AM_XOOPSTUBE_MUPLOADS );
+        Xoopstube\Utility::getServerStatistics();
         if ($rootpath > 0) {
             echo '<div><b>' . _AM_XOOPSTUBE_VIDEO_FUPLOADPATH . '</b> ' . XOOPS_ROOT_PATH . '/' . $dirarray[$rootpath] . '</div>';
             echo '<div><b>' . _AM_XOOPSTUBE_VIDEO_FUPLOADURL . '</b> ' . XOOPS_URL . '/' . $dirarray[$rootpath] . '</div><br>';
@@ -125,12 +125,12 @@ switch (strtolower($op)) {
         $iform->setExtra('enctype="multipart/form-data"');
         ob_start();
         $iform->addElement(new XoopsFormHidden('dir', $rootpath));
-        xoopstube\Utility::xtubeGetDirSelectOption($namelist, $dirarray, $namearray);
+        Xoopstube\Utility::getDirSelectOption($namelist, $dirarray, $namearray);
         $iform->addElement(new XoopsFormLabel(_AM_XOOPSTUBE_VIDEO_FOLDERSELECTION, ob_get_contents()));
         ob_end_clean();
 
         if ($rootpath > 0) {
-            $graph_array      = &XoopstubeLists:: getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $dirarray[$rootpath], $type = 'images');
+            $graph_array      = &Lists:: getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $dirarray[$rootpath], $type = 'images');
             $indexImageSelect = new \XoopsFormSelect('', 'videofile', '');
             $indexImageSelect->addOptionArray($graph_array);
             $indexImageSelect->setExtra("onchange='showImgSelected(\"image\", \"videofile\", \"" . $dirarray[$rootpath] . '", "", "' . XOOPS_URL . "\")'");

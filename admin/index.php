@@ -18,20 +18,20 @@
  */
 
 use Xmf\Request;
-use Xoopsmodules\xoopstube;
+use XoopsModules\Xoopstube;
 
 require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
 $adminObject = \Xmf\Module\Admin::getInstance();
 
-$start     = Request::getInt('start', 0, 'POST');// xtubeCleanRequestVars($_REQUEST, 'start', 0);
-$start1    = Request::getInt('start1', 0, 'POST');// xtubeCleanRequestVars($_REQUEST, 'start1', 0);
-$start2    = Request::getInt('start2', 0, 'POST');// xtubeCleanRequestVars($_REQUEST, 'start2', 0);
-$start3    = Request::getInt('start3', 0, 'POST');// xtubeCleanRequestVars($_REQUEST, 'start3', 0);
-$start4    = Request::getInt('start4', 0, 'POST');// xtubeCleanRequestVars($_REQUEST, 'start4', 0);
-$start5    = Request::getInt('start5', 0, 'POST');// xtubeCleanRequestVars($_REQUEST, 'start5', 0);
-$totalcats = xoopstube\Utility::xtubeGetTotalCategoryCount();
+$start     = Request::getInt('start', 0, 'POST');// cleanRequestVars($_REQUEST, 'start', 0);
+$start1    = Request::getInt('start1', 0, 'POST');// cleanRequestVars($_REQUEST, 'start1', 0);
+$start2    = Request::getInt('start2', 0, 'POST');// cleanRequestVars($_REQUEST, 'start2', 0);
+$start3    = Request::getInt('start3', 0, 'POST');// cleanRequestVars($_REQUEST, 'start3', 0);
+$start4    = Request::getInt('start4', 0, 'POST');// cleanRequestVars($_REQUEST, 'start4', 0);
+$start5    = Request::getInt('start5', 0, 'POST');// cleanRequestVars($_REQUEST, 'start5', 0);
+$totalcats = Xoopstube\Utility::getTotalCategoryCount();
 
 $result = $GLOBALS['xoopsDB']->query('SELECT COUNT(*) FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_broken'));
 list($totalbrokenvideos) = $GLOBALS['xoopsDB']->fetchRow($result);
@@ -79,7 +79,7 @@ if ($totalbrokenvideos > 0) {
 $folderMode = $GLOBALS['xoopsModuleConfig']['dirmode'];
 //require_once __DIR__ . '/../class/Utility.php';
 foreach (array_keys($uploadFolders) as $i) {
-    xoopstube\Utility::prepareFolder($uploadFolders[$i], $folderMode);
+    Xoopstube\Utility::prepareFolder($uploadFolders[$i], $folderMode);
     $adminObject->addConfigBoxLine($uploadFolders[$i], 'folder');
     //    $adminObject->addConfigBoxLine(array($uploadFolders[$i], $folderMode), 'chmod');
 }
@@ -128,7 +128,7 @@ $adminObject->addConfigBoxLine(DirectoryChecker::getDirectoryStatus($path, 0777,
 //echo wfd_serverstats();
 //---------------------------
 
-xtubeFileChecks();
+fileChecks();
 
 */
 

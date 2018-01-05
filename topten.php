@@ -19,7 +19,7 @@
  */
 
 use Xmf\Request;
-use Xoopsmodules\xoopstube;
+use XoopsModules\Xoopstube;
 
 include __DIR__ . '/header.php';
 
@@ -27,7 +27,7 @@ $GLOBALS['xoopsOption']['template_main'] = 'xoopstube_topten.tpl';
 include XOOPS_ROOT_PATH . '/header.php';
 $xoTheme->addStylesheet('modules/' . $moduleDirName . '/assets/css/xtubestyle.css');
 
-$mytree = new xoopstube\Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
+$mytree = new Xoopstube\Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
 
 $action_array = [
     'hit'  => 0,
@@ -41,7 +41,7 @@ $sort     = in_array(Request::getString('list', '', 'GET'), $action_array) ? Req
 $sort_arr = $action_array[$sort];
 $sortDB   = $list_array[$sort_arr];
 
-$catarray['imageheader'] = xoopstube\Utility::xtubeRenderImageHeader();
+$catarray['imageheader'] = Xoopstube\Utility::renderImageHeader();
 $xoopsTpl->assign('catarray', $catarray);
 
 $arr    = [];
@@ -49,7 +49,7 @@ $result = $GLOBALS['xoopsDB']->query('SELECT cid, title, pid FROM ' . $GLOBALS['
 
 $e = 0;
 while (false !== (list($cid, $ctitle) = $GLOBALS['xoopsDB']->fetchRow($result))) {
-    if (true === xoopstube\Utility::xtubeCheckGroups($cid)) {
+    if (true === Xoopstube\Utility::checkGroups($cid)) {
         $query      = 'SELECT lid, cid, title, hits, rating, votes FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE published > 0 AND published <= ' . time() . ' AND (expired = 0 OR expired > ' . time() . ') AND offline = 0 AND (cid=' . $cid;
         $arr        = $mytree->getAllChildId($cid);
         $arrayCount = count($arr);

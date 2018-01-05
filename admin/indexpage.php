@@ -18,19 +18,19 @@
  */
 
 use Xmf\Request;
-use Xoopsmodules\xoopstube;
+use XoopsModules\Xoopstube;
 
 require_once __DIR__ . '/admin_header.php';
 
-//xoopstube\Utility::prepareFolder(XOOPSTUBE_UPLOAD_PATH);
-//xoopstube\Utility::prepareFolder(XOOPSTUBE_ATTACHED_FILES_PATH);
-//xoopstube\Utility::prepareFolder(XOOPSTUBE_PICTURES_PATH);
-//xoopstube\Utility::prepareFolder(XOOPSTUBE_CSV_PATH);
-//xoopstube\Utility::prepareFolder(XOOPSTUBE_CACHE_PATH);
-//xoopstube\Utility::prepareFolder(XOOPSTUBE_TEXT_PATH);
+//Xoopstube\Utility::prepareFolder(XOOPSTUBE_UPLOAD_PATH);
+//Xoopstube\Utility::prepareFolder(XOOPSTUBE_ATTACHED_FILES_PATH);
+//Xoopstube\Utility::prepareFolder(XOOPSTUBE_PICTURES_PATH);
+//Xoopstube\Utility::prepareFolder(XOOPSTUBE_CSV_PATH);
+//Xoopstube\Utility::prepareFolder(XOOPSTUBE_CACHE_PATH);
+//Xoopstube\Utility::prepareFolder(XOOPSTUBE_TEXT_PATH);
 
-$op = $op = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'op', '');
-//$cid = xtubeCleanRequestVars( $_REQUEST, 'cid', 0 );
+$op = $op = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET'); //cleanRequestVars($_REQUEST, 'op', '');
+//$cid = cleanRequestVars( $_REQUEST, 'cid', 0 );
 
 switch (strtolower($op)) {
     case 'save':
@@ -70,7 +70,7 @@ switch (strtolower($op)) {
         list($indeximage, $indexheading, $indexheader, $indexfooter, $nohtml, $nosmiley, $noxcodes, $noimages, $nobreak, $indexheaderalign, $indexfooteralign, $lastvideosyn, $lastvideostotal) = $GLOBALS['xoopsDB']->fetchrow($result);
 
         xoops_cp_header();
-        //xtubeRenderAdminMenu( _AM_XOOPSTUBE_INDEXPAGE );
+        //renderAdminMenu( _AM_XOOPSTUBE_INDEXPAGE );
         $adminObject = \Xmf\Module\Admin::getInstance();
         $adminObject->displayNavigation(basename(__FILE__));
 
@@ -84,7 +84,7 @@ switch (strtolower($op)) {
 
         $sform = new \XoopsThemeForm(_AM_XOOPSTUBE_IPAGE_MODIFY, 'op', xoops_getenv('PHP_SELF'), 'post', true);
         $sform->addElement(new XoopsFormText(_AM_XOOPSTUBE_IPAGE_CTITLE, 'indexheading', 60, 60, $indexheading), false);
-        $graph_array      = xoopstube\XoopstubeLists:: getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $GLOBALS['xoopsModuleConfig']['mainimagedir'], $type = 'images');
+        $graph_array      = Xoopstube\Lists:: getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $GLOBALS['xoopsModuleConfig']['mainimagedir'], $type = 'images');
         $indexImageSelect = new \XoopsFormSelect('', 'indeximage', $indeximage);
         $indexImageSelect->addOptionArray($graph_array);
         $indexImageSelect->setExtra("onchange='showImgSelected(\"image\", \"indeximage\", \"" . $GLOBALS['xoopsModuleConfig']['mainimagedir'] . '", "", "' . XOOPS_URL . "\")'");

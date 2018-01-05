@@ -18,12 +18,12 @@
  */
 
 use Xmf\Request;
-use Xoopsmodules\xoopstube;
+use XoopsModules\Xoopstube;
 
 require_once __DIR__ . '/admin_header.php';
 global $xoopsModule;
 
-$mytree = new xoopstube\Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
+$mytree = new Xoopstube\Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
 
 $op  = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET');
 $lid = Request::getInt('lid', Request::getInt('lid', 0, 'POST'), 'GET');
@@ -66,17 +66,17 @@ function edit($lid = 0)
 
     require_once __DIR__ . '/admin_header.php';
     xoops_cp_header();
-    //xtubeRenderAdminMenu( _AM_XOOPSTUBE_MVIDEOS );
+    //renderAdminMenu( _AM_XOOPSTUBE_MVIDEOS );
 
     if ($lid) {
-        $_vote_data = xoopstube\Utility::xtubeGetVoteDetails($lid);
+        $_vote_data = Xoopstube\Utility::getVoteDetails($lid);
         $text_info  = '
             <table width="100%" style="font-size: 90%;">
              <tr>
               <td style="width: 25%; border-right: #E8E8E8 1px solid; vertical-align: top; padding-left: 10px;">
                <div><b>' . _AM_XOOPSTUBE_VIDEO_ID . ' </b>' . $lid . '</div>
-               <div><b>' . _AM_XOOPSTUBE_MINDEX_SUBMITTED . ': </b>' . xoopstube\Utility::xtubeGetTimestamp(formatTimestamp($video_array['date'], $GLOBALS['xoopsModuleConfig']['dateformat'])) . '</div>
-               <div><b>' . _AM_XOOPSTUBE_MOD_MODIFYSUBMITTER . ' </b>' . xoopstube\Utility::xtubeGetLinkedUserNameFromId($video_array['submitter']) . '</div><div><b>' . _AM_XOOPSTUBE_VIDEO_IP . ' </b>' . $ipaddress . '</div>
+               <div><b>' . _AM_XOOPSTUBE_MINDEX_SUBMITTED . ': </b>' . Xoopstube\Utility::getTimestamp(formatTimestamp($video_array['date'], $GLOBALS['xoopsModuleConfig']['dateformat'])) . '</div>
+               <div><b>' . _AM_XOOPSTUBE_MOD_MODIFYSUBMITTER . ' </b>' . Xoopstube\Utility::getLinkedUserNameFromId($video_array['submitter']) . '</div><div><b>' . _AM_XOOPSTUBE_VIDEO_IP . ' </b>' . $ipaddress . '</div>
                <div><b>' . _AM_XOOPSTUBE_VIDEO_VIEWS . ' </b>' . $video_array['hits'] . '</div>
               </td>
               <td style="width: 25%; border-right: #E8E8E8 1px solid; vertical-align: top; padding-left: 10px;">
@@ -189,7 +189,7 @@ function edit($lid = 0)
     $sform->addElement($keywords);
 
     // Insert tags if Tag-module is installed
-    if (xoopstube\Utility::xtubeIsModuleTagInstalled()) {
+    if (Xoopstube\Utility::isModuleTagInstalled()) {
         require_once XOOPS_ROOT_PATH . '/modules/tag/include/formtag.php';
         $text_tags = new TagFormTag('item_tag', 70, 255, $video_array['item_tag'], 0);
         $sform->addElement($text_tags);
@@ -207,7 +207,7 @@ function edit($lid = 0)
 
     // Video Expire Date
     $isexpired           = ($expired > time()) ? 1 : 0;
-    $expiredates         = ($expired > time()) ? _AM_XOOPSTUBE_VIDEO_EXPIREDATESET . xoopstube\Utility::xtubeGetTimestamp(formatTimestamp($expired, $GLOBALS['xoopsModuleConfig']['dateformat'])) : _AM_XOOPSTUBE_VIDEO_SETDATETIMEEXPIRE;
+    $expiredates         = ($expired > time()) ? _AM_XOOPSTUBE_VIDEO_EXPIREDATESET . Xoopstube\Utility::getTimestamp(formatTimestamp($expired, $GLOBALS['xoopsModuleConfig']['dateformat'])) : _AM_XOOPSTUBE_VIDEO_SETDATETIMEEXPIRE;
     $warning             = ($published > $expired && $expired > time()) ? _AM_XOOPSTUBE_VIDEO_EXPIREWARNING : '';
     $expiredate_checkbox = new \XoopsFormCheckBox('', 'expiredateactivate', $isexpired);
     $expiredate_checkbox->addOption(1, $expiredates . ' <br> <br> ');
@@ -365,9 +365,9 @@ switch (strtolower($op)) {
 
         // Add item_tag to Tag-module
         if (!$lid) {
-            $tagupdate = xoopstube\Utility::xtubeUpdateTag($newid, $item_tag);
+            $tagupdate = Xoopstube\Utility::updateTag($newid, $item_tag);
         } else {
-            $tagupdate = xoopstube\Utility::xtubeUpdateTag($lid, $item_tag);
+            $tagupdate = Xoopstube\Utility::updateTag($lid, $item_tag);
         }
 
         // Send notifications
@@ -401,7 +401,7 @@ switch (strtolower($op)) {
         $message = (!$lid) ? _AM_XOOPSTUBE_VIDEO_NEWFILEUPLOAD : _AM_XOOPSTUBE_VIDEO_FILEMODIFIEDUPDATE;
         $message = ($lid && !Request::getBool('was_published', false, 'POST') && $approved) ? _AM_XOOPSTUBE_VIDEO_FILEAPPROVED : $message;
 
-        if (Request::hasVar('delbroken')) { //xtubeCleanRequestVars($_REQUEST, 'delbroken', 0)) {
+        if (Request::hasVar('delbroken')) { //cleanRequestVars($_REQUEST, 'delbroken', 0)) {
             $sql = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_broken') . ' WHERE lid=' . $lid;
             if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
                 XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
@@ -415,8 +415,8 @@ switch (strtolower($op)) {
         break;
 
     case 'delete':
-        if (Request::hasVar('confirm')) { // (xtubeCleanRequestVars($_REQUEST, 'confirm', 0)) {
-            $title = Request::getString('title', 0); //xtubeCleanRequestVars($_REQUEST, 'title', 0);
+        if (Request::hasVar('confirm')) { // (cleanRequestVars($_REQUEST, 'confirm', 0)) {
+            $title = Request::getString('title', 0); //cleanRequestVars($_REQUEST, 'title', 0);
 
             // delete video
             $sql = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE lid=' . $lid;
@@ -456,7 +456,7 @@ switch (strtolower($op)) {
             $item_tag = $result['item_tag'];
 
             xoops_cp_header();
-            //xtubeRenderAdminMenu( _AM_XOOPSTUBE_BINDEX );
+            //renderAdminMenu( _AM_XOOPSTUBE_BINDEX );
 
             xoops_confirm([
                               'op'      => 'delete',
@@ -466,7 +466,7 @@ switch (strtolower($op)) {
                           ], 'main.php', _AM_XOOPSTUBE_VIDEO_REALLYDELETEDTHIS . '<br><br>' . $title, _DELETE);
 
             // Remove item_tag from Tag-module
-            $tagupdate = xoopstube\Utility::xtubeUpdateTag($lid, $item_tag);
+            $tagupdate = Xoopstube\Utility::updateTag($lid, $item_tag);
 
             require_once __DIR__ . '/admin_footer.php';
         }
@@ -506,26 +506,26 @@ switch (strtolower($op)) {
         break;
 
     case 'delvote':
-        $rid = Request::getInt('rid', 0); //xtubeCleanRequestVars($_REQUEST, 'rid', 0);
+        $rid = Request::getInt('rid', 0); //cleanRequestVars($_REQUEST, 'rid', 0);
         $sql = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_votedata') . ' WHERE ratingid=' . $rid;
         if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
             XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
             return false;
         }
-        xoopstube\Utility::xtubeUpdateRating($rid);
+        Xoopstube\Utility::updateRating($rid);
         redirect_header('main.php', 1, _AM_XOOPSTUBE_VOTE_VOTEDELETED);
         break;
 
     case 'main':
     default:
-        $start     = Request::getInt('start', 0, 'POST');// xtubeCleanRequestVars($_REQUEST, 'start', 0);
-        $start1    = Request::getInt('start1', 0, 'POST');// xtubeCleanRequestVars($_REQUEST, 'start1', 0);
-        $start2    = Request::getInt('start2', 0, 'POST');// xtubeCleanRequestVars($_REQUEST, 'start2', 0);
-        $start3    = Request::getInt('start3', 0, 'POST');// xtubeCleanRequestVars($_REQUEST, 'start3', 0);
-        $start4    = Request::getInt('start4', 0, 'POST');// xtubeCleanRequestVars($_REQUEST, 'start4', 0);
-        $start5    = Request::getInt('start5', 0, 'POST');// xtubeCleanRequestVars($_REQUEST, 'start5', 0);
-        $totalcats = xoopstube\Utility::xtubeGetTotalCategoryCount();
+        $start     = Request::getInt('start', 0, 'POST');// cleanRequestVars($_REQUEST, 'start', 0);
+        $start1    = Request::getInt('start1', 0, 'POST');// cleanRequestVars($_REQUEST, 'start1', 0);
+        $start2    = Request::getInt('start2', 0, 'POST');// cleanRequestVars($_REQUEST, 'start2', 0);
+        $start3    = Request::getInt('start3', 0, 'POST');// cleanRequestVars($_REQUEST, 'start3', 0);
+        $start4    = Request::getInt('start4', 0, 'POST');// cleanRequestVars($_REQUEST, 'start4', 0);
+        $start5    = Request::getInt('start5', 0, 'POST');// cleanRequestVars($_REQUEST, 'start5', 0);
+        $totalcats = Xoopstube\Utility::getTotalCategoryCount();
 
         $result = $GLOBALS['xoopsDB']->query('SELECT COUNT(*) FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_broken'));
         list($totalbrokenvideos) = $GLOBALS['xoopsDB']->fetchRow($result);
@@ -544,7 +544,7 @@ switch (strtolower($op)) {
         $adminObject->addItemButton(_MI_XOOPSTUBE_ADD_CATEGORY, 'category.php', 'add', '');
         $adminObject->displayButton('left', '');
 
-        //xtubeRenderAdminMenu( _AM_XOOPSTUBE_BINDEX );
+        //renderAdminMenu( _AM_XOOPSTUBE_BINDEX );
         //    echo '
         //          <fieldset style="border: #E8E8E8 1px solid;">
         //          <legend style="display: inline; font-weight: bold; color: #0A3760;">' . _AM_XOOPSTUBE_MINDEX_VIDEOSUMMARY . '</legend>
@@ -581,34 +581,34 @@ switch (strtolower($op)) {
             //            $sql='SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_cat') . ' ORDER BY cid DESC';
             //            $publishedArray       = $GLOBALS['xoopsDB']->query($sql, $GLOBALS['xoopsModuleConfig']['admin_perpage'], $start);
             //            $publishedArrayCount = $GLOBALS['xoopsDB']->getRowsNum($GLOBALS['xoopsDB']->query($sql));
-            //            xtubeRenderCategoryListHeader(_AM_XOOPSTUBE_MINDEX_PUBLISHEDVIDEO);
-            //            xtubeSetPageNavigationCategoryList($publishedArrayCount, $start, 'art', '', 'left');
+            //            renderCategoryListHeader(_AM_XOOPSTUBE_MINDEX_PUBLISHEDVIDEO);
+            //            setPageNavigationCategoryList($publishedArrayCount, $start, 'art', '', 'left');
             //            if ($publishedArrayCount > 0) {
             //                while ($published = $GLOBALS['xoopsDB']->fetchArray($publishedArray)) {
-            //                    xtubeRenderCategoryListBody($published);
+            //                    renderCategoryListBody($published);
             //                }
             //                echo '</table>';
             //            } else {
-            //                xtubeRenderCategoryListFooter();
+            //                renderCategoryListFooter();
             //            }
-            //            xtubeSetPageNavigationCategoryList($publishedArrayCount, $start, 'art', '', 'right');
+            //            setPageNavigationCategoryList($publishedArrayCount, $start, 'art', '', 'right');
         }
 
         if ($totalvideos > 0) {
             $sql                 = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE published > 0  ORDER BY lid DESC';
             $publishedArray      = $GLOBALS['xoopsDB']->query($sql, $GLOBALS['xoopsModuleConfig']['admin_perpage'], $start);
             $publishedArrayCount = $GLOBALS['xoopsDB']->getRowsNum($GLOBALS['xoopsDB']->query($sql));
-            xoopstube\Utility::xtubeRenderVideoListHeader(_AM_XOOPSTUBE_MINDEX_PUBLISHEDVIDEO);
-            xoopstube\Utility::xtubeSetPageNavigationVideoList($publishedArrayCount, $start, 'art', '', 'left');
+            Xoopstube\Utility::renderVideoListHeader(_AM_XOOPSTUBE_MINDEX_PUBLISHEDVIDEO);
+            Xoopstube\Utility::setPageNavigationVideoList($publishedArrayCount, $start, 'art', '', 'left');
             if ($publishedArrayCount > 0) {
                 while (false !== ($published = $GLOBALS['xoopsDB']->fetchArray($publishedArray))) {
-                    xoopstube\Utility::xtubeRenderVideoListBody($published);
+                    Xoopstube\Utility::renderVideoListBody($published);
                 }
                 echo '</table>';
             } else {
-                xoopstube\Utility::xtubeRenderVideoListFooter();
+                Xoopstube\Utility::renderVideoListFooter();
             }
-            xoopstube\Utility::xtubeSetPageNavigationVideoList($publishedArrayCount, $start, 'art', '', 'right');
+            Xoopstube\Utility::setPageNavigationVideoList($publishedArrayCount, $start, 'art', '', 'right');
         }
         require_once __DIR__ . '/admin_footer.php';
         break;

@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\xoopstube\common;
+<?php namespace XoopsModules\Xoopstube\Common;
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -63,7 +63,7 @@ class Breadcrumb
     {
         if (!isset($GLOBALS['xoTheme']) || !is_object($GLOBALS['xoTheme'])) {
             require_once $GLOBALS['xoops']->path('class/theme.php');
-            $GLOBALS['xoTheme'] = new xos_opal_Theme();
+            $GLOBALS['xoTheme'] = new \xos_opal_Theme();
         }
 
         require_once $GLOBALS['xoops']->path('class/template.php');

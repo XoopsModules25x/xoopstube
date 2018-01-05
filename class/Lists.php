@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\xoopstube;
+<?php namespace XoopsModules\Xoopstube;
 
 /**
  * Module: XoopsTube
@@ -18,14 +18,14 @@
  * @since           1.0.6
  */
 
-use Xoopsmodules\xoopstube;
-use Xoopsmodules\xoopstube\common;
+use XoopsModules\Xoopstube;
+use XoopsModules\Xoopstube\Common;
 
 /**
- * Class XoopstubeLists
- * @package Xoopsmodules\xoopstube
+ * Class Lists
+ * @package XoopsModules\Xoopstube
  */
-class XoopstubeLists
+class Lists
 {
     public $value;
     public $selected;

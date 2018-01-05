@@ -17,7 +17,7 @@
  * @since           1.0.6
  */
 
-use Xoopsmodules\xoopstube;
+use XoopsModules\Xoopstube;
 
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 $form = new \XoopsThemeForm($block['form_title'], 'blockform', 'blocksadmin.php', 'post', true);

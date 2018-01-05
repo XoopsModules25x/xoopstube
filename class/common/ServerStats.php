@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\xoopstube\common;
+<?php namespace XoopsModules\Xoopstube\Common;
 
 /*
  You may not change or alter any portion of this comment or credits

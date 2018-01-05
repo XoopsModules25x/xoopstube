@@ -19,7 +19,7 @@
  */
 
 use Xmf\Request;
-use Xoopsmodules\xoopstube;
+use XoopsModules\Xoopstube;
 
 include __DIR__ . '/../../mainfile.php';
 
@@ -27,16 +27,16 @@ $moduleDirName = basename(__DIR__);
 $modulePath    = __DIR__;
 
 require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/include/common.php';
-require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/Utility.php';
+//require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/Utility.php';
 require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/include/video.php';
 require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/sbookmarks.php';
-require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/Thumbnails.php';
-require_once XOOPS_ROOT_PATH . '/modules/xoopstube/class/Tree.php';
+//require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/Thumbnails.php';
+//require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/Tree.php';
 require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
 
 xoops_loadLanguage('main', $moduleDirName);
 
-require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/XtubeTextSanitizer.php';
-$xtubemyts = new xoopstube\XtubeTextSanitizer(); // MyTextSanitizer object
+//require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/TextSanitizer.php';
+$xtubemyts = new Xoopstube\TextSanitizer(); // MyTextSanitizer object
 
 global $xoopModuleConfig;

@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\xoopstube;
+<?php namespace XoopsModules\Xoopstube;
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -20,8 +20,8 @@
  */
 // defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
-use Xoopsmodules\xoopstube;
-use Xoopsmodules\xoopstube\common;
+use XoopsModules\Xoopstube;
+use XoopsModules\Xoopstube\Common;
 
 require_once __DIR__ . '/../include/common.php';
 

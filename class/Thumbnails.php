@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\xoopstube;
+<?php namespace XoopsModules\Xoopstube;
 
 /**
  * Module: XoopsTube
@@ -18,8 +18,8 @@
  * @since           1.0.6
  */
 
-use Xoopsmodules\xoopstube;
-use Xoopsmodules\xoopstube\common;
+use XoopsModules\Xoopstube;
+use XoopsModules\Xoopstube\Common;
 
 if (!defined('_PATH')) {
     define('_PATH', XOOPS_ROOT_PATH);

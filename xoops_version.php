@@ -18,6 +18,7 @@
  * @since           1.0.6
  */
 
+use XoopsModules\Xoopstube;
 require_once __DIR__ . '/preloads/autoloader.php';
 
 $moduleDirName = basename(__DIR__);

@@ -18,7 +18,7 @@
  */
 
 use Xmf\Request;
-use Xoopsmodules\xoopstube;
+use XoopsModules\Xoopstube;
 
 require_once __DIR__ . '/admin_header.php';
 if (!is_object($GLOBALS['xoopsUser']) || !is_object($xoopsModule)

@@ -18,19 +18,19 @@
  */
 
 use Xmf\Request;
-use Xoopsmodules\xoopstube;
+use XoopsModules\Xoopstube;
 
 require_once __DIR__ . '/admin_header.php';
 
 global $xtubeImageArray, $xoopsModule;
 
-$op  = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'op', '');
-$lid = Request::getInt('lid', Request::getInt('lid', 0, 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'lid', 0);
+$op  = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET'); //cleanRequestVars($_REQUEST, 'op', '');
+$lid = Request::getInt('lid', Request::getInt('lid', 0, 'POST'), 'GET'); //cleanRequestVars($_REQUEST, 'lid', 0);
 
 switch (strtolower($op)) {
     case 'updatenotice':
-        $ack         = Request::getInt('ack', 0); //xtubeCleanRequestVars($_REQUEST, 'ack', 0);
-        $con         = Request::getInt('con', 1); //xtubeCleanRequestVars($_REQUEST, 'con', 1);
+        $ack         = Request::getInt('ack', 0); //cleanRequestVars($_REQUEST, 'ack', 0);
+        $con         = Request::getInt('con', 1); //cleanRequestVars($_REQUEST, 'con', 1);
         $update_mess = '';
 
         if ($ack && !$con) {
@@ -176,7 +176,7 @@ switch (strtolower($op)) {
                 } else {
                     echo '<td class="even"><a href="mailto:' . $owneremail . '">' . $ownername . '</a></td>';
                 }
-                echo '<td class="even" style="text-align: center;">' . xoopstube\Utility::xtubeGetTimestamp(formatTimestamp($date, $GLOBALS['xoopsModuleConfig']['dateformatadmin'])) . '</td>';
+                echo '<td class="even" style="text-align: center;">' . Xoopstube\Utility::getTimestamp(formatTimestamp($date, $GLOBALS['xoopsModuleConfig']['dateformatadmin'])) . '</td>';
                 echo '<td class="even"><a href="brokenvideo.php?op=updateNotice&amp;lid=' . $lid . '&ack=' . (int)$acknowledged . '">' . $ack_image . ' </a></td>';
                 echo '<td class="even"><a href="brokenvideo.php?op=updateNotice&amp;lid=' . $lid . '&con=' . (int)$confirmed . '">' . $con_image . '</a></td>';
                 echo '<td class="even" style="text-align: center;" nowrap>';

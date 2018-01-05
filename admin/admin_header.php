@@ -17,7 +17,7 @@
  * @since           1.0.6
  */
 
-use Xoopsmodules\xoopstube;
+use XoopsModules\Xoopstube;
 
 require_once __DIR__ . '/../../../include/cp_header.php';
 //require_once $GLOBALS['xoops']->path('www/class/xoopsformloader.php');
@@ -47,16 +47,16 @@ if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof XoopsTpl))
 }
 
 //include $moduleDirName . '/include/config.php';
-require_once __DIR__ . '/../class/Utility.php';
+//require_once __DIR__ . '/../class/Utility.php';
 require_once __DIR__ . '/../include/video.php';
-require_once __DIR__ . '/../class/XoopstubeLists.php';
-require_once __DIR__ . '/../class/XtubeTextSanitizer.php';
-require_once __DIR__ . '/../class/Tree.php';
+//require_once __DIR__ . '/../class/Lists.php';
+//require_once __DIR__ . '/../class/TextSanitizer.php';
+//require_once __DIR__ . '/../class/Tree.php';
 
 require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
-$xtubemyts = new XtubeTextSanitizer(); // MyTextSanitizer object
+$xtubemyts = new Xoopstube\TextSanitizer(); // MyTextSanitizer object
 
 $xtubeImageArray = [
     'editimg'     => "<img src='$pathIcon16/edit.png' alt='" . _AM_XOOPSTUBE_ICO_EDIT . "' align='middle'>",

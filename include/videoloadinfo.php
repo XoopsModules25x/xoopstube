@@ -18,13 +18,14 @@
  * @since           1.0.6
  */
 
-use Xoopsmodules\xoopstube;
+use XoopsModules\Xoopstube;
 
 // $module_video = '';
 
 //require_once __DIR__ . '/admin_header.php';
 
 //global $pathIcon16;
+$xtubemyts = new Xoopstube\TextSanitizer(); // MyTextSanitizer object
 
 $video['id']        = (int)$video_arr['lid'];
 $video['cid']       = (int)$video_arr['cid'];
@@ -126,7 +127,7 @@ $votestring = (1 == $video_arr['votes']) ? _MD_XOOPSTUBE_ONEVOTE : sprintf(_MD_X
 $video['useradminvideo'] = 0;
 if (is_object($GLOBALS['xoopsUser']) && !empty($GLOBALS['xoopsUser'])) {
     $_user_submitter = ($GLOBALS['xoopsUser']->getVar('uid') === $video_arr['submitter']) ? true : false;
-    if (true === xoopstube\Utility::xtubeCheckGroups($cid)) {
+    if (true === Xoopstube\Utility::checkGroups($cid)) {
         $video['useradminvideo'] = 1;
         if ($GLOBALS['xoopsUser']->getVar('uid') === $video_arr['submitter']) {
             $video['usermodify'] = '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/submit.php?lid=' . $video_arr['lid'] . '"> ' . _MD_XOOPSTUBE_MODIFY . '</a> |';
@@ -137,14 +138,14 @@ if (is_object($GLOBALS['xoopsUser']) && !empty($GLOBALS['xoopsUser'])) {
 $description          =& $xtubemyts->displayTarea($video_arr['description'], 1, 1, 1, 1, 1);
 $video['description'] = xoops_substr($description, 0, $GLOBALS['xoopsModuleConfig']['totalchars'], '...');
 
-$video['updated']        = xoopstube\Utility::xtubeGetTimestamp(formatTimestamp($time, $GLOBALS['xoopsModuleConfig']['dateformat']));
-$video['submitter']      = xoopstube\Utility::xtubeGetLinkedUserNameFromId($video_arr['submitter']);
+$video['updated']        = Xoopstube\Utility::getTimestamp(formatTimestamp($time, $GLOBALS['xoopsModuleConfig']['dateformat']));
+$video['submitter']      = Xoopstube\Utility::getLinkedUserNameFromId($video_arr['submitter']);
 $video['time']           = $video_arr['time'];
 $video['mail_subject']   = rawurlencode(sprintf(_MD_XOOPSTUBE_INTFILEFOUND, $GLOBALS['xoopsConfig']['sitename']));
 $video['mail_body']      = rawurlencode(sprintf(_MD_XOOPSTUBE_INTFILEFOUND, $GLOBALS['xoopsConfig']['sitename']) . ':  ' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/singlevideo.php?cid=' . $video_arr['cid'] . '&amp;lid=' . $video_arr['lid']);
 $video['comments']       = $video_arr['comments'];
-$video['icons']          = xoopstube\Utility::xtubeDisplayIcons($video_arr['published'], $video_arr['status'], $video_arr['hits']);
-$video['allow_rating']   = xoopstube\Utility::xtubeCheckGroups($cid, 'XTubeRatePerms') ? true : false;
+$video['icons']          = Xoopstube\Utility::displayIcons($video_arr['published'], $video_arr['status'], $video_arr['hits']);
+$video['allow_rating']   = Xoopstube\Utility::checkGroups($cid, 'XTubeRatePerms') ? true : false;
 $video['screen_shot']    = $GLOBALS['xoopsModuleConfig']['screenshot'];
 $video['total_chars']    = $GLOBALS['xoopsModuleConfig']['totalchars'];
 $video['module_dir']     = $xoopsModule->getVar('dirname');

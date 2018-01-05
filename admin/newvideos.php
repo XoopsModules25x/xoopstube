@@ -18,12 +18,12 @@
  */
 
 use Xmf\Request;
-use Xoopsmodules\xoopstube;
+use XoopsModules\Xoopstube;
 
 require_once __DIR__ . '/admin_header.php';
 
-$op  = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'op', '');
-$lid = Request::getInt('lid', Request::getInt('lid', 0, 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'lid', 0);
+$op  = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET'); //cleanRequestVars($_REQUEST, 'op', '');
+$lid = Request::getInt('lid', Request::getInt('lid', 0, 'POST'), 'GET'); //cleanRequestVars($_REQUEST, 'lid', 0);
 
 switch (strtolower($op)) {
     case 'approve':
@@ -77,7 +77,7 @@ switch (strtolower($op)) {
     case 'main':
     default:
 
-        $start = Request::getInt('start', 0); //xtubeCleanRequestVars($_REQUEST, 'start', 0);
+        $start = Request::getInt('start', 0); //cleanRequestVars($_REQUEST, 'start', 0);
         $sql   = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE published = 0 ORDER BY lid DESC';
         if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
             XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
@@ -116,9 +116,9 @@ switch (strtolower($op)) {
                 $title        = $xtubemyts->htmlSpecialCharsStrip($new['title']);
                 $vidid        = urldecode($xtubemyts->htmlSpecialCharsStrip($new['vidid']));
                 $logourl      = $xtubemyts->htmlSpecialCharsStrip($new['screenshot']);
-                $submitter    = xoopstube\Utility::xtubeGetLinkedUserNameFromId($new['submitter']);
+                $submitter    = Xoopstube\Utility::getLinkedUserNameFromId($new['submitter']);
                 $returnsource = xtubeReturnSource($new['vidsource']);
-                $datetime     = xoopstube\Utility::xtubeGetTimestamp(formatTimestamp($new['date'], $GLOBALS['xoopsModuleConfig']['dateformatadmin']));
+                $datetime     = Xoopstube\Utility::getTimestamp(formatTimestamp($new['date'], $GLOBALS['xoopsModuleConfig']['dateformatadmin']));
 
                 $icon = $new['published'] ? $approved : '<a href="newvideos.php?op=approve&amp;lid=' . $lid . '">' . $xtubeImageArray['approve'] . ' </a>';
                 $icon .= '<a href="main.php?op=edit&amp;lid=' . $lid . '">' . $xtubeImageArray['editimg'] . ' </a>';

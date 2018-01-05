@@ -19,7 +19,7 @@
  */
 
 use Xmf\Request;
-use Xoopsmodules\xoopstube;
+use XoopsModules\Xoopstube;
 
 include __DIR__ . '/header.php';
 
@@ -95,7 +95,7 @@ if (!empty(Request::getString('submit', ''))) {
         $ratemessage = _MD_XOOPSTUBE_ERROR;
     } else {
         // All is well.  Calculate Score & Add to Summary (for quick retrieval & sorting) to DB.
-        xoopstube\Utility::xtubeUpdateRating($lid);
+        Xoopstube\Utility::updateRating($lid);
         $ratemessage = _MD_XOOPSTUBE_VOTEAPPRE . '<br>' . sprintf(_MD_XOOPSTUBE_THANKYOU, $GLOBALS['xoopsConfig']['sitename']);
     }
     redirect_header('singlevideo.php?cid=' . $cid . '&amp;lid=' . $lid, 4, $ratemessage);
@@ -104,10 +104,10 @@ if (!empty(Request::getString('submit', ''))) {
     $GLOBALS['xoopsOption']['template_main'] = 'xoopstube_ratevideo.tpl';
     include XOOPS_ROOT_PATH . '/header.php';
 
-    $catarray['imageheader'] = xoopstube\Utility::xtubeRenderImageHeader();
+    $catarray['imageheader'] = Xoopstube\Utility::renderImageHeader();
     $cid                     = Request::getInt('cid', Request::getInt('cid', '', 'POST'), 'GET');
 
-    $catarray['imageheader'] = xoopstube\Utility::xtubeRenderImageHeader();
+    $catarray['imageheader'] = Xoopstube\Utility::renderImageHeader();
     $xoopsTpl->assign('catarray', $catarray);
 
     $result = $GLOBALS['xoopsDB']->query('SELECT title FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE lid=' . $lid);
@@ -118,13 +118,13 @@ if (!empty(Request::getString('submit', ''))) {
         'title' => $xtubemyts->htmlSpecialCharsStrip($title)
     ]);
 
-    xoopstube\Utility::xtubeSetNoIndexNoFollow();
+    Xoopstube\Utility::setNoIndexNoFollow();
 
     $xoopsTpl->assign('module_dir', $xoopsModule->getVar('dirname'));
     include XOOPS_ROOT_PATH . '/footer.php';
 }
 
-xoopstube\Utility::xtubeSetNoIndexNoFollow();
+Xoopstube\Utility::setNoIndexNoFollow();
 
 $xoopsTpl->assign('module_dir', $xoopsModule->getVar('dirname'));
 include XOOPS_ROOT_PATH . '/footer.php';

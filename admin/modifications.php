@@ -18,20 +18,20 @@
  */
 
 use Xmf\Request;
-use Xoopsmodules\xoopstube;
+use XoopsModules\Xoopstube;
 
 require_once __DIR__ . '/admin_header.php';
 
 //global $xoopstubetree;
 
-$op        = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'op', '');
-$requestid = Request::getInt('requestid', Request::getInt('requestid', 0, 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'requestid', 0);
+$op        = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET'); //cleanRequestVars($_REQUEST, 'op', '');
+$requestid = Request::getInt('requestid', Request::getInt('requestid', 0, 'POST'), 'GET'); //cleanRequestVars($_REQUEST, 'requestid', 0);
 
 switch (strtolower($op)) {
     case 'listmodreqshow':
 
         xoops_cp_header();
-        //    xtubeRenderAdminMenu(_AM_XOOPSTUBE_MOD_MODREQUESTS);
+        //    renderAdminMenu(_AM_XOOPSTUBE_MOD_MODREQUESTS);
 
         $sql       = 'SELECT modifysubmitter, requestid, lid, cid, title, vidid, submitter, publisher, vidsource, description, time, keywords, item_tag, picurl FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_mod') . ' WHERE requestid=' . $requestid;
         $mod_array = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
@@ -42,7 +42,7 @@ switch (strtolower($op)) {
         unset($sql);
 
         $orig_user      = new \XoopsUser($orig_array['submitter']);
-        $submittername  = xoopstube\Utility::xtubeGetLinkedUserNameFromId($orig_array['submitter']);
+        $submittername  = Xoopstube\Utility::getLinkedUserNameFromId($orig_array['submitter']);
         $submitteremail = $orig_user::getUnameFromId('email');
 
         echo '<div><b>' . _AM_XOOPSTUBE_MOD_MODPOSTER . '</b> ' . $submittername . '</div>';
@@ -69,7 +69,7 @@ switch (strtolower($op)) {
         $sform->display();
 
         $orig_user      = new \XoopsUser($mod_array['modifysubmitter']);
-        $submittername  = xoopstube\Utility::xtubeGetLinkedUserNameFromId($mod_array['modifysubmitter']);
+        $submittername  = Xoopstube\Utility::getLinkedUserNameFromId($mod_array['modifysubmitter']);
         $submitteremail = $orig_user::getUnameFromId('email');
 
         echo '<div><b>' . _AM_XOOPSTUBE_MOD_MODIFYSUBMITTER . '</b> ' . $submittername . '</div>';
@@ -149,7 +149,7 @@ switch (strtolower($op)) {
     default:
 
         $start            = Request::getInt('start', 0, 'GET');
-        $xoopstubetree    = new xoopstube\Tree($GLOBALS['xoopsDB']->prefix('xoopstube_mod'), 'requestid', 0);
+        $xoopstubetree    = new Xoopstube\Tree($GLOBALS['xoopsDB']->prefix('xoopstube_mod'), 'requestid', 0);
         $sql              = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_mod') . ' ORDER BY requestdate DESC';
         $result           = $GLOBALS['xoopsDB']->query($sql, $GLOBALS['xoopsModuleConfig']['admin_perpage'], $start);
         $totalmodrequests = $GLOBALS['xoopsDB']->getRowsNum($GLOBALS['xoopsDB']->query($sql));
@@ -177,8 +177,8 @@ switch (strtolower($op)) {
                 $path        = str_replace('/', '', $path);
                 $path        = str_replace(':', '', trim($path));
                 $title       = trim($path);
-                $submitter   = xoopstube\Utility::xtubeGetLinkedUserNameFromId($video_arr['modifysubmitter']);
-                $requestdate = xoopstube\Utility::xtubeGetTimestamp(formatTimestamp($video_arr['requestdate'], $GLOBALS['xoopsModuleConfig']['dateformatadmin']));
+                $submitter   = Xoopstube\Utility::getLinkedUserNameFromId($video_arr['modifysubmitter']);
+                $requestdate = Xoopstube\Utility::getTimestamp(formatTimestamp($video_arr['requestdate'], $GLOBALS['xoopsModuleConfig']['dateformatadmin']));
 
                 echo '<tr style="text-align: center;">';
                 echo '<td class="head">' . $video_arr['requestid'] . '</td>';

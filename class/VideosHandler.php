@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\xoopstube;
+<?php namespace XoopsModules\Xoopstube;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -21,14 +21,14 @@
  */
 // defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
-use Xoopsmodules\xoopstube;
-use Xoopsmodules\xoopstube\common;
+use XoopsModules\Xoopstube;
+use XoopsModules\Xoopstube\Common;
 
 
 /**
- * Class XoopstubeVideosHandler
+ * Class VideosHandler
  */
-class XoopstubeVideosHandler extends \XoopsPersistableObjectHandler
+class VideosHandler extends \XoopsPersistableObjectHandler
 {
     /**
      * @var Helper
@@ -37,33 +37,33 @@ class XoopstubeVideosHandler extends \XoopsPersistableObjectHandler
     public $helper = null;
 
     /**
-     * @param null|XoopsDatabase $db
+     * @param null|\XoopsDatabase $db
      */
-    public function __construct(XoopsDatabase $db)
+    public function __construct(\XoopsDatabase $db)
     {
-        parent::__construct($db, 'xoopstube_videos', XoopstubeVideos::class, 'lid', 'title');
-        $this->helper = xoopstube\Helper::getInstance();
+        parent::__construct($db, 'xoopstube_videos', Videos::class, 'lid', 'title');
+        $this->helper = Xoopstube\Helper::getInstance();
     }
 
     /**
      * Get criteria for active videos
      *
-     * @return \Xoopsmodules\xoopstube\CriteriaCompo
+     * @return \CriteriaCompo
      */
     public function getActiveCriteria()
     {
         $gpermHandler = xoops_getHandler('groupperm');
 
-        $criteria = new CriteriaCompo(new Criteria('offline', false));
-        $criteria->add(new Criteria('published', 0, '>'));
-        $criteria->add(new Criteria('published', time(), '<='));
-        $expiredCriteria = new CriteriaCompo(new Criteria('expired', 0));
-        $expiredCriteria->add(new Criteria('expired', time(), '>='), 'OR');
+        $criteria = new \CriteriaCompo(new \Criteria('offline', false));
+        $criteria->add(new \Criteria('published', 0, '>'));
+        $criteria->add(new \Criteria('published', time(), '<='));
+        $expiredCriteria = new \CriteriaCompo(new \Criteria('expired', 0));
+        $expiredCriteria->add(new \Criteria('expired', time(), '>='), 'OR');
         $criteria->add($expiredCriteria);
         // add criteria for categories that the user has permissions for
         $groups                   = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : [0 => XOOPS_GROUP_ANONYMOUS];
-        $allowedDownCategoriesIds = $gpermHandler->getItemIds('XTubeCatPerm', $groups, $this->xoopstube->getModule()->mid());
-        $criteria->add(new Criteria('cid', '(' . implode(',', $allowedDownCategoriesIds) . ')', 'IN'));
+        $allowedDownCategoriesIds = $gpermHandler->getItemIds('XTubeCatPerm', $groups, $this->helper->getModule()->mid());
+        $criteria->add(new \Criteria('cid', '(' . implode(',', $allowedDownCategoriesIds) . ')', 'IN'));
 
         return $criteria;
     }

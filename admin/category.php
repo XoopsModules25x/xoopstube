@@ -16,7 +16,7 @@
  */
 
 use Xmf\Request;
-use Xoopsmodules\xoopstube;
+use XoopsModules\Xoopstube;
 
 require_once __DIR__ . '/admin_header.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsform/grouppermform.php';
@@ -61,7 +61,7 @@ function createCategory($cid = 0)
     $client_id    = 0;
     $banner_id    = 0;
     $heading      = _AM_XOOPSTUBE_CCATEGORY_CREATENEW;
-    $totalcats    = xoopstube\Utility::xtubeGetTotalCategoryCount();
+    $totalcats    = Xoopstube\Utility::getTotalCategoryCount();
 
     if ($cid > 0) {
         $sql          = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_cat') . ' WHERE cid=' . (int)$cid;
@@ -98,20 +98,20 @@ function createCategory($cid = 0)
     $sform->addElement(new XoopsFormText(_AM_XOOPSTUBE_FCATEGORY_WEIGHT, 'weight', 10, 80, $weight), false);
 
     if ($totalcats > 0 && $cid) {
-        $mytreechose = new xoopstube\Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
+        $mytreechose = new Xoopstube\Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
         ob_start();
         $mytreechose->makeMySelBox('title', 'title', $cat_arr['pid'], 1, 'pid');
         $sform->addElement(new XoopsFormLabel(_AM_XOOPSTUBE_FCATEGORY_SUBCATEGORY, ob_get_contents()));
         ob_end_clean();
     } else {
-        $mytreechose = new xoopstube\Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
+        $mytreechose = new Xoopstube\Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
         ob_start();
         $mytreechose->makeMySelBox('title', 'title', $cid, 1, 'pid');
         $sform->addElement(new XoopsFormLabel(_AM_XOOPSTUBE_FCATEGORY_SUBCATEGORY, ob_get_contents()));
         ob_end_clean();
     }
 
-    $graph_array      =& XoopstubeLists::getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $GLOBALS['xoopsModuleConfig']['catimage'], $type = 'images');
+    $graph_array      = Xoopstube\Lists::getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $GLOBALS['xoopsModuleConfig']['catimage'], $type = 'images');
     $indexImageSelect = new \XoopsFormSelect('', 'imgurl', $imgurl);
     $indexImageSelect->addOptionArray($graph_array);
     $indexImageSelect->setExtra("onchange='showImgSelected(\"image\", \"imgurl\", \"" . $GLOBALS['xoopsModuleConfig']['catimage'] . '", "", "' . XOOPS_URL . "\")'");
@@ -251,10 +251,10 @@ switch ($op) {
             $cid = Request::getInt('cid', Request::getInt('cid', 0, 'GET'), 'POST'); //(isset($_POST['cid'])) ? $_POST['cid'] : $_GET['cid'];
 
             xoops_cp_header();
-            //xtubeRenderAdminMenu(_AM_XOOPSTUBE_MCATEGORY);
+            //renderAdminMenu(_AM_XOOPSTUBE_MCATEGORY);
 
             require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-            $xoopstubetree = new xoopstube\Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
+            $xoopstubetree = new Xoopstube\Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
             $sform         = new \XoopsThemeForm(_AM_XOOPSTUBE_CCATEGORY_MOVE, 'move', xoops_getenv('PHP_SELF'), 'post', true);
             ob_start();
             $xoopstubetree->makeMySelBox('title', 'title', 0, 0, 'target');
@@ -359,7 +359,7 @@ switch ($op) {
         $cid = Request::getInt('cid', Request::getInt('cid', 0, 'GET'), 'POST');
         //        $ok            = (isset($_POST['ok']) && $_POST['ok'] == 1) ? (int) $_POST['ok'] : 0;
         $ok            = (1 == Request::getInt('ok', 0, 'POST')) ? 1 : 0;
-        $xoopstubetree = new xoopstube\Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
+        $xoopstubetree = new Xoopstube\Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
 
         if (1 == $ok) {
             // get all subcategories under the specified category
@@ -446,7 +446,7 @@ switch ($op) {
     case 'modCat':
         $cid = Request::getInt('cid', 0, 'POST'); //(isset($_POST['cid'])) ? $_POST['cid'] : 0;
         xoops_cp_header();
-        //xtubeRenderAdminMenu(_AM_XOOPSTUBE_MCATEGORY);
+        //renderAdminMenu(_AM_XOOPSTUBE_MCATEGORY);
         createCategory($cid);
         require_once __DIR__ . '/admin_footer.php';
         break;
@@ -454,12 +454,12 @@ switch ($op) {
     case 'main':
     default:
         xoops_cp_header();
-        //xtubeRenderAdminMenu(_AM_XOOPSTUBE_MCATEGORY);
+        //renderAdminMenu(_AM_XOOPSTUBE_MCATEGORY);
 
         //        require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-        $xoopstubetree = new xoopstube\Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
+        $xoopstubetree = new Xoopstube\Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
         $sform         = new \XoopsThemeForm(_AM_XOOPSTUBE_CCATEGORY_MODIFY, 'category', xoops_getenv('PHP_SELF'), 'post', true);
-        $totalcats     = xoopstube\Utility::xtubeGetTotalCategoryCount();
+        $totalcats     = Xoopstube\Utility::getTotalCategoryCount();
 
         if ($totalcats > 0) {
             ob_start();

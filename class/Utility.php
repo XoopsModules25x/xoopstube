@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\xoopstube;
+<?php namespace XoopsModules\Xoopstube;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -11,9 +11,9 @@
 */
 
 use Xmf\Request;
-use Xoopsmodules\xoopstube;
-use Xoopsmodules\xoopstube\common;
-use WideImage\WideImage;
+use XoopsModules\Xoopstube;
+use XoopsModules\Xoopstube\Common;
+use \WideImage\WideImage;
 
 /**
  * xoopstube
@@ -38,18 +38,18 @@ use WideImage\WideImage;
 
 
 
-require_once __DIR__ . '/../include/common.php';
+//require_once __DIR__ . '/../include/common.php';
 
 /**
  * Class Utility
  */
 class Utility
 {
-    use common\VersionChecks; //checkVerXoops, checkVerPhp Traits
+    use Common\VersionChecks; //checkVerXoops, checkVerPhp Traits
 
-    use common\ServerStats; // getServerStats Trait
+    use Common\ServerStats; // getServerStats Trait
 
-    use common\FilesManagement; // Files Management Trait
+    use Common\FilesManagement; // Files Management Trait
 
     //--------------- Custom module methods -----------------------------
 
@@ -58,7 +58,7 @@ class Utility
     /**
      * Access the only instance of this class
      *
-     * @return \Xoopsmodules\xoopstube\Utility
+     * @return \XoopsModules\Xoopstube\Utility
      *
      * @static
      * @staticvar   object
@@ -96,7 +96,7 @@ class Utility
                 $retval = $xoopsModuleConfig[$option];
             }
         } else {
-            /** @var XoopsModuleHandler $moduleHandler */
+            /** @var \XoopsModuleHandler $moduleHandler */
             $moduleHandler = xoops_getHandler('module');
             $module        = $moduleHandler->getByDirname($repmodule);
             $configHandler = xoops_getHandler('config');
@@ -345,7 +345,7 @@ class Utility
     /**
      * Internal function used to get the handler of the current module
      *
-     * @return XoopsModule The module
+     * @return \XoopsModule The module
      */
     protected static function _getModule()
     {
@@ -545,12 +545,12 @@ class Utility
     /**
      * Mark the mandatory fields of a form with a star
      *
-     * @param XoopsObject $sform The form to modify
+     * @param \XoopsObject $sform The form to modify
      *
      * @internal param string $caracter The character to use to mark fields
      * @return object The modified form
      */
-    public static function &formMarkRequiredFields(XoopsObject $sform)
+    public static function &formMarkRequiredFields(\XoopsObject $sform)
     {
         if (self::needsAsterisk()) {
             $required = [];
@@ -1053,7 +1053,7 @@ class Utility
                     $permittedtypes = $mimeTypes;
                 }
                 $uploadSize = null === $uploadMaxSize ? self::getModuleOption('maxuploadsize') : $uploadMaxSize;
-                $uploader   = new \XoopsMediaUploader($dstpath, $permittedtypes, $uploadSize, $maxWidth, $maxHeight);
+                $uploader   = new Xoopstube\MediaUploader($dstpath, $permittedtypes, $uploadSize, $maxWidth, $maxHeight);
                 //$uploader->allowUnknownTypes = true;
                 $uploader->setTargetFileName($destname);
                 if ($uploader->fetchMedia($_POST['xoops_upload_file'][$indice])) {
@@ -1106,7 +1106,7 @@ class Utility
             }
         }
 
-        $img = WideImage::load($src_path);
+        $img = \WideImage::load($src_path);
         if ($resize) {
             $result = $img->resize($param_width, $param_height, $fit);
             $result->saveToFile($dst_path);
@@ -1126,8 +1126,8 @@ class Utility
      *
      * @param string       $category La catégorie de l'évènement
      * @param integer      $itemId   L'ID de l'élément (trop général pour être décris précisément)
-     * @param unknown_type $event    L'évènement qui est déclencé
-     * @param unknown_type $tags     Les variables à passer au template
+     * @param \XoopsNotification $event    L'évènement qui est déclencé
+     * @param mixed $tags     Les variables à passer au template
      */
     public static function notify($category, $itemId, $event, $tags)
     {
@@ -1314,7 +1314,7 @@ class Utility
      */
     public static function getTTC($ht, $vat, $edit = false, $format = 's')
     {
-        $oledrion_Currency = Oledrion_Currency::getInstance();
+        $oledrion_Currency = \XoopsModules\oledrion\Currency::getInstance();
         $ttc               = $ht * (1 + ($vat / 100));
         if (!$edit) {
             return $oledrion_Currency->amountForDisplay($ttc, $format);
@@ -1337,10 +1337,10 @@ class Utility
     /**
      * Retourne le montant TTC
      *
-     * @param floatval $product_price Le montant du produit
+     * @param float $product_price Le montant du produit
      * @param integer  $vat_id        Le numéro de TVA
      *
-     * @return floatval Le montant TTC si on a trouvé sa TVA sinon
+     * @return float Le montant TTC si on a trouvé sa TVA sinon
      */
     public static function getAmountWithVat($product_price, $vat_id)
     {
@@ -1349,7 +1349,7 @@ class Utility
         if (is_array($vats) && in_array($vat_id, $vats)) {
             $vat_rate = $vats[$vat_id];
         } else {
-            $handlers = OledrionHandler::getInstance();
+            $handlers = \XoopsModules\oledrion\OledrionHandler::getInstance();
             $vat      = null;
             $vat      = $handlers->h_oledrion_vat->get($vat_id);
             if (is_object($vat)) {
@@ -1421,9 +1421,9 @@ class Utility
     {
         $start             = mktime(0, 1, 0, date('n'), date('j'), date('Y'));
         $end               = mktime(0, 0, 0, date('n'), date('t'), date('Y'));
-        $criteriaThisMonth = new CriteriaCompo();
-        $criteriaThisMonth->add(new Criteria('product_submitted', $start, '>='));
-        $criteriaThisMonth->add(new Criteria('product_submitted', $end, '<='));
+        $criteriaThisMonth = new \CriteriaCompo();
+        $criteriaThisMonth->add(new \Criteria('product_submitted', $start, '>='));
+        $criteriaThisMonth->add(new \Criteria('product_submitted', $end, '<='));
 
         return $criteriaThisMonth;
     }
@@ -1443,7 +1443,7 @@ class Utility
             sort($xoopsUsersIDs);
             if (count($xoopsUsersIDs) > 0) {
                 $memberHandler = xoops_getHandler('user');
-                $criteria      = new Criteria('uid', '(' . implode(',', $xoopsUsersIDs) . ')', 'IN');
+                $criteria      = new \Criteria('uid', '(' . implode(',', $xoopsUsersIDs) . ')', 'IN');
                 $criteria->setSort('uid');
                 $users = $memberHandler->getObjects($criteria, true);
             }
@@ -1881,7 +1881,7 @@ class Utility
     {
         require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
 
-        return XoopsLists::getCountryList();
+        return \XoopsLists::getCountryList();
     }
 
     //=================================================================================================================================
@@ -1891,7 +1891,7 @@ class Utility
      * @param  bool $optional
      * @return bool
      */
-    public static function xtubeGetHandler($name, $optional = false)
+    public static function getHandler($name, $optional = false)
     {
         global $handlers, $xoopsModule;
 
@@ -1919,7 +1919,7 @@ class Utility
      *
      * @return bool
      */
-    public static function xtubeCheckGroups($cid = 0, $permType = 'XTubeCatPerm', $redirect = false)
+    public static function checkGroups($cid = 0, $permType = 'XTubeCatPerm', $redirect = false)
     {
         global $xoopsModule;
 
@@ -1941,7 +1941,7 @@ class Utility
      *
      * @return bool
      */
-    public static function xtubeGetVoteDetails($lid = 0)
+    public static function getVoteDetails($lid = 0)
     {
         $sql = 'SELECT
         COUNT(rating) AS rate,
@@ -1970,7 +1970,7 @@ class Utility
      *
      * @return array|bool
      */
-    public static function xtubeCalculateVoteData($sel_id = 0)
+    public static function calculateVoteData($sel_id = 0)
     {
         $ret                  = [];
         $ret['useravgrating'] = 0;
@@ -2002,7 +2002,7 @@ class Utility
      *
      * @return array|int|null|string
      */
-    public static function xtubeCleanRequestVars(
+    public static function cleanRequestVars(
         &$array,
         $name = null,
         $def = null,
@@ -2055,10 +2055,10 @@ class Utility
      *
      * @return string
      */
-    public static function xtubeRenderToolbar($cid = 0)
+    public static function renderToolbar($cid = 0)
     {
         $toolbar = '[ ';
-        if (true === self::xtubeCheckGroups($cid, 'XTubeSubPerm')) {
+        if (true === self::checkGroups($cid, 'XTubeSubPerm')) {
             $toolbar .= '<a href="submit.php?cid=' . $cid . '">' . _MD_XOOPSTUBE_SUBMITVIDEO . '</a> | ';
         }
         $toolbar .= '<a href="newlist.php?newvideoshowdays=7">' . _MD_XOOPSTUBE_LATESTLIST . '</a> | <a href="topten.php?list=hit">' . _MD_XOOPSTUBE_POPULARITY . '</a> | <a href="topten.php?list=rate">' . _MD_XOOPSTUBE_TOPRATED . '</a> ]';
@@ -2069,7 +2069,7 @@ class Utility
     /**
      *
      */
-    public static function xtubeGetServerStatistics()
+    public static function getServerStatistics()
     {
         global $xoopsModule;
         echo '<fieldset style="border: #E8E8E8 1px solid;">
@@ -2097,7 +2097,7 @@ class Utility
         echo '</fieldset>';
     }
 
-    // xtubeDisplayIcons()
+    // displayIcons()
     //
     // @param  $time
     // @param integer $status
@@ -2110,7 +2110,7 @@ class Utility
      *
      * @return string
      */
-    public static function xtubeDisplayIcons($time, $status = 0, $counter = 0)
+    public static function displayIcons($time, $status = 0, $counter = 0)
     {
         global $xoopsModule;
 
@@ -2155,7 +2155,7 @@ class Utility
     }
 
     // Reusable Link Sorting Functions
-    // xtubeConvertOrderByIn()
+    // convertOrderByIn()
     // @param  $orderby
     // @return
     /**
@@ -2163,7 +2163,7 @@ class Utility
      *
      * @return string
      */
-    public static function xtubeConvertOrderByIn($orderby)
+    public static function convertOrderByIn($orderby)
     {
         switch (trim($orderby)) {
             case 'titleA':
@@ -2206,7 +2206,7 @@ class Utility
      *
      * @return string
      */
-    public static function xtubeConvertOrderByTrans($orderby)
+    public static function convertOrderByTrans($orderby)
     {
         switch ($orderby) {
             case 'hits ASC':
@@ -2249,7 +2249,7 @@ class Utility
      *
      * @return string
      */
-    public static function xtubeConvertOrderByOut($orderby)
+    public static function convertOrderByOut($orderby)
     {
         switch ($orderby) {
             case 'title ASC':
@@ -2293,7 +2293,7 @@ class Utility
     /**
      * @param $sel_id
      */
-    public static function xtubeUpdateRating($sel_id)
+    public static function updateRating($sel_id)
     {
         $query       = 'SELECT rating FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_votedata') . ' WHERE lid=' . $sel_id;
         $voteresult  = $GLOBALS['xoopsDB']->query($query);
@@ -2316,7 +2316,7 @@ class Utility
      *
      * @return int
      */
-    public static function xtubeGetTotalCategoryCount($pid = 0)
+    public static function getTotalCategoryCount($pid = 0)
     {
         $sql = 'SELECT cid FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_cat');
         if ($pid > 0) {
@@ -2325,7 +2325,7 @@ class Utility
         $result     = $GLOBALS['xoopsDB']->query($sql);
         $catlisting = 0;
         while (false !== (list($cid) = $GLOBALS['xoopsDB']->fetchRow($result))) {
-            if (self::xtubeCheckGroups($cid)) {
+            if (self::checkGroups($cid)) {
                 ++$catlisting;
             }
         }
@@ -2333,7 +2333,7 @@ class Utility
         return $catlisting;
     }
 
-    // xtubeGetTotalItems()
+    // getTotalItems()
     // @param integer $sel_id
     // @param integer $get_child
     // @param integer $return_sql
@@ -2345,7 +2345,7 @@ class Utility
      *
      * @return string
      */
-    public static function xtubeGetTotalItems($sel_id = 0, $get_child = 0, $return_sql = 0)
+    public static function getTotalItems($sel_id = 0, $get_child = 0, $return_sql = 0)
     {
         global $mytree, $_check_array;
 
@@ -2380,7 +2380,7 @@ class Utility
         $arr    = [];
         $result = $GLOBALS['xoopsDB']->query($sql);
         while (false !== (list($lid, $cid, $published) = $GLOBALS['xoopsDB']->fetchRow($result))) {
-            if (true === self::xtubeCheckGroups()) {
+            if (true === self::checkGroups()) {
                 ++$count;
                 $published_date = ($published > $published_date) ? $published : $published_date;
             }
@@ -2430,7 +2430,7 @@ class Utility
      *
      * @return string
      */
-    public static function xtubeRenderImageHeader($indeximage = '', $indexheading = '')
+    public static function renderImageHeader($indeximage = '', $indexheading = '')
     {
         if ('' === $indeximage) {
             $result = $GLOBALS['xoopsDB']->query('SELECT indeximage, indexheading FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_indexpage'));
@@ -2439,7 +2439,7 @@ class Utility
 
         $image = '';
         if (!empty($indeximage)) {
-            $image = self::xtubeDisplayImage($indeximage, 'index.php', $GLOBALS['xoopsModuleConfig']['mainimagedir'], $indexheading);
+            $image = self::displayImage($indeximage, 'index.php', $GLOBALS['xoopsModuleConfig']['mainimagedir'], $indexheading);
         }
 
         return $image;
@@ -2453,7 +2453,7 @@ class Utility
      *
      * @return string
      */
-    public static function xtubeDisplayImage($image = '', $path = '', $imgsource = '', $alttext = '')
+    public static function displayImage($image = '', $path = '', $imgsource = '', $alttext = '')
     {
         global $xoopsModule;
 
@@ -2483,7 +2483,7 @@ class Utility
      *
      * @return mixed
      */
-    public static function xtubeIsNewImage($published)
+    public static function isNewImage($published)
     {
         global $xoopsModule;
 
@@ -2519,7 +2519,7 @@ class Utility
      *
      * @return string
      */
-    public static function xtubeFindStringChar($haystack, $needle)
+    public static function findStringChar($haystack, $needle)
     {
         return substr($haystack, 0, strpos($haystack, $needle) + 1);
     }
@@ -2532,7 +2532,7 @@ class Utility
      *
      * @return bool|null
      */
-    public static function xtubeRenderAdminMenu($header = '', $menu = '', $extra = '', $scount = 4)
+    public static function renderAdminMenu($header = '', $menu = '', $extra = '', $scount = 4)
     {
         global $xoopsModule;
 
@@ -2752,7 +2752,7 @@ class Utility
      * @param $dirarray
      * @param $namearray
      */
-    public static function xtubeGetDirSelectOption($selected, $dirarray, $namearray)
+    public static function getDirSelectOption($selected, $dirarray, $namearray)
     {
         echo "<select size='1' name='workd' onchange='location.href=\"upload.php?rootpath=\"+this.options[this.selectedIndex].value'>";
         echo "<option value=''>--------------------------------------</option>";
@@ -2766,24 +2766,24 @@ class Utility
         echo '</select>';
     }
 
-    /**
-     * @param $selected
-     * @param $dirarray
-     * @param $namearray
-     */
-    public static function xtubeVGetDirSelectOption($selected, $dirarray, $namearray)
-    {
-        echo "<select size='1' name='workd' onchange='location.href=\"vupload.php?rootpath=\"+this.options[this.selectedIndex].value'>";
-        echo "<option value=''>--------------------------------------</option>";
-        foreach ($namearray as $namearray => $workd) {
-            $opt_selected = '';
-            if ($workd == $selected) {
-                $opt_selected = 'selected';
-            }
-            echo '<option value="' . htmlspecialchars($namearray, ENT_QUOTES) . '" $opt_selected>' . $workd . '</option>';
-        }
-        echo '</select>';
-    }
+//    /**
+//     * @param $selected
+//     * @param $dirarray
+//     * @param $namearray
+//     */
+//    public static function getDirSelectOption($selected, $dirarray, $namearray)
+//    {
+//        echo "<select size='1' name='workd' onchange='location.href=\"vupload.php?rootpath=\"+this.options[this.selectedIndex].value'>";
+//        echo "<option value=''>--------------------------------------</option>";
+//        foreach ($namearray as $namearray => $workd) {
+//            $opt_selected = '';
+//            if ($workd == $selected) {
+//                $opt_selected = 'selected';
+//            }
+//            echo '<option value="' . htmlspecialchars($namearray, ENT_QUOTES) . '" $opt_selected>' . $workd . '</option>';
+//        }
+//        echo '</select>';
+//    }
 
     /**
      * @param        $FILES
@@ -2795,7 +2795,7 @@ class Utility
      *
      * @return array|null
      */
-    public static function xtubeUploadFiles(
+    public static function uploadFiles(
         $FILES,
         $uploaddir = 'uploads',
         $allowed_mimetypes = '',
@@ -2820,7 +2820,7 @@ class Utility
         $maxfilewidth  = $GLOBALS['xoopsModuleConfig']['maximgwidth'];
         $maxfileheight = $GLOBALS['xoopsModuleConfig']['maximgheight'];
 
-        $uploader = new \XoopsMediaUploader($upload_dir, $allowed_mimetypes, $maxfilesize, $maxfilewidth, $maxfileheight);
+        $uploader = new Xoopstube\MediaUploader($upload_dir, $allowed_mimetypes, $maxfilesize, $maxfilewidth, $maxfileheight);
         $uploader->noAdminSizeCheck(1);
         //if ($uploader->fetchMedia(Request::getArray('xoops_upload_file[0]', array(), 'POST'))) {
         if ($uploader->fetchMedia(Request::getArray('xoops_upload_file', '', 'POST')[0])) {
@@ -2850,7 +2850,7 @@ class Utility
     /**
      * @param $heading
      */
-    public static function xtubeRenderCategoryListHeader($heading)
+    public static function renderCategoryListHeader($heading)
     {
         echo '
         <h4 style="font-weight: bold; color: #0A3760;">' . $heading . '</h4>
@@ -2872,7 +2872,7 @@ class Utility
     /**
      * @param $published
      */
-    public static function xtubeRenderCategoryListBody($published)
+    public static function renderCategoryListBody($published)
     {
         global $xtubemyts, $xtubeImageArray;
 
@@ -2881,12 +2881,12 @@ class Utility
 
         $title        = '<a href="../singlevideo.php?cid=' . $published['cid'] . '&amp;lid=' . $published['lid'] . '">' . $xtubemyts->htmlSpecialCharsStrip(trim($published['title'])) . '</a>';
         $maintitle    = urlencode($xtubemyts->htmlSpecialChars(trim($published['title'])));
-        $cattitle     = '<a href="../viewcat.php?cid=' . $published['cid'] . '">' . self::xtubeGetCategoryTitle($published['cid']) . '</a>';
-        $submitter    = self::xtubeGetLinkedUserNameFromId($published['submitter']);
+        $cattitle     = '<a href="../viewcat.php?cid=' . $published['cid'] . '">' . self::getCategoryTitle($published['cid']) . '</a>';
+        $submitter    = self::getLinkedUserNameFromId($published['submitter']);
         $returnsource = xtubeReturnSource($published['vidsource']);
-        $submitted    = self::xtubeGetTimestamp(formatTimestamp($published['date'], $GLOBALS['xoopsModuleConfig']['dateformatadmin']));
-        $publish      = ($published['published'] > 0) ? self::xtubeGetTimestamp(formatTimestamp($published['published'], $GLOBALS['xoopsModuleConfig']['dateformatadmin'])) : 'Not Published';
-        $expires      = $published['expired'] ? self::xtubeGetTimestamp(formatTimestamp($published['expired'], $GLOBALS['xoopsModuleConfig']['dateformatadmin'])) : _AM_XOOPSTUBE_MINDEX_NOTSET;
+        $submitted    = self::getTimestamp(formatTimestamp($published['date'], $GLOBALS['xoopsModuleConfig']['dateformatadmin']));
+        $publish      = ($published['published'] > 0) ? self::getTimestamp(formatTimestamp($published['published'], $GLOBALS['xoopsModuleConfig']['dateformatadmin'])) : 'Not Published';
+        $expires      = $published['expired'] ? self::getTimestamp(formatTimestamp($published['expired'], $GLOBALS['xoopsModuleConfig']['dateformatadmin'])) : _AM_XOOPSTUBE_MINDEX_NOTSET;
 
         if ((($published['expired'] && $published['expired'] > time()) || 0 == $published['expired'])
             && ($published['published'] && $published['published'] < time())
@@ -2930,7 +2930,7 @@ class Utility
      *
      * @return bool|null
      */
-    public static function xtubeSetPageNavigationCategoryList(
+    public static function setPageNavigationCategoryList(
         $pubrowamount,
         $start,
         $art = 'art',
@@ -2951,7 +2951,7 @@ class Utility
     /**
      *
      */
-    public static function xtubeRenderCategoryListFooter()
+    public static function renderCategoryListFooter()
     {
         echo '<tr style="text-align: center;">
             <td class="head" colspan="7">' . _AM_XOOPSTUBE_MINDEX_NOVIDEOSFOUND . '</td>
@@ -2961,7 +2961,7 @@ class Utility
     /**
      * @param $heading
      */
-    public static function xtubeRenderVideoListHeader($heading)
+    public static function renderVideoListHeader($heading)
     {
         echo '
         <h4 style="font-weight: bold; color: #0A3760;">' . $heading . '</h4>
@@ -2983,7 +2983,7 @@ class Utility
     /**
      * @param $published
      */
-    public static function xtubeRenderVideoListBody($published)
+    public static function renderVideoListBody($published)
     {
         global $xtubemyts, $xtubeImageArray, $pathIcon16;
 
@@ -2992,12 +2992,12 @@ class Utility
 
         $title        = '<a href="../singlevideo.php?cid=' . $published['cid'] . '&amp;lid=' . $published['lid'] . '">' . $xtubemyts->htmlSpecialCharsStrip(trim($published['title'])) . '</a>';
         $maintitle    = urlencode($xtubemyts->htmlSpecialChars(trim($published['title'])));
-        $cattitle     = '<a href="../viewcat.php?cid=' . $published['cid'] . '">' . self::xtubeGetCategoryTitle($published['cid']) . '</a>';
-        $submitter    = self::xtubeGetLinkedUserNameFromId($published['submitter']);
+        $cattitle     = '<a href="../viewcat.php?cid=' . $published['cid'] . '">' . self::getCategoryTitle($published['cid']) . '</a>';
+        $submitter    = self::getLinkedUserNameFromId($published['submitter']);
         $returnsource = xtubeReturnSource($published['vidsource']);
-        $submitted    = self::xtubeGetTimestamp(formatTimestamp($published['date'], $GLOBALS['xoopsModuleConfig']['dateformatadmin']));
-        $publish      = ($published['published'] > 0) ? self::xtubeGetTimestamp(formatTimestamp($published['published'], $GLOBALS['xoopsModuleConfig']['dateformatadmin'])) : 'Not Published';
-        $expires      = $published['expired'] ? self::xtubeGetTimestamp(formatTimestamp($published['expired'], $GLOBALS['xoopsModuleConfig']['dateformatadmin'])) : _AM_XOOPSTUBE_MINDEX_NOTSET;
+        $submitted    = self::getTimestamp(formatTimestamp($published['date'], $GLOBALS['xoopsModuleConfig']['dateformatadmin']));
+        $publish      = ($published['published'] > 0) ? self::getTimestamp(formatTimestamp($published['published'], $GLOBALS['xoopsModuleConfig']['dateformatadmin'])) : 'Not Published';
+        $expires      = $published['expired'] ? self::getTimestamp(formatTimestamp($published['expired'], $GLOBALS['xoopsModuleConfig']['dateformatadmin'])) : _AM_XOOPSTUBE_MINDEX_NOTSET;
 
         if ((($published['expired'] && $published['expired'] > time()) || 0 === $published['expired'])
             && ($published['published'] && $published['published'] < time())
@@ -3038,7 +3038,7 @@ class Utility
      *
      * @return mixed
      */
-    public static function xtubeGetCategoryTitle($catt)
+    public static function getCategoryTitle($catt)
     {
         $sql    = 'SELECT title FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_cat') . ' WHERE cid=' . $catt;
         $result = $GLOBALS['xoopsDB']->query($sql);
@@ -3050,7 +3050,7 @@ class Utility
     /**
      *
      */
-    public static function xtubeRenderVideoListFooter()
+    public static function renderVideoListFooter()
     {
         echo '<tr style="text-align: center;">
             <td class="head" colspan="7">' . _AM_XOOPSTUBE_MINDEX_NOVIDEOSFOUND . '</td>
@@ -3066,7 +3066,7 @@ class Utility
      *
      * @return bool|null
      */
-    public static function xtubeSetPageNavigationVideoList($pubrowamount, $start, $art = 'art', $_this = '', $align)
+    public static function setPageNavigationVideoList($pubrowamount, $start, $art = 'art', $_this = '', $align)
     {
         if ($pubrowamount < $GLOBALS['xoopsModuleConfig']['admin_perpage']) {
             return false;
@@ -3084,7 +3084,7 @@ class Utility
      *
      * @return mixed
      */
-    public static function xtubeConvertHtml2Text($document)
+    public static function convertHtml2Text($document)
     {
         // PHP Manual:: function preg_replace
         // $document should contain an HTML document.
@@ -3138,11 +3138,11 @@ class Utility
     /**
      * @return bool
      */
-    public static function xtubeIsModuleTagInstalled()
+    public static function isModuleTagInstalled()
     {
         static $isModuleTagInstalled;
         if (!isset($isModuleTagInstalled)) {
-            /** @var XoopsModuleHandler $moduleHandler */
+            /** @var \XoopsModuleHandler $moduleHandler */
             $moduleHandler = xoops_getHandler('module');
             $tag_mod       = $moduleHandler->getByDirname('tag');
             if (!$tag_mod) {
@@ -3161,10 +3161,10 @@ class Utility
      * @param $lid
      * @param $item_tag
      */
-    public static function xtubeUpdateTag($lid, $item_tag)
+    public static function updateTag($lid, $item_tag)
     {
         global $xoopsModule;
-        if (self::xtubeIsModuleTagInstalled()) {
+        if (self::isModuleTagInstalled()) {
             require_once XOOPS_ROOT_PATH . '/modules/tag/include/formtag.php';
             $tagHandler = xoops_getModuleHandler('tag', 'tag');
             $tagHandler->updateByItem($item_tag, $lid, $xoopsModule->getVar('dirname'), 0);
@@ -3174,7 +3174,7 @@ class Utility
     /**
      * @param $lid
      */
-    public static function xtubeUpdateCounter($lid)
+    public static function updateCounter($lid)
     {
         $sql    = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' SET hits=hits+1 WHERE lid=' . (int)$lid;
         $result = $GLOBALS['xoopsDB']->queryF($sql);
@@ -3185,7 +3185,7 @@ class Utility
      *
      * @return null|string
      */
-    public static function xtubeGetBannerFromBannerId($banner_id)
+    public static function getBannerFromBannerId($banner_id)
     {
         ###### Hack by www.stefanosilvestrini.com ######
         $db      = \XoopsDatabaseFactory::getDatabaseConnection();
@@ -3246,7 +3246,7 @@ class Utility
      *
      * @return null|string
      */
-    public static function xtubeGetBannerFromClientId($client_id)
+    public static function getBannerFromClientId($client_id)
     {
         ###### Hack by www.stefanosilvestrini.com ######
         $db      = \XoopsDatabaseFactory::getDatabaseConnection();
@@ -3305,7 +3305,7 @@ class Utility
     /**
      *
      */
-    public static function xtubeSetNoIndexNoFollow()
+    public static function setNoIndexNoFollow()
     {
         global $xoopsTpl;
         if (is_object($GLOBALS['xoTheme'])) {
@@ -3320,7 +3320,7 @@ class Utility
      *
      * @return string
      */
-    public static function xtubeGetLinkedUserNameFromId($userid)
+    public static function getLinkedUserNameFromId($userid)
     {
         $userid = (int)$userid;
         if ($userid > 0) {
@@ -3341,7 +3341,7 @@ class Utility
      *
      * @return string
      */
-    public static function xtubeGetTimestamp($time)
+    public static function getTimestamp($time)
     {
         $moduleDirName = basename(dirname(__DIR__));
         xoops_loadLanguage('local', $moduleDirName);
@@ -3396,7 +3396,7 @@ class Utility
      * Author: Andrew Mills  Email:  ajmills@sirium.net
      * from amReviews module
      */
-    public static function xtubeFileChecks()
+    public static function fileChecks()
     {
         echo '<fieldset>';
         echo '<legend style="color: #990000; font-weight: bold;">' . _AM_XOOPSTUBE_FILECHECKS . '</legend>';
@@ -3466,7 +3466,7 @@ class Utility
      * @param      $fileSource
      * @param null $fileTarget
      */
-    public static function xtubeCreateDirectory($path, $mode = 0777, $fileSource, $fileTarget = null)
+    public static function createDirectory($path, $mode = 0777, $fileSource, $fileTarget = null)
     {
         if (!is_dir($path)) {
             mkdir($path, $mode);
@@ -3481,7 +3481,7 @@ class Utility
     /**
      * @return string
      */
-    public static function xtubeGetLetters()
+    public static function getLetters()
     {
         global $xoopsModule;
 
@@ -3520,13 +3520,13 @@ class Utility
     /**
      * @return mixed|string
      */
-    public static function xtubeLettersChoice()
+    public static function getLettersChoice()
     {
         global $xoopsModule;
 
         $moduleDirName = $xoopsModule->getVar('dirname');
         require_once XOOPS_ROOT_PATH . "/modules/$moduleDirName/class/$moduleDirName.php";
-        $helper = xoopstube\Helper::getInstance();
+        $helper = Xoopstube\Helper::getInstance();
 
         $a             = $helper->getHandler('xoopstube');
         $b             = $a->getActiveCriteria();
@@ -3555,7 +3555,7 @@ class Utility
         // Render output
         if (!isset($GLOBALS['xoTheme']) || !is_object($GLOBALS['xoTheme'])) {
             require_once $GLOBALS['xoops']->path('class/theme.php');
-            $GLOBALS['xoTheme'] = new xos_opal_Theme();
+            $GLOBALS['xoTheme'] = new \xos_opal_Theme();
         }
         require_once $GLOBALS['xoops']->path('class/template.php');
         $letterschoiceTpl          = new \XoopsTpl();
@@ -3566,70 +3566,70 @@ class Utility
 
         return $html;
     }
-
-    /**
-     * Create download by letter choice bar/menu
-     * updated starting from this idea https://xoops.org/modules/news/article.php?storyid=6497
-     *
-     * @return string html
-     *
-     * @access  public
-     * @author  luciorota
-     */
-    public static function xoopstubeLettersChoice()
-    {
-        global $xoopsModule;
-
-        $moduleDirName = $xoopsModule->getVar('dirname');
-        include_once XOOPS_ROOT_PATH . "/modules/$moduleDirName/class/$moduleDirName.php";
-
-        $helper = xoopstube\Helper::getInstance();
-
-        $criteria = $helper->getHandler('xoopstube')->getActiveCriteria();
-        $criteria->setGroupby('UPPER(LEFT(title,1))');
-        $countsByLetters = $helper->getHandler('xoopstube')->getCounts($criteria);
-        // Fill alphabet array
-        $alphabet       = [];
-        $alphabet       = getXtubeAlphabet();
-        $alphabet_array = [];
-        foreach ($alphabet as $letter) {
-            $letter_array = [];
-            if (isset($countsByLetters[$letter])) {
-                $letter_array['letter'] = $letter;
-                $letter_array['count']  = $countsByLetters[$letter];
-                $letter_array['url']    = XOOPS_URL . "/modules/{$helper->getModule()->dirname()}/viewcat.php?list={$letter}";
-            } else {
-                $letter_array['letter'] = $letter;
-                $letter_array['count']  = 0;
-                $letter_array['url']    = '';
-            }
-            $alphabet_array[$letter] = $letter_array;
-            unset($letter_array);
-        }
-        // Render output
-        if (!isset($GLOBALS['xoTheme']) || !is_object($GLOBALS['xoTheme'])) {
-            include_once $GLOBALS['xoops']->path('/class/theme.php');
-            $GLOBALS['xoTheme'] = new xos_opal_Theme();
-        }
-        require_once $GLOBALS['xoops']->path('class/template.php');
-        $letterschoiceTpl          = new \XoopsTpl();
-        $letterschoiceTpl->caching = false; // Disable cache
-        $letterschoiceTpl->assign('alphabet', $alphabet_array);
-        $html = $letterschoiceTpl->fetch("db:{$helper->getModule()->dirname()}_co_letterschoice.tpl");
-        unset($letterschoiceTpl);
-
-        return $html;
-    }
-
+//
+//    /**
+//     * Create download by letter choice bar/menu
+//     * updated starting from this idea https://xoops.org/modules/news/article.php?storyid=6497
+//     *
+//     * @return string html
+//     *
+//     * @access  public
+//     * @author  luciorota
+//     */
+//    public static function getLettersChoice()
+//    {
+//        global $xoopsModule;
+//
+//        $moduleDirName = $xoopsModule->getVar('dirname');
+//        include_once XOOPS_ROOT_PATH . "/modules/$moduleDirName/class/$moduleDirName.php";
+//
+//        $helper = Xoopstube\Helper::getInstance();
+//
+//        $criteria = $helper->getHandler('xoopstube')->getActiveCriteria();
+//        $criteria->setGroupby('UPPER(LEFT(title,1))');
+//        $countsByLetters = $helper->getHandler('xoopstube')->getCounts($criteria);
+//        // Fill alphabet array
+//        $alphabet       = [];
+//        $alphabet       = getXtubeAlphabet();
+//        $alphabet_array = [];
+//        foreach ($alphabet as $letter) {
+//            $letter_array = [];
+//            if (isset($countsByLetters[$letter])) {
+//                $letter_array['letter'] = $letter;
+//                $letter_array['count']  = $countsByLetters[$letter];
+//                $letter_array['url']    = XOOPS_URL . "/modules/{$helper->getModule()->dirname()}/viewcat.php?list={$letter}";
+//            } else {
+//                $letter_array['letter'] = $letter;
+//                $letter_array['count']  = 0;
+//                $letter_array['url']    = '';
+//            }
+//            $alphabet_array[$letter] = $letter_array;
+//            unset($letter_array);
+//        }
+//        // Render output
+//        if (!isset($GLOBALS['xoTheme']) || !is_object($GLOBALS['xoTheme'])) {
+//            include_once $GLOBALS['xoops']->path('/class/theme.php');
+//            $GLOBALS['xoTheme'] = new xos_opal_Theme();
+//        }
+//        require_once $GLOBALS['xoops']->path('class/template.php');
+//        $letterschoiceTpl          = new \XoopsTpl();
+//        $letterschoiceTpl->caching = false; // Disable cache
+//        $letterschoiceTpl->assign('alphabet', $alphabet_array);
+//        $html = $letterschoiceTpl->fetch("db:{$helper->getModule()->dirname()}_co_letterschoice.tpl");
+//        unset($letterschoiceTpl);
+//
+//        return $html;
+//    }
+//
 
     //===============  from WF-Downloads   ======================================
 
     /**
      * @return bool
      */
-    public static function xtubeUserIsAdmin()
+    public static function isUserAdmin()
     {
-        $helper = xoopstube\Helper::getInstance();
+        $helper = Xoopstube\Helper::getInstance();
 
         static $xtubeIsAdmin;
 

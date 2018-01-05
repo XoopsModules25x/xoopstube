@@ -1,4 +1,4 @@
-<?php namespace Xoopsmodules\xoopstube;
+<?php namespace XoopsModules\Xoopstube;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -20,15 +20,15 @@
  * @author          trabis <lusopoemas@gmail.com>
  */
 
-use Xoopsmodules\xoopstube;
-use Xoopsmodules\xoopstube\common;
+use XoopsModules\Xoopstube;
+use XoopsModules\Xoopstube\Common;
 
 // defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 /**
- * Class XoopstubeVideos
+ * Class Videos
  */
-class XoopstubeVideos
+class Videos
 {
     public $dirname;
     public $module;
@@ -49,7 +49,7 @@ class XoopstubeVideos
     /**
      * @param bool $debug
      *
-     * @return \Xoopsmodules\xoopstube\XoopstubeVideos
+     * @return \XoopsModules\Xoopstube\Videos
      */
     public static function getInstance($debug = false)
     {
