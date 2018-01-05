@@ -55,7 +55,7 @@ $catarray['letters']      = Xoopstube\Utility::getLetters();
 /*
 $db           = \XoopsDatabaseFactory::getDatabase();
 $objHandler = new Xoopstube\DownloadHandler($db);
-$choicebyletter = new Xoopstube\Common\ChoiceByLetter($objHandler, null, null, range('a', 'z'), 'letter');
+$choicebyletter = new Xoopstube\Common\LetterChoice($objHandler, null, null, range('a', 'z'), 'letter');
 $catarray['letters2']  = $choicebyletter->render();
 */
 
