@@ -87,3 +87,9 @@ div.xoopstube_socbookmark a:hover img {
     opacity: 1;
     filter: alpha(opacity=100);
 }
+
+
+.xoopstube_head_catletters {
+    text-align: center;
+    font-size: 80%;
+}

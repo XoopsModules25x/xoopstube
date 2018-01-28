@@ -57,22 +57,17 @@ if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
         global $xoopsModule, $pathIcon16;
         require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
         $db = \XoopsDatabaseFactory::getDatabaseConnection();
-        if (file_exists(XOOPS_ROOT_PATH . '/modules/system/language/' . $GLOBALS['xoopsConfig']['language'] . '/admin/blocksadmin.php')) {
-            require_once XOOPS_ROOT_PATH . '/modules/system/language/' . $GLOBALS['xoopsConfig']['language'] . '/admin.php';
-            require_once XOOPS_ROOT_PATH . '/modules/system/language/' . $GLOBALS['xoopsConfig']['language'] . '/admin/blocksadmin.php';
-            //include_once(XOOPS_ROOT_PATH."/modules/system/language/".$GLOBALS['xoopsConfig']['language']."/admin/groups.php");
-        } else {
-            require_once XOOPS_ROOT_PATH . '/modules/system/language/portuguesebr/admin.php';
-            require_once XOOPS_ROOT_PATH . '/modules/system/language/portuguesebr/admin/blocksadmin.php';
-            require_once XOOPS_ROOT_PATH . '/modules/system/language/portuguesebr/admin/groups.php';
-        }
+        xoops_loadLanguage('admin', 'system');
+        xoops_loadLanguage('admin/blocksadmin', 'system');
+        xoops_loadLanguage('admin/groups', 'system');
+
         /** @var XoopsModuleHandler $moduleHandler */
         $moduleHandler    = xoops_getHandler('module');
         $memberHandler    = xoops_getHandler('member');
         $grouppermHandler = xoops_getHandler('groupperm');
         $groups           = $memberHandler->getGroups();
-        $criteria         = new CriteriaCompo(new Criteria('hasmain', 1));
-        $criteria->add(new Criteria('isactive', 1));
+        $criteria         = new \CriteriaCompo(new \Criteria('hasmain', 1));
+        $criteria->add(new \Criteria('isactive', 1));
         $module_list     =& $moduleHandler->getList($criteria);
         $module_list[-1] = _AM_SYSTEM_BLOCKS_TOPPAGE;
         $module_list[0]  = _AM_SYSTEM_BLOCKS_ALLPAGES;
@@ -290,19 +285,10 @@ if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
         //require_once __DIR__ . '/admin_header.php';
         xoops_cp_header();
 
-        //xoops_loadLanguage('admin', XTUBE_DIRNAME);
-        //xoops_loadLanguage('modinfo', XTUBE_DIRNAME);
-        //xoops_loadLanguage('main', XTUBE_DIRNAME);
+        xoops_loadLanguage('admin', 'system');
+        xoops_loadLanguage('admin/blocksadmin', 'system');
+        xoops_loadLanguage('admin/groups', 'system');
 
-        if (file_exists(XOOPS_ROOT_PATH . '/modules/system/language/' . $GLOBALS['xoopsConfig']['language'] . '/admin/blocksadmin.php')) {
-            require_once XOOPS_ROOT_PATH . '/modules/system/language/' . $GLOBALS['xoopsConfig']['language'] . '/admin.php';
-            require_once XOOPS_ROOT_PATH . '/modules/system/language/' . $GLOBALS['xoopsConfig']['language'] . '/admin/blocksadmin.php';
-            require_once XOOPS_ROOT_PATH . '/modules/system/language/' . $GLOBALS['xoopsConfig']['language'] . '/admin/groups.php';
-        } else {
-            require_once XOOPS_ROOT_PATH . '/modules/system/language/portuguesebr/admin.php';
-            require_once XOOPS_ROOT_PATH . '/modules/system/language/portuguesebr/admin/blocksadmin.php';
-            require_once XOOPS_ROOT_PATH . '/modules/system/language/portuguesebr/admin/groups.php';
-        }
         //        mpu_adm_menu();
         $myblock = new \XoopsBlock($bid);
         $db      = \XoopsDatabaseFactory::getDatabaseConnection();
@@ -312,7 +298,7 @@ if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
         while (false !== ($row = $db->fetchArray($result))) {
             $modules[] = (int)$row['module_id'];
         }
-        $is_custom = ('C' === $myblock->getVar('block_type') || 'E' === $myblock->getVar('block_type')) ? true : false;
+        $is_custom = ('C' === $myblock->getVar('block_type') || 'E' === $myblock->getVar('block_type'));
         $block     = [
             'title'      => $myblock->getVar('title') . ' Clone',
             'form_title' => _AM_XOOPSTUBE_BLOCKS_CLONEBLOCK,
@@ -350,15 +336,10 @@ if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
      */
     function isBlockCloned($bid, $bside, $bweight, $bvisible, $bcachetime, $bmodule, $options)
     {
-        if (file_exists(XOOPS_ROOT_PATH . '/modules/system/language/' . $GLOBALS['xoopsConfig']['language'] . '/admin/blocksadmin.php')) {
-            require_once XOOPS_ROOT_PATH . '/modules/system/language/' . $GLOBALS['xoopsConfig']['language'] . '/admin.php';
-            require_once XOOPS_ROOT_PATH . '/modules/system/language/' . $GLOBALS['xoopsConfig']['language'] . '/admin/blocksadmin.php';
-            //include_once(XOOPS_ROOT_PATH."/modules/system/language/".$GLOBALS['xoopsConfig']['language']."/admin/groups.php");
-        } else {
-            require_once XOOPS_ROOT_PATH . '/modules/system/language/portuguesebr/admin.php';
-            require_once XOOPS_ROOT_PATH . '/modules/system/language/portuguesebr/admin/blocksadmin.php';
-            require_once XOOPS_ROOT_PATH . '/modules/system/language/portuguesebr/admin/groups.php';
-        }
+        xoops_loadLanguage('admin', 'system');
+        xoops_loadLanguage('admin/blocksadmin', 'system');
+        xoops_loadLanguage('admin/groups', 'system');
+
         $block = new \XoopsBlock($bid);
         $clone = $block->xoopsClone();
         if (empty($bmodule)) {
@@ -442,19 +423,9 @@ if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
         //require_once __DIR__ . '/admin_header.php';
         xoops_cp_header();
 
-        //xoops_loadLanguage('admin', XTUBE_DIRNAME);
-        //xoops_loadLanguage('modinfo', XTUBE_DIRNAME);
-        //xoops_loadLanguage('main', XTUBE_DIRNAME);
-
-        if (file_exists(XOOPS_ROOT_PATH . '/modules/system/language/' . $GLOBALS['xoopsConfig']['language'] . '/admin/blocksadmin.php')) {
-            require_once XOOPS_ROOT_PATH . '/modules/system/language/' . $GLOBALS['xoopsConfig']['language'] . '/admin.php';
-            require_once XOOPS_ROOT_PATH . '/modules/system/language/' . $GLOBALS['xoopsConfig']['language'] . '/admin/blocksadmin.php';
-            require_once XOOPS_ROOT_PATH . '/modules/system/language/' . $GLOBALS['xoopsConfig']['language'] . '/admin/groups.php';
-        } else {
-            require_once XOOPS_ROOT_PATH . '/modules/system/language/portuguesebr/admin.php';
-            require_once XOOPS_ROOT_PATH . '/modules/system/language/portuguesebr/admin/blocksadmin.php';
-            require_once XOOPS_ROOT_PATH . '/modules/system/language/portuguesebr/admin/groups.php';
-        }
+        xoops_loadLanguage('admin', 'system');
+        xoops_loadLanguage('admin/blocksadmin', 'system');
+        xoops_loadLanguage('admin/groups', 'system');
         //        mpu_adm_menu();
         $myblock = new \XoopsBlock($bid);
         $db      = \XoopsDatabaseFactory::getDatabaseConnection();
@@ -464,7 +435,7 @@ if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
         while (false !== ($row = $db->fetchArray($result))) {
             $modules[] = (int)$row['module_id'];
         }
-        $is_custom = ('C' === $myblock->getVar('block_type') || 'E' === $myblock->getVar('block_type')) ? true : false;
+        $is_custom = ('C' === $myblock->getVar('block_type') || 'E' === $myblock->getVar('block_type'));
         $block     = [
             'title'      => $myblock->getVar('title'),
             'form_title' => _AM_XOOPSTUBE_BLOCKS_EDITBLOCK,

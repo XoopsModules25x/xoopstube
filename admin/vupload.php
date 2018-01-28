@@ -95,9 +95,9 @@ switch (strtolower($op)) {
         $iform = new \XoopsThemeForm(_AM_XOOPSTUBE_VUPLOAD_FUPLOADVIDEOTO . $pathlist, 'op', xoops_getenv('PHP_SELF'), 'post', true);
         $iform->setExtra('enctype="multipart/form-data"');
         ob_start();
-        $iform->addElement(new XoopsFormHidden('dir', $rootpath));
+        $iform->addElement(new \XoopsFormHidden('dir', $rootpath));
         Xoopstube\Utility::getDirSelectOption($namelist, $dirarray, $namearray);
-        $iform->addElement(new XoopsFormLabel(_AM_XOOPSTUBE_VUPLOAD_FOLDERSELECTION, ob_get_contents()));
+        $iform->addElement(new \XoopsFormLabel(_AM_XOOPSTUBE_VUPLOAD_FOLDERSELECTION, ob_get_contents()));
         ob_end_clean();
 
         if ($rootpath > 0) {
@@ -108,20 +108,20 @@ switch (strtolower($op)) {
             $indexfile_tray = new \XoopsFormElementTray(_AM_XOOPSTUBE_VUPLOAD_FSHOWSELECTEDFILE, '&nbsp;');
             $indexfile_tray->addElement($indexfile_select);
             if (!empty($imgurl)) {
-                $indexfile_tray->addElement(new XoopsFormLabel('', '<br><br><img src="' . XOOPS_URL . '/' . $dirarray[$rootpath] . '/' . $videofile . '" name="image" id="image" alt="">'));
+                $indexfile_tray->addElement(new \XoopsFormLabel('', '<br><br><img src="' . XOOPS_URL . '/' . $dirarray[$rootpath] . '/' . $videofile . '" name="image" id="image" alt="">'));
             } else {
-                $indexfile_tray->addElement(new XoopsFormLabel('', '<br><br><img src="' . XOOPS_URL . '/uploads/blank.gif" name="image" id="image" alt="">'));
+                $indexfile_tray->addElement(new \XoopsFormLabel('', '<br><br><img src="' . XOOPS_URL . '/uploads/blank.gif" name="image" id="image" alt="">'));
             }
             $iform->addElement($indexfile_tray);
 
             $file_tray = new \XoopsFormFile(_AM_XOOPSTUBE_VUPLOAD_FUPLOADVIDEO, 'uploadfile', 0);
             $file_tray->setDescription('<span style="font-size: small;">' . _AM_XOOPSTUBE_VUPLOAD_FSHOWSELECTEDFILEDSC . '</span>');
             $iform->addElement($file_tray);
-            $iform->addElement(new XoopsFormHidden('uploadpath', $dirarray[$rootpath]));
-            $iform->addElement(new XoopsFormHidden('rootnumber', $rootpath));
+            $iform->addElement(new \XoopsFormHidden('uploadpath', $dirarray[$rootpath]));
+            $iform->addElement(new \XoopsFormHidden('rootnumber', $rootpath));
 
             $dup_tray = new \XoopsFormElementTray('', '');
-            $dup_tray->addElement(new XoopsFormHidden('op', 'vupload'));
+            $dup_tray->addElement(new \XoopsFormHidden('op', 'vupload'));
             $butt_dup = new \XoopsFormButton('', '', _AM_XOOPSTUBE_BUPLOAD, 'submit');
             $butt_dup->setExtra('onclick="this.form.elements.op.value=\'vupload\'"');
             $dup_tray->addElement($butt_dup);

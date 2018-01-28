@@ -22,11 +22,11 @@ use XoopsModules\Xoopstube;
 require_once __DIR__ . '/../../../include/cp_header.php';
 //require_once $GLOBALS['xoops']->path('www/class/xoopsformloader.php');
 
-//require_once __DIR__ . '/../class/Utility.php';
+// require_once __DIR__ . '/../class/Utility.php';
 require_once __DIR__ . '/../include/common.php';
 
 $moduleDirName = basename(dirname(__DIR__));
-$helper = \Xmf\Module\Helper::getHelper($moduleDirName);
+$helper = Xoopstube\Helper::getInstance();
 $adminObject = Xmf\Module\Admin::getInstance();
 
 $pathIcon16    = Xmf\Module\Admin::iconUrl('', 16);
@@ -38,6 +38,7 @@ $pathModIcon32 = $helper->getModule()->getInfo('modicons32');
 $helper->loadLanguage('admin');
 $helper->loadLanguage('modinfo');
 $helper->loadLanguage('main');
+$helper->loadLanguage('common');
 
 $myts = \MyTextSanitizer::getInstance();
 
@@ -47,11 +48,11 @@ if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof XoopsTpl))
 }
 
 //include $moduleDirName . '/include/config.php';
-//require_once __DIR__ . '/../class/Utility.php';
+// require_once __DIR__ . '/../class/Utility.php';
 require_once __DIR__ . '/../include/video.php';
-//require_once __DIR__ . '/../class/Lists.php';
-//require_once __DIR__ . '/../class/TextSanitizer.php';
-//require_once __DIR__ . '/../class/Tree.php';
+// require_once __DIR__ . '/../class/Lists.php';
+// require_once __DIR__ . '/../class/TextSanitizer.php';
+// require_once __DIR__ . '/../class/Tree.php';
 
 require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';

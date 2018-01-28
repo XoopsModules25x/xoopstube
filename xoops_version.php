@@ -320,9 +320,10 @@ $modversion['templates'][] = [
 ];
 
 $modversion['templates'][] = [
-    'file'        => $modversion['dirname'] . '_common_letterschoice.tpl',
+    'file'        => $modversion['dirname'] . '_letterschoice.tpl',
     'description' => ''
 ];
+
 
 // ------------------- Config ------------------- //
 $modversion['config'][] = [
@@ -799,6 +800,19 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 1
 ];
+
+/**
+ * Make Sample button visible?
+ */
+$modversion['config'][] = [
+    'name'        => 'displaySampleButton',
+    'title'       => '_MI_XOOPSTUBE_SHOW_SAMPLE_BUTTON',
+    'description' => '_MI_XOOPSTUBE_SHOW_SAMPLE_BUTTON_DESC',
+    'formtype'    => 'yesno',
+    'valuetype'   => 'int',
+    'default'     => 0,
+];
+
 
 // ------------------- Notification ------------------- //
 $modversion['config'][] = [

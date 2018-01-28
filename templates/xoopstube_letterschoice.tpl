@@ -80,7 +80,8 @@
         top: 1px;
     }
 </style>
-<{$smarty.const._MD_XOOPSTUBE_BROWSETOTOPIC}>
+<{*<{$smarty.const._MD_XOOPSTUBE_BROWSETOTOPIC}>*}>
+<{*<{$letterChoiceTitle}>*}>
 <br>
 <div>
     <{assign var="alphabetcount" value=$alphabet|@count}>

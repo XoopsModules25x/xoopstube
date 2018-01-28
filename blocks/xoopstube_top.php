@@ -79,7 +79,7 @@ function xtubeCheckBlockGroups($cid = 0, $permType = 'XTubeCatPerm', $redirect =
  *
  * @return string
  */
-function getThumbsTopVideoBlock($bvidid, $btitle, $bsource, $bpicurl, $size = [])
+function getThumbsTopVideoBlock($bvidid, $btitle, $bsource, $bpicurl, array $size = [])
 {
     $thumbb = '';
     /** @var XoopsModuleHandler $moduleHandler */
@@ -309,6 +309,7 @@ function showTopVideoBlock($options)
 function getRandomVideo($options)
 {
     global $xtubemyts;
+    $utility = new Xoopstube\Utility();
     $moduleDirName = basename(dirname(__DIR__));
     $block         = [];
     /** @var XoopsModuleHandler $moduleHandler */
@@ -351,7 +352,7 @@ function getRandomVideo($options)
         $videorandom['cid']   = (int)$myrow['cid'];
         $videorandom['title'] = $title;
         if (isset($options[3])) {
-            $videorandom['date'] = Xoopstube\Utility::getTimestamp(formatTimestamp($myrow['published'], $options[3]));
+            $videorandom['date'] = $utility::getTimestamp(formatTimestamp($myrow['published'], $options[3]));
         }
         $videorandom['videothumb'] = xtubeGetVideoThumb($myrow['vidid'], $myrow['title'], $myrow['vidsource'], $myrow['picurl'], $xtubeModuleConfig['videoimgdir'] . '/' . $myrow['screenshot'], $xtubeModuleConfig['shotwidth'], $xtubeModuleConfig['shotheight']);
         $videorandom['dirname']    = $xtubeModule->getVar('dirname');
@@ -463,10 +464,10 @@ function editTopVideoBlock($options)
     $cat_arr = $xt->getChildTreeArray(0, 'title');
 
     $form .= '<br>' . _MB_XOOPSTUBE_SELECTCAT . '<br><select name="options[]" multiple="multiple" size="5">';
-    $form = false === array_search(0, $options) ? $form . '<option value="0">' . _MB_XOOPSTUBE_ALLCAT . '</option>' : $form . '<option value="0" selected="selected">' . _MB_XOOPSTUBE_ALLCAT . '</option>';
+    $form = false === array_search(0, $options, true) ? $form . '<option value="0">' . _MB_XOOPSTUBE_ALLCAT . '</option>' : $form . '<option value="0" selected="selected">' . _MB_XOOPSTUBE_ALLCAT . '</option>';
 
     foreach ($cat_arr as $catlist) {
-        if (false === array_search($catlist, $options)) {
+        if (false === array_search($catlist, $options, true)) {
             $form .= '<option value="' . $catlist['cid'] . '">' . $catlist['title'] . '</option>';
         } else {
             $form .= '<option value="' . $catlist['cid'] . '" selected="selected">' . $catlist['title'] . '</option>';

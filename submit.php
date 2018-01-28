@@ -231,7 +231,7 @@ if (true === Xoopstube\Utility::checkGroups($cid, 'XTubeSubPerm')) {
         Xoopstube\Utility::setNoIndexNoFollow();
 
         // Video title form
-        $sform->addElement(new XoopsFormText(_MD_XOOPSTUBE_FILETITLE, 'title', 70, 255, $title), true);
+        $sform->addElement(new \XoopsFormText(_MD_XOOPSTUBE_FILETITLE, 'title', 70, 255, $title), true);
 
         // Video source form
         $vidsource_array  = [
@@ -260,7 +260,7 @@ if (true === Xoopstube\Utility::checkGroups($cid, 'XTubeSubPerm')) {
         $videocode = new \XoopsFormText(_MD_XOOPSTUBE_DLVIDID, 'vidid', 70, 512, $vidid);
         $videocode->setDescription('<br><span style="font-size: small;">' . _MD_XOOPSTUBE_VIDEO_DLVIDIDDSC . '</span>');
         $sform->addElement($videocode, true);
-        $sform->addElement(new XoopsFormLabel('', _MD_XOOPSTUBE_VIDEO_DLVIDID_NOTE));
+        $sform->addElement(new \XoopsFormLabel('', _MD_XOOPSTUBE_VIDEO_DLVIDID_NOTE));
 
         // Picture url form
         $picurl = new \XoopsFormText(_MD_XOOPSTUBE_VIDEO_PICURL, 'picurl', 70, 255, $picurl);
@@ -268,7 +268,7 @@ if (true === Xoopstube\Utility::checkGroups($cid, 'XTubeSubPerm')) {
         $sform->addElement($picurl, false);
 
         // Video publisher form
-        $sform->addElement(new XoopsFormText(_MD_XOOPSTUBE_VIDEO_PUBLISHER, 'publisher', 70, 255, $publisher), true);
+        $sform->addElement(new \XoopsFormText(_MD_XOOPSTUBE_VIDEO_PUBLISHER, 'publisher', 70, 255, $publisher), true);
 
         // Category tree
         $mytree = new Xoopstube\Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
@@ -290,7 +290,7 @@ if (true === Xoopstube\Utility::checkGroups($cid, 'XTubeSubPerm')) {
         // Video category form
         ob_start();
         $mytree->makeMySelBox('title', 'title', $cid, 0);
-        $sform->addElement(new XoopsFormLabel(_MD_XOOPSTUBE_CATEGORYC, ob_get_contents()));
+        $sform->addElement(new \XoopsFormLabel(_MD_XOOPSTUBE_CATEGORYC, ob_get_contents()));
         ob_end_clean();
 
         // Video description form
@@ -327,7 +327,7 @@ if (true === Xoopstube\Utility::checkGroups($cid, 'XTubeSubPerm')) {
                 $sform->addElement($text_tags);
             }
         } else {
-            $sform->addElement(new XoopsFormHidden('item_tag', $video_array['item_tag']));
+            $sform->addElement(new \XoopsFormHidden('item_tag', $video_array['item_tag']));
         }
 
         $submitter2 = (is_object($GLOBALS['xoopsUser']) && !empty($GLOBALS['xoopsUser'])) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
@@ -339,7 +339,7 @@ if (true === Xoopstube\Utility::checkGroups($cid, 'XTubeSubPerm')) {
                 $notify_checkbox->addOption(1, _MD_XOOPSTUBE_NOTIFYAPPROVE);
                 $option_tray->addElement($notify_checkbox);
             } else {
-                $sform->addElement(new XoopsFormHidden('notifypub', 0));
+                $sform->addElement(new \XoopsFormHidden('notifypub', 0));
             }
         }
 
@@ -349,16 +349,16 @@ if (true === Xoopstube\Utility::checkGroups($cid, 'XTubeSubPerm')) {
             $option_tray->addElement($approve_checkbox);
         } else {
             if (true === Xoopstube\Utility::checkGroups($cid, 'XTubeAutoApp')) {
-                $sform->addElement(new XoopsFormHidden('approve', 1));
+                $sform->addElement(new \XoopsFormHidden('approve', 1));
             } else {
-                $sform->addElement(new XoopsFormHidden('approve', 0));
+                $sform->addElement(new \XoopsFormHidden('approve', 0));
             }
         }
         $sform->addElement($option_tray);
 
         $button_tray = new \XoopsFormElementTray('', '');
-        $button_tray->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
-        $button_tray->addElement(new XoopsFormHidden('lid', $lid));
+        $button_tray->addElement(new \XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
+        $button_tray->addElement(new \XoopsFormHidden('lid', $lid));
 
         $sform->addElement($button_tray);
         $sform->display();

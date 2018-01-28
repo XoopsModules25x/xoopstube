@@ -65,7 +65,7 @@ class Lists
     }
 
     /**
-     * @param $this_array
+     * @param array $this_array
      *
      * @return string
      */

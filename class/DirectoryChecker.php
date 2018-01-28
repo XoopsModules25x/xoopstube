@@ -40,7 +40,7 @@ class DirectoryChecker
      *
      * @return bool|string
      */
-    public static function getDirectoryStatus($path, $mode = 0777, $languageConstants = [], $redirectFile)
+    public static function getDirectoryStatus($path, $mode = 0777, array $languageConstants = [], $redirectFile)
     {
         global $pathIcon16;
 

@@ -64,7 +64,7 @@ switch (strtolower($op)) {
                 require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/include/video.php';
                 $content = xtubeReturnSource($content);
             }
-            $sform->addElement(new XoopsFormLabel($lang_def, $content));
+            $sform->addElement(new \XoopsFormLabel($lang_def, $content));
         }
         $sform->display();
 
@@ -90,11 +90,11 @@ switch (strtolower($op)) {
                 require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/include/video.php';
                 $content = xtubeReturnSource($content);
             }
-            $sform->addElement(new XoopsFormLabel($lang_def, $content));
+            $sform->addElement(new \XoopsFormLabel($lang_def, $content));
         }
         $button_tray = new \XoopsFormElementTray('', '');
-        $button_tray->addElement(new XoopsFormHidden('requestid', $requestid));
-        $button_tray->addElement(new XoopsFormHidden('lid', $mod_array['requestid']));
+        $button_tray->addElement(new \XoopsFormHidden('requestid', $requestid));
+        $button_tray->addElement(new \XoopsFormHidden('lid', $mod_array['requestid']));
         $hidden = new \XoopsFormHidden('op', 'changemodreq');
         $button_tray->addElement($hidden);
         if ($mod_array) {

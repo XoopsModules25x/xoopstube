@@ -23,6 +23,9 @@ use XoopsModules\Xoopstube;
 
 include __DIR__ . '/header.php';
 
+$moduleDirName = basename(__DIR__);
+$moduleDirNameUpper = strtoupper($moduleDirName);
+
 $start = Request::getInt('start', Request::getInt('start', 0, 'POST'), 'GET');
 
 $GLOBALS['xoopsOption']['template_main'] = 'xoopstube_index.tpl';
@@ -48,18 +51,27 @@ $breaks = $head_arr['nobreak'] ? 1 : 0;
 $catarray['indexheading'] = $xtubemyts->displayTarea($head_arr['indexheading'], $html, $smiley, $xcodes, $images, $breaks);
 $catarray['indexheader']  = $xtubemyts->displayTarea($head_arr['indexheader'], $html, $smiley, $xcodes, $images, $breaks);
 $catarray['indexfooter']  = $xtubemyts->displayTarea($head_arr['indexfooter'], $html, $smiley, $xcodes, $images, $breaks);
-$catarray['letters']      = Xoopstube\Utility::getLetters();
+//$catarray['letters']      = Xoopstube\Utility::getLetters();
 
 
+// Letter Choice Start ---------------------------------------
+
+XoopsModules\Xoopstube\Helper::getInstance()->loadLanguage('common');
+$xoopsTpl->assign('letterChoiceTitle', constant('CO_' . $moduleDirNameUpper . '_' . 'BROWSETOTOPIC'));
 /** @var \XoopsDatabase $db */
-/*
 $db           = \XoopsDatabaseFactory::getDatabase();
-$objHandler = new Xoopstube\DownloadHandler($db);
+$objHandler = new Xoopstube\VideosHandler($db);
 $choicebyletter = new Xoopstube\Common\LetterChoice($objHandler, null, null, range('a', 'z'), 'letter');
-$catarray['letters2']  = $choicebyletter->render();
-*/
+//$choicebyletter = new Xoopstube\Common\LetterChoice($objHandler, null, null, range('a', 'z'), 'init', XOOPSTUBE_URL . '/letter.php');
+$catarray['letters']  = $choicebyletter->render();
+//$catarray['letters']  = $choicebyletter->render($alphaCount, $howmanyother);
 
 $xoopsTpl->assign('catarray', $catarray);
+
+// Letter Choice End ------------------------------------
+
+
+
 // End main page Headers
 
 $count   = 1;
@@ -191,5 +203,7 @@ if (1 == $lastvideos['lastvideosyn'] && $lastvideos['lastvideostotal'] > 0) {
 $xoopsTpl->assign('cat_columns', $GLOBALS['xoopsModuleConfig']['catcolumns']);
 $xoopsTpl->assign('lang_thereare', sprintf($lang_thereare, $total_cat, $listings['count']));
 $xoopsTpl->assign('module_dir', $xoopsModule->getVar('dirname'));
+
+
 
 include XOOPS_ROOT_PATH . '/footer.php';

@@ -351,3 +351,6 @@ define('_MI_XOOPSTUBE_BNAME11_DESC', 'Shows spotlight video');
 //1.07
 define('_MI_XOOPSTUBE_IMAGEASPECT', 'Keep Image Aspect Ratio?');
 define('_MI_XOOPSTUBE_IMAGEASPECTDSC', 'To keep the ration, leave it at 1');
+
+define('_MI_XOOPSTUBE_SHOW_SAMPLE_BUTTON', 'Show Sample Button?');
+define('_MI_XOOPSTUBE_SHOW_SAMPLE_BUTTON_DESC', 'If yes, the "Add Sample Data" button will be visible to the Admin. It is Yes as a default for first installation.');

@@ -13,7 +13,7 @@
 use Xmf\Request;
 use XoopsModules\Xoopstube;
 use XoopsModules\Xoopstube\Common;
-use \WideImage\WideImage;
+use WideImage\WideImage;
 
 /**
  * xoopstube
@@ -342,26 +342,6 @@ class Utility
         redirect_header($url, $time, $message);
     }
 
-    /**
-     * Internal function used to get the handler of the current module
-     *
-     * @return \XoopsModule The module
-     */
-    protected static function _getModule()
-    {
-        static $mymodule;
-        if (!isset($mymodule)) {
-            global $xoopsModule;
-            if (isset($xoopsModule) && is_object($xoopsModule) && OLEDRION_DIRNAME == $xoopsModule->getVar('dirname')) {
-                $mymodule = $xoopsModule;
-            } else {
-                $hModule  = xoops_getHandler('module');
-                $mymodule = $hModule->getByDirname(OLEDRION_DIRNAME);
-            }
-        }
-
-        return $mymodule;
-    }
 
     /**
      * Returns the module's name (as defined by the user in the module manager) with cache
@@ -548,7 +528,7 @@ class Utility
      * @param \XoopsObject $sform The form to modify
      *
      * @internal param string $caracter The character to use to mark fields
-     * @return object The modified form
+     * @return \XoopsObject The modified form
      */
     public static function &formMarkRequiredFields(\XoopsObject $sform)
     {
@@ -912,9 +892,9 @@ class Utility
         $content = htmlentities($content); // TODO: Vérifier
         $content = preg_replace('/&([a-zA-Z])(uml|acute|grave|circ|tilde);/', '$1', $content);
         $content = html_entity_decode($content);
-        $content = preg_replace('/quot/i', ' ', $content);
+        $content = str_ireplace("quot", ' ', $content);
         $content = preg_replace("/'/i", ' ', $content);
-        $content = preg_replace('/-/i', ' ', $content);
+        $content = str_ireplace("-", ' ', $content);
         $content = preg_replace('/[[:punct:]]/i', '', $content);
 
         // Selon option mais attention au fichier .htaccess !
@@ -956,13 +936,13 @@ class Utility
 
         $tmp = [];
         // Search for the "Minimum keyword length"
-        if (isset($_SESSION['oledrion_keywords_limit'])) {
-            $limit = $_SESSION['oledrion_keywords_limit'];
+        if (isset($_SESSION['xoopstube_keywords_limit'])) {
+            $limit = $_SESSION['xoopstube_keywords_limit'];
         } else {
             $configHandler                       = xoops_getHandler('config');
             $xoopsConfigSearch                   = $configHandler->getConfigsByCat(XOOPS_CONF_SEARCH);
             $limit                               = $xoopsConfigSearch['keyword_min'];
-            $_SESSION['oledrion_keywords_limit'] = $limit;
+            $_SESSION['xoopstube_keywords_limit'] = $limit;
         }
         $myts            = \MyTextSanitizer::getInstance();
         $content         = str_replace('<br>', ' ', $content);
@@ -1093,9 +1073,9 @@ class Utility
         $keep_original = false,
         $fit = 'inside'
     ) {
-        //        require_once OLEDRION_PATH . 'class/wideimage/WideImage.inc.php';
+        //        require_once XOOPSTUBE_PATH . 'class/wideimage/WideImage.inc.php';
         $resize = true;
-        if (OLEDRION_DONT_RESIZE_IF_SMALLER) {
+        if (XOOPSTUBE_DONT_RESIZE_IF_SMALLER) {
             $pictureDimensions = getimagesize($src_path);
             if (is_array($pictureDimensions)) {
                 $width  = $pictureDimensions[0];
@@ -1106,7 +1086,7 @@ class Utility
             }
         }
 
-        $img = \WideImage::load($src_path);
+        $img = WideImage::load($src_path);
         if ($resize) {
             $result = $img->resize($param_width, $param_height, $fit);
             $result->saveToFile($dst_path);
@@ -1121,20 +1101,6 @@ class Utility
         return true;
     }
 
-    /**
-     * Déclenchement d'une alerte Xoops suite à un évènement
-     *
-     * @param string       $category La catégorie de l'évènement
-     * @param integer      $itemId   L'ID de l'élément (trop général pour être décris précisément)
-     * @param \XoopsNotification $event    L'évènement qui est déclencé
-     * @param mixed $tags     Les variables à passer au template
-     */
-    public static function notify($category, $itemId, $event, $tags)
-    {
-        $notificationHandler  = xoops_getHandler('notification');
-        $tags['X_MODULE_URL'] = OLEDRION_URL;
-        $notificationHandler->triggerEvent($category, $itemId, $event, $tags);
-    }
 
     /**
      * Ajoute des jours à une date et retourne la nouvelle date au format Date de Mysql
@@ -1169,7 +1135,7 @@ class Utility
         $workingBreadcrumb = [];
         if (is_array($path)) {
             $moduleName          = self::getModuleName();
-            $workingBreadcrumb[] = "<a href='" . OLEDRION_URL . "' title='" . self::makeHrefTitle($moduleName) . "'>" . $moduleName . '</a>';
+            $workingBreadcrumb[] = "<a href='" . XOOPSTUBE_URL . "' title='" . self::makeHrefTitle($moduleName) . "'>" . $moduleName . '</a>';
             foreach ($path as $url => $title) {
                 $workingBreadcrumb[] = "<a href='" . $url . "'>" . $title . '</a>';
             }
@@ -1267,103 +1233,6 @@ class Utility
         return $ret;
     }
 
-    /**
-     * Mise en place de l'appel à la feuille de style du module dans le template
-     * @param string $url
-     */
-    public static function setCSS($url = '')
-    {
-        global $xoopsTpl, $xoTheme;
-        if ('' === $url) {
-            $url = OLEDRION_URL . 'css/oledrion.css';
-        }
-
-        if (!is_object($xoTheme)) {
-            $xoopsTpl->assign('xoops_module_header', $xoopsTpl->get_template_vars('xoops_module_header') . "<link rel=\"stylesheet\" type=\"text/css\" href=\"$url\">");
-        } else {
-            $xoTheme->addStylesheet($url);
-        }
-    }
-
-    /**
-     * Mise en place de l'appel à la feuille de style du module dans le template
-     * @param string $language
-     */
-    public static function setLocalCSS($language = 'english')
-    {
-        global $xoopsTpl, $xoTheme;
-
-        $localcss = OLEDRION_URL . 'language/' . $language . '/style.css';
-
-        if (!is_object($xoTheme)) {
-            $xoopsTpl->assign('xoops_module_header', $xoopsTpl->get_template_vars('xoops_module_header') . "<link rel=\"stylesheet\" type=\"text/css\" href=\"$localcss\">");
-        } else {
-            $xoTheme->addStylesheet($localcss);
-        }
-    }
-
-    /**
-     * Calcul du TTC à partir du HT et de la TVA
-     *
-     * @param float   $ht     Montant HT
-     * @param float   $vat    Taux de TVA
-     * @param boolean $edit   Si faux alors le montant est formaté pour affichage sinon il reste tel quel
-     * @param string  $format Format d'affichage du résultat (long ou court)
-     *
-     * @return mixed Soit une chaine soit un flottant
-     */
-    public static function getTTC($ht, $vat, $edit = false, $format = 's')
-    {
-        $oledrion_Currency = \XoopsModules\oledrion\Currency::getInstance();
-        $ttc               = $ht * (1 + ($vat / 100));
-        if (!$edit) {
-            return $oledrion_Currency->amountForDisplay($ttc, $format);
-        } else {
-            return $ttc;
-        }
-    }
-
-    /**
-     * Renvoie le montant de la tva à partir du montant HT
-     * @param $ht
-     * @param $vat
-     * @return float
-     */
-    public static function getVAT($ht, $vat)
-    {
-        return (float)($ht * $vat);
-    }
-
-    /**
-     * Retourne le montant TTC
-     *
-     * @param float $product_price Le montant du produit
-     * @param integer  $vat_id        Le numéro de TVA
-     *
-     * @return float Le montant TTC si on a trouvé sa TVA sinon
-     */
-    public static function getAmountWithVat($product_price, $vat_id)
-    {
-        static $vats = [];
-        $vat_rate = null;
-        if (is_array($vats) && in_array($vat_id, $vats)) {
-            $vat_rate = $vats[$vat_id];
-        } else {
-            $handlers = \XoopsModules\oledrion\OledrionHandler::getInstance();
-            $vat      = null;
-            $vat      = $handlers->h_oledrion_vat->get($vat_id);
-            if (is_object($vat)) {
-                $vat_rate      = $vat->getVar('vat_rate', 'e');
-                $vats[$vat_id] = $vat_rate;
-            }
-        }
-
-        if (!null === $vat_rate) {
-            return ((float)$product_price * (float)$vat_rate / 100) + (float)$product_price;
-        } else {
-            return $product_price;
-        }
-    }
 
     /**
      * @param $datastream
@@ -1415,7 +1284,7 @@ class Utility
     /**
      * Retourne un criteria compo qui permet de filtrer les produits sur le mois courant
      *
-     * @return object
+     * @return \CriteriaCompo
      */
     public static function getThisMonthCriteria()
     {
@@ -1553,336 +1422,7 @@ class Utility
         }
     }
 
-    /**
-     * Load a language file
-     *
-     * @param string $languageFile     The required language file
-     * @param string $defaultExtension Default extension to use
-     *
-     * @since 2.2.2009.02.13
-     */
-    public static function loadLanguageFile($languageFile, $defaultExtension = '.php')
-    {
-        global $xoopsConfig;
-        $root = OLEDRION_PATH;
-        if (false === strpos($languageFile, $defaultExtension)) {
-            $languageFile .= $defaultExtension;
-        }
-        if (file_exists($root . 'language' . DIRECTORY_SEPARATOR . $xoopsConfig['language'] . DIRECTORY_SEPARATOR . $languageFile)) {
-            require_once $root . 'language' . DIRECTORY_SEPARATOR . $xoopsConfig['language'] . DIRECTORY_SEPARATOR . $languageFile;
-        } else { // Fallback
-            require_once $root . 'language' . DIRECTORY_SEPARATOR . 'english' . DIRECTORY_SEPARATOR . $languageFile;
-        }
-    }
 
-    /**
-     * Formatage d'un floattant pour la base de données
-     *
-     * @param float    Le montant à formater
-     *
-     * @return string le montant formaté
-     * @since 2.2.2009.02.25
-     */
-    public static function formatFloatForDB($amount)
-    {
-        return number_format($amount, 2, '.', '');
-    }
-
-    /**
-     * Appelle un fichier Javascript à la manière de Xoops
-     *
-     * @note, l'url complète ne doit pas être fournie, la méthode se charge d'ajouter
-     * le chemin vers le répertoire js en fonction de la requête, c'est à dire que si
-     * on appelle un fichier de langue, la méthode ajoute l'url vers le répertoire de
-     * langue, dans le cas contraire on ajoute l'url vers le répertoire JS du module.
-     *
-     * @param string $javascriptFile
-     * @param bool   $inLanguageFolder
-     * @param bool   $oldWay
-     *
-     * @return void
-     * @since 2.3.2009.03.14
-     */
-    public static function callJavascriptFile($javascriptFile, $inLanguageFolder = false, $oldWay = false)
-    {
-        global $xoopsConfig, $xoTheme;
-        $fileToCall = $javascriptFile;
-        if ($inLanguageFolder) {
-            $root    = OLEDRION_PATH;
-            $rootUrl = OLEDRION_URL;
-            if (file_exists($root . 'language' . DIRECTORY_SEPARATOR . $xoopsConfig['language'] . DIRECTORY_SEPARATOR . $javascriptFile)) {
-                $fileToCall = $rootUrl . 'language/' . $xoopsConfig['language'] . '/' . $javascriptFile;
-            } else { // Fallback
-                $fileToCall = $rootUrl . 'language/english/' . $javascriptFile;
-            }
-        } else {
-            $fileToCall = OLEDRION_JS_URL . $javascriptFile;
-        }
-
-        $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');
-        $xoTheme->addScript($fileToCall);
-    }
-
-    /**
-     * Create the <option> of an html select
-     *
-     * @param array $array   Array of index and labels
-     * @param mixed $default the default value
-     * @param bool  $withNull
-     *
-     * @return string
-     * @since 2.3.2009.03.13
-     */
-    public static function htmlSelectOptions($array, $default = 0, $withNull = true)
-    {
-        $ret      = [];
-        $selected = '';
-        if ($withNull) {
-            if (0 === $default) {
-                $selected = " selected = 'selected'";
-            }
-            $ret[] = '<option value=0' . $selected . '>---</option>';
-        }
-
-        foreach ($array as $index => $label) {
-            $selected = '';
-            if ($index == $default) {
-                $selected = " selected = 'selected'";
-            }
-            $ret[] = '<option value="' . $index . '"' . $selected . '>' . $label . '</option>';
-        }
-
-        return implode("\n", $ret);
-    }
-
-    /**
-     * Creates an html select
-     *
-     * @param string  $selectName Selector's name
-     * @param array   $array      Options
-     * @param mixed   $default    Default's value
-     * @param boolean $withNull   Do we include a null option ?
-     *
-     * @return string
-     * @since 2.3.2009.03.13
-     */
-    public static function htmlSelect($selectName, $array, $default, $withNull = true)
-    {
-        $ret = '';
-        $ret .= "<select name='" . $selectName . "' id='" . $selectName . "'>\n";
-        $ret .= self::htmlSelectOptions($array, $default, $withNull);
-        $ret .= "</select>\n";
-
-        return $ret;
-    }
-
-    /**
-     * Extrait l'id d'une chaine formatée sous la forme xxxx-99 (duquel on récupère 99)
-     *
-     * @note: utilisé par les attributs produits
-     *
-     * @param string $string    La chaine de travail
-     * @param string $separator Le séparateur
-     *
-     * @return string
-     */
-    public static function getId($string, $separator = '_')
-    {
-        $pos = strrpos($string, $separator);
-        if (false === $pos) {
-            return $string;
-        } else {
-            return (int)substr($string, $pos + 1);
-        }
-    }
-
-    /**
-     * Fonction "inverse" de getId (depuis xxxx-99 on récupère xxxx)
-     *
-     * @note: utilisé par les attributs produits
-     *
-     * @param string $string    La chaine de travail
-     * @param string $separator Le séparateur
-     *
-     * @return string
-     */
-    public static function getName($string, $separator = '_')
-    {
-        $pos = strrpos($string, $separator);
-
-        return false === $pos ? $string : substr($string, 0, $pos);
-    }
-
-    /**
-     * Renvoie un montant nul si le montant est négatif
-     *
-     * @param float $amount
-     *
-     * @return void
-     */
-    public static function doNotAcceptNegativeAmounts(&$amount)
-    {
-        if ($amount < 0.00) {
-            $amount = 0.00;
-        }
-    }
-
-    /**
-     * Returns a string from the request
-     *
-     * @param string $valueName    Name of the parameter you want to get
-     * @param mixed  $defaultValue Default value to return if the parameter is not set in the request
-     *
-     * @return mixed
-     */
-    public static function getFromRequest($valueName, $defaultValue = '')
-    {
-        return isset($_REQUEST[$valueName]) ? $_REQUEST[$valueName] : $defaultValue;
-    }
-
-    /**
-     * Verify that a mysql table exists
-     *
-     * @package       Oledrion
-     * @author        Instant Zero (http://xoops.instant-zero.com)
-     * @copyright (c) Instant Zero
-     * @param $tablename
-     * @return bool
-     */
-    public static function tableExists($tablename)
-    {
-        global $xoopsDB;
-        $result = $xoopsDB->queryF("SHOW TABLES LIKE '$tablename'");
-
-        return ($xoopsDB->getRowsNum($result) > 0);
-    }
-
-    /**
-     * Verify that a field exists inside a mysql table
-     *
-     * @package       Oledrion
-     * @author        Instant Zero (http://xoops.instant-zero.com)
-     * @copyright (c) Instant Zero
-     * @param $fieldname
-     * @param $table
-     * @return bool
-     */
-    public static function fieldExists($fieldname, $table)
-    {
-        global $xoopsDB;
-        $result = $xoopsDB->queryF("SHOW COLUMNS FROM $table LIKE '$fieldname'");
-
-        return ($xoopsDB->getRowsNum($result) > 0);
-    }
-
-    /**
-     * Retourne la définition d'un champ
-     *
-     * @param string $fieldname
-     * @param string $table
-     *
-     * @return array
-     */
-    public static function getFieldDefinition($fieldname, $table)
-    {
-        global $xoopsDB;
-        $result = $xoopsDB->queryF("SHOW COLUMNS FROM $table LIKE '$fieldname'");
-        if ($result) {
-            return $xoopsDB->fetchArray($result);
-        }
-
-        return '';
-    }
-
-    /**
-     * Add a field to a mysql table
-     *
-     * @package       Oledrion
-     * @author        Instant Zero (http://xoops.instant-zero.com)
-     * @copyright (c) Instant Zero
-     * @param $field
-     * @param $table
-     * @return mixed
-     */
-    public static function addField($field, $table)
-    {
-        global $xoopsDB;
-        $result = $xoopsDB->queryF("ALTER TABLE $table ADD $field;");
-
-        return $result;
-    }
-
-    /**
-     * @param $info
-     *
-     * @return string
-     */
-    public static function packingHtmlSelect($info)
-    {
-        $ret = '';
-        $ret .= '<div class="oledrion_htmlform">';
-        $ret .= '<img class="oledrion_htmlimage" src="' . $info['packing_image_url'] . '" alt="' . $info['packing_title'] . '">';
-        $ret .= '<h3>' . $info['packing_title'] . '</h3>';
-        if ($info['packing_price'] > 0) {
-            $ret .= '<p><span class="bold">' . _OLEDRION_PRICE . '</span> : ' . $info['packing_price_fordisplay'] . '</p>';
-        } else {
-            $ret .= '<p><span class="bold">' . _OLEDRION_PRICE . '</span> : ' . _OLEDRION_FREE . '</p>';
-        }
-        $ret .= '<p>' . $info['packing_description'] . '</p>';
-        $ret .= '</div>';
-
-        return $ret;
-    }
-
-    /**
-     * @param $info
-     *
-     * @return string
-     */
-    public static function deliveryHtmlSelect($info)
-    {
-        $ret = '';
-        $ret .= '<div class="oledrion_htmlform">';
-        $ret .= '<img class="oledrion_htmlimage" src="' . $info['delivery_image_url'] . '" alt="' . $info['delivery_title'] . '">';
-        $ret .= '<h3>' . $info['delivery_title'] . '</h3>';
-        if ($info['delivery_price'] > 0) {
-            $ret .= '<p><span class="bold">' . _OLEDRION_PRICE . '</span> : ' . $info['delivery_price_fordisplay'] . '</p>';
-        } else {
-            $ret .= '<p><span class="bold">' . _OLEDRION_PRICE . '</span> : ' . _OLEDRION_FREE . '</p>';
-        }
-        $ret .= '<p><span class="bold">' . _OLEDRION_DELIVERY_TIME . '</span> : ' . $info['delivery_time'] . _OLEDRION_DELIVERY_DAY . '</p>';
-        $ret .= '<p>' . $info['delivery_description'] . '</p>';
-        $ret .= '</div>';
-
-        return $ret;
-    }
-
-    /**
-     * @param $info
-     *
-     * @return string
-     */
-    public static function paymentHtmlSelect($info)
-    {
-        $ret = '';
-        $ret .= '<div class="oledrion_htmlform">';
-        $ret .= '<img class="oledrion_htmlimage" src="' . $info['payment_image_url'] . '" alt="' . $info['payment_title'] . '">';
-        $ret .= '<h3>' . $info['payment_title'] . '</h3>';
-        $ret .= '<p>' . $info['payment_description'] . '</p>';
-        $ret .= '</div>';
-
-        return $ret;
-    }
-
-    /**
-     * @return array
-     */
-    public static function getCountriesList()
-    {
-        require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
-
-        return \XoopsLists::getCountryList();
-    }
 
     //=================================================================================================================================
 
@@ -3566,32 +3106,63 @@ class Utility
 
         return $html;
     }
-//
-//    /**
-//     * Create download by letter choice bar/menu
-//     * updated starting from this idea https://xoops.org/modules/news/article.php?storyid=6497
-//     *
-//     * @return string html
-//     *
-//     * @access  public
-//     * @author  luciorota
-//     */
-//    public static function getLettersChoice()
+
+
+    /**
+     * Recursively sort categories by level and weight
+     *
+     * @param integer $pid
+     * @param integer $level
+     *
+     * @return array array of arrays: 'pid', 'cid', 'level', 'category' as array
+     *
+     * @access  public
+     * @author  luciorota
+     */
+    public static function sortCategories($pid = 0, $level = 0)
+    {
+        $helper = Xoopstube\Helper::getInstance();
+
+        $sorted   = [];
+        $criteria = new \CriteriaCompo();
+        $criteria->add(new \Criteria('pid', $pid));
+        $criteria->setSort('weight');
+        $criteria->setOrder('ASC');
+        $subCategoryObjs = $helper->getHandler('category')->getObjects($criteria);
+        if (count($subCategoryObjs) > 0) {
+            ++$level;
+            foreach ($subCategoryObjs as $subCategoryObj) {
+                $pid      = $subCategoryObj->getVar('pid');
+                $cid      = $subCategoryObj->getVar('cid');
+                $sorted[] = ['pid' => $pid, 'cid' => $cid, 'level' => $level, 'category' => $subCategoryObj->toArray()];
+                if (false !== ($subSorted = self::sortCategories($cid, $level))) {
+                    $sorted = array_merge($sorted, $subSorted);
+                }
+            }
+        }
+
+        return $sorted;
+    }
+
+    /**
+     * Create download by letter choice bar/menu
+     * updated starting from this idea https://xoops.org/modules/news/article.php?storyid=6497
+     *
+     * @return string html
+     *
+     * @access  public
+     * @author  luciorota
+     */
+//    public static function lettersChoice()
 //    {
-//        global $xoopsModule;
-//
-//        $moduleDirName = $xoopsModule->getVar('dirname');
-//        include_once XOOPS_ROOT_PATH . "/modules/$moduleDirName/class/$moduleDirName.php";
-//
 //        $helper = Xoopstube\Helper::getInstance();
 //
-//        $criteria = $helper->getHandler('xoopstube')->getActiveCriteria();
+//        $criteria = $helper->getHandler('Videos')->getActiveCriteria();
 //        $criteria->setGroupby('UPPER(LEFT(title,1))');
-//        $countsByLetters = $helper->getHandler('xoopstube')->getCounts($criteria);
+//        $countsByLetters = $helper->getHandler('Videos')->getCounts($criteria);
 //        // Fill alphabet array
-//        $alphabet       = [];
-//        $alphabet       = getXtubeAlphabet();
-//        $alphabet_array = [];
+//        $alphabet       = getLocalAlphabet();
+//        $alphabetArray = [];
 //        foreach ($alphabet as $letter) {
 //            $letter_array = [];
 //            if (isset($countsByLetters[$letter])) {
@@ -3603,24 +3174,23 @@ class Utility
 //                $letter_array['count']  = 0;
 //                $letter_array['url']    = '';
 //            }
-//            $alphabet_array[$letter] = $letter_array;
+//            $alphabetArray[$letter] = $letter_array;
 //            unset($letter_array);
 //        }
 //        // Render output
 //        if (!isset($GLOBALS['xoTheme']) || !is_object($GLOBALS['xoTheme'])) {
-//            include_once $GLOBALS['xoops']->path('/class/theme.php');
+//            require_once $GLOBALS['xoops']->path('/class/theme.php');
 //            $GLOBALS['xoTheme'] = new xos_opal_Theme();
 //        }
 //        require_once $GLOBALS['xoops']->path('class/template.php');
 //        $letterschoiceTpl          = new \XoopsTpl();
 //        $letterschoiceTpl->caching = false; // Disable cache
-//        $letterschoiceTpl->assign('alphabet', $alphabet_array);
-//        $html = $letterschoiceTpl->fetch("db:{$helper->getModule()->dirname()}_co_letterschoice.tpl");
+//        $letterschoiceTpl->assign('alphabet', $alphabetArray);
+//        $html = $letterschoiceTpl->fetch("db:{$helper->getModule()->dirname()}_common_letterschoice.tpl");
 //        unset($letterschoiceTpl);
 //
 //        return $html;
 //    }
-//
 
     //===============  from WF-Downloads   ======================================
 

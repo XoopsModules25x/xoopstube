@@ -7,7 +7,22 @@
     <h4 style="text-align: center;"><{$catarray.indexheading}></h4>
 <{/if}>
 <div style="padding-bottom: 12px; text-align: <{$catarray.indexheaderalign}>;"><{$catarray.indexheader}></div>
-<div style="padding-bottom: 12px; text-align: center;" class="itemPermaLink"><{$catarray.letters}></div>
+
+<{*<div style="padding-bottom: 12px; text-align: center;" class="itemPermaLink"><{$catarray.letters}></div>*}>
+
+
+<{*-------------Letter Choice Start -----------------------------*}>
+
+<{if $catarray.letters}>
+    <div class="xoopstube_head_catletters" align="center">
+        <{$letterChoiceTitle}>
+        <{$catarray.letters}></div>
+    <br>
+<{/if}>
+<{*-------------Letter Choice End -----------------------------*}>
+
+
+
 <{if count($categories) gt 0}>
     <div class="even" style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_MAINLISTING}></div>
     <table width="100%" cellspacing="1" cellpadding="3" summary='' style="text-align: center;">

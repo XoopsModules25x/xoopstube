@@ -61,7 +61,7 @@ if (0 == $moderate) {
 }
 $pathIcon16          = \Xmf\Module\Admin::iconUrl('', 16);
 $video['adminvideo'] = '';
-$video['isadmin']    = ((is_object($GLOBALS['xoopsUser']) && !empty($GLOBALS['xoopsUser'])) && $GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) ? true : false;
+$video['isadmin']    = ((is_object($GLOBALS['xoopsUser']) && !empty($GLOBALS['xoopsUser'])) && $GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid()));
 if (true === $video['isadmin'] && 0 == $moderate) {
     $video['adminvideo'] = '<a href="'
                            . XOOPS_URL
@@ -126,7 +126,7 @@ $votestring = (1 == $video_arr['votes']) ? _MD_XOOPSTUBE_ONEVOTE : sprintf(_MD_X
 
 $video['useradminvideo'] = 0;
 if (is_object($GLOBALS['xoopsUser']) && !empty($GLOBALS['xoopsUser'])) {
-    $_user_submitter = ($GLOBALS['xoopsUser']->getVar('uid') === $video_arr['submitter']) ? true : false;
+    $_user_submitter = $GLOBALS['xoopsUser']->getVar('uid') === $video_arr['submitter'];
     if (true === Xoopstube\Utility::checkGroups($cid)) {
         $video['useradminvideo'] = 1;
         if ($GLOBALS['xoopsUser']->getVar('uid') === $video_arr['submitter']) {

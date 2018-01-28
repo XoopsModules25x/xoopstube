@@ -23,6 +23,10 @@
 
 use XoopsModules\Xoopstube;
 
+/**
+ * @param $options
+ * @return array
+ */
 function xtubeShowBannerB($options)
 {
     $moduleDirName = basename(dirname(__DIR__));

@@ -72,7 +72,7 @@ class LetterChoice
         $objHandler,
         $criteria = null,
         $field_name = null,
-        $alphabet = [],
+        array $alphabet = [],
         $arg_name = 'letter',
         $url = null,
         $extra_arg = '',
@@ -83,8 +83,8 @@ class LetterChoice
         $this->criteria    = null === $criteria ? new \CriteriaCompo() : $criteria;
         $this->field_name  = null === $field_name ? $this->objHandler->identifierName : $field_name;
 //        $this->alphabet   = (count($alphabet) > 0) ? $alphabet : range('a', 'z'); // is there a way to get locale alphabet?
-        $this->alphabet       = getLocalAlphabet();
-
+//        $this->alphabet       = getLocalAlphabet();
+        $this->alphabet = include __DIR__ . '/../../language/'.$GLOBALS['xoopsConfig']['language'] .'/alphabet.php';
         $this->arg_name    = $arg_name;
         $this->url         = null === $url ? $_SERVER['PHP_SELF'] : $url;
         if ('' !== $extra_arg && ('&amp;' !== substr($extra_arg, -5) || '&' !== substr($extra_arg, -1))) {
@@ -98,8 +98,16 @@ class LetterChoice
      *
      * @return string
      */
-    public function render()
+    public function render($alphaCount = null, $howmanyother = null)
     {
+        $moduleDirName = basename(dirname(dirname(__DIR__)));
+        $moduleDirNameUpper = strtoupper($moduleDirName);
+        xoops_loadLanguage('common', $moduleDirName);
+        xoops_loadLanguage('alphabet', $moduleDirName);
+        $all = constant('CO_' . $moduleDirNameUpper . '_ALL');
+        $other = constant('CO_' . $moduleDirNameUpper . '_OTHER');
+
+
         $ret = '';
         //
         if (!$this->caseSensitive) {
@@ -110,6 +118,15 @@ class LetterChoice
         $countsByLetters = $this->objHandler->getCounts($this->criteria);
         // fill alphabet array
         $alphabetArray = [];
+        $letter_array = [];
+
+        $letter = 'All';
+        $letter_array['letter'] = $all;
+        $letter_array['count']  = $alphaCount;
+        $letter_array['url']    = $this->url ;
+        $alphabetArray[$letter] = $letter_array;
+
+
         foreach ($this->alphabet as $letter) {
             $letter_array = [];
             if (!$this->caseSensitive) {
@@ -136,6 +153,13 @@ class LetterChoice
             $alphabetArray[$letter] = $letter_array;
             unset($letter_array);
         }
+
+
+        $letter_array['letter'] = $other;
+        $letter_array['count']  = $howmanyother;
+        $letter_array['url']    = $this->url. '?init=Other' ;
+        $alphabetArray[$letter] = $letter_array;
+
         // render output
         if (!isset($GLOBALS['xoTheme']) || !is_object($GLOBALS['xoTheme'])) {
             require_once $GLOBALS['xoops']->path('/class/theme.php');
@@ -145,7 +169,7 @@ class LetterChoice
         $choiceByLetterTpl          = new \XoopsTpl();
         $choiceByLetterTpl->caching = false; // Disable cache
         $choiceByLetterTpl->assign('alphabet', $alphabetArray);
-        $ret .= $choiceByLetterTpl->fetch("db:{$this->helper->getDirname()}_co_letterschoice.tpl");
+        $ret .= $choiceByLetterTpl->fetch("db:{$this->helper->getDirname()}_letterschoice.tpl");
         unset($choiceByLetterTpl);
 
         return $ret;

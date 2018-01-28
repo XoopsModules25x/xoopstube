@@ -117,7 +117,7 @@ class Tree
      *
      * @return array
      */
-    public function getAllChildId($selectId, $order = '', $idarray = [])
+    public function getAllChildId($selectId, $order = '', array $idarray = [])
     {
         $selectId = (int)$selectId;
         $sql      = 'SELECT ' . $this->id . ' FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $selectId . '';
@@ -146,7 +146,7 @@ class Tree
      *
      * @return array
      */
-    public function getAllParentId($selectId, $order = '', $idarray = [])
+    public function getAllParentId($selectId, $order = '', array $idarray = [])
     {
         $selectId = (int)$selectId;
         $sql      = 'SELECT ' . $this->pid . ' FROM ' . $this->table . ' WHERE ' . $this->id . '=' . $selectId . '';
@@ -308,7 +308,7 @@ class Tree
      *
      * @return array
      */
-    public function getAllChild($selectId = 0, $order = '', $parray = [])
+    public function getAllChild($selectId = 0, $order = '', array $parray = [])
     {
         $selectId = (int)$selectId;
         $sql      = 'SELECT * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $selectId . '';
@@ -338,7 +338,7 @@ class Tree
      *
      * @return array
      */
-    public function getChildTreeArray($selectId = 0, $order = '', $parray = [], $r_prefix = '')
+    public function getChildTreeArray($selectId = 0, $order = '', array $parray = [], $r_prefix = '')
     {
         $selectId = (int)$selectId;
         $sql      = 'SELECT * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $selectId . '';

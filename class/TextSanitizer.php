@@ -18,8 +18,8 @@
  * @since           1.0.6
  */
 
-use XoopsModules\Xoopstube;
-use XoopsModules\Xoopstube\Common;
+//use XoopsModules\Xoopstube;
+//use XoopsModules\Xoopstube\Common;
 
 /**
  * Class TextSanitizer

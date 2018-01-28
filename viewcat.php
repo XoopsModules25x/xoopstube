@@ -54,6 +54,20 @@ $xoopsTpl->assign('catarray', $catarray);
 //$catArray['toolbar'] = xoopstube_toolbar();
 //$xoopsTpl->assign('catarray', $catArray);
 
+
+
+
+//$catArray['imageheader'] = Xoopstube\Utility::headerImage();
+////$catArray['letters']     = Wfdownloads\Utility::lettersChoice();
+///** @var \XoopsDatabase $db */
+//$db           = \XoopsDatabaseFactory::getDatabase();
+//$objHandler = new Xoopstube\DownloadHandler($db);
+//$choicebyletter = new Xoopstube\Common\LetterChoice($objHandler, null, null, range('a', 'z'), 'letter');
+//$catarray['letters']  = $choicebyletter->render();
+
+
+
+
 // Breadcrumb
 $pathstring = '<li><a href="index.php">' . _MD_XOOPSTUBE_MAIN . '</a></li>';
 $pathstring .= $mytree->getNicePathFromId($cid, 'title', 'viewcat.php?op=');
@@ -242,7 +256,7 @@ if ($count > 0) {
 
     // Nav page render
     $page_nav = $pagenav->renderNav();
-    $istrue   = (isset($page_nav) && !empty($page_nav)) ? true : false;
+    $istrue   = (isset($page_nav) && !empty($page_nav));
     $xoopsTpl->assign('page_nav', $istrue);
     $xoopsTpl->assign('pagenav', $page_nav);
     $xoopsTpl->assign('module_dir', $xoopsModule->getVar('dirname'));

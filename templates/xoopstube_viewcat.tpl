@@ -6,6 +6,7 @@
 <{/if}>
 <div><{$description}></div><br>
 <div style="padding-bottom: 12px; text-align: center;" class="itemPermaLink"><{$catarray.letters}></div>
+
 <div class="even" style="font-size: smaller; font-weight: bold;"><{$category_path}></div><br>
 <{if $subcategories}>
     <fieldset>

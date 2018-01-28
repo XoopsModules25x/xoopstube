@@ -15,17 +15,22 @@
  * @author          Michael Beck (aka Mamba)
  */
 
-use Xmf\Request;
+use XoopsModules\Xoopstube;
 
 require_once __DIR__ . '/../../../mainfile.php';
 
-$moduleDirName = basename(dirname(__DIR__));
+include __DIR__ . '/../preloads/autoloader.php';
 
-$op = Request::getCmd('op', '');
+$op = \Xmf\Request::getCmd('op', '');
+
+$moduleDirName = basename(dirname(__DIR__));
 
 switch ($op) {
     case 'load':
         loadSampleData();
+        break;
+    case 'save':
+        saveSampleData();
         break;
 }
 
@@ -37,11 +42,26 @@ function loadSampleData()
     $items = \Xmf\Yaml::readWrapped('item-data.yml');
     $cat   = \Xmf\Yaml::readWrapped('cat-data.yml');
 
-    \Xmf\Database\TableLoad::truncateTable('xoopstube_videos');
-    \Xmf\Database\TableLoad::truncateTable('xoopstube_cat');
+    \Xmf\Database\TableLoad::truncateTable($moduleDirName . '_' . 'videos');
+    \Xmf\Database\TableLoad::truncateTable($moduleDirName . '_' . 'cat');
 
-    \Xmf\Database\TableLoad::loadTableFromArray('xoopstube_cat', $cat);
-    \Xmf\Database\TableLoad::loadTableFromArray('xoopstube_videos', $items);
+    \Xmf\Database\TableLoad::loadTableFromArray($moduleDirName . '_' . 'cat', $cat);
+    \Xmf\Database\TableLoad::loadTableFromArray($moduleDirName . '_' . 'videos', $items);
 
     redirect_header('../admin/main.php', 1, _AM_XOOPSTUBE_SAMPLEDATA_SUCCESS);
+}
+
+function saveSampleData()
+{
+    $moduleDirName      = basename(dirname(__DIR__));
+    $moduleDirNameUpper = strtoupper($moduleDirName);
+
+    $tables = ['videos', 'cat'];
+
+    foreach ($tables as $table) {
+        \Xmf\Database\TableLoad::saveTableToYamlFile($moduleDirName . '_' . $table, $table . '_' . date("Y-m-d H-i-s") . '.yml');
+    }
+
+    redirect_header('../admin/index.php', 1, constant('CO_' . $moduleDirNameUpper . '_' . 'SAMPLEDATA_SUCCESS'));
+
 }

@@ -245,8 +245,8 @@ class Thumbnails
                 if (!empty($GLOBALS['xoopsModuleConfig']['path_magick']) && is_dir($GLOBALS['xoopsModuleConfig']['path_magick'])) {
                     if (preg_match("#[A-Z]:|\\\\#Ai", __FILE__)) {
                         $cur_dir     = __DIR__;
-                        $src_file_im = '"' . $cur_dir . '\\' . strtr($this->_source_image, '/', '\\') . '"';
-                        $new_file_im = '"' . $cur_dir . '\\' . strtr($this->_save_image, '/', '\\') . '"';
+                        $src_file_im = '"' . $cur_dir . '\\' . str_replace('/', '\\', $this->_source_image) . '"';
+                        $new_file_im = '"' . $cur_dir . '\\' . str_replace('/', '\\', $this->_save_image) . '"';
                     } else {
                         $src_file_im = escapeshellarg($this->_source_image);
                         $new_file_im = escapeshellarg($this->_save_image);

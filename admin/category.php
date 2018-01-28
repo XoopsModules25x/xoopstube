@@ -40,7 +40,7 @@ if (isset($_GET)) {
  */
 function createCategory($cid = 0)
 {
-    require_once __DIR__ . '/../class/xoopstube_lists.php';
+    // require_once __DIR__ . '/../class/xoopstube_lists.php';
     //    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
     global $xtubemyts, $totalcats, $xoopsModule;
@@ -94,20 +94,20 @@ function createCategory($cid = 0)
     $sform = new \XoopsThemeForm($heading, 'op', xoops_getenv('PHP_SELF'), 'post', true);
     $sform->setExtra('enctype="multipart/form-data"');
 
-    $sform->addElement(new XoopsFormText(_AM_XOOPSTUBE_FCATEGORY_TITLE, 'title', 50, 80, $title), true);
-    $sform->addElement(new XoopsFormText(_AM_XOOPSTUBE_FCATEGORY_WEIGHT, 'weight', 10, 80, $weight), false);
+    $sform->addElement(new \XoopsFormText(_AM_XOOPSTUBE_FCATEGORY_TITLE, 'title', 50, 80, $title), true);
+    $sform->addElement(new \XoopsFormText(_AM_XOOPSTUBE_FCATEGORY_WEIGHT, 'weight', 10, 80, $weight), false);
 
     if ($totalcats > 0 && $cid) {
         $mytreechose = new Xoopstube\Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
         ob_start();
         $mytreechose->makeMySelBox('title', 'title', $cat_arr['pid'], 1, 'pid');
-        $sform->addElement(new XoopsFormLabel(_AM_XOOPSTUBE_FCATEGORY_SUBCATEGORY, ob_get_contents()));
+        $sform->addElement(new \XoopsFormLabel(_AM_XOOPSTUBE_FCATEGORY_SUBCATEGORY, ob_get_contents()));
         ob_end_clean();
     } else {
         $mytreechose = new Xoopstube\Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
         ob_start();
         $mytreechose->makeMySelBox('title', 'title', $cid, 1, 'pid');
-        $sform->addElement(new XoopsFormLabel(_AM_XOOPSTUBE_FCATEGORY_SUBCATEGORY, ob_get_contents()));
+        $sform->addElement(new \XoopsFormLabel(_AM_XOOPSTUBE_FCATEGORY_SUBCATEGORY, ob_get_contents()));
         ob_end_clean();
     }
 
@@ -118,9 +118,9 @@ function createCategory($cid = 0)
     $indeximage_tray = new \XoopsFormElementTray(_AM_XOOPSTUBE_FCATEGORY_CIMAGE, '&nbsp;');
     $indeximage_tray->addElement($indexImageSelect);
     if ('' !== $imgurl && 1 != $imgurl) {
-        $indeximage_tray->addElement(new XoopsFormLabel('', "<br><br><img src='" . XOOPS_URL . '/' . $GLOBALS['xoopsModuleConfig']['catimage'] . '/' . $imgurl . "' name='image' id='image' alt=''>"));
+        $indeximage_tray->addElement(new \XoopsFormLabel('', "<br><br><img src='" . XOOPS_URL . '/' . $GLOBALS['xoopsModuleConfig']['catimage'] . '/' . $imgurl . "' name='image' id='image' alt=''>"));
     } else {
-        $indeximage_tray->addElement(new XoopsFormLabel('', "<br><br><img src='" . XOOPS_URL . "/uploads/blank.gif' name='image' id='image' alt=''>"));
+        $indeximage_tray->addElement(new \XoopsFormLabel('', "<br><br><img src='" . XOOPS_URL . "/uploads/blank.gif' name='image' id='image' alt=''>"));
     }
     $sform->addElement($indeximage_tray);
 
@@ -194,11 +194,11 @@ function createCategory($cid = 0)
     $options_tray->addElement($breaks_checkbox);
     $sform->addElement($options_tray);
 
-    //    $sform -> addElement(new XoopsFormSelectGroup(_AM_XOOPSTUBE_FCATEGORY_GROUPPROMPT, "groups", true, $groups, 5, true));
+    //    $sform -> addElement(new \XoopsFormSelectGroup(_AM_XOOPSTUBE_FCATEGORY_GROUPPROMPT, "groups", true, $groups, 5, true));
 
-    $sform->addElement(new XoopsFormHidden('cid', (int)$cid));
+    $sform->addElement(new \XoopsFormHidden('cid', (int)$cid));
 
-    $sform->addElement(new XoopsFormHidden('spotlighttop', (int)$cid));
+    $sform->addElement(new \XoopsFormHidden('spotlighttop', (int)$cid));
 
     $button_tray = new \XoopsFormElementTray('', '');
     $hidden      = new \XoopsFormHidden('op', 'save');
@@ -258,12 +258,12 @@ switch ($op) {
             $sform         = new \XoopsThemeForm(_AM_XOOPSTUBE_CCATEGORY_MOVE, 'move', xoops_getenv('PHP_SELF'), 'post', true);
             ob_start();
             $xoopstubetree->makeMySelBox('title', 'title', 0, 0, 'target');
-            $sform->addElement(new XoopsFormLabel(_AM_XOOPSTUBE_BMODIFY, ob_get_contents()));
+            $sform->addElement(new \XoopsFormLabel(_AM_XOOPSTUBE_BMODIFY, ob_get_contents()));
             ob_end_clean();
             $create_tray = new \XoopsFormElementTray('', '');
-            $create_tray->addElement(new XoopsFormHidden('source', $cid));
-            $create_tray->addElement(new XoopsFormHidden('ok', 1));
-            $create_tray->addElement(new XoopsFormHidden('op', 'move'));
+            $create_tray->addElement(new \XoopsFormHidden('source', $cid));
+            $create_tray->addElement(new \XoopsFormHidden('ok', 1));
+            $create_tray->addElement(new \XoopsFormHidden('op', 'move'));
             $butt_save = new \XoopsFormButton('', '', _AM_XOOPSTUBE_BMOVE, 'submit');
             $butt_save->setExtra('onclick="this.form.elements.op.value=\'move\'"');
             $create_tray->addElement($butt_save);
@@ -464,10 +464,10 @@ switch ($op) {
         if ($totalcats > 0) {
             ob_start();
             $xoopstubetree->makeMySelBox('title', 'title');
-            $sform->addElement(new XoopsFormLabel(_AM_XOOPSTUBE_CCATEGORY_MODIFY_TITLE, ob_get_contents()));
+            $sform->addElement(new \XoopsFormLabel(_AM_XOOPSTUBE_CCATEGORY_MODIFY_TITLE, ob_get_contents()));
             ob_end_clean();
             $dup_tray = new \XoopsFormElementTray('', '');
-            $dup_tray->addElement(new XoopsFormHidden('op', 'modCat'));
+            $dup_tray->addElement(new \XoopsFormHidden('op', 'modCat'));
             $butt_dup = new \XoopsFormButton('', '', _AM_XOOPSTUBE_BMODIFY, 'submit');
             $butt_dup->setExtra('onclick="this.form.elements.op.value=\'modCat\'"');
             $dup_tray->addElement($butt_dup);

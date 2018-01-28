@@ -83,7 +83,7 @@ switch (strtolower($op)) {
          </fieldset><br>';
 
         $sform = new \XoopsThemeForm(_AM_XOOPSTUBE_IPAGE_MODIFY, 'op', xoops_getenv('PHP_SELF'), 'post', true);
-        $sform->addElement(new XoopsFormText(_AM_XOOPSTUBE_IPAGE_CTITLE, 'indexheading', 60, 60, $indexheading), false);
+        $sform->addElement(new \XoopsFormText(_AM_XOOPSTUBE_IPAGE_CTITLE, 'indexheading', 60, 60, $indexheading), false);
         $graph_array      = Xoopstube\Lists:: getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $GLOBALS['xoopsModuleConfig']['mainimagedir'], $type = 'images');
         $indexImageSelect = new \XoopsFormSelect('', 'indeximage', $indeximage);
         $indexImageSelect->addOptionArray($graph_array);
@@ -91,9 +91,9 @@ switch (strtolower($op)) {
         $indeximage_tray = new \XoopsFormElementTray(_AM_XOOPSTUBE_IPAGE_CIMAGE, '&nbsp;');
         $indeximage_tray->addElement($indexImageSelect);
         if (!empty($indeximage)) {
-            $indeximage_tray->addElement(new XoopsFormLabel('', '<br><br><img src="' . XOOPS_URL . '/' . $GLOBALS['xoopsModuleConfig']['mainimagedir'] . '/' . $indeximage . '" name="image" id="image" alt="">'));
+            $indeximage_tray->addElement(new \XoopsFormLabel('', '<br><br><img src="' . XOOPS_URL . '/' . $GLOBALS['xoopsModuleConfig']['mainimagedir'] . '/' . $indeximage . '" name="image" id="image" alt="">'));
         } else {
-            $indeximage_tray->addElement(new XoopsFormLabel('', '<br><br><img src="' . XOOPS_URL . '/uploads/blank.gif" name="image" id="image" alt="">'));
+            $indeximage_tray->addElement(new \XoopsFormLabel('', '<br><br><img src="' . XOOPS_URL . '/uploads/blank.gif" name="image" id="image" alt="">'));
         }
         $sform->addElement($indeximage_tray);
 
@@ -124,7 +124,7 @@ switch (strtolower($op)) {
                                                 'center' => _AM_XOOPSTUBE_IPAGE_CCENTER
                                             ]);
         $sform->addElement($headeralign_select);
-        $sform->addElement(new XoopsFormTextArea(_AM_XOOPSTUBE_IPAGE_CFOOTER, 'indexfooter', $indexfooter, 10, 60));
+        $sform->addElement(new \XoopsFormTextArea(_AM_XOOPSTUBE_IPAGE_CFOOTER, 'indexfooter', $indexfooter, 10, 60));
         $footeralign_select = new \XoopsFormSelect(_AM_XOOPSTUBE_IPAGE_CFOOTERA, 'indexfooteralign', $indexfooteralign);
         $footeralign_select->addOptionArray([
                                                 'left'   => _AM_XOOPSTUBE_IPAGE_CLEFT,
@@ -156,7 +156,7 @@ switch (strtolower($op)) {
         $options_tray->addElement($breaks_checkbox);
         $sform->addElement($options_tray);
 
-        $sform->addElement(new XoopsFormRadioYN(_AM_XOOPSTUBE_IPAGE_SHOWLATEST, 'lastvideosyn', $lastvideosyn, ' ' . _YES . '', ' ' . _NO . ''));
+        $sform->addElement(new \XoopsFormRadioYN(_AM_XOOPSTUBE_IPAGE_SHOWLATEST, 'lastvideosyn', $lastvideosyn, ' ' . _YES . '', ' ' . _NO . ''));
 
         $lastvideostotalform = new \XoopsFormText(_AM_XOOPSTUBE_IPAGE_LATESTTOTAL, 'lastvideostotal', 2, 2, $lastvideostotal);
         $lastvideostotalform->setDescription('<span style="font-size: small;">' . _AM_XOOPSTUBE_IPAGE_LATESTTOTAL_DSC . '</span>');
@@ -165,7 +165,7 @@ switch (strtolower($op)) {
         $button_tray = new \XoopsFormElementTray('', '');
         $hidden      = new \XoopsFormHidden('op', 'save');
         $button_tray->addElement($hidden);
-        $button_tray->addElement(new XoopsFormButton('', 'post', _AM_XOOPSTUBE_BSAVE, 'submit'));
+        $button_tray->addElement(new \XoopsFormButton('', 'post', _AM_XOOPSTUBE_BSAVE, 'submit'));
         $sform->addElement($button_tray);
         $sform->display();
         break;
