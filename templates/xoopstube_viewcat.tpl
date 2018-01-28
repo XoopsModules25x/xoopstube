@@ -5,7 +5,17 @@
     <br>
 <{/if}>
 <div><{$description}></div><br>
-<div style="padding-bottom: 12px; text-align: center;" class="itemPermaLink"><{$catarray.letters}></div>
+<{*<div style="padding-bottom: 12px; text-align: center;" class="itemPermaLink"><{$catarray.letters}></div>*}>
+
+<{*-------------Letter Choice Start -----------------------------*}>
+
+<{if $catarray.letters}>
+    <div class="xoopstube_head_catletters" align="center">
+        <{$letterChoiceTitle}>
+        <{$catarray.letters}></div>
+    <br>
+<{/if}>
+<{*-------------Letter Choice End -----------------------------*}>
 
 <div class="even" style="font-size: smaller; font-weight: bold;"><{$category_path}></div><br>
 <{if $subcategories}>

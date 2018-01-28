@@ -8,9 +8,15 @@
 
     <{$description}>
 
-    <div class="text-center xoopstube-navigation">
-        <{$catarray.letters}>
-    </div><!-- .xoopstube-navigation -->
+    <{*-------------Letter Choice Start -----------------------------*}>
+
+    <{if $catarray.letters}>
+        <div class="xoopstube_head_catletters" align="center">
+            <{$letterChoiceTitle}>
+            <{$catarray.letters}></div>
+        <br>
+    <{/if}>
+    <{*-------------Letter Choice End -----------------------------*}>
 
 
 

@@ -41,13 +41,35 @@ if (is_array($arr) > 0 && !$list && !$selectdate) {
 
 $GLOBALS['xoopsOption']['template_main'] = 'xoopstube_viewcat.tpl';
 
+
 include XOOPS_ROOT_PATH . '/header.php';
 $xoTheme->addStylesheet('modules/' . $moduleDirName . '/assets/css/xtubestyle.css');
 global $xoopsModule;
+
+/*
 $catarray['letters'] = Xoopstube\Utility::getLetters();
 //$catarray['letters']     = Xoopstube\Utility::getLettersChoice();
 $catarray['imageheader'] = Xoopstube\Utility::renderImageHeader();
 $xoopsTpl->assign('catarray', $catarray);
+*/
+
+// Letter Choice Start ---------------------------------------
+
+XoopsModules\Xoopstube\Helper::getInstance()->loadLanguage('common');
+$xoopsTpl->assign('letterChoiceTitle', constant('CO_' . $moduleDirNameUpper . '_' . 'BROWSETOTOPIC'));
+/** @var \XoopsDatabase $db */
+$db           = \XoopsDatabaseFactory::getDatabase();
+$objHandler = new Xoopstube\VideosHandler($db);
+$choicebyletter = new Xoopstube\Common\LetterChoice($objHandler, null, null, range('a', 'z'), 'letter');
+//$choicebyletter = new Xoopstube\Common\LetterChoice($objHandler, null, null, range('a', 'z'), 'init', XOOPSTUBE_URL . '/letter.php');
+$catarray['letters']  = $choicebyletter->render();
+//$catarray['letters']  = $choicebyletter->render($alphaCount, $howmanyother);
+
+$xoopsTpl->assign('catarray', $catarray);
+
+// Letter Choice End ------------------------------------
+
+
 
 //$catArray['letters'] = Xoopstube\Utility::getLettersChoice();
 //$catArray['letters'] = Xoopstube\Utility::getLettersChoice();
