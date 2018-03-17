@@ -85,7 +85,9 @@ if (true === Xoopstube\Utility::checkGroups($cid, 'XTubeSubPerm')) {
             $sql .= " VALUES    ('', $cid, '$title', '$vidid', '$submitter', '$publisher', '$status', '$date', 0, 0, 0, 0, '$vidsource', '$publishdate', 0, '$offline', '$descriptionb', '$ipaddress', '$notifypub', '$vidrating', '$time', '$keywords', '$item_tag', '$picurl')";
             if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
                 $_error = $GLOBALS['xoopsDB']->error() . ' : ' . $GLOBALS['xoopsDB']->errno();
-                XoopsErrorHandler_HandleError(E_USER_WARNING, $_error, __FILE__, __LINE__);
+                /** @var \XoopsLogger $logger */
+                $logger = \XoopsLogger::getInstance();
+                $logger->handleError(E_USER_WARNING, $_error, __FILE__, __LINE__);
             }
             $newid = $GLOBALS['xoopsDB']->getInsertId();
 
@@ -132,7 +134,7 @@ if (true === Xoopstube\Utility::checkGroups($cid, 'XTubeSubPerm')) {
                            . $lid;
                 if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
                     $_error = $GLOBALS['xoopsDB']->error() . ' : ' . $GLOBALS['xoopsDB']->errno();
-                    XoopsErrorHandler_HandleError(E_USER_WARNING, $_error, __FILE__, __LINE__);
+                    $logger->handleError(E_USER_WARNING, $_error, __FILE__, __LINE__);
                 }
 
                 $notificationHandler   = xoops_getHandler('notification');
@@ -159,7 +161,7 @@ if (true === Xoopstube\Utility::checkGroups($cid, 'XTubeSubPerm')) {
                     $sql .= " VALUES ('', $lid, $cid, '$title', '$vidid', '$publisher', '$vidsource', '$descriptionb', '$modifysubmitter', '$requestdate', '$time', '$keywords', '$item_tag', '$picurl')";
                     if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
                         $_error = $GLOBALS['xoopsDB']->error() . ' : ' . $GLOBALS['xoopsDB']->errno();
-                        XoopsErrorHandler_HandleError(E_USER_WARNING, $_error, __FILE__, __LINE__);
+                        $logger->handleError(E_USER_WARNING, $_error, __FILE__, __LINE__);
                     }
                 } else {
                     redirect_header('index.php', 2, _MD_XOOPSTUBE_MODIFYNOTALLOWED);

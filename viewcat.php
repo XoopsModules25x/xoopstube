@@ -58,7 +58,7 @@ $xoopsTpl->assign('catarray', $catarray);
 XoopsModules\Xoopstube\Helper::getInstance()->loadLanguage('common');
 $xoopsTpl->assign('letterChoiceTitle', constant('CO_' . $moduleDirNameUpper . '_' . 'BROWSETOTOPIC'));
 /** @var \XoopsDatabase $db */
-$db           = \XoopsDatabaseFactory::getDatabase();
+$db           = \XoopsDatabaseFactory::getDatabaseConnection();
 $objHandler = new Xoopstube\VideosHandler($db);
 $choicebyletter = new Xoopstube\Common\LetterChoice($objHandler, null, null, range('a', 'z'), 'letter');
 //$choicebyletter = new Xoopstube\Common\LetterChoice($objHandler, null, null, range('a', 'z'), 'init', XOOPSTUBE_URL . '/letter.php');
@@ -82,7 +82,7 @@ $xoopsTpl->assign('catarray', $catarray);
 //$catArray['imageheader'] = Xoopstube\Utility::headerImage();
 ////$catArray['letters']     = Wfdownloads\Utility::lettersChoice();
 ///** @var \XoopsDatabase $db */
-//$db           = \XoopsDatabaseFactory::getDatabase();
+//$db           = \XoopsDatabaseFactory::getDatabaseConnection();
 //$objHandler = new Xoopstube\DownloadHandler($db);
 //$choicebyletter = new Xoopstube\Common\LetterChoice($objHandler, null, null, range('a', 'z'), 'letter');
 //$catarray['letters']  = $choicebyletter->render();

@@ -19,12 +19,12 @@
  */
 // CONFIG displayicons
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
- * Interface Constants
+ * class Constants
  */
-interface Constants
+class Constants
 {
     /**#@+
      * Constant definition

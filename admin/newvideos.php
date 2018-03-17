@@ -31,7 +31,7 @@ switch (strtolower($op)) {
         global $xoopsModule;
         $sql = 'SELECT cid, title, publisher, notifypub FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE lid=' . $lid;
         if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
-            XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
+            $logger->handleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
             return false;
         }
@@ -48,7 +48,7 @@ switch (strtolower($op)) {
 
         $sql = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' SET published=' . $time . ", status=1, publisher='" . $publisher . "' WHERE lid=" . $lid;
         if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
-            XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
+            $logger->handleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
             return false;
         }
@@ -59,7 +59,7 @@ switch (strtolower($op)) {
 
         $sql = 'SELECT title FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_cat') . ' WHERE cid=' . $cid;
         if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
-            XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
+            $logger->handleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
         } else {
             $row                   = $GLOBALS['xoopsDB']->fetchArray($result);
             $tags['CATEGORY_NAME'] = $row['title'];
@@ -80,7 +80,7 @@ switch (strtolower($op)) {
         $start = Request::getInt('start', 0); //cleanRequestVars($_REQUEST, 'start', 0);
         $sql   = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE published = 0 ORDER BY lid DESC';
         if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
-            XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
+            $logger->handleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
             return false;
         }

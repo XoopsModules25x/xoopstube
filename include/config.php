@@ -20,6 +20,9 @@
 $moduleDirName = basename(dirname(__DIR__));
 $moduleDirNameUpper   = strtoupper($moduleDirName);
 
+/**
+ * @return object
+ */
 function getConfig()
 {
     return (object)[

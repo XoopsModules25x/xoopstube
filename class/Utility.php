@@ -2706,7 +2706,7 @@ class Utility
         global $xoopsModule;
         if (self::isModuleTagInstalled()) {
             require_once XOOPS_ROOT_PATH . '/modules/tag/include/formtag.php';
-            $tagHandler = xoops_getModuleHandler('tag', 'tag');
+            $tagHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Tag'); // xoops_getModuleHandler('tag', 'tag');
             $tagHandler->updateByItem($item_tag, $lid, $xoopsModule->getVar('dirname'), 0);
         }
     }

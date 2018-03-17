@@ -41,7 +41,9 @@ switch (strtolower($op)) {
             }
             $sql .= ' WHERE lid=' . $lid;
             if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
-                XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
+                /** @var \XoopsLogger $logger */
+                $logger = \XoopsLogger::getInstance();
+                $logger->handleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
                 return false;
             }
@@ -54,7 +56,9 @@ switch (strtolower($op)) {
             }
             $sql .= ' WHERE lid=' . $lid;
             if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
-                XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
+                /** @var \XoopsLogger $logger */
+                $logger = \XoopsLogger::getInstance();
+                $logger->handleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
                 return false;
             }
@@ -70,7 +74,9 @@ switch (strtolower($op)) {
             }
             $sql .= ' WHERE lid=' . $lid;
             if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
-                XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
+                /** @var \XoopsLogger $logger */
+                $logger = \XoopsLogger::getInstance();
+                $logger->handleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
                 return false;
             }
@@ -83,7 +89,9 @@ switch (strtolower($op)) {
             }
             $sql .= ' WHERE lid=' . $lid;
             if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
-                XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
+                /** @var \XoopsLogger $logger */
+                $logger = \XoopsLogger::getInstance();
+                $logger->handleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
                 return false;
             }

@@ -89,7 +89,9 @@ switch (strtolower($op)) {
         // first delete all alternate categories for this topic
         $sql = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_altcat') . ' WHERE lid=' . $lid;
         if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
-            XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
+            /** @var \XoopsLogger $logger */
+            $logger = \XoopsLogger::getInstance();
+            $logger->handleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
             return false;
         }
@@ -99,7 +101,7 @@ switch (strtolower($op)) {
             if (preg_match('/cid-(\d*)/', $sid, $cid)) {
                 $sql = 'INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('xoopstube_altcat') . '(cid, lid) VALUES("' . $cid[1] . '","' . $lid . '")';
                 if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
-                    XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
+                    $logger->handleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
                     return false;
                 }

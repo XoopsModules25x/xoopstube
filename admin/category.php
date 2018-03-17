@@ -344,7 +344,9 @@ switch ($op) {
             $database_mess = _AM_XOOPSTUBE_CCATEGORY_MODIFIED;
         }
         if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
-            XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
+            /** @var \XoopsLogger $logger */
+            $logger = \XoopsLogger::getInstance();
+            $logger->handleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
             return false;
         }

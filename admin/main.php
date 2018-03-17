@@ -39,7 +39,9 @@ function edit($lid = 0)
 
     $sql = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE lid=' . $lid;
     if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
-        XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
+        /** @var \XoopsLogger $logger */
+        $logger = \XoopsLogger::getInstance();
+        $logger->handleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
         return false;
     }
@@ -356,7 +358,9 @@ switch (strtolower($op)) {
         }
 
         if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
-            XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
+            /** @var \XoopsLogger $logger */
+            $logger = \XoopsLogger::getInstance();
+            $logger->handleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
             return false;
         }
@@ -404,7 +408,9 @@ switch (strtolower($op)) {
         if (Request::hasVar('delbroken')) { //cleanRequestVars($_REQUEST, 'delbroken', 0)) {
             $sql = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_broken') . ' WHERE lid=' . $lid;
             if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
-                XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
+                /** @var \XoopsLogger $logger */
+                $logger = \XoopsLogger::getInstance();
+                $logger->handleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
                 return false;
             }
@@ -421,7 +427,9 @@ switch (strtolower($op)) {
             // delete video
             $sql = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE lid=' . $lid;
             if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
-                XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
+                /** @var \XoopsLogger $logger */
+                $logger = \XoopsLogger::getInstance();
+                $logger->handleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
                 return false;
             }
@@ -429,7 +437,9 @@ switch (strtolower($op)) {
             // delete altcat
             $sql = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_altcat') . ' WHERE lid=' . $lid;
             if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
-                XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
+                /** @var \XoopsLogger $logger */
+                $logger = \XoopsLogger::getInstance();
+                $logger->handleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
                 return false;
             }
@@ -437,7 +447,9 @@ switch (strtolower($op)) {
             // delete vote data
             $sql = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_votedata') . ' WHERE lid=' . $lid;
             if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
-                XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
+                /** @var \XoopsLogger $logger */
+                $logger = \XoopsLogger::getInstance();
+                $logger->handleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
                 return false;
             }
@@ -448,7 +460,9 @@ switch (strtolower($op)) {
         } else {
             $sql = 'SELECT lid, title, item_tag, vidid FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE lid=' . $lid;
             if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
-                XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
+                /** @var \XoopsLogger $logger */
+                $logger = \XoopsLogger::getInstance();
+                $logger->handleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
                 return false;
             }
@@ -509,7 +523,9 @@ switch (strtolower($op)) {
         $rid = Request::getInt('rid', 0); //cleanRequestVars($_REQUEST, 'rid', 0);
         $sql = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_votedata') . ' WHERE ratingid=' . $rid;
         if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
-            XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
+            /** @var \XoopsLogger $logger */
+            $logger = \XoopsLogger::getInstance();
+            $logger->handleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
             return false;
         }
@@ -584,7 +600,7 @@ switch (strtolower($op)) {
             //            renderCategoryListHeader(_AM_XOOPSTUBE_MINDEX_PUBLISHEDVIDEO);
             //            setPageNavigationCategoryList($publishedArrayCount, $start, 'art', '', 'left');
             //            if ($publishedArrayCount > 0) {
-            //                while ($published = $GLOBALS['xoopsDB']->fetchArray($publishedArray)) {
+            //                while (false !== ($published = $GLOBALS['xoopsDB']->fetchArray($publishedArray))) {
             //                    renderCategoryListBody($published);
             //                }
             //                echo '</table>';

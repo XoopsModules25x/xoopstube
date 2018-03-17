@@ -27,7 +27,7 @@ $moduleDirName = basename(__DIR__);
 $modversion = [
     'version'             => 1.08,
     'module_status'       => 'Beta 1',
-    'release_date'        => '2017/12/14',
+    'release_date'        => '2018/03/14',
     'name'                => _MI_XOOPSTUBE_NAME,
     'description'         => _MI_XOOPSTUBE_DESC,
     'official'            => 1, //1 indicates supported by XOOPS Dev Team, 0 means 3rd party supported
@@ -52,7 +52,7 @@ $modversion = [
     'image'               => 'assets/images/logoModule.png',
     'iconsmall'           => 'assets/images/iconsmall.png',
     'iconbig'             => 'assets/images/iconbig.png',
-    'dirname'             => "{$moduleDirName}",
+    'dirname'             => (string)($moduleDirName),
     // Frameworks
     //    'dirmoduleadmin'      => 'Frameworks/moduleclasses/moduleadmin',
     //    'systemIcons16'       => 'Frameworks/moduleclasses/icons/16',
