@@ -86,7 +86,7 @@ function createCategory($cid = 0)
 
         $gpermHandler = xoops_getHandler('groupperm');
         $groups       = $gpermHandler->getGroupIds('XTubeCatPerm', $cid, $xoopsModule->getVar('mid'));
-        //        $groups        = $groups;
+    //        $groups        = $groups;
     } else {
         $groups = true;
     }

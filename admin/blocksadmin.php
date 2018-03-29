@@ -68,7 +68,7 @@ if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
         $groups           = $memberHandler->getGroups();
         $criteria         = new \CriteriaCompo(new \Criteria('hasmain', 1));
         $criteria->add(new \Criteria('isactive', 1));
-        $module_list     =& $moduleHandler->getList($criteria);
+        $module_list     = $moduleHandler->getList($criteria);
         $module_list[-1] = _AM_SYSTEM_BLOCKS_TOPPAGE;
         $module_list[0]  = _AM_SYSTEM_BLOCKS_ALLPAGES;
         ksort($module_list);

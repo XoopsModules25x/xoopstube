@@ -64,5 +64,4 @@ function saveSampleData()
     }
 
     redirect_header('../admin/index.php', 1, constant('CO_' . $moduleDirNameUpper . '_' . 'SAMPLEDATA_SUCCESS'));
-
 }

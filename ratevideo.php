@@ -84,7 +84,8 @@ if (!empty(Request::getString('submit', ''))) {
     $sql      = sprintf(
         'INSERT INTO %s (ratingid, lid, ratinguser, rating, ratinghostname, ratingtimestamp, title) VALUES (%u, %u, %u, %u, %s, %u, %s)',
         $GLOBALS['xoopsDB']->prefix('xoopstube_votedata'),
-        $newid, $lid,
+        $newid,
+        $lid,
         $ratinguser,
         $rating,
         $GLOBALS['xoopsDB']->quoteString($ip),

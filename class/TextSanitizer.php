@@ -37,5 +37,3 @@ class TextSanitizer extends \MyTextSanitizer
         return $this->htmlSpecialChars($this->stripSlashesGPC($text));
     }
 }
-
-

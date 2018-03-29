@@ -1,4 +1,5 @@
 <?php namespace XoopsModules\Xoopstube;
+
 /*
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -27,13 +28,14 @@ class Helper extends \Xmf\Module\Helper
     public $debug;
 
     /**
-     * @internal param $debug
+     * 
      * @param bool $debug
      */
     protected function __construct($debug = false)
     {
         $this->debug   = $debug;
-        $this->dirname = basename(dirname(__DIR__));
+       $moduleDirName = basename(dirname(__DIR__));
+       parent::__construct($moduleDirName);
     }
 
     /**

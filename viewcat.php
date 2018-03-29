@@ -202,7 +202,7 @@ $xoopsTpl->assign('catarray', $catarray);
 $xoopsTpl->assign('show_categort_title', true);
 
 $orderby0 = (isset($_REQUEST['orderby'])
-             && !empty($_REQUEST['orderby'])) ? Xoopstube\Utility::convertOrderByIn(htmlspecialchars($_REQUEST['orderby'])) : Xoopstube\Utility::convertOrderByIn($GLOBALS['xoopsModuleConfig']['linkxorder']);
+             && !empty($_REQUEST['orderby'])) ? Xoopstube\Utility::convertOrderByIn(htmlspecialchars($_REQUEST['orderby'], ENT_QUOTES | ENT_HTML5)) : Xoopstube\Utility::convertOrderByIn($GLOBALS['xoopsModuleConfig']['linkxorder']);
 $orderby  = Request::getString('orderby', '', 'GET') ? Xoopstube\Utility::convertOrderByIn(Request::getString('orderby', '', 'GET')) : Xoopstube\Utility::convertOrderByIn($GLOBALS['xoopsModuleConfig']['linkxorder']);
 
 if ($selectdate) {

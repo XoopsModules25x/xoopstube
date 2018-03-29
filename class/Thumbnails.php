@@ -76,23 +76,23 @@ class Thumbnails
 
         // The actual image we will be processing
         if (!null === $img_name) {
-            $this->_imgName = (string)trim($img_name);
+            $this->_imgName = trim($img_name);
         }
 
         // The image path
         if (!null === $img_path) {
-            $this->_img_path = (string)trim($img_path);
+            $this->_img_path = trim($img_path);
         }
 
         // The image save path
         if (!null === $img_savepath) {
-            $this->_img_savepath = (string)trim($img_savepath);
+            $this->_img_savepath = trim($img_savepath);
         }
 
         $path_to_check = XOOPS_ROOT_PATH . "/$img_path/$img_savepath";
 
         if (!is_dir($path_to_check)) {
-            if (false === mkdir((string)$path_to_check, 0777)) {
+            if (false === mkdir($path_to_check, 0777)) {
                 return false;
             }
         }
@@ -195,7 +195,7 @@ class Thumbnails
      */
     public function setImageName($value)
     {
-        $this->_imgName = (string)trim($value);
+        $this->_imgName = trim($value);
     }
 
     /**
@@ -203,7 +203,7 @@ class Thumbnails
      */
     public function setImagePath($value)
     {
-        $this->_img_path = (string)trim($value);
+        $this->_img_path = trim($value);
     }
 
     /**
@@ -211,7 +211,7 @@ class Thumbnails
      */
     public function setImgSavePath($value)
     {
-        $this->_img_savepath = (string)trim($value);
+        $this->_img_savepath = trim($value);
     }
 
     // ThumbsNails::resizeThumbnail()

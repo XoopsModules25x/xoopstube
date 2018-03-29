@@ -349,7 +349,7 @@ switch (strtolower($op)) {
                            . $GLOBALS['xoopsDB']->prefix('xoopstube_videos')
                            . ' (lid, cid, title, vidid, screenshot, submitter, publisher, status, date, hits, rating, votes, comments, vidsource, published, expired, updated, offline, description, ipaddress, notifypub, vidrating, time, keywords, item_tag, picurl )';
             $sql         .= " VALUES    (NULL, $cid, '$title', '$vidid', '', '$submitter', '$publisher', '$status', '$date', 0, 0, 0, 0, '$vidsource', '$published', '$expiredate', '$updated', '$offline', '$descriptionb', '$ipaddress', '0', '$vidrating', '$time', '$keywords', '$item_tag', '$picurl')";
-            //    $newid = $GLOBALS['xoopsDB'] -> getInsertId();
+        //    $newid = $GLOBALS['xoopsDB'] -> getInsertId();
         } else {
             $sql = 'UPDATE '
                    . $GLOBALS['xoopsDB']->prefix('xoopstube_videos')

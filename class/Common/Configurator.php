@@ -1,4 +1,5 @@
 <?php namespace XoopsModules\Xoopstube\Common;
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -44,7 +45,7 @@ class Configurator
         $moduleDirName = basename(dirname(__DIR__));
         $capsDirName   = strtoupper($moduleDirName);
 
-        include_once __DIR__ . '/../../include/config.php';
+        require_once __DIR__ . '/../../include/config.php';
         $config = getConfig();
 
         $this->name            = $config->name;
@@ -56,6 +57,5 @@ class Configurator
         $this->oldFiles        = $config->oldFiles;
         $this->oldFolders      = $config->oldFolders;
         $this->modCopyright    = $config->modCopyright;
-
     }
 }

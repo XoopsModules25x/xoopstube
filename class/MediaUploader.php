@@ -172,7 +172,7 @@ class MediaUploader
      */
     public function setTargetFileName($value)
     {
-        $this->targetFileName = (string)trim($value);
+        $this->targetFileName = trim($value);
     }
 
     /**
@@ -182,7 +182,7 @@ class MediaUploader
      */
     public function setPrefix($value)
     {
-        $this->prefix = (string)trim($value);
+        $this->prefix = trim($value);
     }
 
     /**

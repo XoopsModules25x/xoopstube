@@ -59,7 +59,7 @@ class FileList
         $this->size      = (int)$size;
 
         $pathToCheck = XOOPS_ROOT_PATH . "/{$path}";
-        if (!is_dir($pathToCheck) && false === @mkdir((string)$pathToCheck, 0777)) {
+        if (!is_dir($pathToCheck) && false === @mkdir($pathToCheck, 0777)) {
             /** @var \XoopsLogger $logger */
             $logger = \XoopsLogger::getInstance();
             $logger->handleError(E_USER_WARNING, $pathToCheck . _AM_XOOPSTUBE_DOESNOTEXIST, __FILE__, __LINE__);
@@ -113,7 +113,7 @@ class FileList
      */
     public function setListType($value = 'images')
     {
-        $this->type = (string)strtolower($value);
+        $this->type = strtolower($value);
     }
 
     /**

@@ -43,7 +43,8 @@ class Videos
     protected function __construct($debug)
     {
         $this->debug   = $debug;
-        $this->dirname = basename(dirname(__DIR__));
+       $moduleDirName = basename(dirname(__DIR__));
+       parent::__construct($moduleDirName);
     }
 
     /**

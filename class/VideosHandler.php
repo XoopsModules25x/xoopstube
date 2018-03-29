@@ -24,7 +24,6 @@
 use XoopsModules\Xoopstube;
 use XoopsModules\Xoopstube\Common;
 
-
 /**
  * Class VideosHandler
  */

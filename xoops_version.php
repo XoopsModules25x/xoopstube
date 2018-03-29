@@ -19,6 +19,7 @@
  */
 
 use XoopsModules\Xoopstube;
+
 require_once __DIR__ . '/preloads/autoloader.php';
 
 $moduleDirName = basename(__DIR__);
@@ -52,7 +53,7 @@ $modversion = [
     'image'               => 'assets/images/logoModule.png',
     'iconsmall'           => 'assets/images/iconsmall.png',
     'iconbig'             => 'assets/images/iconbig.png',
-    'dirname'             => (string)($moduleDirName),
+    'dirname'             => ($moduleDirName),
     // Frameworks
     //    'dirmoduleadmin'      => 'Frameworks/moduleclasses/moduleadmin',
     //    'systemIcons16'       => 'Frameworks/moduleclasses/icons/16',
