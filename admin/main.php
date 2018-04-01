@@ -299,7 +299,7 @@ switch (strtolower($op)) {
         $submitter    = $GLOBALS['xoopsUser']->uid();
         $publisher    = $xtubemyts->addSlashes(Request::getString('publisher', '', 'POST'));
         $vidsource    = Request::getInt('vidsource', 0, 'POST'); //(!empty($_POST['vidsource'])) ? $_POST['vidsource'] : 0;
-        $updated      = (0 == Request::getInt('was_published', '', 'POST')) ? 0 : time();
+        $updated      = Request::getInt('was_published', time(), 'POST');
 
         //PHP 5.3
         $published0 = Request::getArray('published', '', 'POST');
@@ -384,7 +384,8 @@ switch (strtolower($op)) {
             $row                   = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
             $tags['CATEGORY_NAME'] = $row['title'];
             $tags['CATEGORY_URL']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewcat.php?cid=' . $cid;
-            $notificationHandler   = xoops_getHandler('notification');
+            /** @var \XoopsNotificationHandler $notificationHandler */
+            $notificationHandler = xoops_getHandler('notification');
             $notificationHandler->triggerEvent('global', 0, 'new_video', $tags);
             $notificationHandler->triggerEvent('category', $cid, 'new_video', $tags);
         }
@@ -512,8 +513,8 @@ switch (strtolower($op)) {
             $g  = empty($xx);
             $h  = null === $xx;
             //            $e = empty(Request::getInt('offline', '', 'GET'));
-            $offline = Request::getInt('offline', null, 'GET');
-            if (null !== $offline) {
+            $offline = Request::getInt('offline', 0, 'GET');
+            if (0 !== $offline) {
                 xtubeToggleOffline($lid, $offline);
             }
         }

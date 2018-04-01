@@ -63,7 +63,9 @@ if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
 
         /** @var XoopsModuleHandler $moduleHandler */
         $moduleHandler    = xoops_getHandler('module');
-        $memberHandler    = xoops_getHandler('member');
+        /** @var \XoopsMemberHandler $memberHandler */
+        $memberHandler = xoops_getHandler('member');
+        /** @var \XoopsGroupPermHandler $grouppermHandler */
         $grouppermHandler = xoops_getHandler('groupperm');
         $groups           = $memberHandler->getGroups();
         $criteria         = new \CriteriaCompo(new \Criteria('hasmain', 1));
@@ -102,7 +104,7 @@ if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
              . _AM_XOOPSTUBE_ACTION
              . '</th></tr>
         ';
-        $block_arr   = XoopsBlock::getByModule($xoopsModule->mid());
+        $block_arr   = \XoopsBlock::getByModule($xoopsModule->mid());
         $block_count = count($block_arr);
         $class       = 'even';
         $cachetimes  = [
@@ -340,6 +342,7 @@ if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
         xoops_loadLanguage('admin/blocksadmin', 'system');
         xoops_loadLanguage('admin/groups', 'system');
 
+        /** @var \XoopsBlock $block */
         $block = new \XoopsBlock($bid);
         $clone = $block->xoopsClone();
         if (empty($bmodule)) {
@@ -372,8 +375,9 @@ if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
             exit();
         }
         if ('' !== $clone->getVar('template')) {
+            /** @var \XoopsTplfileHandler $tplfileHandler */
             $tplfileHandler = xoops_getHandler('tplfile');
-            $btemplate      =& $tplfileHandler->find($GLOBALS['xoopsConfig']['template_set'], 'block', $bid);
+            $btemplate      = $tplfileHandler->find($GLOBALS['xoopsConfig']['template_set'], 'block', $bid);
             if (count($btemplate) > 0) {
                 $tplclone = $btemplate[0]->xoopsClone();
                 $tplclone->setVar('tpl_id', 0);
@@ -484,7 +488,7 @@ if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
         $myblock->store();
 
         if (!empty($bmodule) && count($bmodule) > 0) {
-            $sql = sprintf('DELETE FROM %s WHERE block_id = %u', $GLOBALS['xoopsDB']->prefix('block_module_link'), $bid);
+            $sql = sprintf('DELETE FROM `%s` WHERE block_id = %u', $GLOBALS['xoopsDB']->prefix('block_module_link'), $bid);
             $GLOBALS['xoopsDB']->query($sql);
             if (in_array(0, $bmodule)) {
                 $sql = sprintf('INSERT INTO %s (block_id, module_id) VALUES (%u, %d)', $GLOBALS['xoopsDB']->prefix('block_module_link'), $bid, 0);
@@ -496,7 +500,7 @@ if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
                 }
             }
         }
-        $sql = sprintf('DELETE FROM %s WHERE gperm_itemid = %u', $GLOBALS['xoopsDB']->prefix('group_permission'), $bid);
+        $sql = sprintf('DELETE FROM `%s` WHERE gperm_itemid = %u', $GLOBALS['xoopsDB']->prefix('group_permission'), $bid);
         $GLOBALS['xoopsDB']->query($sql);
         if (!empty($groups)) {
             foreach ($groups as $grp) {
@@ -526,7 +530,7 @@ if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
                 xtubeSetOrder($bid[$i], $title[$i], $weight[$i], $visible[$i], $side[$i], $bcachetime[$i], $bmodule[$i]);
             }
             if (!empty($bmodule[$i]) && count($bmodule[$i]) > 0) {
-                $sql = sprintf('DELETE FROM %s WHERE block_id = %u', $GLOBALS['xoopsDB']->prefix('block_module_link'), $bid[$i]);
+                $sql = sprintf('DELETE FROM `%s` WHERE block_id = %u', $GLOBALS['xoopsDB']->prefix('block_module_link'), $bid[$i]);
                 $GLOBALS['xoopsDB']->query($sql);
                 if (in_array(0, $bmodule[$i])) {
                     $sql = sprintf('INSERT INTO %s (block_id, module_id) VALUES (%u, %d)', $GLOBALS['xoopsDB']->prefix('block_module_link'), $bid[$i], 0);
@@ -538,7 +542,7 @@ if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
                     }
                 }
             }
-            $sql = sprintf('DELETE FROM %s WHERE gperm_itemid = %u', $GLOBALS['xoopsDB']->prefix('group_permission'), $bid[$i]);
+            $sql = sprintf('DELETE FROM `%s` WHERE gperm_itemid = %u', $GLOBALS['xoopsDB']->prefix('group_permission'), $bid[$i]);
             $GLOBALS['xoopsDB']->query($sql);
             if (!empty($groups[$i])) {
                 foreach ($groups[$i] as $grp) {

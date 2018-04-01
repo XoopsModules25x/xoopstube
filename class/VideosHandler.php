@@ -51,7 +51,7 @@ class VideosHandler extends \XoopsPersistableObjectHandler
      */
     public function getActiveCriteria()
     {
-        $gpermHandler = xoops_getHandler('groupperm');
+        $grouppermHandler = xoops_getHandler('groupperm');
 
         $criteria = new \CriteriaCompo(new \Criteria('offline', false));
         $criteria->add(new \Criteria('published', 0, '>'));
@@ -61,7 +61,7 @@ class VideosHandler extends \XoopsPersistableObjectHandler
         $criteria->add($expiredCriteria);
         // add criteria for categories that the user has permissions for
         $groups                   = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : [0 => XOOPS_GROUP_ANONYMOUS];
-        $allowedDownCategoriesIds = $gpermHandler->getItemIds('XTubeCatPerm', $groups, $this->helper->getModule()->mid());
+        $allowedDownCategoriesIds = $grouppermHandler->getItemIds('XTubeCatPerm', $groups, $this->helper->getModule()->mid());
         $criteria->add(new \Criteria('cid', '(' . implode(',', $allowedDownCategoriesIds) . ')', 'IN'));
 
         return $criteria;

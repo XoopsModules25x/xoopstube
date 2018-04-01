@@ -81,12 +81,13 @@ function createCategory($cid = 0)
         $banner_id    = $cat_arr['banner_id'];
         $heading      = _AM_XOOPSTUBE_CCATEGORY_MODIFY;
 
+        /** @var \XoopsMemberHandler $memberHandler */
         $memberHandler = xoops_getHandler('member');
-        $group_list    = $memberHandler->getGroupList();
-
-        $gpermHandler = xoops_getHandler('groupperm');
-        $groups       = $gpermHandler->getGroupIds('XTubeCatPerm', $cid, $xoopsModule->getVar('mid'));
-    //        $groups        = $groups;
+        $group_list = $memberHandler->getGroupList();
+        $memberHandler = xoops_getHandler('member');
+        /** @var \XoopsGroupPermHandler $grouppermHandler */
+        $grouppermHandler = xoops_getHandler('groupperm');
+        $groups       = $grouppermHandler->getGroupIds('XTubeCatPerm', $cid, $xoopsModule->getVar('mid'));
     } else {
         $groups = true;
     }
@@ -330,7 +331,8 @@ switch ($op) {
             $tags                  = [];
             $tags['CATEGORY_NAME'] = $title;
             $tags['CATEGORY_URL']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewcat.php?cid=' . $newid;
-            $notificationHandler   = xoops_getHandler('notification');
+            /** @var \XoopsNotificationHandler $notificationHandler */
+            $notificationHandler = xoops_getHandler('notification');
             $notificationHandler->triggerEvent('global', 0, 'new_category', $tags);
             $database_mess = _AM_XOOPSTUBE_CCATEGORY_CREATED;
         } else {
@@ -373,38 +375,38 @@ switch ($op) {
                 $result = $GLOBALS['xoopsDB']->query('SELECT lid FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE cid=' . (int)$arr[$i]);
                 // now for each linkload, delete the text data and vote ata associated with the linkload
                 while (false !== (list($lid) = $GLOBALS['xoopsDB']->fetchRow($result))) {
-                    $sql = sprintf('DELETE FROM %s WHERE lid = %u', $GLOBALS['xoopsDB']->prefix('xoopstube_votedata'), (int)$lid);
+                    $sql = sprintf('DELETE FROM `%s` WHERE lid = %u', $GLOBALS['xoopsDB']->prefix('xoopstube_votedata'), (int)$lid);
                     $GLOBALS['xoopsDB']->query($sql);
-                    $sql = sprintf('DELETE FROM %s WHERE lid = %u', $GLOBALS['xoopsDB']->prefix('xoopstube_videos'), (int)$lid);
+                    $sql = sprintf('DELETE FROM `%s` WHERE lid = %u', $GLOBALS['xoopsDB']->prefix('xoopstube_videos'), (int)$lid);
                     $GLOBALS['xoopsDB']->query($sql);
 
                     // delete comments
                     xoops_comment_delete($xoopsModule->getVar('mid'), $lid);
                 }
                 // all links for each subcategory is deleted, now delete the subcategory data
-                $sql = sprintf('DELETE FROM %s WHERE cid = %u', $GLOBALS['xoopsDB']->prefix('xoopstube_cat'), (int)$arr[$i]);
+                $sql = sprintf('DELETE FROM `%s` WHERE cid = %u', $GLOBALS['xoopsDB']->prefix('xoopstube_cat'), (int)$arr[$i]);
                 $GLOBALS['xoopsDB']->query($sql);
                 // delete altcat entries
-                $sql = sprintf('DELETE FROM %s WHERE cid = %u', $GLOBALS['xoopsDB']->prefix('xoopstube_altcat'), $arr[$i]);
+                $sql = sprintf('DELETE FROM `%s` WHERE cid = %u', $GLOBALS['xoopsDB']->prefix('xoopstube_altcat'), $arr[$i]);
                 $GLOBALS['xoopsDB']->query($sql);
             }
             // all subcategory and associated data are deleted, now delete category data and its associated data
             $result = $GLOBALS['xoopsDB']->query('SELECT lid FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE cid=' . $cid);
             while (false !== (list($lid) = $GLOBALS['xoopsDB']->fetchRow($result))) {
-                $sql = sprintf('DELETE FROM %s WHERE lid = %u', $GLOBALS['xoopsDB']->prefix('xoopstube_videos'), (int)$lid);
+                $sql = sprintf('DELETE FROM `%s` WHERE lid = %u', $GLOBALS['xoopsDB']->prefix('xoopstube_videos'), (int)$lid);
                 $GLOBALS['xoopsDB']->query($sql);
                 // delete comments
                 xoops_comment_delete($xoopsModule->getVar('mid'), (int)$lid);
-                $sql = sprintf('DELETE FROM %s WHERE lid = %u', $GLOBALS['xoopsDB']->prefix('xoopstube_votedata'), (int)$lid);
+                $sql = sprintf('DELETE FROM `%s` WHERE lid = %u', $GLOBALS['xoopsDB']->prefix('xoopstube_votedata'), (int)$lid);
                 $GLOBALS['xoopsDB']->query($sql);
             }
 
             // delete altcat entries
-            $sql = sprintf('DELETE FROM %s WHERE cid = %u', $GLOBALS['xoopsDB']->prefix('xoopstube_altcat'), $cid);
+            $sql = sprintf('DELETE FROM `%s` WHERE cid = %u', $GLOBALS['xoopsDB']->prefix('xoopstube_altcat'), $cid);
             $GLOBALS['xoopsDB']->query($sql);
 
             // delete category
-            $sql   = sprintf('DELETE FROM %s WHERE cid = %u', $GLOBALS['xoopsDB']->prefix('xoopstube_cat'), $cid);
+            $sql   = sprintf('DELETE FROM `%s` WHERE cid = %u', $GLOBALS['xoopsDB']->prefix('xoopstube_cat'), $cid);
             $error = _AM_XOOPSTUBE_DBERROR . ': <br><br>' . $sql;
             xoops_groupperm_deletebymoditem($xoopsModule->getVar('mid'), 'XTubeCatPerm', $cid);
             if (!$result = $GLOBALS['xoopsDB']->query($sql)) {

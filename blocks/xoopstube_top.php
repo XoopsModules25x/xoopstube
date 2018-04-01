@@ -30,11 +30,11 @@ function checkBlockGroups($cid = 0, $permType = 'XTubeCatPerm', $redirect = fals
 {
     $moduleDirName = basename(dirname(__DIR__));
     $groups        = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
-    $gpermHandler  = xoops_getHandler('groupperm');
+    $grouppermHandler  = xoops_getHandler('groupperm');
     /** @var XoopsModuleHandler $moduleHandler */
     $moduleHandler = xoops_getHandler('module');
     $module        = $moduleHandler->getByDirname($moduleDirName);
-    if (!$gpermHandler->checkRight($permType, $cid, $groups, $module->getVar('mid'))) {
+    if (!$grouppermHandler->checkRight($permType, $cid, $groups, $module->getVar('mid'))) {
         if (false === $redirect) {
             return false;
         } else {
@@ -60,8 +60,8 @@ function xtubeCheckBlockGroups($cid = 0, $permType = 'XTubeCatPerm', $redirect =
     /** @var XoopsModuleHandler $moduleHandler */
     $moduleHandler = xoops_getHandler('module');
     $xtubeModule   = $moduleHandler->getByDirname($moduleDirName);
-    $gpermHandler  = xoops_getHandler('groupperm');
-    if (!$gpermHandler->checkRight($permType, $cid, $groups, $xtubeModule->getVar('mid'))) {
+    $grouppermHandler  = xoops_getHandler('groupperm');
+    if (!$grouppermHandler->checkRight($permType, $cid, $groups, $xtubeModule->getVar('mid'))) {
         if (false === $redirect) {
             return false;
         }

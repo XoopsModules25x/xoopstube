@@ -239,8 +239,8 @@ $module        = $moduleHandler->getByDirname($modversion['dirname']);
 $cansubmit     = 0;
 if (is_object($module)) {
     $groups       = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
-    $gpermHandler = xoops_getHandler('groupperm');
-    if ($gpermHandler->checkRight('XTubeSubPerm', 0, $groups, $module->getVar('mid'))) {
+    $grouppermHandler = xoops_getHandler('groupperm');
+    if ($grouppermHandler->checkRight('XTubeSubPerm', 0, $groups, $module->getVar('mid'))) {
         $cansubmit = 1;
     }
 }
