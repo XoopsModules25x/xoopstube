@@ -892,9 +892,9 @@ class Utility
         $content = htmlentities($content, ENT_QUOTES | ENT_HTML5); // TODO: Vérifier
         $content = preg_replace('/&([a-zA-Z])(uml|acute|grave|circ|tilde);/', '$1', $content);
         $content = html_entity_decode($content);
-        $content = str_ireplace("quot", ' ', $content);
+        $content = str_ireplace('quot', ' ', $content);
         $content = preg_replace("/'/i", ' ', $content);
-        $content = str_ireplace("-", ' ', $content);
+        $content = str_ireplace('-', ' ', $content);
         $content = preg_replace('/[[:punct:]]/i', '', $content);
 
         // Selon option mais attention au fichier .htaccess !
@@ -1311,6 +1311,7 @@ class Utility
             $xoopsUsersIDs = array_unique($xoopsUsersIDs);
             sort($xoopsUsersIDs);
             if (count($xoopsUsersIDs) > 0) {
+                /** @var \XoopsUserHandler $memberHandler */
                 $memberHandler = xoops_getHandler('user');
                 $criteria      = new \Criteria('uid', '(' . implode(',', $xoopsUsersIDs) . ')', 'IN');
                 $criteria->setSort('uid');
@@ -1464,6 +1465,7 @@ class Utility
         global $xoopsModule;
 
         $groups       = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
+        /** @var \XoopsGroupPermHandler $grouppermHandler */
         $grouppermHandler = xoops_getHandler('groupperm');
         if (!$grouppermHandler->checkRight($permType, $cid, $groups, $xoopsModule->getVar('mid'))) {
             if (false === $redirect) {
@@ -2864,6 +2866,7 @@ class Utility
     {
         $userid = (int)$userid;
         if ($userid > 0) {
+            /** @var \XoopsMemberHandler $memberHandler */
             $memberHandler = xoops_getHandler('member');
             $user          = $memberHandler->getUser($userid);
             if (is_object($user)) {
@@ -3045,7 +3048,7 @@ class Utility
             } else {
                 $letterchoice .= '<a class="xoopstube_letters" href="';
             }
-            $letterchoice .= XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewcat.php?list=' . $ltr . '">' . $ltr . '</a>';
+            $letterchoice .= XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewcat.php?letter=' . $ltr . '">' . $ltr . '</a>';
             if ($counter == round($num / 2)) {
                 $letterchoice .= '<br>';
             } elseif ($counter !== $num) {
@@ -3083,7 +3086,7 @@ class Utility
             if (isset($countsByLetters[$letter])) {
                 $letter_array['letter'] = $letter;
                 $letter_array['count']  = $countsByLetters[$letter];
-                $letter_array['url']    = '' . XOOPS_URL . "/modules/$moduleDirName/viewcat.php?list={$letter}";
+                $letter_array['url']    = '' . XOOPS_URL . "/modules/$moduleDirName/viewcat.php?letter={$letter}";
             } else {
                 $letter_array['letter'] = $letter;
                 $letter_array['count']  = 0;
@@ -3099,7 +3102,7 @@ class Utility
         }
         require_once $GLOBALS['xoops']->path('class/template.php');
         $letterschoiceTpl          = new \XoopsTpl();
-        $letterschoiceTpl->caching = false; // Disable cache
+        $letterschoiceTpl->caching = 0; // Disable cache
         $letterschoiceTpl->assign('alphabet', $alphabet_array);
         $html = $letterschoiceTpl->fetch('db:' . $helper->getModule()->dirname() . '_common_letterschoice.tpl');
         unset($letterschoiceTpl);
@@ -3215,4 +3218,168 @@ class Utility
 
         return $xtubeIsAdmin;
     }
+
+//from Lexikon
+
+
+    /**
+     * @return int
+     */
+    public static function countCats()
+    {
+        global $xoopsUser, $xoopsModule;
+        $grouppermHandler = xoops_getHandler('groupperm');
+        $groups       = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+        $totalcats    = $grouppermHandler->getItemIds('lexikon_view', $groups, $xoopsModule->getVar('mid'));
+
+        return count($totalcats);
+    }
+
+    /**
+     * @return mixed
+     */
+    public static function countWords()
+    {
+        global $xoopsUser, $xoopsDB;
+        $grouppermHandler = xoops_getHandler('groupperm');
+        $groups       = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+        /** @var \XoopsModuleHandler $moduleHandler */
+        $moduleHandler = xoops_getHandler('module');
+        $module        = $moduleHandler->getByDirname('lexikon');
+        $module_id     = $module->getVar('mid');
+        $allowed_cats  = $grouppermHandler->getItemIds('lexikon_view', $groups, $module_id);
+        $catids        = implode(',', $allowed_cats);
+        $catperms      = " AND categoryID IN ($catids) ";
+
+        $pubwords       = $xoopsDB->query('SELECT * FROM ' . $xoopsDB->prefix('lxentries') . " WHERE submit = '0' AND offline ='0' AND request = '0' " . $catperms . ' ');
+        $publishedwords = $xoopsDB->getRowsNum($pubwords);
+
+        return $publishedwords;
+    }
+
+
+    /**
+     * @return array
+     */
+    public static function getCategoryArray()
+    {
+        global $xoopsDB,  $xoopsUser, $xoopsModule;
+        /** @var Xoopstube\Helper $helper */
+        $helper = Xoopstube\Helper::getInstance();
+        $myts         = \MyTextSanitizer::getInstance();
+        $groups       = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+        $grouppermHandler = xoops_getHandler('groupperm');
+        $block0       = [];
+        $count        = 1;
+        $resultcat    = $xoopsDB->query('SELECT categoryID, name, total, logourl FROM ' . $xoopsDB->prefix('lxcategories') . ' ORDER BY weight ASC');
+        while (false !== (list($catID, $name, $total, $logourl) = $xoopsDB->fetchRow($resultcat))) {
+            if ($grouppermHandler->checkRight('lexikon_view', $catID, $groups, $xoopsModule->getVar('mid'))) {
+                $catlinks = [];
+                ++$count;
+                if ($logourl && 'http://' !== $logourl) {
+                    $logourl = $myts->htmlSpecialChars($logourl);
+                } else {
+                    $logourl = '';
+                }
+                $xoopsModule          = \XoopsModule::getByDirname('lexikon');
+                $catlinks['id']       = (int)$catID;
+                $catlinks['total']    = (int)$total;
+                $catlinks['linktext'] = $myts->htmlSpecialChars($name);
+                $catlinks['image']    = $logourl;
+                $catlinks['count']    = $count;
+
+                $block0['categories'][] = $catlinks;
+            }
+        }
+
+        return $block0;
+    }
+
+    /**
+     * @return array
+     */
+    public static function getAlphaArray()
+    {
+        global $xoopsUser, $xoopsDB, $xoopsModule;
+        $grouppermHandler = xoops_getHandler('groupperm');
+        $groups       = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+        /** @var \XoopsModuleHandler $moduleHandler */
+        $moduleHandler = xoops_getHandler('module');
+        $module        = $moduleHandler->getByDirname('lexikon');
+        $module_id     = $module->getVar('mid');
+        $allowed_cats  = $grouppermHandler->getItemIds('lexikon_view', $groups, $module_id);
+        $catids        = implode(',', $allowed_cats);
+        $catperms      = " AND categoryID IN ($catids) ";
+        $alpha         = [];
+        /**
+         * @param $a
+         * @return null|string|string[]
+         */
+        function unichr($a)
+        {
+            return mb_convert_encoding(pack('N', $a), mb_internal_encoding(), 'UCS-4BE');
+        }
+
+        for ($a = 48; $a < (48 + 10); ++$a) {
+            $letterlinks             = [];
+            $initial                 = unichr($a);
+            $sql                     = $xoopsDB->query('SELECT entryID FROM ' . $xoopsDB->prefix('lxentries') . " WHERE init = '$initial' AND submit = '0' AND offline ='0' AND request = '0' " . $catperms . ' ');
+            $howmany                 = $xoopsDB->getRowsNum($sql);
+            $letterlinks['total']    = $howmany;
+            $letterlinks['id']       = unichr($a);
+            $letterlinks['linktext'] = unichr($a);
+
+            $alpha['initial'][] = $letterlinks;
+        }
+        for ($a = 65; $a < (65 + 26); ++$a) {
+            $letterlinks             = [];
+            $initial                 = unichr($a);
+            $sql                     = $xoopsDB->query('SELECT entryID FROM ' . $xoopsDB->prefix('lxentries') . " WHERE init = '$initial' AND submit = '0' AND offline ='0' AND request = '0' " . $catperms . ' ');
+            $howmany                 = $xoopsDB->getRowsNum($sql);
+            $letterlinks['total']    = $howmany;
+            $letterlinks['id']       = unichr($a);
+            $letterlinks['linktext'] = unichr($a);
+
+            $alpha['initial'][] = $letterlinks;
+        }
+        /*for ($a = 1040; $a < (1040 + 32); ++$a) {
+            $letterlinks             = [];
+            $initial                 = unichr($a);
+            $sql                     = $xoopsDB->query('SELECT entryID FROM '
+                                                           . $xoopsDB->prefix('lxentries')
+                                                           . " WHERE init = '$initial' AND submit = '0' AND offline ='0' AND request = '0' "
+                                                           . $catperms
+                                                           . '');
+            $howmany                 = $xoopsDB->getRowsNum($sql);
+            $letterlinks['total']    = $howmany;
+            $letterlinks['id']       = unichr($a);
+            $letterlinks['linktext'] = unichr($a);
+            $alpha['initial'][] = $letterlinks;
+        }*/
+
+        return $alpha;
+    }
+
+
+    /**
+     * chr() with unicode support
+     * I found this on this site http://en.php.net/chr
+     * don't take credit for this.
+     * @param $initials
+     * @return string
+     */
+    public static function getUchr($initials)
+    {
+        if (is_scalar($initials)) {
+            $initials = func_get_args();
+        }
+        $str = '';
+        foreach ($initials as $init) {
+            $str .= html_entity_decode('&#' . $init . ';', ENT_NOQUOTES, 'UTF-8');
+        }
+
+        return $str;
+    }
+
+
 }

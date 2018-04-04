@@ -53,7 +53,7 @@ $modversion = [
     'image'               => 'assets/images/logoModule.png',
     'iconsmall'           => 'assets/images/iconsmall.png',
     'iconbig'             => 'assets/images/iconbig.png',
-    'dirname'             => ($moduleDirName),
+    'dirname'             => $moduleDirName,
     // Frameworks
     //    'dirmoduleadmin'      => 'Frameworks/moduleclasses/moduleadmin',
     //    'systemIcons16'       => 'Frameworks/moduleclasses/icons/16',
@@ -90,7 +90,7 @@ $modversion = [
     'hasMain'             => 1,
     // Install/Update
     'onInstall'           => 'include/oninstall.php',
-    'onUpdate'            => 'include/onupdate.php'
+    //    'onUpdate'            => 'include/onupdate.php'
 ];
 
 // ------------------- Mysql ------------------- //

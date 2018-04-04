@@ -97,6 +97,8 @@ class LetterChoice
     /**
      * Create choice by letter
      *
+     * @param null $alphaCount
+     * @param null $howmanyother
      * @return string
      */
     public function render($alphaCount = null, $howmanyother = null)
@@ -168,7 +170,7 @@ class LetterChoice
         }
         require_once $GLOBALS['xoops']->path('/class/template.php');
         $choiceByLetterTpl          = new \XoopsTpl();
-        $choiceByLetterTpl->caching = false; // Disable cache
+        $choiceByLetterTpl->caching = 0; // Disable cache
         $choiceByLetterTpl->assign('alphabet', $alphabetArray);
         $ret .= $choiceByLetterTpl->fetch("db:{$this->helper->getDirname()}_letterschoice.tpl");
         unset($choiceByLetterTpl);

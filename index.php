@@ -29,7 +29,22 @@ $moduleDirNameUpper = strtoupper($moduleDirName);
 $start = Request::getInt('start', Request::getInt('start', 0, 'POST'), 'GET');
 
 $GLOBALS['xoopsOption']['template_main'] = 'xoopstube_index.tpl';
+
+
+//$xoTheme->addStylesheet('modules/' . $moduleDirName . '/assets/css/xtubestyle.css');
+
+$xoTheme->addScript(XOOPS_URL . '/browse.php?Frameworks/jquery/jquery.js');
+$xoTheme->addStylesheet(XOOPSTUBE_URL . '/assets/css/module.css');
+
+$xoopsTpl->assign('xoopstube_url', XOOPSTUBE_URL . '/');
+
+
+
 include XOOPS_ROOT_PATH . '/header.php';
+
+
+
+
 
 $mytree = new Xoopstube\Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
 $xtubemyts = new Xoopstube\TextSanitizer(); // MyTextSanitizer object
@@ -51,6 +66,7 @@ $breaks = $head_arr['nobreak'] ? 1 : 0;
 $catarray['indexheading'] = $xtubemyts->displayTarea($head_arr['indexheading'], $html, $smiley, $xcodes, $images, $breaks);
 $catarray['indexheader']  = $xtubemyts->displayTarea($head_arr['indexheader'], $html, $smiley, $xcodes, $images, $breaks);
 $catarray['indexfooter']  = $xtubemyts->displayTarea($head_arr['indexfooter'], $html, $smiley, $xcodes, $images, $breaks);
+
 //$catarray['letters']      = Xoopstube\Utility::getLetters();
 
 
@@ -61,11 +77,15 @@ $xoopsTpl->assign('letterChoiceTitle', constant('CO_' . $moduleDirNameUpper . '_
 /** @var \XoopsDatabase $db */
 $db           = \XoopsDatabaseFactory::getDatabaseConnection();
 $objHandler = new Xoopstube\VideosHandler($db);
-$choicebyletter = new Xoopstube\Common\LetterChoice($objHandler, null, null, range('a', 'z'), 'letter');
+$choicebyletter = new Xoopstube\Common\LetterChoice($objHandler, null, null, range('a', 'z'), 'letter', 'viewcat.php');
 //$choicebyletter = new Xoopstube\Common\LetterChoice($objHandler, null, null, range('a', 'z'), 'init', XOOPSTUBE_URL . '/letter.php');
-$catarray['letters']  = $choicebyletter->render();
+//render the LetterChoice partial and story as part of the Category array
 //$catarray['letters']  = $choicebyletter->render($alphaCount, $howmanyother);
 
+$catarray['letters']  = $choicebyletter->render();
+
+
+//now assign it to the Smarty variable
 $xoopsTpl->assign('catarray', $catarray);
 
 // Letter Choice End ------------------------------------

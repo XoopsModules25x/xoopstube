@@ -24,6 +24,10 @@
 
 use XoopsModules\Xoopstube;
 
+/**
+ * @param $lid
+ * @return string
+ */
 function getSocialBookmarks($lid)
 {
     global $xoopsModule;

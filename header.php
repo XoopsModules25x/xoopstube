@@ -39,4 +39,21 @@ xoops_loadLanguage('main', $moduleDirName);
 //require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/TextSanitizer.php';
 $xtubemyts = new Xoopstube\TextSanitizer(); // MyTextSanitizer object
 
+if (!isset($GLOBALS['xoTheme']) || !is_object($GLOBALS['xoTheme'])) {
+    require_once $GLOBALS['xoops']->path('class/theme.php');
+    $GLOBALS['xoTheme'] = new \xos_opal_Theme();
+}
+
+
+
+//$GLOBALS['xoTheme']->addStylesheet('modules/' . $moduleDirName . '/assets/css/xtubestyle.css');
+
+$GLOBALS['xoTheme']->addScript(XOOPS_URL . '/browse.php?Frameworks/jquery/jquery.js');
+//$xoTheme->addScript(XOOPSTUBE_URL . '/assets/js/magnific/jquery.magnific-popup.min.js');
+//$xoTheme->addStylesheet(XOOPSTUBE_URL . '/assets/js/magnific/magnific-popup.css');
+$GLOBALS['xoTheme']->addStylesheet(XOOPSTUBE_URL . '/assets/css/module.css');
+
+
+require_once XOOPS_ROOT_PATH . '/header.php';
+
 global $xoopModuleConfig;

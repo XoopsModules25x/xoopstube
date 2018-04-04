@@ -8,9 +8,9 @@
 
     <{$description}>
 
-    <div class="text-center xoopstube-navigation">
+    <{*<div class="text-center xoopstube-navigation">*}>
         <{$catarray.letters}>
-    </div><!-- .xoopstube-navigation -->
+    <{*</div><!-- .xoopstube-navigation -->*}>
 
     <{$category_path}>
 

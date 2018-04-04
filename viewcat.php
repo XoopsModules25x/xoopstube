@@ -21,12 +21,12 @@
 use Xmf\Request;
 use XoopsModules\Xoopstube;
 
-include __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 
 // Begin Main page Heading etc
 $cid        = Request::getInt('cid', 0, 'GET'); //cleanRequestVars($_REQUEST, 'cid', 0);
 $selectdate = Request::getString('selectdate', ''); //cleanRequestVars($_REQUEST, 'selectdate', '');
-$list       = Request::getString('list', '');// cleanRequestVars($_REQUEST, 'list', '');
+$list       = Request::getString('letter', '');// cleanRequestVars($_REQUEST, 'letter', '');
 $start      = Request::getInt('start', 0, 'GET'); //cleanRequestVars($_REQUEST, 'start', 0);
 
 $catsort = $GLOBALS['xoopsModuleConfig']['sortcats'];
@@ -43,8 +43,27 @@ $GLOBALS['xoopsOption']['template_main'] = 'xoopstube_viewcat.tpl';
 
 
 include XOOPS_ROOT_PATH . '/header.php';
-$xoTheme->addStylesheet('modules/' . $moduleDirName . '/assets/css/xtubestyle.css');
+
+//$xoTheme->addStylesheet('modules/' . $moduleDirName . '/assets/css/xtubestyle.css');
+
+$xoTheme->addScript(XOOPS_URL . '/browse.php?Frameworks/jquery/jquery.js');
+//$xoTheme->addScript(XOOPSTUBE_URL . '/assets/js/magnific/jquery.magnific-popup.min.js');
+//$xoTheme->addStylesheet(XOOPSTUBE_URL . '/assets/js/magnific/magnific-popup.css');
+$xoTheme->addStylesheet(XOOPSTUBE_URL . '/assets/css/module.css');
+
+$xoTheme->addScript(XOOPS_URL . '/browse.php?Frameworks/jquery/jquery.js');
+//$xoTheme->addScript(XOOPSTUBE_URL . '/assets/js/magnific/jquery.magnific-popup.min.js');
+//$xoTheme->addStylesheet(XOOPSTUBE_URL . '/assets/js/magnific/magnific-popup.css');
+$xoTheme->addStylesheet(XOOPSTUBE_URL . '/assets/css/module.css');
+
+$xoopsTpl->assign('xoopstube_url', XOOPSTUBE_URL . '/');
+
+
+
 global $xoopsModule;
+
+$xtubemyts = new Xoopstube\TextSanitizer(); // MyTextSanitizer object
+
 
 /*
 $catarray['letters'] = Xoopstube\Utility::getLetters();
@@ -232,7 +251,7 @@ if ($selectdate) {
 
     $sql = 'SELECT COUNT(*) FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . $query;
     list($count) = $GLOBALS['xoopsDB']->fetchRow($GLOBALS['xoopsDB']->query($sql));
-    $list_by = "list=$list";
+    $list_by = "letter=$list";
 } else {
     $query = 'WHERE a.published>0 AND a.published<=' . time() . ' AND (a.expired=0 OR a.expired>' . time() . ') AND a.offline=0' . ' AND (b.cid=a.cid OR (a.cid=' . $cid . ' OR b.cid=' . $cid . '))';
 

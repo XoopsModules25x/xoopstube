@@ -69,7 +69,7 @@ class Tree
     {
         $selectId = (int)$selectId;
         $arr      = [];
-        $sql      = 'SELECT * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $selectId . '';
+        $sql      = 'SELECT * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $selectId . ' ';
         if ('' !== $order) {
             $sql .= " ORDER BY $order";
         }
@@ -311,7 +311,7 @@ class Tree
     public function getAllChild($selectId = 0, $order = '', array $parray = [])
     {
         $selectId = (int)$selectId;
-        $sql      = 'SELECT * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $selectId . '';
+        $sql      = 'SELECT * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $selectId . ' ';
         if ('' !== $order) {
             $sql .= " ORDER BY $order";
         }
@@ -341,7 +341,7 @@ class Tree
     public function getChildTreeArray($selectId = 0, $order = '', array $parray = [], $r_prefix = '')
     {
         $selectId = (int)$selectId;
-        $sql      = 'SELECT * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $selectId . '';
+        $sql      = 'SELECT * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $selectId . ' ';
         if ('' !== $order) {
             $sql .= " ORDER BY $order";
         }

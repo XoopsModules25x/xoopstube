@@ -28,7 +28,7 @@ use XoopsModules\Xoopstube\Common;
 /**
  * Class Videos
  */
-class Videos
+class Videos extends \XoopsObject
 {
     public $dirname;
     public $module;

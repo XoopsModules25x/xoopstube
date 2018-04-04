@@ -327,9 +327,9 @@ define('_MI_XOOPSTUBE_SBROKENSUBMIT', 'Broken');
 define('_MI_XOOPSTUBE_BNAME11', 'Spotlight videos');
 
 //define('_MI_XOOPSTUBE_PREFERENCES_DIRECTIORIES', '<span style="font-weight: bold; color: #FF0000; font-size: small;"><b>Directories Setup</span> ');
-define('_MI_XOOPSTUBE_PREFERENCES_DIRECTIORIES', '<span style="font-weight: bold; "><b>Directories Setup</span> ');
-define('_MI_XOOPSTUBE_PREFERENCES_COMMENTS', '<span style="font-weight: bold; "><b>Comments/Notifications</span> ');
-define('_MI_XOOPSTUBE_PREFERENCES_OTHERS', '<span style="font-weight: bold; "><b>Other Preferences</span> ');
+define('_MI_XOOPSTUBE_PREFERENCES_DIRECTIORIES', '<span style="color: #FF0000; font-size: Small;  font-weight: bold;">--- Directories Setup ---</span> ');
+define('_MI_XOOPSTUBE_PREFERENCES_COMMENTS', '<span style="color: #FF0000; font-size: Small;  font-weight: bold;">--- Comments/Notifications ---</span> ');
+define('_MI_XOOPSTUBE_PREFERENCES_OTHERS', '<span style="color: #FF0000; font-size: Small;  font-weight: bold;">--- Other Preferences ---</span> ');
 
 define('_MI_XOOPSTUBE_PREFERENCES_DIRMODE', 'Directory writing permissions');
 define('_MI_XOOPSTUBE_PREFERENCES_DIRMODE_DESC', 'Set the directory writing permissions as defined for Unix (e.g. 0777 is the default for upload directories)');

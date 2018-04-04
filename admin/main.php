@@ -302,20 +302,20 @@ switch (strtolower($op)) {
         $updated      = Request::getInt('was_published', time(), 'POST');
 
         //PHP 5.3
-        $published0 = Request::getArray('published', '', 'POST');
-        $published  = strtotime($published0['date']) + $published0['time'];
+//        $temp = Request::getArray('published', [], 'POST');
+//        $published  = strtotime($temp['date']) + $temp['time'];
 
         //          PHP 5.4
-        //        $published    = strtotime(Request::getArray('published', '', 'POST')['date']) + Request::getArray('published', '', 'POST')['time'];
+         $published    = strtotime(Request::getArray('published', [], 'POST')['date']) + Request::getArray('published', [], 'POST')['time'];
 
         if (0 == Request::getInt('up_dated', '', 'POST')) {
             $updated = 0;
             $status  = 1;
         }
 
-        $offline   = (1 == Request::getInt('offline', '', 'POST')) ? 1 : 0; // $_POST['offline'] == 1) ? 1 : 0;
-        $approved  = (1 == Request::getInt('approved', '', 'POST')) ? 1 : 0; //isset($_POST['approved']) && $_POST['approved'] == 1) ? 1 : 0;
-        $notifypub = (1 == Request::getInt('notifypub', '', 'POST')); //(isset($_POST['notifypub']) && $_POST['notifypub'] == 1);
+        $offline   = Request::hasVar('offline', 'POST') ? 1 : 0; // $_POST['offline'] == 1) ? 1 : 0;
+        $approved  = (1 == Request::getInt('approved', 0, 'POST')) ? 1 : 0; //isset($_POST['approved']) && $_POST['approved'] == 1) ? 1 : 0;
+        $notifypub = (1 == Request::getInt('notifypub', 0, 'POST')); //(isset($_POST['notifypub']) && $_POST['notifypub'] == 1);
 
         if (!$lid) {
             $date        = time();
@@ -329,11 +329,7 @@ switch (strtolower($op)) {
             $publishdate = time();
         }
         //        if (Request::hasVar('expiredateactivate', 'POST')) {
-        //PHP 5.3
-        $expiredate0 = Request::getArray('expired', [], 'POST');
-        $expiredate  = strtotime($expiredate0['date']) + $expiredate0['time'];
-        //PHP 5.4
-        //        $expiredate = strtotime(Request::getArray('expired', array(), 'POST')['date']) + Request::getArray('expired', array(), 'POST')['time'];
+                $expiredate = strtotime(Request::getArray('expired', [], 'POST')['date']) + Request::getArray('expired', [], 'POST')['time'];
         //        }
 
         if (Request::hasVar('clearexpire', 'POST')) {
