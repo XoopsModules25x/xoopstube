@@ -44,7 +44,7 @@ switch (strtolower($op)) {
         } else {
             $reportid = 0;
             $sql      = sprintf(
-                'INSERT INTO %s (reportid, lid, sender, ip, date, confirmed, acknowledged, title ) VALUES ( %u, %u, %u, %s, %u, %u, %u, %s)',
+                'INSERT INTO `%s` (reportid, lid, sender, ip, date, confirmed, acknowledged, title ) VALUES ( %u, %u, %u, %s, %u, %u, %u, %s)',
                 $GLOBALS['xoopsDB']->prefix('xoopstube_broken'),
                 $reportid,
                 $lid,

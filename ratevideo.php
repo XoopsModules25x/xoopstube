@@ -82,7 +82,7 @@ if (!empty(Request::getString('submit', ''))) {
     $newid    = $GLOBALS['xoopsDB']->genId($GLOBALS['xoopsDB']->prefix('xoopstube_votedata') . '_ratingid_seq');
     $datetime = time();
     $sql      = sprintf(
-        'INSERT INTO %s (ratingid, lid, ratinguser, rating, ratinghostname, ratingtimestamp, title) VALUES (%u, %u, %u, %u, %s, %u, %s)',
+        'INSERT INTO `%s` (ratingid, lid, ratinguser, rating, ratinghostname, ratingtimestamp, title) VALUES (%u, %u, %u, %u, %s, %u, %s)',
         $GLOBALS['xoopsDB']->prefix('xoopstube_votedata'),
         $newid,
         $lid,
