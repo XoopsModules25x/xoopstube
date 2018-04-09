@@ -302,11 +302,11 @@ switch (strtolower($op)) {
         $updated      = Request::getInt('was_published', time(), 'POST');
 
         //PHP 5.3
-//        $temp = Request::getArray('published', [], 'POST');
-//        $published  = strtotime($temp['date']) + $temp['time'];
+        //        $temp = Request::getArray('published', [], 'POST');
+        //        $published  = strtotime($temp['date']) + $temp['time'];
 
         //          PHP 5.4
-         $published    = strtotime(Request::getArray('published', [], 'POST')['date']) + Request::getArray('published', [], 'POST')['time'];
+        $published = strtotime(Request::getArray('published', [], 'POST')['date']) + Request::getArray('published', [], 'POST')['time'];
 
         if (0 == Request::getInt('up_dated', '', 'POST')) {
             $updated = 0;
@@ -329,7 +329,7 @@ switch (strtolower($op)) {
             $publishdate = time();
         }
         //        if (Request::hasVar('expiredateactivate', 'POST')) {
-                $expiredate = strtotime(Request::getArray('expired', [], 'POST')['date']) + Request::getArray('expired', [], 'POST')['time'];
+        $expiredate = strtotime(Request::getArray('expired', [], 'POST')['date']) + Request::getArray('expired', [], 'POST')['time'];
         //        }
 
         if (Request::hasVar('clearexpire', 'POST')) {
@@ -345,7 +345,7 @@ switch (strtolower($op)) {
                            . $GLOBALS['xoopsDB']->prefix('xoopstube_videos')
                            . ' (lid, cid, title, vidid, screenshot, submitter, publisher, status, date, hits, rating, votes, comments, vidsource, published, expired, updated, offline, description, ipaddress, notifypub, vidrating, time, keywords, item_tag, picurl )';
             $sql         .= " VALUES    (NULL, $cid, '$title', '$vidid', '', '$submitter', '$publisher', '$status', '$date', 0, 0, 0, 0, '$vidsource', '$published', '$expiredate', '$updated', '$offline', '$descriptionb', '$ipaddress', '0', '$vidrating', '$time', '$keywords', '$item_tag', '$picurl')";
-        //    $newid = $GLOBALS['xoopsDB'] -> getInsertId();
+            //    $newid = $GLOBALS['xoopsDB'] -> getInsertId();
         } else {
             $sql = 'UPDATE '
                    . $GLOBALS['xoopsDB']->prefix('xoopstube_videos')

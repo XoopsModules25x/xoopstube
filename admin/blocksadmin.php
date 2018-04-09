@@ -62,7 +62,7 @@ if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
         xoops_loadLanguage('admin/groups', 'system');
 
         /** @var XoopsModuleHandler $moduleHandler */
-        $moduleHandler    = xoops_getHandler('module');
+        $moduleHandler = xoops_getHandler('module');
         /** @var \XoopsMemberHandler $memberHandler */
         $memberHandler = xoops_getHandler('member');
         /** @var \XoopsGroupPermHandler $grouppermHandler */

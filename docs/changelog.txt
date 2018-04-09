@@ -1,11 +1,10 @@
-<h5>1.08 Beta 1       [NOT RELEASED]</h5>  Dev: Xoops 2.5.9, PHP 7.2.3
+<h5>1.08 Beta 1       [2018-04-08]</h5>  Dev: Xoops 2.5.9, PHP 7.2.4
 <hr>
 - namespaces (mamba)
 - Autoload (mamba)
 - added Export data to YML - set in Preferences (mamba)
 - added XoopsLogger (mamba)
-- Constants are class (mamba)
-
+- Constants in class (mamba)
 
 
 <h5>1.07 RC 1       [NOT RELEASED]</h5>

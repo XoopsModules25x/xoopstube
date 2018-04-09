@@ -17,8 +17,8 @@
  * @since           1.0.6
  */
 
-$moduleDirName = basename(dirname(__DIR__));
-$moduleDirNameUpper   = strtoupper($moduleDirName);
+$moduleDirName      = basename(dirname(__DIR__));
+$moduleDirNameUpper = strtoupper($moduleDirName);
 
 /**
  * @return object

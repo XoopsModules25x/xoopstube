@@ -54,8 +54,8 @@ class Lists
         $emptyselect = 0,
         $type = 0,
         $prefix = '',
-        $suffix = ''
-    ) {
+        $suffix = '')
+    {
         $this->value       = $value;
         $this->selection   = $selected;
         $this->path        = $path;

@@ -29,7 +29,7 @@ function xtubeCheckSearchGroups($cid = 0, $permType = 'XTubeCatPerm', $redirect 
     $moduleDirName = basename(dirname(__DIR__));
     //    $modulePath = dirname(__DIR__);
 
-    $groups       = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
+    $groups           = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
     $grouppermHandler = xoops_getHandler('groupperm');
 
     /** @var XoopsModuleHandler $moduleHandler */

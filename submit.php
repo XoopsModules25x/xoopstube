@@ -99,6 +99,7 @@ if (true === Xoopstube\Utility::checkGroups($cid, 'XTubeSubPerm')) {
             }
 
             // Notify of new link (anywhere) and new link in category
+            /** @var \XoopsNotificationHandler $notificationHandler */
             $notificationHandler = xoops_getHandler('notification');
 
             $tags               = [];

@@ -23,9 +23,8 @@ use XoopsModules\Xoopstube;
 //require_once __DIR__ . '/../include/common.php';
 $helper = Xoopstube\Helper::getInstance();
 
-$pathIcon32 = \Xmf\Module\Admin::menuIconPath('');
+$pathIcon32    = \Xmf\Module\Admin::menuIconPath('');
 $pathModIcon32 = $helper->getModule()->getInfo('modicons32');
-
 
 $adminmenu[] = [
     'title' => _MI_XOOPSTUBE_HOME,

@@ -83,11 +83,11 @@ function createCategory($cid = 0)
 
         /** @var \XoopsMemberHandler $memberHandler */
         $memberHandler = xoops_getHandler('member');
-        $group_list = $memberHandler->getGroupList();
+        $group_list    = $memberHandler->getGroupList();
         $memberHandler = xoops_getHandler('member');
         /** @var \XoopsGroupPermHandler $grouppermHandler */
         $grouppermHandler = xoops_getHandler('groupperm');
-        $groups       = $grouppermHandler->getGroupIds('XTubeCatPerm', $cid, $xoopsModule->getVar('mid'));
+        $groups           = $grouppermHandler->getGroupIds('XTubeCatPerm', $cid, $xoopsModule->getVar('mid'));
     } else {
         $groups = true;
     }

@@ -40,7 +40,6 @@ define('CO_' . $moduleDirNameUpper . '_' . 'UPLOADPATHDSC', 'Note. Upload path *
 define('CO_' . $moduleDirNameUpper . '_' . 'PRINT', "<span style='font-weight: bold;'>Print</span>");
 define('CO_' . $moduleDirNameUpper . '_' . 'PDF', "<span style='font-weight: bold;'>Create PDF</span>");
 
-
 define('CO_' . $moduleDirNameUpper . '_' . 'UPGRADEFAILED0', "Update failed - couldn't rename field '%s'");
 define('CO_' . $moduleDirNameUpper . '_' . 'UPGRADEFAILED1', "Update failed - couldn't add new fields");
 define('CO_' . $moduleDirNameUpper . '_' . 'UPGRADEFAILED2', "Update failed - couldn't rename table '%s'");
@@ -56,10 +55,9 @@ define('CO_' . $moduleDirNameUpper . '_' . 'ERROR_BAD_DEL_PATH', 'Could not dele
 define('CO_' . $moduleDirNameUpper . '_' . 'ERROR_BAD_REMOVE', 'Could not delete %s');
 define('CO_' . $moduleDirNameUpper . '_' . 'ERROR_NO_PLUGIN', 'Could not load plugin');
 
-
 //Help
 define('CO_' . $moduleDirNameUpper . '_' . 'DIRNAME', basename(dirname(dirname(__DIR__))));
-define('CO_' . $moduleDirNameUpper . '_' . 'HELP_HEADER', __DIR__.'/help/helpheader.tpl');
+define('CO_' . $moduleDirNameUpper . '_' . 'HELP_HEADER', __DIR__ . '/help/helpheader.tpl');
 define('CO_' . $moduleDirNameUpper . '_' . 'BACK_2_ADMIN', 'Back to Administration of ');
 define('CO_' . $moduleDirNameUpper . '_' . 'OVERVIEW', 'Overview');
 

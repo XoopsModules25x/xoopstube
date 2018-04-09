@@ -41,7 +41,6 @@ if (is_array($arr) > 0 && !$list && !$selectdate) {
 
 $GLOBALS['xoopsOption']['template_main'] = 'xoopstube_viewcat.tpl';
 
-
 include XOOPS_ROOT_PATH . '/header.php';
 
 //$xoTheme->addStylesheet('modules/' . $moduleDirName . '/assets/css/xtubestyle.css');
@@ -58,12 +57,9 @@ $xoTheme->addStylesheet(XOOPSTUBE_URL . '/assets/css/module.css');
 
 $xoopsTpl->assign('xoopstube_url', XOOPSTUBE_URL . '/');
 
-
-
 global $xoopsModule;
 
 $xtubemyts = new Xoopstube\TextSanitizer(); // MyTextSanitizer object
-
 
 /*
 $catarray['letters'] = Xoopstube\Utility::getLetters();
@@ -77,26 +73,21 @@ $xoopsTpl->assign('catarray', $catarray);
 XoopsModules\Xoopstube\Helper::getInstance()->loadLanguage('common');
 $xoopsTpl->assign('letterChoiceTitle', constant('CO_' . $moduleDirNameUpper . '_' . 'BROWSETOTOPIC'));
 /** @var \XoopsDatabase $db */
-$db           = \XoopsDatabaseFactory::getDatabaseConnection();
-$objHandler = new Xoopstube\VideosHandler($db);
+$db             = \XoopsDatabaseFactory::getDatabaseConnection();
+$objHandler     = new Xoopstube\VideosHandler($db);
 $choicebyletter = new Xoopstube\Common\LetterChoice($objHandler, null, null, range('a', 'z'), 'letter');
 //$choicebyletter = new Xoopstube\Common\LetterChoice($objHandler, null, null, range('a', 'z'), 'init', XOOPSTUBE_URL . '/letter.php');
-$catarray['letters']  = $choicebyletter->render();
+$catarray['letters'] = $choicebyletter->render();
 //$catarray['letters']  = $choicebyletter->render($alphaCount, $howmanyother);
 
 $xoopsTpl->assign('catarray', $catarray);
 
 // Letter Choice End ------------------------------------
 
-
-
 //$catArray['letters'] = Xoopstube\Utility::getLettersChoice();
 //$catArray['letters'] = Xoopstube\Utility::getLettersChoice();
 //$catArray['toolbar'] = xoopstube_toolbar();
 //$xoopsTpl->assign('catarray', $catArray);
-
-
-
 
 //$catArray['imageheader'] = Xoopstube\Utility::headerImage();
 ////$catArray['letters']     = Wfdownloads\Utility::lettersChoice();
@@ -105,9 +96,6 @@ $xoopsTpl->assign('catarray', $catarray);
 //$objHandler = new Xoopstube\DownloadHandler($db);
 //$choicebyletter = new Xoopstube\Common\LetterChoice($objHandler, null, null, range('a', 'z'), 'letter');
 //$catarray['letters']  = $choicebyletter->render();
-
-
-
 
 // Breadcrumb
 $pathstring = '<li><a href="index.php">' . _MD_XOOPSTUBE_MAIN . '</a></li>';

@@ -81,17 +81,8 @@ if (!empty(Request::getString('submit', ''))) {
     // All is well.  Add to Line Item Rate to DB.
     $newid    = $GLOBALS['xoopsDB']->genId($GLOBALS['xoopsDB']->prefix('xoopstube_votedata') . '_ratingid_seq');
     $datetime = time();
-    $sql      = sprintf(
-        'INSERT INTO `%s` (ratingid, lid, ratinguser, rating, ratinghostname, ratingtimestamp, title) VALUES (%u, %u, %u, %u, %s, %u, %s)',
-        $GLOBALS['xoopsDB']->prefix('xoopstube_votedata'),
-        $newid,
-        $lid,
-        $ratinguser,
-        $rating,
-        $GLOBALS['xoopsDB']->quoteString($ip),
-        $datetime,
-                        $GLOBALS['xoopsDB']->quoteString($title)
-    );
+    $sql      = sprintf('INSERT INTO `%s` (ratingid, lid, ratinguser, rating, ratinghostname, ratingtimestamp, title) VALUES (%u, %u, %u, %u, %s, %u, %s)', $GLOBALS['xoopsDB']->prefix('xoopstube_votedata'), $newid, $lid, $ratinguser, $rating, $GLOBALS['xoopsDB']->quoteString($ip), $datetime,
+                        $GLOBALS['xoopsDB']->quoteString($title));
     if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
         $ratemessage = _MD_XOOPSTUBE_ERROR;
     } else {

@@ -28,7 +28,7 @@ $moduleDirName = basename(__DIR__);
 $modversion = [
     'version'             => 1.08,
     'module_status'       => 'Beta 1',
-    'release_date'        => '2018/03/14',
+    'release_date'        => '2018/03/08',
     'name'                => _MI_XOOPSTUBE_NAME,
     'description'         => _MI_XOOPSTUBE_DESC,
     'official'            => 1, //1 indicates supported by XOOPS Dev Team, 0 means 3rd party supported
@@ -47,33 +47,16 @@ $modversion = [
     'manual_file'         => XOOPS_URL . "/modules/{$moduleDirName}/docs/install.txt",
     'min_php'             => '5.5',
     'min_xoops'           => '2.5.9',
-    'min_admin'           => '1.1',
+    'min_admin'           => '1.2',
     'min_db'              => ['mysql' => '5.5'],
     // images
     'image'               => 'assets/images/logoModule.png',
     'iconsmall'           => 'assets/images/iconsmall.png',
     'iconbig'             => 'assets/images/iconbig.png',
     'dirname'             => $moduleDirName,
-    // Frameworks
-    //    'dirmoduleadmin'      => 'Frameworks/moduleclasses/moduleadmin',
-    //    'systemIcons16'       => 'Frameworks/moduleclasses/icons/16',
-    //    'systemIcons32'       => 'Frameworks/moduleclasses/icons/32',
-    //    'systemIcons32url'    => XOOPS_URL . '/' . 'Frameworks/moduleclasses/icons/32',
-
-    //Frameworks
-    //    'dirmoduleadmin'      => 'Frameworks/moduleclasses/moduleadmin',
-    //    'sysIcons16'          => 'Frameworks/moduleclasses/icons/16',
-    //    'sysIcons32'          => 'Frameworks/moduleclasses/icons/32',
     // Local path icons
     'modicons16'          => 'assets/images/icons/16',
     'modicons32'          => 'assets/images/icons/32',
-
-    // Local path icons
-    //    'moduleIcons16'       => 'assets/images/icons/16',
-    //    'moduleIcons32'       => 'assets/images/icons/32',
-    // About
-    //    'release_date'        => "2013/10/07",
-    //    'release'             => "2015-04-03",
     'demo_site_url'       => 'https://xoops.org',
     'demo_site_name'      => 'XOOPS Demo Site',
     'support_url'         => 'https://xoops.org/modules/newbb',
@@ -238,7 +221,7 @@ $moduleHandler = xoops_getHandler('module');
 $module        = $moduleHandler->getByDirname($modversion['dirname']);
 $cansubmit     = 0;
 if (is_object($module)) {
-    $groups       = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
+    $groups           = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
     $grouppermHandler = xoops_getHandler('groupperm');
     if ($grouppermHandler->checkRight('XTubeSubPerm', 0, $groups, $module->getVar('mid'))) {
         $cansubmit = 1;
@@ -324,7 +307,6 @@ $modversion['templates'][] = [
     'file'        => $modversion['dirname'] . '_letterschoice.tpl',
     'description' => ''
 ];
-
 
 // ------------------- Config ------------------- //
 $modversion['config'][] = [
@@ -813,7 +795,6 @@ $modversion['config'][] = [
     'valuetype'   => 'int',
     'default'     => 0,
 ];
-
 
 // ------------------- Notification ------------------- //
 $modversion['config'][] = [

@@ -23,13 +23,12 @@ use XoopsModules\Xoopstube;
 
 include __DIR__ . '/header.php';
 
-$moduleDirName = basename(__DIR__);
+$moduleDirName      = basename(__DIR__);
 $moduleDirNameUpper = strtoupper($moduleDirName);
 
 $start = Request::getInt('start', Request::getInt('start', 0, 'POST'), 'GET');
 
 $GLOBALS['xoopsOption']['template_main'] = 'xoopstube_index.tpl';
-
 
 //$xoTheme->addStylesheet('modules/' . $moduleDirName . '/assets/css/xtubestyle.css');
 
@@ -38,15 +37,9 @@ $xoTheme->addStylesheet(XOOPSTUBE_URL . '/assets/css/module.css');
 
 $xoopsTpl->assign('xoopstube_url', XOOPSTUBE_URL . '/');
 
-
-
 include XOOPS_ROOT_PATH . '/header.php';
 
-
-
-
-
-$mytree = new Xoopstube\Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
+$mytree    = new Xoopstube\Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
 $xtubemyts = new Xoopstube\TextSanitizer(); // MyTextSanitizer object
 
 // Begin Main page Heading etc
@@ -69,28 +62,24 @@ $catarray['indexfooter']  = $xtubemyts->displayTarea($head_arr['indexfooter'], $
 
 //$catarray['letters']      = Xoopstube\Utility::getLetters();
 
-
 // Letter Choice Start ---------------------------------------
 
 XoopsModules\Xoopstube\Helper::getInstance()->loadLanguage('common');
 $xoopsTpl->assign('letterChoiceTitle', constant('CO_' . $moduleDirNameUpper . '_' . 'BROWSETOTOPIC'));
 /** @var \XoopsDatabase $db */
-$db           = \XoopsDatabaseFactory::getDatabaseConnection();
-$objHandler = new Xoopstube\VideosHandler($db);
+$db             = \XoopsDatabaseFactory::getDatabaseConnection();
+$objHandler     = new Xoopstube\VideosHandler($db);
 $choicebyletter = new Xoopstube\Common\LetterChoice($objHandler, null, null, range('a', 'z'), 'letter', 'viewcat.php');
 //$choicebyletter = new Xoopstube\Common\LetterChoice($objHandler, null, null, range('a', 'z'), 'init', XOOPSTUBE_URL . '/letter.php');
 //render the LetterChoice partial and story as part of the Category array
 //$catarray['letters']  = $choicebyletter->render($alphaCount, $howmanyother);
 
-$catarray['letters']  = $choicebyletter->render();
-
+$catarray['letters'] = $choicebyletter->render();
 
 //now assign it to the Smarty variable
 $xoopsTpl->assign('catarray', $catarray);
 
 // Letter Choice End ------------------------------------
-
-
 
 // End main page Headers
 
@@ -223,7 +212,5 @@ if (1 == $lastvideos['lastvideosyn'] && $lastvideos['lastvideostotal'] > 0) {
 $xoopsTpl->assign('cat_columns', $GLOBALS['xoopsModuleConfig']['catcolumns']);
 $xoopsTpl->assign('lang_thereare', sprintf($lang_thereare, $total_cat, $listings['count']));
 $xoopsTpl->assign('module_dir', $xoopsModule->getVar('dirname'));
-
-
 
 include XOOPS_ROOT_PATH . '/footer.php';

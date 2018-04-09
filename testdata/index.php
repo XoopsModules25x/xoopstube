@@ -38,7 +38,7 @@ switch ($op) {
 
 function loadSampleData()
 {
-    $moduleDirName      = basename(dirname(__DIR__));
+    $moduleDirName = basename(dirname(__DIR__));
     xoops_loadLanguage('admin', $moduleDirName);
     $items = \Xmf\Yaml::readWrapped('item-data.yml');
     $cat   = \Xmf\Yaml::readWrapped('cat-data.yml');

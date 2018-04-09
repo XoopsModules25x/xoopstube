@@ -36,8 +36,6 @@ use WideImage\WideImage;
 
 // defined('XOOPS_ROOT_PATH') || die('XOOPS Root Path not defined');
 
-
-
 //require_once __DIR__ . '/../include/common.php';
 
 /**
@@ -169,7 +167,7 @@ class Utility
     public static function IP()
     {
         $proxy_ip = '';
-       if (\Xmf\Request::hasVar('HTTP_X_FORWARDED_FOR', 'SERVER')) {
+        if (\Xmf\Request::hasVar('HTTP_X_FORWARDED_FOR', 'SERVER')) {
             $proxy_ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
         } elseif (!empty($_SERVER['HTTP_X_FORWARDED'])) {
             $proxy_ip = $_SERVER['HTTP_X_FORWARDED'];
@@ -341,7 +339,6 @@ class Utility
     {
         redirect_header($url, $time, $message);
     }
-
 
     /**
      * Returns the module's name (as defined by the user in the module manager) with cache
@@ -939,9 +936,9 @@ class Utility
         if (isset($_SESSION['xoopstube_keywords_limit'])) {
             $limit = $_SESSION['xoopstube_keywords_limit'];
         } else {
-            $configHandler                       = xoops_getHandler('config');
-            $xoopsConfigSearch                   = $configHandler->getConfigsByCat(XOOPS_CONF_SEARCH);
-            $limit                               = $xoopsConfigSearch['keyword_min'];
+            $configHandler                        = xoops_getHandler('config');
+            $xoopsConfigSearch                    = $configHandler->getConfigsByCat(XOOPS_CONF_SEARCH);
+            $limit                                = $xoopsConfigSearch['keyword_min'];
             $_SESSION['xoopstube_keywords_limit'] = $limit;
         }
         $myts            = \MyTextSanitizer::getInstance();
@@ -1015,8 +1012,8 @@ class Utility
         $mimeTypes = null,
         $uploadMaxSize = null,
         $maxWidth = null,
-        $maxHeight = null
-    ) {
+        $maxHeight = null)
+    {
         require_once XOOPS_ROOT_PATH . '/class/uploader.php';
         global $destname;
         if (isset($_POST['xoops_upload_file'])) {
@@ -1071,8 +1068,8 @@ class Utility
         $param_width,
         $param_height,
         $keep_original = false,
-        $fit = 'inside'
-    ) {
+        $fit = 'inside')
+    {
         //        require_once XOOPSTUBE_PATH . 'class/wideimage/WideImage.inc.php';
         $resize = true;
         if (XOOPSTUBE_DONT_RESIZE_IF_SMALLER) {
@@ -1100,7 +1097,6 @@ class Utility
 
         return true;
     }
-
 
     /**
      * Ajoute des jours à une date et retourne la nouvelle date au format Date de Mysql
@@ -1232,7 +1228,6 @@ class Utility
 
         return $ret;
     }
-
 
     /**
      * @param $datastream
@@ -1464,7 +1459,7 @@ class Utility
     {
         global $xoopsModule;
 
-        $groups       = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
+        $groups = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
         /** @var \XoopsGroupPermHandler $grouppermHandler */
         $grouppermHandler = xoops_getHandler('groupperm');
         if (!$grouppermHandler->checkRight($permType, $cid, $groups, $xoopsModule->getVar('mid'))) {
@@ -1549,8 +1544,8 @@ class Utility
         $name = null,
         $def = null,
         $strict = false,
-        $lengthcheck = 15
-    ) {
+        $lengthcheck = 15)
+    {
         // Sanitise $_request for further use.  This method gives more control and security.
         // Method is more for functionality rather than beauty at the moment, will correct later.
         unset($array['usercookie'], $array['PHPSESSID']);
@@ -2308,24 +2303,24 @@ class Utility
         echo '</select>';
     }
 
-//    /**
-//     * @param $selected
-//     * @param $dirarray
-//     * @param $namearray
-//     */
-//    public static function getDirSelectOption($selected, $dirarray, $namearray)
-//    {
-//        echo "<select size='1' name='workd' onchange='location.href=\"vupload.php?rootpath=\"+this.options[this.selectedIndex].value'>";
-//        echo "<option value=''>--------------------------------------</option>";
-//        foreach ($namearray as $namearray => $workd) {
-//            $opt_selected = '';
-//            if ($workd == $selected) {
-//                $opt_selected = 'selected';
-//            }
-//            echo '<option value="' . htmlspecialchars($namearray, ENT_QUOTES) . '" $opt_selected>' . $workd . '</option>';
-//        }
-//        echo '</select>';
-//    }
+    //    /**
+    //     * @param $selected
+    //     * @param $dirarray
+    //     * @param $namearray
+    //     */
+    //    public static function getDirSelectOption($selected, $dirarray, $namearray)
+    //    {
+    //        echo "<select size='1' name='workd' onchange='location.href=\"vupload.php?rootpath=\"+this.options[this.selectedIndex].value'>";
+    //        echo "<option value=''>--------------------------------------</option>";
+    //        foreach ($namearray as $namearray => $workd) {
+    //            $opt_selected = '';
+    //            if ($workd == $selected) {
+    //                $opt_selected = 'selected';
+    //            }
+    //            echo '<option value="' . htmlspecialchars($namearray, ENT_QUOTES) . '" $opt_selected>' . $workd . '</option>';
+    //        }
+    //        echo '</select>';
+    //    }
 
     /**
      * @param        $FILES
@@ -2343,8 +2338,8 @@ class Utility
         $allowed_mimetypes = '',
         $redirecturl = 'index.php', //    $num = 0,
         $redirect = 0,
-        $usertype = 1
-    ) {
+        $usertype = 1)
+    {
         global $FILES, $xoopsModule;
 
         $down = [];
@@ -2477,8 +2472,8 @@ class Utility
         $start,
         $art = 'art',
         $_this = '',
-        $align
-    ) {
+        $align)
+    {
         if ($pubrowamount < $GLOBALS['xoopsModuleConfig']['admin_perpage']) {
             return false;
         }
@@ -3110,7 +3105,6 @@ class Utility
         return $html;
     }
 
-
     /**
      * Recursively sort categories by level and weight
      *
@@ -3156,44 +3150,44 @@ class Utility
      * @access  public
      * @author  luciorota
      */
-//    public static function lettersChoice()
-//    {
-//        $helper = Xoopstube\Helper::getInstance();
-//
-//        $criteria = $helper->getHandler('Videos')->getActiveCriteria();
-//        $criteria->setGroupby('UPPER(LEFT(title,1))');
-//        $countsByLetters = $helper->getHandler('Videos')->getCounts($criteria);
-//        // Fill alphabet array
-//        $alphabet       = getLocalAlphabet();
-//        $alphabetArray = [];
-//        foreach ($alphabet as $letter) {
-//            $letter_array = [];
-//            if (isset($countsByLetters[$letter])) {
-//                $letter_array['letter'] = $letter;
-//                $letter_array['count']  = $countsByLetters[$letter];
-//                $letter_array['url']    = XOOPS_URL . "/modules/{$helper->getModule()->dirname()}/viewcat.php?list={$letter}";
-//            } else {
-//                $letter_array['letter'] = $letter;
-//                $letter_array['count']  = 0;
-//                $letter_array['url']    = '';
-//            }
-//            $alphabetArray[$letter] = $letter_array;
-//            unset($letter_array);
-//        }
-//        // Render output
-//        if (!isset($GLOBALS['xoTheme']) || !is_object($GLOBALS['xoTheme'])) {
-//            require_once $GLOBALS['xoops']->path('/class/theme.php');
-//            $GLOBALS['xoTheme'] = new \xos_opal_Theme();
-//        }
-//        require_once $GLOBALS['xoops']->path('class/template.php');
-//        $letterschoiceTpl          = new \XoopsTpl();
-//        $letterschoiceTpl->caching = false; // Disable cache
-//        $letterschoiceTpl->assign('alphabet', $alphabetArray);
-//        $html = $letterschoiceTpl->fetch("db:{$helper->getModule()->dirname()}_common_letterschoice.tpl");
-//        unset($letterschoiceTpl);
-//
-//        return $html;
-//    }
+    //    public static function lettersChoice()
+    //    {
+    //        $helper = Xoopstube\Helper::getInstance();
+    //
+    //        $criteria = $helper->getHandler('Videos')->getActiveCriteria();
+    //        $criteria->setGroupby('UPPER(LEFT(title,1))');
+    //        $countsByLetters = $helper->getHandler('Videos')->getCounts($criteria);
+    //        // Fill alphabet array
+    //        $alphabet       = getLocalAlphabet();
+    //        $alphabetArray = [];
+    //        foreach ($alphabet as $letter) {
+    //            $letter_array = [];
+    //            if (isset($countsByLetters[$letter])) {
+    //                $letter_array['letter'] = $letter;
+    //                $letter_array['count']  = $countsByLetters[$letter];
+    //                $letter_array['url']    = XOOPS_URL . "/modules/{$helper->getModule()->dirname()}/viewcat.php?list={$letter}";
+    //            } else {
+    //                $letter_array['letter'] = $letter;
+    //                $letter_array['count']  = 0;
+    //                $letter_array['url']    = '';
+    //            }
+    //            $alphabetArray[$letter] = $letter_array;
+    //            unset($letter_array);
+    //        }
+    //        // Render output
+    //        if (!isset($GLOBALS['xoTheme']) || !is_object($GLOBALS['xoTheme'])) {
+    //            require_once $GLOBALS['xoops']->path('/class/theme.php');
+    //            $GLOBALS['xoTheme'] = new \xos_opal_Theme();
+    //        }
+    //        require_once $GLOBALS['xoops']->path('class/template.php');
+    //        $letterschoiceTpl          = new \XoopsTpl();
+    //        $letterschoiceTpl->caching = false; // Disable cache
+    //        $letterschoiceTpl->assign('alphabet', $alphabetArray);
+    //        $html = $letterschoiceTpl->fetch("db:{$helper->getModule()->dirname()}_common_letterschoice.tpl");
+    //        unset($letterschoiceTpl);
+    //
+    //        return $html;
+    //    }
 
     //===============  from WF-Downloads   ======================================
 
@@ -3219,8 +3213,7 @@ class Utility
         return $xtubeIsAdmin;
     }
 
-//from Lexikon
-
+    //from Lexikon
 
     /**
      * @return int
@@ -3229,8 +3222,8 @@ class Utility
     {
         global $xoopsUser, $xoopsModule;
         $grouppermHandler = xoops_getHandler('groupperm');
-        $groups       = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
-        $totalcats    = $grouppermHandler->getItemIds('lexikon_view', $groups, $xoopsModule->getVar('mid'));
+        $groups           = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+        $totalcats        = $grouppermHandler->getItemIds('lexikon_view', $groups, $xoopsModule->getVar('mid'));
 
         return count($totalcats);
     }
@@ -3242,7 +3235,7 @@ class Utility
     {
         global $xoopsUser, $xoopsDB;
         $grouppermHandler = xoops_getHandler('groupperm');
-        $groups       = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+        $groups           = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
         /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
         $module        = $moduleHandler->getByDirname('lexikon');
@@ -3257,21 +3250,20 @@ class Utility
         return $publishedwords;
     }
 
-
     /**
      * @return array
      */
     public static function getCategoryArray()
     {
-        global $xoopsDB,  $xoopsUser, $xoopsModule;
+        global $xoopsDB, $xoopsUser, $xoopsModule;
         /** @var Xoopstube\Helper $helper */
-        $helper = Xoopstube\Helper::getInstance();
-        $myts         = \MyTextSanitizer::getInstance();
-        $groups       = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+        $helper           = Xoopstube\Helper::getInstance();
+        $myts             = \MyTextSanitizer::getInstance();
+        $groups           = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
         $grouppermHandler = xoops_getHandler('groupperm');
-        $block0       = [];
-        $count        = 1;
-        $resultcat    = $xoopsDB->query('SELECT categoryID, name, total, logourl FROM ' . $xoopsDB->prefix('lxcategories') . ' ORDER BY weight ASC');
+        $block0           = [];
+        $count            = 1;
+        $resultcat        = $xoopsDB->query('SELECT categoryID, name, total, logourl FROM ' . $xoopsDB->prefix('lxcategories') . ' ORDER BY weight ASC');
         while (false !== (list($catID, $name, $total, $logourl) = $xoopsDB->fetchRow($resultcat))) {
             if ($grouppermHandler->checkRight('lexikon_view', $catID, $groups, $xoopsModule->getVar('mid'))) {
                 $catlinks = [];
@@ -3302,7 +3294,7 @@ class Utility
     {
         global $xoopsUser, $xoopsDB, $xoopsModule;
         $grouppermHandler = xoops_getHandler('groupperm');
-        $groups       = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+        $groups           = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
         /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
         $module        = $moduleHandler->getByDirname('lexikon');
@@ -3360,7 +3352,6 @@ class Utility
         return $alpha;
     }
 
-
     /**
      * chr() with unicode support
      * I found this on this site http://en.php.net/chr
@@ -3380,6 +3371,5 @@ class Utility
 
         return $str;
     }
-
 
 }

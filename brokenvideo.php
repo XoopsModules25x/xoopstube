@@ -43,18 +43,8 @@ switch (strtolower($op)) {
             redirect_header('singlevideo.php?cid=' . (int)$cid . '&amp;lid=' . $lid, 2, $ratemessage);
         } else {
             $reportid = 0;
-            $sql      = sprintf(
-                'INSERT INTO `%s` (reportid, lid, sender, ip, date, confirmed, acknowledged, title ) VALUES ( %u, %u, %u, %s, %u, %u, %u, %s)',
-                $GLOBALS['xoopsDB']->prefix('xoopstube_broken'),
-                $reportid,
-                $lid,
-                $sender,
-                $GLOBALS['xoopsDB']->quoteString($ip),
-                $time,
-                0,
-                0,
-                                $GLOBALS['xoopsDB']->quoteString($title)
-            );
+            $sql      = sprintf('INSERT INTO `%s` (reportid, lid, sender, ip, date, confirmed, acknowledged, title ) VALUES ( %u, %u, %u, %s, %u, %u, %u, %s)', $GLOBALS['xoopsDB']->prefix('xoopstube_broken'), $reportid, $lid, $sender, $GLOBALS['xoopsDB']->quoteString($ip), $time, 0, 0,
+                                $GLOBALS['xoopsDB']->quoteString($title));
             if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
                 $error[] = _MD_XOOPSTUBE_ERROR;
             }

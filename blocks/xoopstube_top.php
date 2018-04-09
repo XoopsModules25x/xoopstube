@@ -28,9 +28,9 @@ use XoopsModules\Xoopstube;
  */
 function checkBlockGroups($cid = 0, $permType = 'XTubeCatPerm', $redirect = false)
 {
-    $moduleDirName = basename(dirname(__DIR__));
-    $groups        = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
-    $grouppermHandler  = xoops_getHandler('groupperm');
+    $moduleDirName    = basename(dirname(__DIR__));
+    $groups           = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
+    $grouppermHandler = xoops_getHandler('groupperm');
     /** @var XoopsModuleHandler $moduleHandler */
     $moduleHandler = xoops_getHandler('module');
     $module        = $moduleHandler->getByDirname($moduleDirName);
@@ -58,9 +58,9 @@ function xtubeCheckBlockGroups($cid = 0, $permType = 'XTubeCatPerm', $redirect =
     $moduleDirName = basename(dirname(__DIR__));
     $groups        = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
     /** @var XoopsModuleHandler $moduleHandler */
-    $moduleHandler = xoops_getHandler('module');
-    $xtubeModule   = $moduleHandler->getByDirname($moduleDirName);
-    $grouppermHandler  = xoops_getHandler('groupperm');
+    $moduleHandler    = xoops_getHandler('module');
+    $xtubeModule      = $moduleHandler->getByDirname($moduleDirName);
+    $grouppermHandler = xoops_getHandler('groupperm');
     if (!$grouppermHandler->checkRight($permType, $cid, $groups, $xtubeModule->getVar('mid'))) {
         if (false === $redirect) {
             return false;
@@ -262,7 +262,7 @@ function showTopVideoBlock($options)
     }
 
     require_once XOOPS_ROOT_PATH . '/modules/' . $xtubeModule->getVar('dirname') . '/include/video.php';
-//    require_once XOOPS_ROOT_PATH . '/modules/' . $xtubeModule->getVar('dirname') . '/class/Utility.php';
+    //    require_once XOOPS_ROOT_PATH . '/modules/' . $xtubeModule->getVar('dirname') . '/class/Utility.php';
 
     while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
         if (false === checkBlockGroups($myrow['cid']) || 0 == $myrow['cid']) {
@@ -309,7 +309,7 @@ function showTopVideoBlock($options)
 function getRandomVideo($options)
 {
     global $xtubemyts;
-    $utility = new Xoopstube\Utility();
+    $utility       = new Xoopstube\Utility();
     $moduleDirName = basename(dirname(__DIR__));
     $block         = [];
     /** @var XoopsModuleHandler $moduleHandler */
@@ -335,7 +335,7 @@ function getRandomVideo($options)
     }
 
     require_once XOOPS_ROOT_PATH . '/modules/' . $xtubeModule->getVar('dirname') . '/include/video.php';
-//    require_once XOOPS_ROOT_PATH . '/modules/' . $xtubeModule->getVar('dirname') . '/class/Utility.php';
+    //    require_once XOOPS_ROOT_PATH . '/modules/' . $xtubeModule->getVar('dirname') . '/class/Utility.php';
 
     while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result2))) {
         if (false === checkBlockGroups($myrow['cid']) || 0 == $myrow['cid']) {
@@ -399,7 +399,7 @@ function getRandomVideoForHorizontalBlock($options)
     }
 
     require_once XOOPS_ROOT_PATH . '/modules/' . $xtubeModule->getVar('dirname') . '/include/video.php';
-//    require_once XOOPS_ROOT_PATH . '/modules/' . $xtubeModule->getVar('dirname') . '/class/Utility.php';
+    //    require_once XOOPS_ROOT_PATH . '/modules/' . $xtubeModule->getVar('dirname') . '/class/Utility.php';
 
     while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result2))) {
         if (false === checkBlockGroups($myrow['cid']) || 0 == $myrow['cid']) {

@@ -30,7 +30,7 @@ use XoopsModules\Xoopstube;
 function xtubeShowTagBlockCloud($options)
 {
     $moduleDirName = basename(dirname(__DIR__));
-//    require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/Utility.php';
+    //    require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/Utility.php';
     if (Xoopstube\Utility::isModuleTagInstalled()) {
         require_once XOOPS_ROOT_PATH . '/modules/tag/blocks/block.php';
 
@@ -48,7 +48,7 @@ function xtubeShowTagBlockCloud($options)
 function xtubeEditTagBlockCloud($options)
 {
     $moduleDirName = basename(dirname(__DIR__));
-//    require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/Utility.php';
+    //    require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/Utility.php';
     if (Xoopstube\Utility::isModuleTagInstalled()) {
         require_once XOOPS_ROOT_PATH . '/modules/tag/blocks/block.php';
 
@@ -66,7 +66,7 @@ function xtubeEditTagBlockCloud($options)
 function xtubeShowTagBlockTop($options)
 {
     $moduleDirName = basename(dirname(__DIR__));
-//    require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/Utility.php';
+    //    require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/Utility.php';
     if (Xoopstube\Utility::isModuleTagInstalled()) {
         require_once XOOPS_ROOT_PATH . '/modules/tag/blocks/block.php';
 
@@ -84,7 +84,7 @@ function xtubeShowTagBlockTop($options)
 function xtubeEditTagBlockTop($options)
 {
     $moduleDirName = basename(dirname(__DIR__));
-//    require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/Utility.php';
+    //    require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/Utility.php';
     if (Xoopstube\Utility::isModuleTagInstalled()) {
         require_once XOOPS_ROOT_PATH . '/modules/tag/blocks/block.php';
 

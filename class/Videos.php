@@ -43,8 +43,8 @@ class Videos extends \XoopsObject
     protected function __construct($debug)
     {
         $this->debug   = $debug;
-       $moduleDirName = basename(dirname(__DIR__));
-       parent::__construct($moduleDirName);
+        $moduleDirName = basename(dirname(__DIR__));
+        parent::__construct($moduleDirName);
     }
 
     /**

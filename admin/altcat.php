@@ -26,7 +26,7 @@ $op  = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET'); //cleanR
 $lid = Request::getInt('lid', Request::getInt('lid', 0, 'POST'), 'GET'); //cleanRequestVars($_REQUEST, 'lid', 0);
 
 /**
- * @param Xoopstube\Tree          $xt
+ * @param Xoopstube\Tree $xt
  * @param int            $itemid
  * @param                $title
  * @param                $checks

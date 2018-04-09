@@ -108,7 +108,6 @@ class Session
             $instance = new static();
         }
 
-
         return $instance;
     }
 }
