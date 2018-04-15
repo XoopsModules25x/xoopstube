@@ -175,9 +175,9 @@ switch (strtolower($op)) {
                 echo '<td class="even" style="text-align: left;"><a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/singlevideo.php?cid=' . $cid . '&amp;lid=' . $lid . '" target="_blank">' . $videoshowname . '</a></td>';
 
                 if ('' === $email) {
-                    echo '<td class="even">' . XoopsUserUtility::getUnameFromId($sender) . ' (' . $ip . ')</td>';
+                    echo '<td class="even">' . \XoopsUserUtility::getUnameFromId($sender) . ' (' . $ip . ')</td>';
                 } else {
-                    echo '<td class="even"><a href="mailto:' . $email . '">' . XoopsUserUtility::getUnameFromId($sender) . '</a> (' . $ip . ')</td>';
+                    echo '<td class="even"><a href="mailto:' . $email . '">' . \XoopsUserUtility::getUnameFromId($sender) . '</a> (' . $ip . ')</td>';
                 }
                 if ('' === $owneremail) {
                     echo '<td class="even">' . $ownername . '</td>';

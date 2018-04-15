@@ -21,7 +21,7 @@
 use Xmf\Request;
 use XoopsModules\Xoopstube;
 
-include __DIR__ . '/../../mainfile.php';
+include  dirname(dirname(__DIR__)) . '/mainfile.php';
 
 $moduleDirName = basename(__DIR__);
 $modulePath    = __DIR__;

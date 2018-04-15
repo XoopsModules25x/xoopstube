@@ -27,7 +27,7 @@
 use XoopsModules\Xoopstube;
 
 defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
-require_once __DIR__ . '/../../include/common.php';
+require_once  dirname(dirname(__DIR__)) . '/include/common.php';
 
 /**
  * Class LetterChoice
@@ -85,7 +85,7 @@ class LetterChoice
         $this->field_name = null === $field_name ? $this->objHandler->identifierName : $field_name;
         //        $this->alphabet   = (count($alphabet) > 0) ? $alphabet : range('a', 'z'); // is there a way to get locale alphabet?
         //        $this->alphabet       = getLocalAlphabet();
-        $this->alphabet = include __DIR__ . '/../../language/' . $GLOBALS['xoopsConfig']['language'] . '/alphabet.php';
+        $this->alphabet = include  dirname(dirname(__DIR__)) . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/alphabet.php';
         $this->arg_name = $arg_name;
         $this->url      = null === $url ? $_SERVER['PHP_SELF'] : $url;
         if ('' !== $extra_arg && ('&amp;' !== substr($extra_arg, -5) || '&' !== substr($extra_arg, -1))) {

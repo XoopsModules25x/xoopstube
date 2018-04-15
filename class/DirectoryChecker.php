@@ -24,7 +24,7 @@ use Xmf\Request;
 
 //defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-require_once __DIR__ . '/../../../mainfile.php';
+require_once  dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
 
 /**
  * Class DirectoryChecker

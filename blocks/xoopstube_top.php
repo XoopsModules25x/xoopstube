@@ -141,7 +141,7 @@ function getThumbsTopVideoBlock($bvidid, $btitle, $bsource, $bpicurl, array $siz
  */
 function getSpotlightVideos($options)
 {
-    require_once __DIR__ . '/../include/video.php';
+    require_once  dirname(__DIR__) . '/include/video.php';
     $block = [];
     /** @var XoopsModuleHandler $moduleHandler */
     $moduleHandler     = xoops_getHandler('module');

@@ -40,7 +40,7 @@ if (isset($_GET)) {
  */
 function createCategory($cid = 0)
 {
-    // require_once __DIR__ . '/../class/xoopstube_lists.php';
+    // require_once  dirname(__DIR__) . '/class/xoopstube_lists.php';
     //    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
     global $xtubemyts, $totalcats, $xoopsModule;

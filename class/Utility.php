@@ -36,7 +36,7 @@ use WideImage\WideImage;
 
 // defined('XOOPS_ROOT_PATH') || die('XOOPS Root Path not defined');
 
-//require_once __DIR__ . '/../include/common.php';
+//require_once  dirname(__DIR__) . '/include/common.php';
 
 /**
  * Class Utility
@@ -273,13 +273,13 @@ class Utility
         unset($xoopsMailer);
         $filename = XOOPS_UPLOAD_PATH . '/logmail_' . self::MODULE_NAME . '.php';
         if (!file_exists($filename)) {
-            $fp = @fopen($filename, 'a');
+            $fp = @fopen($filename, 'ab');
             if ($fp) {
                 fwrite($fp, "<?php exit(); ?>\n");
                 fclose($fp);
             }
         }
-        $fp = @fopen($filename, 'a');
+        $fp = @fopen($filename, 'ab');
 
         if ($fp) {
             fwrite($fp, str_repeat('-', 120) . "\n");
@@ -3066,11 +3066,11 @@ class Utility
         require_once XOOPS_ROOT_PATH . "/modules/$moduleDirName/class/$moduleDirName.php";
         $helper = Xoopstube\Helper::getInstance();
 
-        $a             = $helper->getHandler('xoopstube');
+        $a             = $helper->getHandler('Xoopstube');
         $b             = $a->getActiveCriteria();
         $moduleDirName = basename(dirname(__DIR__));
 
-        $criteria = $helper->getHandler('xoopstube')->getActiveCriteria();
+        $criteria = $helper->getHandler('Xoopstube')->getActiveCriteria();
         $criteria->setGroupby('UPPER(LEFT(title,1))');
         $countsByLetters = $helper->getHandler($moduleDirName)->getCounts($criteria);
         // Fill alphabet array
@@ -3125,7 +3125,7 @@ class Utility
         $criteria->add(new \Criteria('pid', $pid));
         $criteria->setSort('weight');
         $criteria->setOrder('ASC');
-        $subCategoryObjs = $helper->getHandler('category')->getObjects($criteria);
+        $subCategoryObjs = $helper->getHandler('Category')->getObjects($criteria);
         if (count($subCategoryObjs) > 0) {
             ++$level;
             foreach ($subCategoryObjs as $subCategoryObj) {

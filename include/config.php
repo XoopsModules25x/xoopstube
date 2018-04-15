@@ -68,7 +68,7 @@ function getConfig()
             '/class/registry.php',
             '/class/utilities.php',
             '/class/util.php',
-            '/include/constants.php',
+            // '/include/constants.php',
             '/include/functions.php',
             '/ajaxrating.txt',
         ],

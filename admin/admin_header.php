@@ -19,11 +19,11 @@
 
 use XoopsModules\Xoopstube;
 
-require_once __DIR__ . '/../../../include/cp_header.php';
+require_once  dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 //require_once $GLOBALS['xoops']->path('www/class/xoopsformloader.php');
 
-// require_once __DIR__ . '/../class/Utility.php';
-require_once __DIR__ . '/../include/common.php';
+// require_once  dirname(__DIR__) . '/class/Utility.php';
+require_once  dirname(__DIR__) . '/include/common.php';
 
 $moduleDirName = basename(dirname(__DIR__));
 $helper        = Xoopstube\Helper::getInstance();
@@ -48,11 +48,11 @@ if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof XoopsTpl))
 }
 
 //include $moduleDirName . '/include/config.php';
-// require_once __DIR__ . '/../class/Utility.php';
-require_once __DIR__ . '/../include/video.php';
-// require_once __DIR__ . '/../class/Lists.php';
-// require_once __DIR__ . '/../class/TextSanitizer.php';
-// require_once __DIR__ . '/../class/Tree.php';
+// require_once  dirname(__DIR__) . '/class/Utility.php';
+require_once  dirname(__DIR__) . '/include/video.php';
+// require_once  dirname(__DIR__) . '/class/Lists.php';
+// require_once  dirname(__DIR__) . '/class/TextSanitizer.php';
+// require_once  dirname(__DIR__) . '/class/Tree.php';
 
 require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';

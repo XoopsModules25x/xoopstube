@@ -93,7 +93,7 @@ switch (strtolower($op)) {
         } else {
             while (false !== (list($ratingid, $lid, $ratinguser, $rating, $ratinghostname, $ratingtimestamp, $title) = $GLOBALS['xoopsDB']->fetchRow($results))) {
                 $formatted_date = Xoopstube\Utility::getTimestamp(formatTimestamp($ratingtimestamp, $GLOBALS['xoopsModuleConfig']['dateformat']));
-                $ratinguname    = XoopsUser::getUnameFromId($ratinguser);
+                $ratinguname    = \XoopsUser::getUnameFromId($ratinguser);
                 echo '
                     <tr>
                     <td class="head" style="text-align: center;">' . $ratingid . '</td>

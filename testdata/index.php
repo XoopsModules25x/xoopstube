@@ -17,9 +17,9 @@
 
 use XoopsModules\Xoopstube;
 
-require_once __DIR__ . '/../../../mainfile.php';
+require_once  dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
 
-include __DIR__ . '/../preloads/autoloader.php';
+include  dirname(__DIR__) . '/preloads/autoloader.php';
 
 $op = \Xmf\Request::getCmd('op', '');
 

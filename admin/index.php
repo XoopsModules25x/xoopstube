@@ -77,7 +77,7 @@ if ($totalbrokenvideos > 0) {
 //------ create directories ---------------
 /*
 $folderMode = $GLOBALS['xoopsModuleConfig']['dirmode'];
-// require_once __DIR__ . '/../class/Utility.php';
+// require_once  dirname(__DIR__) . '/class/Utility.php';
 foreach (array_keys($uploadFolders) as $i) {
     Xoopstube\Utility::prepareFolder($uploadFolders[$i], $folderMode);
     $adminObject->addConfigBoxLine($uploadFolders[$i], 'folder');
@@ -85,7 +85,7 @@ foreach (array_keys($uploadFolders) as $i) {
 }
 */
 
-//require_once __DIR__ . '/../testdata/index.php';
+//require_once  dirname(__DIR__) . '/testdata/index.php';
 //$adminObject->addItemButton(_AM_XOOPSTUBE_ADD_SAMPLEDATA, '__DIR__ . /../../testdata/index.php?op=load', 'add');
 
 $adminObject->displayNavigation(basename(__FILE__));
@@ -94,7 +94,7 @@ $adminObject->displayNavigation(basename(__FILE__));
 
 if ($helper->getConfig('displaySampleButton')) {
     xoops_loadLanguage('admin/modulesadmin', 'system');
-    require_once __DIR__ . '/../testdata/index.php';
+    require_once  dirname(__DIR__) . '/testdata/index.php';
 
     $adminObject->addItemButton(constant('CO_' . $moduleDirNameUpper . '_' . 'ADD_SAMPLEDATA'), '__DIR__ . /../../testdata/index.php?op=load', 'add');
 
@@ -111,7 +111,7 @@ $adminObject->displayIndex();
 
 /*
 //------ check directories ---------------
-require_once __DIR__ . '/../include/directorychecker.php';
+require_once  dirname(__DIR__) . '/include/directorychecker.php';
 
 $adminObject->addConfigBoxLine('');
 $redirectFile = $_SERVER['PHP_SELF'];

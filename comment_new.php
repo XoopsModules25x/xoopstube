@@ -20,7 +20,7 @@
 
 use Xmf\Request;
 
-include __DIR__ . '/../../mainfile.php';
+include  dirname(dirname(__DIR__)) . '/mainfile.php';
 $com_itemid = Request::getInt('com_itemid', 0, 'GET');
 if ($com_itemid > 0) {
     // Get file title

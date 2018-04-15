@@ -21,7 +21,7 @@ use Xmf\Request;
 use XoopsModules\Xoopstube;
 
 require_once __DIR__ . '/admin_header.php';
-require_once __DIR__ . '/../../../include/cp_header.php';
+require_once  dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsform/grouppermform.php';
 
 xoops_cp_header();
