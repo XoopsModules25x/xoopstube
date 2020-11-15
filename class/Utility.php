@@ -467,10 +467,8 @@ class Utility extends Common\SysUtility
             if ('' === trim($recipients)) {
                 return false;
             }
-        } else {
-            if (0 == count($recipients)) {
-                return false;
-            }
+        } elseif (0 == count($recipients)) {
+            return false;
         }
         if (function_exists('xoops_getMailer')) {
             $xoopsMailer = xoops_getMailer();
@@ -1472,7 +1470,7 @@ class Utility extends Common\SysUtility
 
     /**
      * Returns the mime type of a file using first finfo then mime_content
-     *     
+     *
      * @param $filename
      * @return string
      */
@@ -2219,12 +2217,10 @@ class Utility extends Common\SysUtility
         if (!is_dir(XOOPS_ROOT_PATH . "/{$imgsource}/{$image}")
             && is_dir(XOOPS_ROOT_PATH . "/{$imgsource}/{$image}")) {
             $showimage .= "<img src='" . XOOPS_URL . "/{$imgsource}/{$image}' border='0' title='" . $alttext . "' alt='" . $alttext . "'></a>";
+        } elseif ($GLOBALS['xoopsUser'] && $GLOBALS['xoopsUser']->isAdmin($xoopsModule->getVar('mid'))) {
+            $showimage .= '<img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/brokenimg.png" alt="' . _MD_XOOPSTUBE_ISADMINNOTICE . '"></a>';
         } else {
-            if ($GLOBALS['xoopsUser'] && $GLOBALS['xoopsUser']->isAdmin($xoopsModule->getVar('mid'))) {
-                $showimage .= '<img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/brokenimg.png" alt="' . _MD_XOOPSTUBE_ISADMINNOTICE . '"></a>';
-            } else {
-                $showimage .= '<img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/blank.png" alt="' . $alttext . '"></a>';
-            }
+            $showimage .= '<img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/blank.png" alt="' . $alttext . '"></a>';
         }
         clearstatcache();
 
@@ -2580,17 +2576,15 @@ class Utility extends Common\SysUtility
             if (!$uploader->upload()) {
                 $errors = $uploader->getErrors();
                 redirect_header($redirecturl, 2, $errors);
+            } elseif ($redirect) {
+                redirect_header($redirecturl, 1, _AM_XOOPSTUBE_UPLOADFILE);
             } else {
-                if ($redirect) {
-                    redirect_header($redirecturl, 1, _AM_XOOPSTUBE_UPLOADFILE);
-                } else {
-                    if (is_file($uploader->savedDestination)) {
-                        $down['url']  = XOOPS_URL . '/' . $uploaddir . '/' . mb_strtolower($uploader->savedFileName);
-                        $down['size'] = filesize(XOOPS_ROOT_PATH . '/' . $uploaddir . '/' . mb_strtolower($uploader->savedFileName));
-                    }
-
-                    return $down;
+                if (is_file($uploader->savedDestination)) {
+                    $down['url']  = XOOPS_URL . '/' . $uploaddir . '/' . mb_strtolower($uploader->savedFileName);
+                    $down['size'] = filesize(XOOPS_ROOT_PATH . '/' . $uploaddir . '/' . mb_strtolower($uploader->savedFileName));
                 }
+
+                return $down;
             }
         } else {
             $errors = $uploader->getErrors();

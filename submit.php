@@ -350,12 +350,10 @@ if (true === Xoopstube\Utility::checkGroups($cid, 'XTubeSubPerm')) {
             $approve_checkbox = new \XoopsFormCheckBox('', 'approve', $approve);
             $approve_checkbox->addOption(1, _MD_XOOPSTUBE_APPROVE);
             $option_tray->addElement($approve_checkbox);
+        } elseif (true === Xoopstube\Utility::checkGroups($cid, 'XTubeAutoApp')) {
+            $sform->addElement(new \XoopsFormHidden('approve', 1));
         } else {
-            if (true === Xoopstube\Utility::checkGroups($cid, 'XTubeAutoApp')) {
-                $sform->addElement(new \XoopsFormHidden('approve', 1));
-            } else {
-                $sform->addElement(new \XoopsFormHidden('approve', 0));
-            }
+            $sform->addElement(new \XoopsFormHidden('approve', 0));
         }
         $sform->addElement($option_tray);
 

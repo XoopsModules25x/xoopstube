@@ -153,16 +153,14 @@ class LetterChoice
                     $letter_array['count']  = 0;
                     $letter_array['url']    = '';
                 }
+            } elseif (isset($countsByLetters[$letter])) {
+                $letter_array['letter'] = $letter;
+                $letter_array['count']  = $countsByLetters[$letter];
+                $letter_array['url']    = $this->url . '?' . $this->arg_name . '=' . $letter . $this->extra;
             } else {
-                if (isset($countsByLetters[$letter])) {
-                    $letter_array['letter'] = $letter;
-                    $letter_array['count']  = $countsByLetters[$letter];
-                    $letter_array['url']    = $this->url . '?' . $this->arg_name . '=' . $letter . $this->extra;
-                } else {
-                    $letter_array['letter'] = $letter;
-                    $letter_array['count']  = 0;
-                    $letter_array['url']    = '';
-                }
+                $letter_array['letter'] = $letter;
+                $letter_array['count']  = 0;
+                $letter_array['url']    = '';
             }
             $alphabetArray[$letter] = $letter_array;
             unset($letter_array);
