@@ -1,0 +1,135 @@
+-
+    gperm_groupid: '1'
+    gperm_itemid: '3'
+    gperm_modid: '387'
+    gperm_name: XTubeAppPerm
+-
+    gperm_groupid: '1'
+    gperm_itemid: '1'
+    gperm_modid: '387'
+    gperm_name: XTubeAppPerm
+-
+    gperm_groupid: '1'
+    gperm_itemid: '2'
+    gperm_modid: '387'
+    gperm_name: XTubeAppPerm
+-
+    gperm_groupid: '1'
+    gperm_itemid: '3'
+    gperm_modid: '387'
+    gperm_name: XTubeAutoApp
+-
+    gperm_groupid: '1'
+    gperm_itemid: '2'
+    gperm_modid: '387'
+    gperm_name: XTubeAutoApp
+-
+    gperm_groupid: '1'
+    gperm_itemid: '1'
+    gperm_modid: '387'
+    gperm_name: XTubeAutoApp
+-
+    gperm_groupid: '1'
+    gperm_itemid: '3'
+    gperm_modid: '387'
+    gperm_name: XTubeCatPerm
+-
+    gperm_groupid: '1'
+    gperm_itemid: '1'
+    gperm_modid: '387'
+    gperm_name: XTubeCatPerm
+-
+    gperm_groupid: '3'
+    gperm_itemid: '2'
+    gperm_modid: '387'
+    gperm_name: XTubeCatPerm
+-
+    gperm_groupid: '2'
+    gperm_itemid: '2'
+    gperm_modid: '387'
+    gperm_name: XTubeCatPerm
+-
+    gperm_groupid: '2'
+    gperm_itemid: '1'
+    gperm_modid: '387'
+    gperm_name: XTubeCatPerm
+-
+    gperm_groupid: '2'
+    gperm_itemid: '3'
+    gperm_modid: '387'
+    gperm_name: XTubeCatPerm
+-
+    gperm_groupid: '1'
+    gperm_itemid: '2'
+    gperm_modid: '387'
+    gperm_name: XTubeCatPerm
+-
+    gperm_groupid: '3'
+    gperm_itemid: '3'
+    gperm_modid: '387'
+    gperm_name: XTubeCatPerm
+-
+    gperm_groupid: '3'
+    gperm_itemid: '1'
+    gperm_modid: '387'
+    gperm_name: XTubeCatPerm
+-
+    gperm_groupid: '2'
+    gperm_itemid: '2'
+    gperm_modid: '387'
+    gperm_name: XTubeRatePerms
+-
+    gperm_groupid: '1'
+    gperm_itemid: '1'
+    gperm_modid: '387'
+    gperm_name: XTubeRatePerms
+-
+    gperm_groupid: '1'
+    gperm_itemid: '3'
+    gperm_modid: '387'
+    gperm_name: XTubeRatePerms
+-
+    gperm_groupid: '1'
+    gperm_itemid: '2'
+    gperm_modid: '387'
+    gperm_name: XTubeRatePerms
+-
+    gperm_groupid: '2'
+    gperm_itemid: '3'
+    gperm_modid: '387'
+    gperm_name: XTubeRatePerms
+-
+    gperm_groupid: '2'
+    gperm_itemid: '1'
+    gperm_modid: '387'
+    gperm_name: XTubeRatePerms
+-
+    gperm_groupid: '1'
+    gperm_itemid: '1'
+    gperm_modid: '387'
+    gperm_name: XTubeSubPerm
+-
+    gperm_groupid: '1'
+    gperm_itemid: '3'
+    gperm_modid: '387'
+    gperm_name: XTubeSubPerm
+-
+    gperm_groupid: '2'
+    gperm_itemid: '2'
+    gperm_modid: '387'
+    gperm_name: XTubeSubPerm
+-
+    gperm_groupid: '1'
+    gperm_itemid: '2'
+    gperm_modid: '387'
+    gperm_name: XTubeSubPerm
+-
+    gperm_groupid: '2'
+    gperm_itemid: '3'
+    gperm_modid: '387'
+    gperm_name: XTubeSubPerm
+-
+    gperm_groupid: '2'
+    gperm_itemid: '1'
+    gperm_modid: '387'
+    gperm_name: XTubeSubPerm
