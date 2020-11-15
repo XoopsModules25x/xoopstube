@@ -67,7 +67,7 @@ class Thumbnails
      */
     public function __construct($img_name = null, $img_path = null, $img_savepath = null)
     {
-        if (!\preg_match("/\.(jpg|gif|png|jpeg)$/i", $img_name)) {
+        if (!\preg_match('/\.(jpg|gif|png|jpeg)$/i', $img_name)) {
             return false;
         }
 
