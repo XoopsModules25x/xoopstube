@@ -12,11 +12,12 @@
  * @package         Xoopstube
  * @author          XOOPS Development Team
  * @copyright       2001-2016 XOOPS Project (https://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link            https://xoops.org/
  * @since           1.0.6
  */
 
+use Xmf\Module\Admin;
 use Xmf\Request;
 use XoopsModules\Xoopstube;
 
@@ -25,7 +26,7 @@ require_once __DIR__ . '/admin_header.php';
 $op  = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET'); //cleanRequestVars($_REQUEST, 'op', '');
 $lid = Request::getInt('lid', Request::getInt('lid', 0, 'POST'), 'GET'); //cleanRequestVars($_REQUEST, 'lid', 0);
 
-switch (strtolower($op)) {
+switch (mb_strtolower($op)) {
     case 'approve':
 
         global $xoopsModule;
@@ -35,7 +36,7 @@ switch (strtolower($op)) {
 
             return false;
         }
-        list($cid, $title, $publisher, $notifypub) = $GLOBALS['xoopsDB']->fetchRow($result);
+        [$cid, $title, $publisher, $notifypub] = $GLOBALS['xoopsDB']->fetchRow($result);
 
         // Update the database
         $time = time();
@@ -64,7 +65,8 @@ switch (strtolower($op)) {
             $row                   = $GLOBALS['xoopsDB']->fetchArray($result);
             $tags['CATEGORY_NAME'] = $row['title'];
             $tags['CATEGORY_URL']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewcat.php?cid=' . $cid;
-            $notificationHandler   = xoops_getHandler('notification');
+            /** @var \XoopsNotificationHandler $notificationHandler */
+            $notificationHandler = xoops_getHandler('notification');
             $notificationHandler->triggerEvent('global', 0, 'new_video', $tags);
             $notificationHandler->triggerEvent('category', $cid, 'new_video', $tags);
             if (1 == (int)$notifypub) {
@@ -73,7 +75,6 @@ switch (strtolower($op)) {
         }
         redirect_header('main.php', 1, _AM_XOOPSTUBE_SUB_NEWFILECREATED);
         break;
-
     case 'main':
     default:
 
@@ -88,7 +89,7 @@ switch (strtolower($op)) {
         $new_array_count = $GLOBALS['xoopsDB']->getRowsNum($GLOBALS['xoopsDB']->query($sql));
 
         xoops_cp_header();
-        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject = Admin::getInstance();
         $adminObject->displayNavigation(basename(__FILE__));
 
         echo '  <div style="padding:5px; background-color: #EEEEEE; border: 1px solid #D9D9D9;">

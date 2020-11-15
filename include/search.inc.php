@@ -9,39 +9,38 @@
  *
  * PHP version 5
  *
- * @category        Module
- * @package         Xoopstube
- * @author          XOOPS Development Team
- * @copyright       2001-2016 XOOPS Project (https://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link            https://xoops.org/
- * @since           1.0.6
- *
  * @param int    $cid
  * @param string $permType
  * @param bool   $redirect
  *
  * @return bool
+ * @category        Module
+ * @package         Xoopstube
+ * @author          XOOPS Development Team
+ * @copyright       2001-2016 XOOPS Project (https://xoops.org)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @link            https://xoops.org/
+ * @since           1.0.6
+ *
  */
-
 function xtubeCheckSearchGroups($cid = 0, $permType = 'XTubeCatPerm', $redirect = false)
 {
     $moduleDirName = basename(dirname(__DIR__));
     //    $modulePath = dirname(__DIR__);
 
-    $groups           = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
+    $groups = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
+    /** @var \XoopsGroupPermHandler $grouppermHandler */
     $grouppermHandler = xoops_getHandler('groupperm');
 
-    /** @var XoopsModuleHandler $moduleHandler */
+    /** @var \XoopsModuleHandler $moduleHandler */
     $moduleHandler = xoops_getHandler('module');
     $module        = $moduleHandler->getByDirname($moduleDirName);
 
     if (!$grouppermHandler->checkRight($permType, $cid, $groups, $module->getVar('mid'))) {
         if (false === $redirect) {
             return false;
-        } else {
-            redirect_header('index.php', 3, _NOPERM);
         }
+        redirect_header('index.php', 3, _NOPERM);
     }
     unset($module);
 

@@ -22,7 +22,7 @@
                 <td class="odd"><{$smarty.const._MD_XOOPSTUBE_LAST30DAYS}></td>
                 <td width="15%" class="odd" align="center"><{$allmonthvideos}></td>
             </tr>
-        </table>        
+        </table>
     </div>
 </div>
 
@@ -32,7 +32,7 @@
         <button class="btn btn-xs btn-primary"  onclick="window.location.href='<{$xoops_url}>/modules/<{$module_dir}>/newlist.php?newvideoshowdays=7'"><{$smarty.const._MD_XOOPSTUBE_1WEEK}></button>
         <button class="btn btn-xs btn-primary"  onclick="window.location.href='<{$xoops_url}>/modules/<{$module_dir}>/newlist.php?newvideoshowdays=14'"><{$smarty.const._MD_XOOPSTUBE_2WEEKS}></button>
         <button class="btn btn-xs btn-primary"  onclick="window.location.href='<{$xoops_url}>/modules/<{$module_dir}>/newlist.php?newvideoshowdays=30'"><{$smarty.const._MD_XOOPSTUBE_30DAYS}></button>
-       
+
     </div>
 </div>
 <br>
@@ -45,7 +45,7 @@
     </tr>
     </thead>
     <tbody>
-    <{if count($dailyvideos) gt 0}>
+    <{if $dailyvideos|is_array && count($dailyvideos) > 0}>
     <!-- Start day loop -->
     <{foreach item=dailyvideo from=$dailyvideos}>
         <tr>

@@ -13,7 +13,7 @@
  * @package         Xoopstube
  * @author          XOOPS Development Team
  * @copyright       2001-2016 XOOPS Project (https://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link            https://xoops.org/
  * @since           1.0.6
  */
@@ -21,17 +21,17 @@
 use Xmf\Request;
 use XoopsModules\Xoopstube;
 
-include __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 
 $GLOBALS['xoopsOption']['template_main'] = 'xoopstube_topten.tpl';
-include XOOPS_ROOT_PATH . '/header.php';
+require_once XOOPS_ROOT_PATH . '/header.php';
 $xoTheme->addStylesheet('modules/' . $moduleDirName . '/assets/css/xtubestyle.css');
 
 $mytree = new Xoopstube\Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
 
 $action_array = [
     'hit'  => 0,
-    'rate' => 1
+    'rate' => 1,
 ];
 $list_array   = ['hits', 'rating'];
 $lang_array   = [_MD_XOOPSTUBE_HITS, _MD_XOOPSTUBE_RATING];
@@ -48,7 +48,7 @@ $arr    = [];
 $result = $GLOBALS['xoopsDB']->query('SELECT cid, title, pid FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_cat') . ' WHERE pid=0 ORDER BY ' . $GLOBALS['xoopsModuleConfig']['sortcats']);
 
 $e = 0;
-while (false !== (list($cid, $ctitle) = $GLOBALS['xoopsDB']->fetchRow($result))) {
+while (list($cid, $ctitle) = $GLOBALS['xoopsDB']->fetchRow($result)) {
     if (true === Xoopstube\Utility::checkGroups($cid)) {
         $query      = 'SELECT lid, cid, title, hits, rating, votes FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE published > 0 AND published <= ' . time() . ' AND (expired = 0 OR expired > ' . time() . ') AND offline = 0 AND (cid=' . $cid;
         $arr        = $mytree->getAllChildId($cid);
@@ -63,7 +63,7 @@ while (false !== (list($cid, $ctitle) = $GLOBALS['xoopsDB']->fetchRow($result)))
         if ($filecount > 0) {
             $rankings[$e]['title'] = $xtubemyts->htmlSpecialCharsStrip($ctitle);
             $rank                  = 1;
-            while (false !== (list($did, $dcid, $dtitle, $hits, $rating, $votes) = $GLOBALS['xoopsDB']->fetchRow($result2))) {
+            while (list($did, $dcid, $dtitle, $hits, $rating, $votes) = $GLOBALS['xoopsDB']->fetchRow($result2)) {
                 $catpath                = basename($mytree->getPathFromId($dcid, 'title'));
                 $dtitle                 = $xtubemyts->htmlSpecialCharsStrip($dtitle);
                 $rankings[$e]['file'][] = [
@@ -74,7 +74,7 @@ while (false !== (list($cid, $ctitle) = $GLOBALS['xoopsDB']->fetchRow($result)))
                     'category' => $catpath,
                     'hits'     => $hits,
                     'rating'   => number_format($rating, 2),
-                    'votes'    => $votes
+                    'votes'    => $votes,
                 ];
                 ++$rank;
             }
@@ -87,4 +87,4 @@ $xoopsTpl->assign('lang_sortby', $lang_array[$sort_arr]);
 $xoopsTpl->assign('rankings', $rankings);
 $xoopsTpl->assign('module_dir', $xoopsModule->getVar('dirname'));
 
-include XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Module: XoopsTube
  *
@@ -12,12 +13,16 @@
  * @package         Xoopstube
  * @author          XOOPS Development Team
  * @copyright       2001-2016 XOOPS Project (https://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link            https://xoops.org/
  * @since           1.0.6
  */
 
-require_once __DIR__ . '/admin_header.php';
+use Xmf\Module\Admin;
+
+/** @var Admin $adminObject */
+
+require __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
 $adminObject->displayNavigation(basename(__FILE__));

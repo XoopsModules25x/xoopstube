@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Xoopstube;
+<?php
+
+namespace XoopsModules\Xoopstube;
 
 /**
  * Module: XoopsTube
@@ -13,13 +15,12 @@
  * @package         Xoopstube
  * @author          XOOPS Development Team
  * @copyright       2001-2016 XOOPS Project (https://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link            https://xoops.org/
  * @since           1.0.6
  */
 
 use XoopsModules\Xoopstube;
-use XoopsModules\Xoopstube\Common;
 
 /**
  * Class Lists
@@ -54,8 +55,8 @@ class Lists
         $emptyselect = 0,
         $type = 0,
         $prefix = '',
-        $suffix = '')
-    {
+        $suffix = ''
+    ) {
         $this->value       = $value;
         $this->selection   = $selected;
         $this->path        = $path;
@@ -98,17 +99,17 @@ class Lists
     public function getDirListAsArray($dirname)
     {
         $dirlist = [];
-        if (is_dir($dirname) && $handle = opendir($dirname)) {
-            while (false !== ($file = readdir($handle))) {
-                if (!preg_match('/^[.]{1,2}$/', $file)) {
-                    if ('cvs' !== strtolower($file) && is_dir($dirname . $file)) {
+        if (\is_dir($dirname) && $handle = \opendir($dirname)) {
+            while (false !== ($file = \readdir($handle))) {
+                if (!\preg_match('/^[.]{1,2}$/', $file)) {
+                    if ('cvs' !== mb_strtolower($file) && \is_dir($dirname . $file)) {
                         $dirlist[$file] = $file;
                     }
                 }
             }
-            closedir($handle);
+            \closedir($handle);
 
-            reset($dirlist);
+            \reset($dirlist);
         }
 
         return $dirlist;
@@ -125,58 +126,55 @@ class Lists
     public static function getListTypeAsArray($dirname, $type = '', $prefix = '', $noselection = 1)
     {
         $filelist = [];
-        switch (trim($type)) {
+        switch (\trim($type)) {
             case 'images':
                 $types = '[.gif|.jpg|.png]';
                 if ($noselection) {
-                    $filelist[''] = _AM_XOOPSTUBE_NOIMAGE;
+                    $filelist[''] = \_AM_XOOPSTUBE_NOIMAGE;
                 }
                 break;
             case 'media':
                 $types = '[.aac|.flv|.mp3|.mp4|.swf]';
                 if ($noselection) {
-                    $filelist[''] = _AM_XOOPSTUBE_NOVIDEO;
+                    $filelist[''] = \_AM_XOOPSTUBE_NOVIDEO;
                 }
                 break;
             case 'html':
                 $types = '[.htm|.tpl|.html|.xhtml|.php|.php3|.phtml|.txt]';
                 if ($noselection) {
-                    $filelist[''] = _AM_XOOPSTUBE_NOSELECT;
+                    $filelist[''] = \_AM_XOOPSTUBE_NOSELECT;
                 }
                 break;
             default:
                 $types = '';
                 if ($noselection) {
-                    $filelist[''] = _AM_XOOPSTUBE_NOFILESELECT;
+                    $filelist[''] = \_AM_XOOPSTUBE_NOFILESELECT;
                 }
                 break;
         }
 
-        if ('/' === substr($dirname, -1)) {
-            $dirname = substr($dirname, 0, -1);
+        if ('/' === mb_substr($dirname, -1)) {
+            $dirname = mb_substr($dirname, 0, -1);
         }
 
-        if (is_dir($dirname) && $handle = opendir($dirname)) {
-            while (false !== ($file = readdir($handle))) {
-                if (!preg_match('/^[.]{1,2}$/', $file) && preg_match("/$types$/i", $file) && is_file($dirname . '/' . $file)) {
-                    if ('blank.gif' === strtolower($file)) {
+        if (\is_dir($dirname) && $handle = \opendir($dirname)) {
+            while (false !== ($file = \readdir($handle))) {
+                if (!\preg_match('/^[.]{1,2}$/', $file) && \preg_match("/$types$/i", $file) && \is_file($dirname . '/' . $file)) {
+                    if ('blank.gif' === mb_strtolower($file)) {
                         continue;
                     }
                     $file            = $prefix . $file;
                     $filelist[$file] = $file;
                 }
             }
-            closedir($handle);
-            asort($filelist);
-            reset($filelist);
+            \closedir($handle);
+            \asort($filelist);
+            \reset($filelist);
         }
 
         return $filelist;
     }
 
-    /**
-     * @return null
-     */
     public function value()
     {
         return $this->value;

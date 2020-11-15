@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Xoopstube\Common;
+<?php
+
+namespace XoopsModules\Xoopstube\Common;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -9,6 +11,7 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 /**
  * LetterChoice class
  *
@@ -24,10 +27,14 @@
  * echo $choicebyletter->render();
  */
 
+use CriteriaCompo;
 use XoopsModules\Xoopstube;
+use XoopsTpl;
+use xos_opal_Theme;
 
-defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
-require_once  dirname(dirname(__DIR__)) . '/include/common.php';
+
+
+// require_once  dirname(dirname(__DIR__)) . '/include/common.php';
 
 /**
  * Class LetterChoice
@@ -38,7 +45,6 @@ class LetterChoice
      * @access public
      */
     public $helper = null;
-
     /**
      * *#@+
      *
@@ -52,9 +58,15 @@ class LetterChoice
     private $url;
     private $extra;
     private $caseSensitive;
-
     /**
      * *#@-
+     * @param mixed      $objHandler
+     * @param null|mixed $criteria
+     * @param null|mixed $field_name
+     * @param mixed      $arg_name
+     * @param null|mixed $url
+     * @param mixed      $extra_arg
+     * @param mixed      $caseSensitive
      */
 
     /**
@@ -67,7 +79,7 @@ class LetterChoice
      * @param string                         $arg_name   item on the current page
      * @param string                         $url
      * @param string                         $extra_arg  Additional arguments to pass in the URL
-     * @param boolean                        $caseSensitive
+     * @param bool                           $caseSensitive
      */
     public function __construct(
         $objHandler,
@@ -77,18 +89,19 @@ class LetterChoice
         $arg_name = 'letter',
         $url = null,
         $extra_arg = '',
-        $caseSensitive = false)
-    {
+        $caseSensitive = false
+    ) {
+        /** @var \Xoopstube\Helper $this ->helper */
         $this->helper     = Xoopstube\Helper::getInstance();
         $this->objHandler = $objHandler;
-        $this->criteria   = null === $criteria ? new \CriteriaCompo() : $criteria;
-        $this->field_name = null === $field_name ? $this->objHandler->identifierName : $field_name;
+        $this->criteria   = $criteria ?? new CriteriaCompo();
+        $this->field_name = $field_name ?? $this->objHandler->identifierName;
         //        $this->alphabet   = (count($alphabet) > 0) ? $alphabet : range('a', 'z'); // is there a way to get locale alphabet?
         //        $this->alphabet       = getLocalAlphabet();
-        $this->alphabet = include  dirname(dirname(__DIR__)) . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/alphabet.php';
+        $this->alphabet = require_once dirname(__DIR__, 2) . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/alphabet.php';
         $this->arg_name = $arg_name;
-        $this->url      = null === $url ? $_SERVER['PHP_SELF'] : $url;
-        if ('' !== $extra_arg && ('&amp;' !== substr($extra_arg, -5) || '&' !== substr($extra_arg, -1))) {
+        $this->url      = $url ?? $_SERVER['SCRIPT_NAME'];
+        if ('' !== $extra_arg && ('&amp;' !== mb_substr($extra_arg, -5) || '&' !== mb_substr($extra_arg, -1))) {
             $this->extra = '&amp;' . $extra_arg;
         }
         $this->caseSensitive = $caseSensitive;
@@ -103,15 +116,15 @@ class LetterChoice
      */
     public function render($alphaCount = null, $howmanyother = null)
     {
-        $moduleDirName      = basename(dirname(dirname(__DIR__)));
-        $moduleDirNameUpper = strtoupper($moduleDirName);
+        $moduleDirName      = basename(dirname(__DIR__, 2));
+        $moduleDirNameUpper = mb_strtoupper($moduleDirName);
         xoops_loadLanguage('common', $moduleDirName);
         xoops_loadLanguage('alphabet', $moduleDirName);
         $all   = constant('CO_' . $moduleDirNameUpper . '_ALL');
         $other = constant('CO_' . $moduleDirNameUpper . '_OTHER');
 
         $ret = '';
-        //
+
         if (!$this->caseSensitive) {
             $this->criteria->setGroupBy('UPPER(LEFT(' . $this->field_name . ',1))');
         } else {
@@ -131,9 +144,9 @@ class LetterChoice
         foreach ($this->alphabet as $letter) {
             $letter_array = [];
             if (!$this->caseSensitive) {
-                if (isset($countsByLetters[strtoupper($letter)])) {
+                if (isset($countsByLetters[mb_strtoupper($letter)])) {
                     $letter_array['letter'] = $letter;
-                    $letter_array['count']  = $countsByLetters[strtoupper($letter)];
+                    $letter_array['count']  = $countsByLetters[mb_strtoupper($letter)];
                     $letter_array['url']    = $this->url . '?' . $this->arg_name . '=' . $letter . $this->extra;
                 } else {
                     $letter_array['letter'] = $letter;
@@ -163,10 +176,10 @@ class LetterChoice
         // render output
         if (!isset($GLOBALS['xoTheme']) || !is_object($GLOBALS['xoTheme'])) {
             require_once $GLOBALS['xoops']->path('/class/theme.php');
-            $GLOBALS['xoTheme'] = new \xos_opal_Theme();
+            $GLOBALS['xoTheme'] = new xos_opal_Theme();
         }
         require_once $GLOBALS['xoops']->path('/class/template.php');
-        $choiceByLetterTpl          = new \XoopsTpl();
+        $choiceByLetterTpl          = new XoopsTpl();
         $choiceByLetterTpl->caching = 0; // Disable cache
         $choiceByLetterTpl->assign('alphabet', $alphabetArray);
         $ret .= $choiceByLetterTpl->fetch("db:{$this->helper->getDirname()}_letterschoice.tpl");

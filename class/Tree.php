@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Xoopstube;
+<?php
+
+namespace XoopsModules\Xoopstube;
 
 /**
  * Module: XoopsTube
@@ -14,15 +16,12 @@
  * @author          XOOPS Development Team
  * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  * @copyright       2001-2016 XOOPS Project (https://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link            https://xoops.org/
  * @since           1.0.6
  */
 
 use XoopsModules\Xoopstube;
-use XoopsModules\Xoopstube\Common;
-
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
  * Abstract base class for forms
@@ -41,9 +40,9 @@ class Tree
     public $order; //specifies the order of query results
     public $title; // name of a field in table $table which will be used when  selection box and paths are generated
     public $db;
-
     //constructor of class XoopsTree
     //sets the names of table, unique id, and parend id
+
     /**
      * @param $tableName
      * @param $idName
@@ -79,7 +78,7 @@ class Tree
             return $arr;
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
-            array_push($arr, $myrow);
+            $arr[] = $myrow;
         }
 
         return $arr;
@@ -101,8 +100,8 @@ class Tree
         if (0 == $count) {
             return $idarray;
         }
-        while (false !== (list($id) = $this->db->fetchRow($result))) {
-            array_push($idarray, $id);
+        while (list($id) = $this->db->fetchRow($result)) {
+            $idarray[] = $id;
         }
 
         return $idarray;
@@ -129,9 +128,9 @@ class Tree
         if (0 == $count) {
             return $idarray;
         }
-        while (false !== (list($r_id) = $this->db->fetchRow($result))) {
-            array_push($idarray, $r_id);
-            $idarray = $this->getAllChildId($r_id, $order, $idarray);
+        while (list($r_id) = $this->db->fetchRow($result)) {
+            $idarray[] = $r_id;
+            $idarray   = $this->getAllChildId($r_id, $order, $idarray);
         }
 
         return $idarray;
@@ -154,18 +153,19 @@ class Tree
             $sql .= " ORDER BY $order";
         }
         $result = $this->db->query($sql);
-        list($r_id) = $this->db->fetchRow($result);
+        [$r_id] = $this->db->fetchRow($result);
         if (0 == $r_id) {
             return $idarray;
         }
-        array_push($idarray, $r_id);
-        $idarray = $this->getAllParentId($r_id, $order, $idarray);
+        $idarray[] = $r_id;
+        $idarray   = $this->getAllParentId($r_id, $order, $idarray);
 
         return $idarray;
     }
 
     //generates path from the root id to a given id($selectId)
     // the path is delimetered with "/"
+
     /**
      * @param        $selectId
      * @param        $title
@@ -180,9 +180,9 @@ class Tree
         if (0 == $this->db->getRowsNum($result)) {
             return $path;
         }
-        list($parentid, $name) = $this->db->fetchRow($result);
+        [$parentid, $name] = $this->db->fetchRow($result);
         $myts = \MyTextSanitizer::getInstance();
-        $name = $myts->htmlspecialchars($name);
+        $name = $myts->htmlSpecialChars($name);
         $path = '/' . $name . $path . '';
         if (0 == $parentid) {
             return $path;
@@ -195,6 +195,7 @@ class Tree
     //makes a nicely ordered selection box
     //$preset_id is used to specify a preselected item
     //set $none to 1 to add a option with value 0
+
     /**
      * @param        $title
      * @param string $order
@@ -222,7 +223,7 @@ class Tree
         if ($none) {
             echo "<option value='0'>----</option>\n";
         }
-        while (false !== (list($catid, $name) = $this->db->fetchRow($result))) {
+        while (list($catid, $name) = $this->db->fetchRow($result)) {
             $sel = '';
             if ($catid == $preset_id) {
                 $sel = " selected='selected'";
@@ -231,8 +232,8 @@ class Tree
             $sel = '';
             $arr = $this->getChildTreeArray($catid, $order);
             foreach ($arr as $option) {
-                $option['prefix'] = str_replace('.', '--', $option['prefix']);
-                $catpath          = $option['prefix'] . '&nbsp;' . $myts->htmlspecialchars($option[$title]);
+                $option['prefix'] = \str_replace('.', '--', $option['prefix']);
+                $catpath          = $option['prefix'] . '&nbsp;' . $myts->htmlSpecialChars($option[$title]);
                 if ($option[$this->id] == $preset_id) {
                     $sel = " selected='selected'";
                 }
@@ -262,9 +263,9 @@ class Tree
         if (0 == $this->db->getRowsNum($result)) {
             return $path;
         }
-        list($parentid, $name) = $this->db->fetchRow($result);
+        [$parentid, $name] = $this->db->fetchRow($result);
         $myts = \MyTextSanitizer::getInstance();
-        $name = $myts->htmlspecialchars($name);
+        $name = $myts->htmlSpecialChars($name);
         $path = "<li><a href='" . $funcURL . '&amp;' . $this->id . '=' . $selectId . "'>" . $name . '</a></li>' . $path . '';
         if (0 == $parentid) {
             return $path;
@@ -276,6 +277,7 @@ class Tree
 
     //generates id path from the root id to a given id
     // the path is delimetered with "/"
+
     /**
      * @param        $selectId
      * @param string $path
@@ -289,7 +291,7 @@ class Tree
         if (0 == $this->db->getRowsNum($result)) {
             return $path;
         }
-        list($parentid) = $this->db->fetchRow($result);
+        [$parentid] = $this->db->fetchRow($result);
         $path = '/' . $selectId . $path . '';
         if (0 == $parentid) {
             return $path;
@@ -321,8 +323,8 @@ class Tree
             return $parray;
         }
         while (false !== ($row = $this->db->fetchArray($result))) {
-            array_push($parray, $row);
-            $parray = $this->getAllChild($row[$this->id], $order, $parray);
+            $parray[] = $row;
+            $parray   = $this->getAllChild($row[$this->id], $order, $parray);
         }
 
         return $parray;
@@ -352,8 +354,8 @@ class Tree
         }
         while (false !== ($row = $this->db->fetchArray($result))) {
             $row['prefix'] = $r_prefix . '.';
-            array_push($parray, $row);
-            $parray = $this->getChildTreeArray($row[$this->id], $order, $parray, $row['prefix']);
+            $parray[]      = $row;
+            $parray        = $this->getChildTreeArray($row[$this->id], $order, $parray, $row['prefix']);
         }
 
         return $parray;

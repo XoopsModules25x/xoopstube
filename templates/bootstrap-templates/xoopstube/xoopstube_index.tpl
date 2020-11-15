@@ -23,7 +23,7 @@
         <!-- .xoopstube-header-text -->
     <{/if}>
     </div>
-    
+
     <div class="col-md-12">
         <{if $catarray.indexheader != ""}>
             <div class="xoopstube-description text-center">
@@ -38,7 +38,7 @@
             <{$catarray.letters2}>
         </div><!-- .xoopstube-navigation -->
     </div>
-    
+
 </div>
 
 <hr>
@@ -48,7 +48,7 @@
         <h4 style="margin-top: 0;"><{$smarty.const._MD_XOOPSTUBE_MAINLISTING}></h4>
     </div>
 </div>
-<{if count($categories) gt 0}>
+<{if $categories|is_array && count($categories) > 0}>
 <div class="row">
     <{foreach item=category from=$categories}>
         <div class="col-md-3 col-sm-4 col-xs-6" style="margin-bottom: 5px;">

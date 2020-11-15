@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Xoopstube;
+<?php
+
+namespace XoopsModules\Xoopstube;
 
 /**
  * Module: XoopsTube
@@ -13,13 +15,12 @@
  * @package         Xoopstube
  * @author          XOOPS Development Team
  * @copyright       2001-2016 XOOPS Project (https://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link            https://xoops.org/
  * @since           1.0.6
  */
 
 use XoopsModules\Xoopstube;
-use XoopsModules\Xoopstube\Common;
 
 /**
  * Class FileList
@@ -28,7 +29,6 @@ use XoopsModules\Xoopstube\Common;
 class FileList
 {
     public $filelist = [];
-
     public $value;
     public $selected;
     public $path = 'uploads';
@@ -42,10 +42,10 @@ class FileList
     /**
      * fileList::construct()
      *
-     * @param string  $path
-     * @param null    $value
-     * @param string  $selected
-     * @param integer $size
+     * @param string $path
+     * @param null   $value
+     * @param string $selected
+     * @param int    $size
      *
      * @internal param int $emptySelect
      * @internal param int $type
@@ -59,10 +59,10 @@ class FileList
         $this->size      = (int)$size;
 
         $pathToCheck = XOOPS_ROOT_PATH . "/{$path}";
-        if (!is_dir($pathToCheck) && false === @mkdir($pathToCheck, 0777)) {
+        if (!\is_dir($pathToCheck) && !mkdir($pathToCheck, 0777) && !is_dir($pathToCheck)) {
             /** @var \XoopsLogger $logger */
             $logger = \XoopsLogger::getInstance();
-            $logger->handleError(E_USER_WARNING, $pathToCheck . _AM_XOOPSTUBE_DOESNOTEXIST, __FILE__, __LINE__);
+            $logger->handleError(\E_USER_WARNING, $pathToCheck . \_AM_XOOPSTUBE_DOESNOTEXIST, __FILE__, __LINE__);
 
             return false;
         }
@@ -74,11 +74,8 @@ class FileList
     /**
      * SpotList::setNoSelection()
      *
-     * @param integer $value
-     *
-     * @return void
+     * @param int $value
      */
-
     public function setEmptySelect($value = 0)
     {
         $this->emptySelect = (1 !== (int)$value) ? 0 : 1;
@@ -113,7 +110,7 @@ class FileList
      */
     public function setListType($value = 'images')
     {
-        $this->type = strtolower($value);
+        $this->type = mb_strtolower($value);
     }
 
     /**
@@ -148,62 +145,57 @@ class FileList
     public function &getListTypeAsArray()
     {
         $filelist = [];
-        switch (trim($this->type)) {
+        switch (\trim($this->type)) {
             case 'images':
                 $types = '[.gif|.jpg|.png]';
                 if ($this->noSelection) {
-                    $this->filelist[0] = _AM_XOOPSTUBE_NOIMAGE;
+                    $this->filelist[0] = \_AM_XOOPSTUBE_NOIMAGE;
                 }
                 break;
             case 'media':
                 $types = '[.aac|.flv|.mp3|.mp4|.swf]';
                 if ($this->noSelection) {
-                    $this->filelist[0] = _AM_XOOPSTUBE_NOVIDEO;
+                    $this->filelist[0] = \_AM_XOOPSTUBE_NOVIDEO;
                 }
                 break;
-
             case 'html':
                 $types = '[.htm|.tpl|.html|.xhtml|.php|.php3|.phtml|.txt]';
                 if ($this->noSelection) {
-                    $this->filelist[0] = _AM_XOOPSTUBE_NOSELECT;
+                    $this->filelist[0] = \_AM_XOOPSTUBE_NOSELECT;
                 }
                 break;
-
             default:
                 $types = '';
                 if ($this->noSelection) {
-                    $this->filelist[0] = _AM_XOOPSTUBE_NOFILESELECT;
+                    $this->filelist[0] = \_AM_XOOPSTUBE_NOFILESELECT;
                 }
                 break;
         }
 
-        if ('/' === substr($this->path, -1)) {
-            $this->path = substr($this->path, 0, -1);
+        if ('/' === mb_substr($this->path, -1)) {
+            $this->path = mb_substr($this->path, 0, -1);
         }
 
         $_full_path = XOOPS_ROOT_PATH . "/{$this->path}";
 
-        if (is_dir($_full_path) && $handle = opendir($_full_path)) {
-            while (false !== ($file = readdir($handle))) {
-                if (!preg_match('/^[.]{1,2}$/', $file) && preg_match("/$types$/i", $file) && is_file($_full_path . '/' . $file)) {
-                    if ('blank.gif' === strtolower($file)) {
+        if (\is_dir($_full_path) && $handle = \opendir($_full_path)) {
+            while (false !== ($file = \readdir($handle))) {
+                if (!\preg_match('/^[.]{1,2}$/', $file) && \preg_match("/$types$/i", $file) && \is_file($_full_path . '/' . $file)) {
+                    if ('blank.gif' === mb_strtolower($file)) {
                         continue;
                     }
                     $file                  = $this->prefix . $file;
                     $this->filelist[$file] = $file;
                 }
             }
-            closedir($handle);
-            asort($this->filelist);
-            reset($this->filelist);
+            \closedir($handle);
+            \asort($this->filelist);
+            \reset($this->filelist);
         }
 
         return $this->filelist;
     }
 
-    /**
-     * @return null
-     */
     public function value()
     {
         return $this->value;

@@ -9,17 +9,16 @@
  *
  * PHP version 5
  *
- * @category        Module
+ * @param mixed $items
  * @package         Xoopstube
  * @author          XOOPS Development Team
  * @author          Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @copyright       2001-2016 XOOPS Project (https://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link            https://xoops.org/
  * @since           1.0.6
+ * @category        Module
  */
-
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
  * Get item fields:
@@ -31,12 +30,10 @@
  * uname
  * tags
  *
+ * @return bool
  * @var array $items associative array of items: [modid][catid][itemid]
  *
- * @return boolean
- *
  */
-
 function xoopstube_tag_iteminfo(&$items)
 {
     $moduleDirName = basename(dirname(__DIR__));
@@ -76,7 +73,7 @@ function xoopstube_tag_iteminfo(&$items)
                 'link'    => "singlevideo.php?cid=$lcid&amp;lid=$item_id",
                 'time'    => $row['published'],
                 'tags'    => $row['item_tag'],
-                'content' => $row['description']
+                'content' => $row['description'],
             ];
         }
     }

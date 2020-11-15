@@ -28,7 +28,7 @@
 
 
     <div class="order-by">
-        <{if $show_videos == true}>
+        <{if $show_videos === true}>
             <h3 class="xoops-default-title"><{$smarty.const._MD_XOOPSTUBE_SORTBY}></h3>
             <div class="row">
                 <div class="col-sm-3 col-md-3">
@@ -77,7 +77,7 @@
         <{/if}>
     </div><!-- .order-by -->
 
-    <{if $page_nav == true}>
+    <{if $page_nav === true}>
         <{$pagenav}>
     <{/if}>
 
@@ -85,11 +85,11 @@
         <{include file="db:xoopstube_videoload.tpl" video=$video[i]}>
     <{/section}>
 
-    <{if $page_nav == true}>
+    <{if $page_nav === true}>
         <{$pagenav}>
     <{/if}>
 
-    <{if $moderate == true}>
+    <{if $moderate === true}>
         <{$smarty.const._MD_XOOPSTUBE_MODERATOR_OPTIONS}>
 
         <{section name=a loop=$mod_arr}>

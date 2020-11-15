@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Xoopstube;
+<?php
+
+namespace XoopsModules\Xoopstube;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -9,6 +11,7 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 /**
  *  Xoopstube class
  *
@@ -21,14 +24,18 @@
  */
 
 use XoopsModules\Xoopstube;
-use XoopsModules\Xoopstube\Common;
+use XoopsObject;
 
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
+
+
+
+
+
 
 /**
  * Class Videos
  */
-class Videos extends \XoopsObject
+class Videos extends XoopsObject
 {
     public $dirname;
     public $module;
@@ -64,9 +71,6 @@ class Videos extends \XoopsObject
         return $instance;
     }
 
-    /**
-     * @return null
-     */
     public function getModule()
     {
         if (null === $this->module) {
@@ -78,8 +82,7 @@ class Videos extends \XoopsObject
 
     /**
      * @param null $name
-     *
-     * @return null
+     * @return mixed|null |null
      */
     public function getConfig($name = null)
     {
@@ -139,8 +142,8 @@ class Videos extends \XoopsObject
         if (isset($xoopsModule) && is_object($xoopsModule) && $xoopsModule->getVar('dirname') === $this->dirname) {
             $this->module = $xoopsModule;
         } else {
-            $hModule      = xoops_getHandler('module');
-            $this->module = $hModule->getByDirname($this->dirname);
+            $moduleHandler = xoops_getHandler('module');
+            $this->module  = $moduleHandler->getByDirname($this->dirname);
         }
         $this->addLog('INIT MODULE');
     }

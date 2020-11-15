@@ -12,22 +12,23 @@
  * @package         Xoopstube
  * @author          XOOPS Development Team
  * @copyright       2001-2016 XOOPS Project (https://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link            https://xoops.org/
  * @since           1.0.6
  */
 
 use XoopsModules\Xoopstube;
+use XoopsModules\Xoopstube\Helper;
 
-require_once  dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+require_once dirname(__DIR__, 3) . '/include/cp_header.php';
 //require_once $GLOBALS['xoops']->path('www/class/xoopsformloader.php');
 
 // require_once  dirname(__DIR__) . '/class/Utility.php';
-require_once  dirname(__DIR__) . '/include/common.php';
+require_once dirname(__DIR__) . '/include/common.php';
 
 $moduleDirName = basename(dirname(__DIR__));
-$helper        = Xoopstube\Helper::getInstance();
-$adminObject   = Xmf\Module\Admin::getInstance();
+$helper      = Helper::getInstance();
+$adminObject = Xmf\Module\Admin::getInstance();
 
 $pathIcon16    = Xmf\Module\Admin::iconUrl('', 16);
 $pathIcon32    = Xmf\Module\Admin::iconUrl('', 32);
@@ -42,14 +43,14 @@ $helper->loadLanguage('common');
 
 $myts = \MyTextSanitizer::getInstance();
 
-if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof XoopsTpl)) {
+if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof \XoopsTpl)) {
     require_once $GLOBALS['xoops']->path('class/template.php');
     $xoopsTpl = new \XoopsTpl();
 }
 
-//include $moduleDirName . '/include/config.php';
+//require_once $moduleDirName . '/config/config.php';
 // require_once  dirname(__DIR__) . '/class/Utility.php';
-require_once  dirname(__DIR__) . '/include/video.php';
+require_once dirname(__DIR__) . '/include/video.php';
 // require_once  dirname(__DIR__) . '/class/Lists.php';
 // require_once  dirname(__DIR__) . '/class/TextSanitizer.php';
 // require_once  dirname(__DIR__) . '/class/Tree.php';
@@ -75,5 +76,5 @@ $xtubeImageArray = [
     'ack_no'      => "<img src='$pathIcon16/0.png' alt='" . _AM_XOOPSTUBE_ICO_REPORT . "' align='middle'>",
     'con_yes'     => "<img src='$pathIcon16/1.png' alt='" . _AM_XOOPSTUBE_ICO_CONFIRM . "' align='middle'>",
     'con_no'      => "<img src='$pathIcon16/0.png' alt='" . _AM_XOOPSTUBE_ICO_CONBROKEN . "' align='middle'>",
-    'view'        => "<img src='$pathIcon16/search.png' alt='" . _AM_XOOPSTUBE_ICO_VIEW . "' align='middle'>"
+    'view'        => "<img src='$pathIcon16/search.png' alt='" . _AM_XOOPSTUBE_ICO_VIEW . "' align='middle'>",
 ];

@@ -12,20 +12,18 @@
  * @package         Xoopstube
  * @author          XOOPS Development Team
  * @copyright       2001-2016 XOOPS Project (https://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link            https://xoops.org/
  * @since           1.0.6
  */
 
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
-
 // referer check
 $ref = xoops_getenv('HTTP_REFERER');
-if ('' === $ref || 0 === strpos($ref, XOOPS_URL . '/modules/system/admin.php')) {
+if ('' === $ref || str_starts_with($ref, XOOPS_URL . '/modules/system/admin.php')) {
     /* module specific part */
 
     /* General part */
 
     // Keep the values of block's options when module is updated (by nobunobu)
-    include __DIR__ . '/updateblock.inc.php';
+    require_once __DIR__ . '/updateblock.inc.php';
 }

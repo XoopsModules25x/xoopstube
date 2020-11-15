@@ -13,21 +13,21 @@
  * @package         Xoopstube
  * @author          XOOPS Development Team, Irmtfan
  * @copyright       2001-2016 XOOPS Project (https://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link            https://xoops.org/
  * @since           1.0.6
  */
 
 use XoopsModules\Xoopstube;
 
-include  dirname(__DIR__) . '/preloads/autoloader.php';
+require_once dirname(__DIR__) . '/preloads/autoloader.php';
 
 $moduleDirName      = basename(dirname(__DIR__));
-$moduleDirNameUpper = strtoupper($moduleDirName); //$capsDirName
+$moduleDirNameUpper = mb_strtoupper($moduleDirName); //$capsDirName
 
 /** @var \XoopsDatabase $db */
-/** @var Xoopstube\Helper $helper */
-/** @var Xoopstube\Utility $utility */
+/** @var \Xoopstube\Helper $helper */
+/** @var \Xoopstube\Utility $utility */
 $db      = \XoopsDatabaseFactory::getDatabaseConnection();
 $helper  = Xoopstube\Helper::getInstance();
 $utility = new Xoopstube\Utility();

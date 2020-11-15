@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Xoopstube;
+<?php
+
+namespace XoopsModules\Xoopstube;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -13,49 +15,43 @@
  * XoopsTube module
  *
  * @copyright       XOOPS Project (https://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package         xoopstube
  * @since           1.06
  * @author          Xoops Development Team
  */
 // CONFIG displayicons
 
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
-
 /**
- * class Constants
+ * interface Constants
  */
-class Constants
+interface Constants
 {
     /**#@+
      * Constant definition
      */
 
-    const XOOPSTUBE_DISPLAYICONS_ICON = 1;
-    const XOOPSTUBE_DISPLAYICONS_TEXT = 2;
-    const XOOPSTUBE_DISPLAYICONS_NO = 3;
-
+    public const XOOPSTUBE_DISPLAYICONS_ICON = 1;
+    public const XOOPSTUBE_DISPLAYICONS_TEXT = 2;
+    public const XOOPSTUBE_DISPLAYICONS_NO = 3;
     // CONFIG submissions
-    const XOOPSTUBE_SUBMISSIONS_NONE = 1;
-    const XOOPSTUBE_SUBMISSIONS_DOWNLOAD = 2;
-    const XOOPSTUBE_SUBMISSIONS_MIRROR = 3;
-    const XOOPSTUBE_SUBMISSIONS_BOTH = 4;
-
+    public const XOOPSTUBE_SUBMISSIONS_NONE = 1;
+    public const XOOPSTUBE_SUBMISSIONS_DOWNLOAD = 2;
+    public const XOOPSTUBE_SUBMISSIONS_MIRROR = 3;
+    public const XOOPSTUBE_SUBMISSIONS_BOTH = 4;
     // CONFIG anonpost
-    const XOOPSTUBE_ANONPOST_NONE = 1;
-    const XOOPSTUBE_ANONPOST_DOWNLOAD = 2;
-    const XOOPSTUBE_ANONPOST_MIRROR = 3;
-    const XOOPSTUBE_ANONPOST_BOTH = 4;
-
+    public const XOOPSTUBE_ANONPOST_NONE = 1;
+    public const XOOPSTUBE_ANONPOST_DOWNLOAD = 2;
+    public const XOOPSTUBE_ANONPOST_MIRROR = 3;
+    public const XOOPSTUBE_ANONPOST_BOTH = 4;
     // CONFIG autoapprove
-    const XOOPSTUBE_AUTOAPPROVE_NONE = 1;
-    const XOOPSTUBE_AUTOAPPROVE_DOWNLOAD = 2;
-    const XOOPSTUBE_AUTOAPPROVE_MIRROR = 3;
-    const XOOPSTUBE_AUTOAPPROVE_BOTH = 4;
-
+    public const XOOPSTUBE_AUTOAPPROVE_NONE = 1;
+    public const XOOPSTUBE_AUTOAPPROVE_DOWNLOAD = 2;
+    public const XOOPSTUBE_AUTOAPPROVE_MIRROR = 3;
+    public const XOOPSTUBE_AUTOAPPROVE_BOTH = 4;
     // CONFIG autosummary
-    const XOOPSTUBE_AUTOSUMMARY_NO = 1;
-    const XOOPSTUBE_AUTOSUMMARY_IFBLANK = 2;
-    const XOOPSTUBE_AUTOSUMMARY_YES = 3;
+    public const XOOPSTUBE_AUTOSUMMARY_NO = 1;
+    public const XOOPSTUBE_AUTOSUMMARY_IFBLANK = 2;
+    public const XOOPSTUBE_AUTOSUMMARY_YES = 3;
     /**#@-*/
 }

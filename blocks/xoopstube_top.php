@@ -12,12 +12,13 @@
  * @package         Xoopstube
  * @author          XOOPS Development Team
  * @copyright       2001-2016 XOOPS Project (https://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link            https://xoops.org/
  * @since           1.0.6
  */
 
 use XoopsModules\Xoopstube;
+use XoopsModules\Xoopstube\Utility;
 
 /**
  * @param int    $cid
@@ -28,18 +29,18 @@ use XoopsModules\Xoopstube;
  */
 function checkBlockGroups($cid = 0, $permType = 'XTubeCatPerm', $redirect = false)
 {
-    $moduleDirName    = basename(dirname(__DIR__));
-    $groups           = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
+    $moduleDirName = basename(dirname(__DIR__));
+    $groups        = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
+    /** @var \XoopsGroupPermHandler $grouppermHandler */
     $grouppermHandler = xoops_getHandler('groupperm');
-    /** @var XoopsModuleHandler $moduleHandler */
+    /** @var \XoopsModuleHandler $moduleHandler */
     $moduleHandler = xoops_getHandler('module');
     $module        = $moduleHandler->getByDirname($moduleDirName);
     if (!$grouppermHandler->checkRight($permType, $cid, $groups, $module->getVar('mid'))) {
         if (false === $redirect) {
             return false;
-        } else {
-            redirect_header('index.php', 3, _NOPERM);
         }
+        redirect_header('index.php', 3, _NOPERM);
     }
     unset($module);
 
@@ -57,9 +58,10 @@ function xtubeCheckBlockGroups($cid = 0, $permType = 'XTubeCatPerm', $redirect =
 {
     $moduleDirName = basename(dirname(__DIR__));
     $groups        = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
-    /** @var XoopsModuleHandler $moduleHandler */
-    $moduleHandler    = xoops_getHandler('module');
-    $xtubeModule      = $moduleHandler->getByDirname($moduleDirName);
+    /** @var \XoopsModuleHandler $moduleHandler */
+    $moduleHandler = xoops_getHandler('module');
+    $xtubeModule   = $moduleHandler->getByDirname($moduleDirName);
+    /** @var \XoopsGroupPermHandler $grouppermHandler */
     $grouppermHandler = xoops_getHandler('groupperm');
     if (!$grouppermHandler->checkRight($permType, $cid, $groups, $xtubeModule->getVar('mid'))) {
         if (false === $redirect) {
@@ -82,9 +84,10 @@ function xtubeCheckBlockGroups($cid = 0, $permType = 'XTubeCatPerm', $redirect =
 function getThumbsTopVideoBlock($bvidid, $btitle, $bsource, $bpicurl, array $size = [])
 {
     $thumbb = '';
-    /** @var XoopsModuleHandler $moduleHandler */
-    $moduleHandler     = xoops_getHandler('module');
-    $xtubeModule       = $moduleHandler->getByDirname('xoopstube');
+    /** @var \XoopsModuleHandler $moduleHandler */
+    $moduleHandler = xoops_getHandler('module');
+    $xtubeModule   = $moduleHandler->getByDirname('xoopstube');
+    /** @var \XoopsConfigHandler $configHandler */
     $configHandler     = xoops_getHandler('config');
     $xtubeModuleConfig = $configHandler->getConfigsByCat(0, $xtubeModule->getVar('mid'));
     if (isset($size['shotwidth'])) {
@@ -99,7 +102,7 @@ function getThumbsTopVideoBlock($bvidid, $btitle, $bsource, $bpicurl, array $siz
     }
     // Determine if video source MetaCafe
     if (1 == $bsource) {
-        list($metaclip) = explode('[/]', $bvidid);
+        [$metaclip] = explode('[/]', $bvidid);
         $videothumb['metathumb'] = $metaclip;
         $thumbb                  = '<img src="http://www.metacafe.com/thumb/' . $videothumb['metathumb'] . '.jpg" title="' . $btitle . '" alt="' . $btitle . '" width="' . $xtubeModuleConfig['shotwidth'] . '" height="' . $xtubeModuleConfig['shotheight'] . '"  border="0">';
     }
@@ -141,25 +144,22 @@ function getThumbsTopVideoBlock($bvidid, $btitle, $bsource, $bpicurl, array $siz
  */
 function getSpotlightVideos($options)
 {
-    require_once  dirname(__DIR__) . '/include/video.php';
+    require_once dirname(__DIR__) . '/include/video.php';
     $block = [];
-    /** @var XoopsModuleHandler $moduleHandler */
-    $moduleHandler     = xoops_getHandler('module');
-    $xtubeModule       = $moduleHandler->getByDirname('xoopstube');
+    /** @var \XoopsModuleHandler $moduleHandler */
+    $moduleHandler = xoops_getHandler('module');
+    $xtubeModule   = $moduleHandler->getByDirname('xoopstube');
+    /** @var \XoopsConfigHandler $configHandler */
     $configHandler     = xoops_getHandler('config');
     $xtubeModuleConfig = $configHandler->getConfigsByCat(0, $xtubeModule->getVar('mid'));
     $xtubemyts         = \MyTextSanitizer:: getInstance();
 
     $options[1] = 4;
-    $result     = $GLOBALS['xoopsDB']->query('SELECT lid, cid, title, vidid, date, hits, vidsource, picurl FROM '
-                                             . $GLOBALS['xoopsDB']->prefix('xoopstube_videos')
-                                             . ' WHERE published > 0 AND published <= '
-                                             . time()
-                                             . ' AND (expired = 0 OR expired > '
-                                             . time()
-                                             . ') AND offline = 0 ORDER BY '
-                                             . $options[0]
-                                             . ' DESC', $options[1], 0);
+    $result     = $GLOBALS['xoopsDB']->query(
+        'SELECT lid, cid, title, vidid, date, hits, vidsource, picurl FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE published > 0 AND published <= ' . time() . ' AND (expired = 0 OR expired > ' . time() . ') AND offline = 0 ORDER BY ' . $options[0] . ' DESC',
+        $options[1],
+        0
+    );
 
     $i = 0;
     while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
@@ -170,10 +170,10 @@ function getSpotlightVideos($options)
             exit;
         }
         $videoload = [];
-        $title     = $xtubemyts->htmlSpecialChars($xtubemyts->stripSlashesGPC($myrow['title']));
+        $title     = $xtubemyts->htmlSpecialChars($myrow['title']);
         if (!XOOPS_USE_MULTIBYTES) {
-            if (strlen($myrow['title']) >= $options[2]) {
-                $title = substr($myrow['title'], 0, $options[2] - 1) . '...';
+            if (mb_strlen($myrow['title']) >= $options[2]) {
+                $title = mb_substr($myrow['title'], 0, $options[2] - 1) . '...';
             }
         }
         $videoload['id']    = (int)$myrow['lid'];
@@ -237,28 +237,37 @@ function showTopVideoBlock($options)
 {
     $moduleDirName = basename(dirname(__DIR__));
     $block         = [];
-    /** @var XoopsModuleHandler $moduleHandler */
-    $moduleHandler     = xoops_getHandler('module');
-    $xtubeModule       = $moduleHandler->getByDirname($moduleDirName);
+    /** @var \XoopsModuleHandler $moduleHandler */
+    $moduleHandler = xoops_getHandler('module');
+    $xtubeModule   = $moduleHandler->getByDirname($moduleDirName);
+    /** @var \XoopsConfigHandler $configHandler */
     $configHandler     = xoops_getHandler('config');
     $xtubeModuleConfig = $configHandler->getConfigsByCat(0, $xtubeModule->getVar('mid'));
     $xtubemyts         = \MyTextSanitizer:: getInstance();
 
     if (isset($options[4]) && ($options[4] > 0)) {
-        $result = $GLOBALS['xoopsDB']->query('SELECT lid, cid, title, vidid, screenshot, published, hits, vidsource, picurl FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE published>0
+        $result = $GLOBALS['xoopsDB']->query(
+            'SELECT lid, cid, title, vidid, screenshot, published, hits, vidsource, picurl FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE published>0
                                     AND published<=' . time() . '
                                     AND (expired=0 OR expired>' . time() . ')
                                     AND offline=0
                                     AND cid=' . $options[4] . '
                                     ORDER BY ' . $options[0] . '
-                                    DESC', $options[1], 0);
+                                    DESC',
+            $options[1],
+            0
+        );
     } else {
-        $result = $GLOBALS['xoopsDB']->query('SELECT lid, cid, title, vidid, screenshot, published, hits, vidsource, picurl FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE published>0
+        $result = $GLOBALS['xoopsDB']->query(
+            'SELECT lid, cid, title, vidid, screenshot, published, hits, vidsource, picurl FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE published>0
                                     AND published<=' . time() . '
                                     AND (expired=0 OR expired>' . time() . ')
                                     AND offline=0
                                     ORDER BY ' . $options[0] . '
-                                    DESC', $options[1], 0);
+                                    DESC',
+            $options[1],
+            0
+        );
     }
 
     require_once XOOPS_ROOT_PATH . '/modules/' . $xtubeModule->getVar('dirname') . '/include/video.php';
@@ -274,17 +283,17 @@ function showTopVideoBlock($options)
         }
 
         $videoload = [];
-        $title     = $xtubemyts->htmlSpecialChars($xtubemyts->stripSlashesGPC($myrow['title']));
+        $title     = $xtubemyts->htmlSpecialChars($myrow['title']);
         if (!XOOPS_USE_MULTIBYTES) {
-            if (strlen($myrow['title']) >= $options[2]) {
-                $title = substr($myrow['title'], 0, $options[2] - 1) . '...';
+            if (mb_strlen($myrow['title']) >= $options[2]) {
+                $title = mb_substr($myrow['title'], 0, $options[2] - 1) . '...';
             }
         }
         $videoload['id']    = (int)$myrow['lid'];
         $videoload['cid']   = (int)$myrow['cid'];
         $videoload['title'] = $title;
         if ('published' === $options[0]) {
-            $videoload['date'] = Xoopstube\Utility::getTimestamp(formatTimestamp($myrow['published'], $options[3]));
+            $videoload['date'] = Utility::getTimestamp(formatTimestamp($myrow['published'], $options[3]));
         } elseif ('hits' === $options[0]) {
             $videoload['hits'] = $myrow['hits'];
         }
@@ -309,29 +318,34 @@ function showTopVideoBlock($options)
 function getRandomVideo($options)
 {
     global $xtubemyts;
-    $utility       = new Xoopstube\Utility();
+    $utility       = new Utility();
     $moduleDirName = basename(dirname(__DIR__));
     $block         = [];
-    /** @var XoopsModuleHandler $moduleHandler */
-    $moduleHandler     = xoops_getHandler('module');
-    $xtubeModule       = $moduleHandler->getByDirname($moduleDirName);
+    /** @var \XoopsModuleHandler $moduleHandler */
+    $moduleHandler = xoops_getHandler('module');
+    $xtubeModule   = $moduleHandler->getByDirname($moduleDirName);
+    /** @var \XoopsConfigHandler $configHandler */
     $configHandler     = xoops_getHandler('config');
     $xtubeModuleConfig = $configHandler->getConfigsByCat(0, $xtubeModule->getVar('mid'));
     $xtubemyts         = \MyTextSanitizer:: getInstance();
 
     if (isset($options[4]) && ($options[4] > 0)) {
-        $result2 = $GLOBALS['xoopsDB']->query('SELECT lid, cid, title, vidid, screenshot, published, vidsource, picurl FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE published > 0
+        $result2 = $GLOBALS['xoopsDB']->query(
+            'SELECT lid, cid, title, vidid, screenshot, published, vidsource, picurl FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE published > 0
                                     AND published<=' . time() . '
                                     AND (expired=0 OR expired>' . time() . ')
                                     AND offline=0
                                     AND cid=' . $options[4] . '
-                                    ORDER BY RAND() LIMIT ' . $options[1]);
+                                    ORDER BY RAND() LIMIT ' . $options[1]
+        );
     } else {
-        $result2 = $GLOBALS['xoopsDB']->query('SELECT lid, cid, title, vidid, screenshot, published, vidsource, picurl FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE published > 0
+        $result2 = $GLOBALS['xoopsDB']->query(
+            'SELECT lid, cid, title, vidid, screenshot, published, vidsource, picurl FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE published > 0
                                     AND published<=' . time() . '
                                     AND (expired=0 OR expired>' . time() . ')
                                     AND offline=0
-                                    ORDER BY RAND() LIMIT ' . $options[1]);
+                                    ORDER BY RAND() LIMIT ' . $options[1]
+        );
     }
 
     require_once XOOPS_ROOT_PATH . '/modules/' . $xtubeModule->getVar('dirname') . '/include/video.php';
@@ -342,10 +356,10 @@ function getRandomVideo($options)
             continue;
         }
         $videorandom = [];
-        $title       = $xtubemyts->htmlSpecialChars($xtubemyts->stripSlashesGPC($myrow['title']));
+        $title       = $xtubemyts->htmlSpecialChars($myrow['title']);
         if (!XOOPS_USE_MULTIBYTES) {
-            if (strlen($myrow['title']) >= $options[2]) {
-                $title = substr($myrow['title'], 0, $options[2] - 1) . '...';
+            if (mb_strlen($myrow['title']) >= $options[2]) {
+                $title = mb_substr($myrow['title'], 0, $options[2] - 1) . '...';
             }
         }
         $videorandom['id']    = (int)$myrow['lid'];
@@ -376,26 +390,31 @@ function getRandomVideoForHorizontalBlock($options)
     global $xtubemyts;
     $moduleDirName = basename(dirname(__DIR__));
     $block         = [];
-    /** @var XoopsModuleHandler $moduleHandler */
-    $moduleHandler     = xoops_getHandler('module');
-    $xtubeModule       = $moduleHandler->getByDirname($moduleDirName);
+    /** @var \XoopsModuleHandler $moduleHandler */
+    $moduleHandler = xoops_getHandler('module');
+    $xtubeModule   = $moduleHandler->getByDirname($moduleDirName);
+    /** @var \XoopsConfigHandler $configHandler */
     $configHandler     = xoops_getHandler('config');
     $xtubeModuleConfig = $configHandler->getConfigsByCat(0, $xtubeModule->getVar('mid'));
     $xtubemyts         = \MyTextSanitizer:: getInstance();
 
     if (isset($options[4]) && ($options[4] > 0)) {
-        $result2 = $GLOBALS['xoopsDB']->query('SELECT lid, cid, title, vidid, screenshot, published, vidsource, picurl FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE published > 0
+        $result2 = $GLOBALS['xoopsDB']->query(
+            'SELECT lid, cid, title, vidid, screenshot, published, vidsource, picurl FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE published > 0
                                     AND published<=' . time() . '
                                     AND (expired=0 OR expired>' . time() . ')
                                     AND offline=0
                                     AND cid=' . $options[4] . '
-                                    ORDER BY RAND() LIMIT ' . $options[1]);
+                                    ORDER BY RAND() LIMIT ' . $options[1]
+        );
     } else {
-        $result2 = $GLOBALS['xoopsDB']->query('SELECT lid, cid, title, vidid, screenshot, published, vidsource, picurl FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE published > 0
+        $result2 = $GLOBALS['xoopsDB']->query(
+            'SELECT lid, cid, title, vidid, screenshot, published, vidsource, picurl FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE published > 0
                                     AND published<=' . time() . '
                                     AND (expired=0 OR expired>' . time() . ')
                                     AND offline=0
-                                    ORDER BY RAND() LIMIT ' . $options[1]);
+                                    ORDER BY RAND() LIMIT ' . $options[1]
+        );
     }
 
     require_once XOOPS_ROOT_PATH . '/modules/' . $xtubeModule->getVar('dirname') . '/include/video.php';
@@ -406,18 +425,18 @@ function getRandomVideoForHorizontalBlock($options)
             continue;
         }
         $videorandomh            = [];
-        $title                   = $xtubemyts->htmlSpecialChars($xtubemyts->stripSlashesGPC($myrow['title']));
+        $title                   = $xtubemyts->htmlSpecialChars($myrow['title']);
         $videorandomh['balloon'] = $myrow['title'];
         if (!XOOPS_USE_MULTIBYTES) {
-            if (strlen($myrow['title']) >= $options[2]) {
-                $title = substr($myrow['title'], 0, $options[2] - 1) . '...';
+            if (mb_strlen($myrow['title']) >= $options[2]) {
+                $title = mb_substr($myrow['title'], 0, $options[2] - 1) . '...';
             }
         }
         $videorandomh['id']    = (int)$myrow['lid'];
         $videorandomh['cid']   = (int)$myrow['cid'];
         $videorandomh['title'] = $title;
         if (isset($options[3])) {
-            $videorandomh['date'] = Xoopstube\Utility::getTimestamp(formatTimestamp($myrow['published'], $options[3]));
+            $videorandomh['date'] = Utility::getTimestamp(formatTimestamp($myrow['published'], $options[3]));
         }
         require_once XOOPS_ROOT_PATH . '/modules/' . $xtubeModule->getVar('dirname') . '/include/video.php';
         $videorandomh['videothumb'] = xtubeGetVideoThumb($myrow['vidid'], $myrow['title'], $myrow['vidsource'], $myrow['picurl'], $xtubeModuleConfig['videoimgdir'] . '/' . $myrow['screenshot'], $xtubeModuleConfig['shotwidth'], $xtubeModuleConfig['shotheight']);

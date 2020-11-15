@@ -45,7 +45,7 @@
     <br>
 <{/if}>
 
-<{if $show_videos == true}>
+<{if $show_videos === true}>
     <div align="center" style="vertical-align: middle; font-size: smaller;">
         <span style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_SORTBY}></span>&nbsp;<{$smarty.const._MD_XOOPSTUBE_TITLE}> (
         <a href="viewcat.php?cid=<{$category_id}>&amp;orderby=titleA">
@@ -80,7 +80,7 @@
     <br>
 <{/if}>
 
-<{if $page_nav == true}>
+<{if $page_nav === true}>
     <div style="text-align: left;"><{$pagenav}></div>
     <br>
 <{/if}>
@@ -92,11 +92,11 @@
     <{/section}>
     <!-- End link loop -->
 </div>
-<{if $page_nav == true}>
+<{if $page_nav === true}>
     <div style="text-align: right;"><{$pagenav}></div>
 <{/if}>
 
-<{if $moderate == true}>
+<{if $moderate === true}>
     <div style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_MODERATOR_OPTIONS}></div>
     <br>
     <div>

@@ -13,7 +13,7 @@
  * @package         Xoopstube
  * @author          XOOPS Development Team
  * @copyright       2001-2016 XOOPS Project (https://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link            https://xoops.org/
  * @since           1.0.6
  */
@@ -26,9 +26,9 @@ require_once __DIR__ . '/header.php';
 $op  = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET');
 $lid = Request::getInt('lid', Request::getInt('lid', '', 'POST'), 'GET');
 
-$buttonn = strtolower(_MD_XOOPSTUBE_SUBMITBROKEN);
+$buttonn = mb_strtolower(_MD_XOOPSTUBE_SUBMITBROKEN);
 
-switch (strtolower($op)) {
+switch (mb_strtolower($op)) {
     case $buttonn:
         $sender = (is_object($GLOBALS['xoopsUser']) && !empty($GLOBALS['xoopsUser'])) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
         $ip     = getenv('REMOTE_ADDR');
@@ -37,14 +37,24 @@ switch (strtolower($op)) {
 
         // Check if REG user is trying to report twice
         $result = $GLOBALS['xoopsDB']->query('SELECT COUNT(*) FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_broken') . ' WHERE lid=' . $lid);
-        list($count) = $GLOBALS['xoopsDB']->fetchRow($result);
+        [$count] = $GLOBALS['xoopsDB']->fetchRow($result);
         if ($count > 0) {
             $ratemessage = _MD_XOOPSTUBE_ALREADYREPORTED;
             redirect_header('singlevideo.php?cid=' . (int)$cid . '&amp;lid=' . $lid, 2, $ratemessage);
         } else {
             $reportid = 0;
-            $sql      = sprintf('INSERT INTO `%s` (reportid, lid, sender, ip, date, confirmed, acknowledged, title ) VALUES ( %u, %u, %u, %s, %u, %u, %u, %s)', $GLOBALS['xoopsDB']->prefix('xoopstube_broken'), $reportid, $lid, $sender, $GLOBALS['xoopsDB']->quoteString($ip), $time, 0, 0,
-                                $GLOBALS['xoopsDB']->quoteString($title));
+            $sql      = sprintf(
+                'INSERT INTO `%s` (reportid, lid, sender, ip, date, confirmed, acknowledged, title ) VALUES ( %u, %u, %u, %s, %u, %u, %u, %s)',
+                $GLOBALS['xoopsDB']->prefix('xoopstube_broken'),
+                $reportid,
+                $lid,
+                $sender,
+                $GLOBALS['xoopsDB']->quoteString($ip),
+                $time,
+                0,
+                0,
+                $GLOBALS['xoopsDB']->quoteString($title)
+            );
             if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
                 $error[] = _MD_XOOPSTUBE_ERROR;
             }
@@ -53,7 +63,8 @@ switch (strtolower($op)) {
             // Send notifications
             $tags                      = [];
             $tags['BROKENREPORTS_URL'] = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/admin/main.php?op=listBrokenvideos';
-            $notificationHandler       = xoops_getHandler('notification');
+            /** @var \XoopsNotificationHandler $notificationHandler */
+            $notificationHandler = xoops_getHandler('notification');
             $notificationHandler->triggerEvent('global', 0, 'video_broken', $tags);
 
             // Send email to the owner of the linkload stating that it is broken
@@ -61,6 +72,7 @@ switch (strtolower($op)) {
             $video_arr = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
             unset($sql);
 
+            /** @var \XoopsMemberHandler $memberHandler */
             $memberHandler = xoops_getHandler('member');
             $submit_user   = $memberHandler->getUser($video_arr['submitter']);
             if (is_object($submit_user) && !empty($submit_user)) {
@@ -92,11 +104,10 @@ switch (strtolower($op)) {
             redirect_header('singlevideo.php?cid=' . (int)$cid . '&amp;lid=' . $lid, 2, $message);
         }
         break;
-
     default:
 
         $GLOBALS['xoopsOption']['template_main'] = 'xoopstube_brokenvideo.tpl';
-        include XOOPS_ROOT_PATH . '/header.php';
+        require_once XOOPS_ROOT_PATH . '/header.php';
 
         $catarray['imageheader'] = Xoopstube\Utility::renderImageHeader();
         $xoopsTpl->assign('catarray', $catarray);
@@ -139,6 +150,6 @@ switch (strtolower($op)) {
         Xoopstube\Utility::setNoIndexNoFollow();
 
         $xoopsTpl->assign('module_dir', $xoopsModule->getVar('dirname'));
-        include XOOPS_ROOT_PATH . '/footer.php';
+        require_once XOOPS_ROOT_PATH . '/footer.php';
         break;
 }

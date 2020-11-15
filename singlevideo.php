@@ -13,7 +13,7 @@
  * @package         Xoopstube
  * @author          XOOPS Development Team
  * @copyright       2001-2016 XOOPS Project (https://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link            https://xoops.org/
  * @since           1.0.6
  */
@@ -21,7 +21,7 @@
 use Xmf\Request;
 use XoopsModules\Xoopstube;
 
-include __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 
 $lid = Request::getInt('lid', Request::getInt('lid', '', 'POST'), 'GET');
 $cid = Request::getInt('cid', Request::getInt('cid', '', 'POST'), 'GET');
@@ -42,7 +42,7 @@ $sql2 = 'SELECT count(*) FROM '
         . ' OR b.cid='
         . $cid
         . '))';
-list($count) = $GLOBALS['xoopsDB']->fetchRow($GLOBALS['xoopsDB']->query($sql2));
+[$count] = $GLOBALS['xoopsDB']->fetchRow($GLOBALS['xoopsDB']->query($sql2));
 
 if (false === Xoopstube\Utility::checkGroups($cid) || 0 === $count) {
     redirect_header('index.php', 1, _MD_XOOPSTUBE_MUSTREGFIRST);
@@ -62,7 +62,7 @@ if (!is_array($video_arr)) {
 
 $GLOBALS['xoopsOption']['template_main'] = 'xoopstube_singlevideo.tpl';
 
-include XOOPS_ROOT_PATH . '/header.php';
+require_once XOOPS_ROOT_PATH . '/header.php';
 $xoTheme->addStylesheet('modules/' . $moduleDirName . '/assets/css/xtubestyle.css');
 
 // tags support

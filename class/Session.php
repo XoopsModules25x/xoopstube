@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Xoopstube;
+<?php
+
+namespace XoopsModules\Xoopstube;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -9,6 +11,7 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 /**
  *  Session class
  *
@@ -19,12 +22,10 @@
  * @author          trabis <lusopoemas@gmail.com>
  * @author          Harry Fuecks (PHP Anthology Volume II)
  */
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 use XoopsModules\Xoopstube;
-use XoopsModules\Xoopstube\Common;
 
-require_once  dirname(__DIR__) . '/include/common.php';
+require_once \dirname(__DIR__) . '/include/common.php';
 
 /**
  * Class Session
@@ -39,7 +40,9 @@ class Session
      */
     protected function __construct()
     {
-        @session_start();
+        if (false === @\session_start()) {
+            throw new \RuntimeException('Session could not start.');
+        }
     }
 
     /**
@@ -48,7 +51,6 @@ class Session
      * @param string $name  name of variable
      * @param mixed  $value value of variable
      *
-     * @return void
      * @access public
      */
     public function set($name, $value)
@@ -66,11 +68,7 @@ class Session
      */
     public function get($name)
     {
-        if (isset($_SESSION[$name])) {
-            return $_SESSION[$name];
-        } else {
-            return false;
-        }
+        return $_SESSION[$name] ?? false;
     }
 
     /**
@@ -78,7 +76,6 @@ class Session
      *
      * @param string $name name of variable
      *
-     * @return void
      * @access public
      */
     public function del($name)
@@ -89,13 +86,12 @@ class Session
     /**
      * Destroys the whole session
      *
-     * @return void
      * @access public
      */
     public function destroy()
     {
         $_SESSION = [];
-        session_destroy();
+        \session_destroy();
     }
 
     /**

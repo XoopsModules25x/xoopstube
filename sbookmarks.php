@@ -9,17 +9,17 @@
  *
  * PHP version 5
  *
- * @category        Module
- * @package         Xoopstube
- * @author          XOOPS Development Team
- * @copyright       2001-2016 XOOPS Project (https://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link            https://xoops.org/
- * @since           1.0.6
- *
  * @param $lid
  *
  * @return string
+ * @author          XOOPS Development Team
+ * @copyright       2001-2016 XOOPS Project (https://xoops.org)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @link            https://xoops.org/
+ * @since           1.0.6
+ *
+ * @category        Module
+ * @package         Xoopstube
  */
 
 use XoopsModules\Xoopstube;

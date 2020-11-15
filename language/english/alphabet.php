@@ -37,5 +37,5 @@ return [
     'X',
     'Y',
     'Z',
-    'Other'
+    'Other',
 ];

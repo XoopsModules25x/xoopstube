@@ -1,4 +1,5 @@
-<link rel="stylesheet" type="text/css" href="<{$xoopstube_url}>/assets/css/xtubestyle.css">
+<link rel="stylesheet" type="text/css" href="<{$xoopstube_url}>assets/css/xtubestyle.css">
+<{*<link rel="stylesheet" type="text/css" href="<{$xoops_url}>/modules/<{$module_dir}>/assets/css/xtubestyle.css">*}>
 <{if $catarray.imageheader != ""}>
     <br>
     <div class="xoopstube_header"><{$catarray.imageheader}></div>
@@ -24,7 +25,7 @@
 
 
 
-<{if count($categories) gt 0}>
+<{if $categories|is_array && count($categories) > 0}>
     <div class="even" style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_MAINLISTING}></div>
     <table width="100%" cellspacing="1" cellpadding="3" summary='' style="text-align: center;">
         <tr>

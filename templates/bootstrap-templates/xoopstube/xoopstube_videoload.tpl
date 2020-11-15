@@ -18,24 +18,24 @@
             </a>
         </div>
         <{/if}>
-        
-        <{if $video.screen_shot}>   
+
+        <{if $video.screen_shot}>
         <div class="col-md-8 col-sm-6 col-xs-12">
         <{else}>
         <div class="col-md-12">
         <{/if}>
-        
+
             <ul class="list-unstyled xt-list">
                 <small>
-                
+
                 <li><strong><{$smarty.const._MD_XOOPSTUBE_SUBMITTER}>:</strong> <{$video.submitter}></li>
-    
+
                 <li><strong><{$smarty.const._MD_XOOPSTUBE_PUBLISHER}>:</strong> <{$video.publisher}></li>
-    
+
                 <li><strong><{$lang_subdate}>:</strong> <{$video.updated}></li>
-    
+
                 <li><{$video.hits|wordwrap:50:"\n":true}></li>
-    
+
                 <{if $video.showrating}>
                     <li>
                         <strong><{$smarty.const._MD_XOOPSTUBE_RATINGC}></strong>
@@ -43,7 +43,7 @@
                     </li>
                 <{/if}>
                 <li><strong><{$smarty.const._MD_XOOPSTUBE_DESCRIPTIONC}></strong>
-    
+
                     <p><{$video.description|truncate:$video.total_chars}></p>
                 </li>
                  <{if $xoops_isadmin}>

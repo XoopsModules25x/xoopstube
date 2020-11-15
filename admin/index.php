@@ -12,35 +12,36 @@
  * @package         Xoopstube
  * @author          XOOPS Development Team
  * @copyright       2001-2016 XOOPS Project (https://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link            https://xoops.org/
  * @since           1.0.6
  */
 
+use Xmf\Module\Admin;
 use Xmf\Request;
 use XoopsModules\Xoopstube;
 
 require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
-$adminObject = \Xmf\Module\Admin::getInstance();
+$adminObject = Admin::getInstance();
 
-$start     = Request::getInt('start', 0, 'POST');// cleanRequestVars($_REQUEST, 'start', 0);
-$start1    = Request::getInt('start1', 0, 'POST');// cleanRequestVars($_REQUEST, 'start1', 0);
-$start2    = Request::getInt('start2', 0, 'POST');// cleanRequestVars($_REQUEST, 'start2', 0);
-$start3    = Request::getInt('start3', 0, 'POST');// cleanRequestVars($_REQUEST, 'start3', 0);
-$start4    = Request::getInt('start4', 0, 'POST');// cleanRequestVars($_REQUEST, 'start4', 0);
-$start5    = Request::getInt('start5', 0, 'POST');// cleanRequestVars($_REQUEST, 'start5', 0);
+$start     = Request::getInt('start', 0, 'POST'); // cleanRequestVars($_REQUEST, 'start', 0);
+$start1    = Request::getInt('start1', 0, 'POST'); // cleanRequestVars($_REQUEST, 'start1', 0);
+$start2    = Request::getInt('start2', 0, 'POST'); // cleanRequestVars($_REQUEST, 'start2', 0);
+$start3    = Request::getInt('start3', 0, 'POST'); // cleanRequestVars($_REQUEST, 'start3', 0);
+$start4    = Request::getInt('start4', 0, 'POST'); // cleanRequestVars($_REQUEST, 'start4', 0);
+$start5    = Request::getInt('start5', 0, 'POST'); // cleanRequestVars($_REQUEST, 'start5', 0);
 $totalcats = Xoopstube\Utility::getTotalCategoryCount();
 
 $result = $GLOBALS['xoopsDB']->query('SELECT COUNT(*) FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_broken'));
-list($totalbrokenvideos) = $GLOBALS['xoopsDB']->fetchRow($result);
+[$totalbrokenvideos] = $GLOBALS['xoopsDB']->fetchRow($result);
 $result2 = $GLOBALS['xoopsDB']->query('SELECT COUNT(*) FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_mod'));
-list($totalmodrequests) = $GLOBALS['xoopsDB']->fetchRow($result2);
+[$totalmodrequests] = $GLOBALS['xoopsDB']->fetchRow($result2);
 $result3 = $GLOBALS['xoopsDB']->query('SELECT COUNT(*) FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE published = 0');
-list($totalnewvideos) = $GLOBALS['xoopsDB']->fetchRow($result3);
+[$totalnewvideos] = $GLOBALS['xoopsDB']->fetchRow($result3);
 $result4 = $GLOBALS['xoopsDB']->query('SELECT COUNT(*) FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE published > 0');
-list($totalvideos) = $GLOBALS['xoopsDB']->fetchRow($result4);
+[$totalvideos] = $GLOBALS['xoopsDB']->fetchRow($result4);
 
 //$xxx='<a href="brokenvideo.php">' . _AM_XOOPSTUBE_SBROKENSUBMIT . '</a><b>';
 
@@ -86,21 +87,27 @@ foreach (array_keys($uploadFolders) as $i) {
 */
 
 //require_once  dirname(__DIR__) . '/testdata/index.php';
-//$adminObject->addItemButton(_AM_XOOPSTUBE_ADD_SAMPLEDATA, '__DIR__ . /../../testdata/index.php?op=load', 'add');
+//$adminObject->addItemButton(_AM_XOOPSTUBE_ADD_SAMPLEDATA, './../testdata/index.php?op=load', 'add');
 
 $adminObject->displayNavigation(basename(__FILE__));
+
+//check for latest release
+//$newRelease = $utility::checkVerModule($helper);
+//if (!empty($newRelease)) {
+//    $adminObject->addItemButton($newRelease[0], $newRelease[1], 'download', 'style="color : Red"');
+//}
 
 //------------- Test Data ----------------------------
 
 if ($helper->getConfig('displaySampleButton')) {
     xoops_loadLanguage('admin/modulesadmin', 'system');
-    require_once  dirname(__DIR__) . '/testdata/index.php';
+    require_once dirname(__DIR__) . '/testdata/index.php';
 
-    $adminObject->addItemButton(constant('CO_' . $moduleDirNameUpper . '_' . 'ADD_SAMPLEDATA'), '__DIR__ . /../../testdata/index.php?op=load', 'add');
+    $adminObject->addItemButton(constant('CO_' . $moduleDirNameUpper . '_' . 'ADD_SAMPLEDATA'), './../testdata/index.php?op=load', 'add');
 
-    $adminObject->addItemButton(constant('CO_' . $moduleDirNameUpper . '_' . 'SAVE_SAMPLEDATA'), '__DIR__ . /../../testdata/index.php?op=save', 'add');
+    $adminObject->addItemButton(constant('CO_' . $moduleDirNameUpper . '_' . 'SAVE_SAMPLEDATA'), './../testdata/index.php?op=save', 'add');
 
-    //    $adminObject->addItemButton(constant('CO_' . $moduleDirNameUpper . '_' . 'EXPORT_SCHEMA'), '__DIR__ . /../../testdata/index.php?op=exportschema', 'add');
+    //    $adminObject->addItemButton(constant('CO_' . $moduleDirNameUpper . '_' . 'EXPORT_SCHEMA'), './../testdata/index.php?op=exportschema', 'add');
 
     $adminObject->displayButton('left', '');
 }
@@ -114,7 +121,7 @@ $adminObject->displayIndex();
 require_once  dirname(__DIR__) . '/include/directorychecker.php';
 
 $adminObject->addConfigBoxLine('');
-$redirectFile = $_SERVER['PHP_SELF'];
+$redirectFile = $_SERVER['SCRIPT_NAME'];
 
 $languageConstants = array(
     _AM_XOOPSTUBE_AVAILABLE,

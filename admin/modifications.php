@@ -12,11 +12,12 @@
  * @package         Xoopstube
  * @author          XOOPS Development Team
  * @copyright       2001-2016 XOOPS Project (https://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link            https://xoops.org/
  * @since           1.0.6
  */
 
+use Xmf\Module\Admin;
 use Xmf\Request;
 use XoopsModules\Xoopstube;
 
@@ -27,7 +28,7 @@ require_once __DIR__ . '/admin_header.php';
 $op        = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET'); //cleanRequestVars($_REQUEST, 'op', '');
 $requestid = Request::getInt('requestid', Request::getInt('requestid', 0, 'POST'), 'GET'); //cleanRequestVars($_REQUEST, 'requestid', 0);
 
-switch (strtolower($op)) {
+switch (mb_strtolower($op)) {
     case 'listmodreqshow':
 
         xoops_cp_header();
@@ -52,7 +53,7 @@ switch (strtolower($op)) {
             if (in_array($key, $not_allowed)) {
                 continue;
             }
-            $lang_def = constant('_AM_XOOPSTUBE_MOD_' . strtoupper($key));
+            $lang_def = constant('_AM_XOOPSTUBE_MOD_' . mb_strtoupper($key));
 
             if ('cid' === $key) {
                 $sql     = 'SELECT title FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_cat') . ' WHERE cid=' . $content;
@@ -78,7 +79,7 @@ switch (strtolower($op)) {
             if (in_array($key, $not_allowed)) {
                 continue;
             }
-            $lang_def = constant('_AM_XOOPSTUBE_MOD_' . strtoupper($key));
+            $lang_def = constant('_AM_XOOPSTUBE_MOD_' . mb_strtoupper($key));
 
             if ('cid' === $key) {
                 $sql     = 'SELECT title FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_cat') . ' WHERE cid=' . $content;
@@ -92,24 +93,23 @@ switch (strtolower($op)) {
             }
             $sform->addElement(new \XoopsFormLabel($lang_def, $content));
         }
-        $button_tray = new \XoopsFormElementTray('', '');
-        $button_tray->addElement(new \XoopsFormHidden('requestid', $requestid));
-        $button_tray->addElement(new \XoopsFormHidden('lid', $mod_array['requestid']));
+        $buttonTray = new \XoopsFormElementTray('', '');
+        $buttonTray->addElement(new \XoopsFormHidden('requestid', $requestid));
+        $buttonTray->addElement(new \XoopsFormHidden('lid', $mod_array['requestid']));
         $hidden = new \XoopsFormHidden('op', 'changemodreq');
-        $button_tray->addElement($hidden);
+        $buttonTray->addElement($hidden);
         if ($mod_array) {
             $butt_dup = new \XoopsFormButton('', '', _AM_XOOPSTUBE_BAPPROVE, 'submit');
             $butt_dup->setExtra('onclick="this.form.elements.op.value=\'changemodreq\'"');
-            $button_tray->addElement($butt_dup);
+            $buttonTray->addElement($butt_dup);
         }
         $butt_dupct2 = new \XoopsFormButton('', '', _AM_XOOPSTUBE_BIGNORE, 'submit');
         $butt_dupct2->setExtra('onclick="this.form.elements.op.value=\'ignoremodreq\'"');
-        $button_tray->addElement($butt_dupct2);
-        $sform->addElement($button_tray);
+        $buttonTray->addElement($butt_dupct2);
+        $sform->addElement($buttonTray);
         $sform->display();
         xoops_cp_footer();
         break;
-
     case 'changemodreq':
         $sql         = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_mod') . ' WHERE requestid=' . $requestid;
         $video_array = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
@@ -130,21 +130,21 @@ switch (strtolower($op)) {
         $time         = $video_array['time'];
         $updated      = time();
 
-        $GLOBALS['xoopsDB']->query('UPDATE '
-                                   . $GLOBALS['xoopsDB']->prefix('xoopstube_videos')
-                                   . " SET cid = $cid, title='$title', vidid='$vidid', screenshot='', publisher='$publisher', vidsource='$vidsource', description='$descriptionb', time='$time', keywords='$keywords', item_tag='$item_tag', picurl='$picurl', updated='$updated' WHERE lid = "
-                                   . $lid);
+        $GLOBALS['xoopsDB']->query(
+            'UPDATE '
+            . $GLOBALS['xoopsDB']->prefix('xoopstube_videos')
+            . " SET cid = $cid, title='$title', vidid='$vidid', screenshot='', publisher='$publisher', vidsource='$vidsource', description='$descriptionb', time='$time', keywords='$keywords', item_tag='$item_tag', picurl='$picurl', updated='$updated' WHERE lid = "
+            . $lid
+        );
         $sql    = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_mod') . ' WHERE requestid=' . $requestid;
         $result = $GLOBALS['xoopsDB']->query($sql);
         redirect_header('index.php', 1, _AM_XOOPSTUBE_MOD_REQUPDATED);
         break;
-
     case 'ignoremodreq':
         $sql = sprintf('DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_mod') . ' WHERE requestid=' . $requestid);
         $GLOBALS['xoopsDB']->query($sql);
         redirect_header('index.php', 1, _AM_XOOPSTUBE_MOD_REQDELETED);
         break;
-
     case 'main':
     default:
 
@@ -155,7 +155,7 @@ switch (strtolower($op)) {
         $totalmodrequests = $GLOBALS['xoopsDB']->getRowsNum($GLOBALS['xoopsDB']->query($sql));
 
         xoops_cp_header();
-        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject = Admin::getInstance();
         $adminObject->displayNavigation(basename(__FILE__));
 
         echo '<fieldset style="border: #E8E8E8 1px solid;">

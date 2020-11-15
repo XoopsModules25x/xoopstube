@@ -13,7 +13,7 @@
  * @package         Xoopstube
  * @author          XOOPS Development Team
  * @copyright       2001-2016 XOOPS Project (https://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link            https://xoops.org/
  * @since           1.0.6
  */
@@ -26,7 +26,7 @@ require_once __DIR__ . '/header.php';
 // Begin Main page Heading etc
 $cid        = Request::getInt('cid', 0, 'GET'); //cleanRequestVars($_REQUEST, 'cid', 0);
 $selectdate = Request::getString('selectdate', ''); //cleanRequestVars($_REQUEST, 'selectdate', '');
-$list       = Request::getString('letter', '');// cleanRequestVars($_REQUEST, 'letter', '');
+$list       = Request::getString('letter', ''); // cleanRequestVars($_REQUEST, 'letter', '');
 $start      = Request::getInt('start', 0, 'GET'); //cleanRequestVars($_REQUEST, 'start', 0);
 
 $catsort = $GLOBALS['xoopsModuleConfig']['sortcats'];
@@ -41,7 +41,7 @@ if (is_array($arr) > 0 && !$list && !$selectdate) {
 
 $GLOBALS['xoopsOption']['template_main'] = 'xoopstube_viewcat.tpl';
 
-include XOOPS_ROOT_PATH . '/header.php';
+require_once XOOPS_ROOT_PATH . '/header.php';
 
 //$xoTheme->addStylesheet('modules/' . $moduleDirName . '/assets/css/xtubestyle.css');
 
@@ -72,7 +72,6 @@ $xoopsTpl->assign('catarray', $catarray);
 
 XoopsModules\Xoopstube\Helper::getInstance()->loadLanguage('common');
 $xoopsTpl->assign('letterChoiceTitle', constant('CO_' . $moduleDirNameUpper . '_' . 'BROWSETOTOPIC'));
-/** @var \XoopsDatabase $db */
 $db             = \XoopsDatabaseFactory::getDatabaseConnection();
 $objHandler     = new Xoopstube\VideosHandler($db);
 $choicebyletter = new Xoopstube\Common\LetterChoice($objHandler, null, null, range('a', 'z'), 'letter');
@@ -163,17 +162,20 @@ if (is_array($arr) > 0 && !$list && !$selectdate) {
         * End
         */
 
-        $xoopsTpl->append('subcategories', [
-            'title'           => $xtubemyts->htmlSpecialCharsStrip($ele['title']),
-            'id'              => $ele['cid'],
-            'image'           => XOOPS_URL . "/$imgurl",
-            'width'           => $_width,
-            'height'          => $_height,
-            'infercategories' => $infercategories,
-            'totalvideos'     => $totalvideos['count'],
-            'count'           => $scount,
-            'alttext'         => $ele['description']
-        ]);
+        $xoopsTpl->append(
+            'subcategories',
+            [
+                'title'           => $xtubemyts->htmlSpecialCharsStrip($ele['title']),
+                'id'              => $ele['cid'],
+                'image'           => XOOPS_URL . "/$imgurl",
+                'width'           => $_width,
+                'height'          => $_height,
+                'infercategories' => $infercategories,
+                'totalvideos'     => $totalvideos['count'],
+                'count'           => $scount,
+                'alttext'         => $ele['description'],
+            ]
+        );
         ++$scount;
     }
 }
@@ -186,9 +188,9 @@ $smiley      = $head_arr['nosmiley'] ? 0 : 1;
 $xcodes      = $head_arr['noxcodes'] ? 0 : 1;
 $images      = $head_arr['noimages'] ? 0 : 1;
 $breaks      = $head_arr['nobreak'] ? 1 : 0;
-$description =& $xtubemyts->displayTarea($head_arr['description'], $html, $smiley, $xcodes, $images, $breaks);
+$description = &$xtubemyts->displayTarea($head_arr['description'], $html, $smiley, $xcodes, $images, $breaks);
 $xoopsTpl->assign('description', $description);
-/** @var XoopsModuleHandler $moduleHandler */
+/** @var \XoopsModuleHandler $moduleHandler */
 $moduleHandler = xoops_getHandler('module');
 $versioninfo   = $moduleHandler->get($xoopsModule->getVar('mid'));
 if ($head_arr['title'] > '') {
@@ -225,7 +227,7 @@ if ($selectdate) {
     $result = $GLOBALS['xoopsDB']->query($sql, $GLOBALS['xoopsModuleConfig']['perpage'], $start);
 
     $sql = 'SELECT COUNT(*) FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . $query;
-    list($count) = $GLOBALS['xoopsDB']->fetchRow($GLOBALS['xoopsDB']->query($sql));
+    [$count] = $GLOBALS['xoopsDB']->fetchRow($GLOBALS['xoopsDB']->query($sql));
 
     $list_by = 'selectdate=' . $selectdate;
 
@@ -238,7 +240,7 @@ if ($selectdate) {
     $result = $GLOBALS['xoopsDB']->query($sql, $GLOBALS['xoopsModuleConfig']['perpage'], $start);
 
     $sql = 'SELECT COUNT(*) FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . $query;
-    list($count) = $GLOBALS['xoopsDB']->fetchRow($GLOBALS['xoopsDB']->query($sql));
+    [$count] = $GLOBALS['xoopsDB']->fetchRow($GLOBALS['xoopsDB']->query($sql));
     $list_by = "letter=$list";
 } else {
     $query = 'WHERE a.published>0 AND a.published<=' . time() . ' AND (a.expired=0 OR a.expired>' . time() . ') AND a.offline=0' . ' AND (b.cid=a.cid OR (a.cid=' . $cid . ' OR b.cid=' . $cid . '))';
@@ -247,7 +249,7 @@ if ($selectdate) {
     $result = $GLOBALS['xoopsDB']->query($sql, $GLOBALS['xoopsModuleConfig']['perpage'], $start);
 
     $sql2 = 'SELECT COUNT(*) FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' a LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('xoopstube_altcat') . ' b ON b.lid=a.lid ' . $query;
-    list($count) = $GLOBALS['xoopsDB']->fetchRow($GLOBALS['xoopsDB']->query($sql2));
+    [$count] = $GLOBALS['xoopsDB']->fetchRow($GLOBALS['xoopsDB']->query($sql2));
     $order   = Xoopstube\Utility::convertOrderByOut($orderby);
     $list_by = 'cid=' . $cid . '&orderby=' . $order;
     $xoopsTpl->assign('show_categort_title', false);
@@ -259,7 +261,7 @@ if ($count > 0) {
     $moderate = 0;
     while (false !== ($video_arr = $GLOBALS['xoopsDB']->fetchArray($result))) {
         if (true === Xoopstube\Utility::checkGroups($video_arr['cid'])) {
-            require XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/include/videoloadinfo.php';
+            require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/include/videoloadinfo.php';
             $xoopsTpl->append('video', $video);
         }
     }
@@ -293,4 +295,4 @@ if ($count > 0) {
 
 $xoopsTpl->assign('cat_columns', $GLOBALS['xoopsModuleConfig']['catcolumns']);
 
-include XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';

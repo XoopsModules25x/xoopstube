@@ -37,13 +37,13 @@
              <{/if}>
         &nbsp;
         <{/if}>
-        
+
         <i class="glyphicon glyphicon-warning-sign"></i>
         <a href="<{$xoops_url}>/modules/<{$video.module_dir}>/brokenvideo.php?lid=<{$video.id}>" title="<{$smarty.const._MD_XOOPSTUBE_REPORTBROKEN}>">
             <{$smarty.const._MD_XOOPSTUBE_REPORTBROKEN}>
         </a>
         &nbsp;
-        
+
         <i class="glyphicon glyphicon-share-alt"></i>
         <a href="mailto:?subject=<{$video.mail_subject}>&body=<{$video.mail_body}>" title="<{$smarty.const._MD_XOOPSTUBE_TELLAFRIEND}>">
             <{$smarty.const._MD_XOOPSTUBE_TELLAFRIEND}>

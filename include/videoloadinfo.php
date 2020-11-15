@@ -13,11 +13,12 @@
  * @package         Xoopstube
  * @author          XOOPS Development Team
  * @copyright       2001-2016 XOOPS Project (https://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link            https://xoops.org/
  * @since           1.0.6
  */
 
+use Xmf\Module\Admin;
 use XoopsModules\Xoopstube;
 
 // $module_video = '';
@@ -32,7 +33,7 @@ $video['cid']       = (int)$video_arr['cid'];
 $video['published'] = (int)$video_arr['published'] ? true : false;
 
 $path              = $mytree->getPathFromId($video_arr['cid'], 'title');
-$path              = substr($path, 1);
+$path              = mb_substr($path, 1);
 $path              = basename($path);
 $path              = str_replace('/', '', $path);
 $video['category'] = $path;
@@ -59,7 +60,7 @@ if (0 == $moderate) {
     $is_updated = _MD_XOOPSTUBE_SUBMITDATE;
     $xoopsTpl->assign('lang_subdate', $is_updated);
 }
-$pathIcon16          = \Xmf\Module\Admin::iconUrl('', 16);
+$pathIcon16          = Admin::iconUrl('', 16);
 $video['adminvideo'] = '';
 $video['isadmin']    = ((is_object($GLOBALS['xoopsUser']) && !empty($GLOBALS['xoopsUser'])) && $GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid()));
 if (true === $video['isadmin'] && 0 == $moderate) {
@@ -135,7 +136,7 @@ if (is_object($GLOBALS['xoopsUser']) && !empty($GLOBALS['xoopsUser'])) {
     }
 }
 
-$description          =& $xtubemyts->displayTarea($video_arr['description'], 1, 1, 1, 1, 1);
+$description          = &$xtubemyts->displayTarea($video_arr['description'], 1, 1, 1, 1, 1);
 $video['description'] = xoops_substr($description, 0, $GLOBALS['xoopsModuleConfig']['totalchars'], '...');
 
 $video['updated']        = Xoopstube\Utility::getTimestamp(formatTimestamp($time, $GLOBALS['xoopsModuleConfig']['dateformat']));

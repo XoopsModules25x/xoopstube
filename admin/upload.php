@@ -12,11 +12,12 @@
  * @package         Xoopstube
  * @author          XOOPS Development Team
  * @copyright       2001-2016 XOOPS Project (https://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link            https://xoops.org/
  * @since           1.0.6
  */
 
+use Xmf\Module\Admin;
 use Xmf\Request;
 use XoopsModules\Xoopstube;
 
@@ -28,7 +29,7 @@ require_once __DIR__ . '/admin_header.php';
 $op       = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET');
 $rootpath = Request::getInt('rootpath', 0, 'GET');
 
-switch (strtolower($op)) {
+switch (mb_strtolower($op)) {
     case 'upload':
         if ('' !== $_FILES['uploadfile']['name']) {
             if (file_exists(XOOPS_ROOT_PATH . '/' . Request::getString('uploadpath', '', 'POST') . '/' . $_FILES['uploadfile']['name'])) {
@@ -40,7 +41,7 @@ switch (strtolower($op)) {
                 'image/pjpeg',
                 'image/x-png',
                 'image/png',
-                'media/flv'
+                'media/flv',
             ];
             Xoopstube\Utility::uploadFiles($_FILES, Request::getString('uploadpath', '', 'POST'), $allowed_mimetypes, 'upload.php', 1, 0);
             redirect_header('upload.php', 2, _AM_XOOPSTUBE_VIDEO_IMAGEUPLOAD);
@@ -48,7 +49,6 @@ switch (strtolower($op)) {
             redirect_header('upload.php', 2, _AM_XOOPSTUBE_VIDEO_NOIMAGEEXIST);
         }
         break;
-
     case 'delfile':
 
         if (1 === Request::getInt('confirm', '', 'POST')) { // isset($_POST['confirm']) && $_POST['confirm'] == 1) {
@@ -67,36 +67,40 @@ switch (strtolower($op)) {
                 redirect_header('upload.php', 1, _AM_XOOPSTUBE_VIDEO_NOFILEERROR);
             }
             xoops_cp_header();
-            xoops_confirm([
-                              'op'         => 'delfile',
-                              'uploadpath' => Request::getString('uploadpath', '', 'POST'),
-                              'videofile'  => Request::getString('videofile', '', 'POST'),
-                              'confirm'    => 1
-                          ], 'upload.php', _AM_XOOPSTUBE_VIDEO_DELETEFILE . '<br><br>' . Request::getString('videofile', '', 'POST'), _AM_XOOPSTUBE_BDELETE);
+            xoops_confirm(
+                [
+                    'op'         => 'delfile',
+                    'uploadpath' => Request::getString('uploadpath', '', 'POST'),
+                    'videofile'  => Request::getString('videofile', '', 'POST'),
+                    'confirm'    => 1,
+                ],
+                'upload.php',
+                _AM_XOOPSTUBE_VIDEO_DELETEFILE . '<br><br>' . Request::getString('videofile', '', 'POST'),
+                _AM_XOOPSTUBE_BDELETE
+            );
         }
         break;
-
     case 'default':
     default:
         $displayimage = '';
         xoops_cp_header();
-        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject = Admin::getInstance();
         $adminObject->displayNavigation(basename(__FILE__));
 
         $dirarray  = [
             1 => $GLOBALS['xoopsModuleConfig']['catimage'],
             2 => $GLOBALS['xoopsModuleConfig']['mainimagedir'],
-            3 => $GLOBALS['xoopsModuleConfig']['videoimgdir']
+            3 => $GLOBALS['xoopsModuleConfig']['videoimgdir'],
         ];
         $namearray = [
             1 => _AM_XOOPSTUBE_VIDEO_CATIMAGE,
             2 => _AM_XOOPSTUBE_VIDEO_MAINIMAGEDIR,
-            3 => _AM_XOOPSTUBE_VIDEO_CATVIDEOIMG
+            3 => _AM_XOOPSTUBE_VIDEO_CATVIDEOIMG,
         ];
         $listarray = [
             1 => _AM_XOOPSTUBE_VIDEO_FCATIMAGE,
             2 => _AM_XOOPSTUBE_VIDEO_FMAINIMAGEDIR,
-            3 => _AM_XOOPSTUBE_VIDEO_FCATVIDEOIMG
+            3 => _AM_XOOPSTUBE_VIDEO_FCATVIDEOIMG,
         ];
 
         //    $dirarray  = array(
@@ -121,15 +125,14 @@ switch (strtolower($op)) {
         $pathlist = isset($listarray[$rootpath]) ? $namearray[$rootpath] : '';
         $namelist = isset($listarray[$rootpath]) ? $namearray[$rootpath] : '';
 
-        $iform = new \XoopsThemeForm(_AM_XOOPSTUBE_VIDEO_FUPLOADIMAGETO . $pathlist, 'op', xoops_getenv('PHP_SELF'), 'post', true);
+        $iform = new \XoopsThemeForm(_AM_XOOPSTUBE_VIDEO_FUPLOADIMAGETO . $pathlist, 'op', xoops_getenv('SCRIPT_NAME'), 'post', true);
         $iform->setExtra('enctype="multipart/form-data"');
         ob_start();
         $iform->addElement(new \XoopsFormHidden('dir', $rootpath));
         Xoopstube\Utility::getDirSelectOption($namelist, $dirarray, $namearray);
-        $iform->addElement(new \XoopsFormLabel(_AM_XOOPSTUBE_VIDEO_FOLDERSELECTION, ob_get_contents()));
-        ob_end_clean();
+        $iform->addElement(new \XoopsFormLabel(_AM_XOOPSTUBE_VIDEO_FOLDERSELECTION, ob_get_clean()));
 
-        if ($rootpath > 0) {
+    if ($rootpath > 0) {
             $graph_array      = Xoopstube\Lists:: getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $dirarray[$rootpath], $type = 'images');
             $indexImageSelect = new \XoopsFormSelect('', 'videofile', '');
             $indexImageSelect->addOptionArray($graph_array);

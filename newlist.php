@@ -13,7 +13,7 @@
  * @package         Xoopstube
  * @author          XOOPS Development Team
  * @copyright       2001-2016 XOOPS Project (https://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @since           1.0.6
  * @link            https://xoops.org/
  */
@@ -21,7 +21,7 @@
 use Xmf\Request;
 use XoopsModules\Xoopstube;
 
-include __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 
 $GLOBALS['xoopsOption']['template_main'] = 'xoopstube_newlistindex.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
@@ -49,19 +49,11 @@ if (Request::hasVar('newvideoshowdays', 'GET')) {
     $duration_week  = ($time_cur - (86400 * 7));
     $allmonthvideos = 0;
     $allweekvideos  = 0;
-    $result         = $GLOBALS['xoopsDB']->query('SELECT lid, cid, published, updated FROM '
-                                                 . $GLOBALS['xoopsDB']->prefix('xoopstube_videos')
-                                                 . ' WHERE (published >= '
-                                                 . $duration
-                                                 . ' AND published <= '
-                                                 . $time_cur
-                                                 . ') OR updated >= '
-                                                 . $duration
-                                                 . ' AND (expired = 0 OR expired > '
-                                                 . $time_cur
-                                                 . ') AND offline = 0');
+    $result         = $GLOBALS['xoopsDB']->query(
+        'SELECT lid, cid, published, updated FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE (published >= ' . $duration . ' AND published <= ' . $time_cur . ') OR updated >= ' . $duration . ' AND (expired = 0 OR expired > ' . $time_cur . ') AND offline = 0'
+    );
 
-    while (false !== ($myrow = $GLOBALS['xoopsDB']->fetcharray($result))) {
+    while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $published = ($myrow['updated'] > 0) ? $myrow['updated'] : $myrow['published'];
         ++$allmonthvideos;
         if ($published > $duration_week) {
@@ -87,20 +79,22 @@ if (Request::hasVar('newvideoshowdays', 'GET')) {
 }
 
 $duration = ($time_cur - (86400 * ($newvideoshowdays - 1)));
-$result   = $GLOBALS['xoopsDB']->query('SELECT lid, cid, published, updated FROM '
-                                       . $GLOBALS['xoopsDB']->prefix('xoopstube_videos')
-                                       . ' WHERE (published > '
-                                       . $duration
-                                       . ' AND published <= '
-                                       . $time_cur
-                                       . ') OR (updated >= '
-                                       . $duration
-                                       . ' AND updated <= '
-                                       . $time_cur
-                                       . ') AND (expired = 0 OR expired > '
-                                       . $time_cur
-                                       . ') AND offline = 0');
-while (false !== ($myrow = $GLOBALS['xoopsDB']->fetcharray($result))) {
+$result   = $GLOBALS['xoopsDB']->query(
+    'SELECT lid, cid, published, updated FROM '
+    . $GLOBALS['xoopsDB']->prefix('xoopstube_videos')
+    . ' WHERE (published > '
+    . $duration
+    . ' AND published <= '
+    . $time_cur
+    . ') OR (updated >= '
+    . $duration
+    . ' AND updated <= '
+    . $time_cur
+    . ') AND (expired = 0 OR expired > '
+    . $time_cur
+    . ') AND offline = 0'
+);
+while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
     $published = ($myrow['updated'] > 0) ? date($GLOBALS['xoopsModuleConfig']['dateformat'], $myrow['updated']) : date($GLOBALS['xoopsModuleConfig']['dateformat'], $myrow['published']);
     $d         = date('j', $published);
     $m         = date('m', $published);
@@ -122,9 +116,9 @@ $sql    .= 'WHERE (published > 0 AND published <= ' . $time_cur . ')
          ORDER BY ' . $GLOBALS['xoopsModuleConfig']['linkxorder'];
 $result = $GLOBALS['xoopsDB']->query($sql, 10, 0);
 while (false !== ($video_arr = $GLOBALS['xoopsDB']->fetchArray($result))) {
-    include XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/include/videoloadinfo.php';
+    require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/include/videoloadinfo.php';
 }
 
 $xoopsTpl->assign('back', '<a href="javascript:history.go(-1)"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/back.png"></a>');
 $xoopsTpl->assign('module_dir', $xoopsModule->getVar('dirname'));
-include XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';

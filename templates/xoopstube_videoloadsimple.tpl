@@ -1,4 +1,4 @@
-<{if $show_categort_title == true}>
+<{if $show_categort_title === true}>
     <div style="margin-bottom: 4px;"><span style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_CATEGORYC}></span><{$video.category}>
     </div>
 <{/if}>
@@ -37,7 +37,7 @@
                     <td colspan="2">&nbsp;</td>
                 </tr>
                 <tr>
-                    <td width="65%" valign="top"> <{if $show_screenshot == true}> <{if $video.screenshot_full != ''}>
+                    <td width="65%" valign="top"> <{if $show_screenshot === true}> <{if $video.screenshot_full != ''}>
 
                         <{/if}> <{/if}>
                         <div style="margin-left: 6px;" align="justify"> &nbsp;

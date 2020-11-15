@@ -13,11 +13,10 @@
  * @package         Xoopstube
  * @author          XOOPS Development Team
  * @copyright       2001-2016 XOOPS Project (https://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link            https://xoops.org/
  * @since           1.0.6
  */
-
 define('_MD_XOOPSTUBE_NOVIDEO', 'This video does not exist!');
 define('_MD_XOOPSTUBE_SUBCATLISTING', 'Subcategories');
 define('_MD_XOOPSTUBE_ISADMINNOTICE', 'Webmaster: There is a problem with this image.');
@@ -61,7 +60,9 @@ define('_MD_XOOPSTUBE_THEREIS', "There is <span style='font-weight: bold;'>%s</s
 define('_MD_XOOPSTUBE_LATESTLIST', 'Latest Listings');
 define('_MD_XOOPSTUBE_FILETITLE', 'Video title: ');
 define('_MD_XOOPSTUBE_DLVIDID', 'Video id-code: ');
-define('_MD_XOOPSTUBE_VIDEO_DLVIDID_NOTE', "
+define(
+    '_MD_XOOPSTUBE_VIDEO_DLVIDID_NOTE',
+    "
 <span style='font-size: small;'><span style='font-weight: bold;'>YouTube:</span> http://www.youtube.com/watch?v=<span style='color: #FF0000;'>IsOtq-qCqZ4</span><br>
 <span style='font-weight: bold;'>MetaCafe:</span> http://www.metacafe.com/watch/<span style='color: #FF0000;'>191543/sperm_whale_encounters_underwater_robot</span>/<br>
 <span style='font-weight: bold;'>SPIKE/ifilm:</span> http://www.ifilm.com/video/<span style='color: #FF0000;'>2718605</span><br>
@@ -76,7 +77,8 @@ define('_MD_XOOPSTUBE_VIDEO_DLVIDID_NOTE', "
 <span style='font-weight: bold;'>Veoh:</span> http://www.veoh.com/videos/<span style='color: #FF0000;'>v15069875yApCz7r3</span>?jsonParams=...<br>
 <span style='font-weight: bold;'>Vimeo:</span> http://www.vimeo.com/<span style='color: #FF0000;'>2246499</span><br>
 <span style='font-weight: bold;'>Megavideo:</span> http://www.megavideo.com/?v=<span style='color: #FF0000;'>J6YSRE0T</span><br>
-<span style='font-weight: bold;'>Viddler:</span> http://www.viddler.com/player/<span style='color: #FF0000;'>d32d2b94</span>/ (see embed code)</span>");
+<span style='font-weight: bold;'>Viddler:</span> http://www.viddler.com/player/<span style='color: #FF0000;'>d32d2b94</span>/ (see embed code)</span>"
+);
 define('_MD_XOOPSTUBE_VIDEO_PICURL', 'Picture url: ');
 define('_MD_XOOPSTUBE_VIDEO_PICURLNOTE', "<span style='font-size: small;'>Picture url when source is Google Video, MySpace TV, DailyMotion, Blip.tv, ClipFish, LiveLeak, Veoh, Vimeo, Viddler or Maktoob</span>");
 define('_MD_XOOPSTUBE_VIDSOURCE', 'Video source:');
@@ -157,9 +159,12 @@ define('_MD_XOOPSTUBE_LEGENDTEXTNEWLAST', 'Over 1 Week');
 define('_MD_XOOPSTUBE_THISFILEDOESNOTEXIST', 'Error: This video does not exist!');
 define('_MD_XOOPSTUBE_BROKENREPORTED', 'Broken video Reported');
 
-define('_MD_XOOPSTUBE_REV_SNEWMNAMEDESC', "Please completely fill out the form below, and we'll add your review as soon as possible.<br><br>
+define(
+    '_MD_XOOPSTUBE_REV_SNEWMNAMEDESC',
+    "Please completely fill out the form below, and we'll add your review as soon as possible.<br><br>
 Thank you for taking the time to submit your opinion. We want to give our users a possibility to find quality software faster.<br><br>
-All reviews will be reviewed by one of our webmasters before they are put up on the web site.");
+All reviews will be reviewed by one of our webmasters before they are put up on the web site."
+);
 define('_MD_XOOPSTUBE_ISNOTAPPROVED', 'Your submission has to be approved by a moderator first.');
 define('_MD_XOOPSTUBE_HOMEPAGETITLEC', 'Home Page Title: ');
 define('_MD_XOOPSTUBE_SCREENSHOT', 'Screenshot:');
@@ -267,7 +272,7 @@ function getXtubeAlphabet()
         'W',
         'X',
         'Y',
-        'Z'
+        'Z',
     ];
 
     return $xtubeAlphabet;

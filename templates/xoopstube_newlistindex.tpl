@@ -41,7 +41,7 @@
     </tr>
 
 
-    <{if count($dailyvideos) gt 0}>
+    <{if $dailyvideos|is_array && count($dailyvideos) > 0}>
     <!-- Start day loop -->
     <{foreach item=dailyvideo from=$dailyvideos}>
         <tr>

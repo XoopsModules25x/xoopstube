@@ -12,23 +12,24 @@
  * @package         Xoopstube
  * @author          XOOPS Development Team
  * @copyright       2001-2016 XOOPS Project (https://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link            https://xoops.org/
  * @since           1.0.6
  */
 
+use Xmf\Module\Admin;
 use Xmf\Request;
 use XoopsModules\Xoopstube;
 
 require_once __DIR__ . '/admin_header.php';
-require_once  dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+
 require_once XOOPS_ROOT_PATH . '/class/xoopsform/grouppermform.php';
 
 xoops_cp_header();
-$adminObject = \Xmf\Module\Admin::getInstance();
+$adminObject = Admin::getInstance();
 $adminObject->displayNavigation(basename(__FILE__));
 
-$permtoset                = Request::getInt('permtoset', 1, 'POST');// isset($_POST['permtoset']) ? (int) $_POST['permtoset'] : 1;
+$permtoset                = Request::getInt('permtoset', 1, 'POST'); // isset($_POST['permtoset']) ? (int) $_POST['permtoset'] : 1;
 $selected                 = ['', '', '', '', ''];
 $selected[$permtoset - 1] = ' selected';
 echo "<form method='post' name='fselperm' action='permissions.php'><table border=0><tr><td><select name='permtoset' onChange='document.fselperm.submit()'>
@@ -71,7 +72,7 @@ switch ($permtoset) {
 $permform = new \XoopsGroupPermForm($title_of_form, $module_id, $perm_name, $perm_desc, 'admin/permissions.php');
 $result   = $GLOBALS['xoopsDB']->query('SELECT cid, pid, title FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_cat') . ' ORDER BY title ASC');
 if ($GLOBALS['xoopsDB']->getRowsNum($result)) {
-    while (false !== ($permrow = $GLOBALS['xoopsDB']->fetcharray($result))) {
+    while (false !== ($permrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $permform->addItem($permrow['cid'], '&nbsp;' . $permrow['title'], $permrow['pid']);
     }
     echo $permform->render();

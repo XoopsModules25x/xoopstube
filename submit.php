@@ -13,17 +13,18 @@
  * @package         Xoopstube
  * @author          XOOPS Development Team
  * @copyright       2001-2016 XOOPS Project (https://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link            https://xoops.org/
  * @since           1.0.6
  */
 
 use Xmf\Request;
+use XoopsModules\Tag\FormTag;
 use XoopsModules\Xoopstube;
 
-include __DIR__ . '/header.php';
-include XOOPS_ROOT_PATH . '/header.php';
-include XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+require_once __DIR__ . '/header.php';
+require_once XOOPS_ROOT_PATH . '/header.php';
+require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
 $mytree = new Xoopstube\Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
 
@@ -198,7 +199,7 @@ if (true === Xoopstube\Utility::checkGroups($cid, 'XTubeSubPerm')) {
             echo '&nbsp;';
             echo '<input type="button" onclick="location=\'index.php\'" class="formButton" value="' . _CANCEL . '" alt="' . _CANCEL . '">';
             echo '</div></form>';
-            include XOOPS_ROOT_PATH . '/footer.php';
+            require_once XOOPS_ROOT_PATH . '/footer.php';
             exit();
         }
         //        echo '<br><div style="text-align: center;">' . Xoopstube\Utility::renderImageHeader() . '</div><br>';
@@ -228,7 +229,7 @@ if (true === Xoopstube\Utility::checkGroups($cid, 'XTubeSubPerm')) {
         $item_tag     = $video_array['item_tag'] ? $xtubemyts->htmlSpecialCharsStrip($video_array['item_tag']) : '';
         $picurl       = $video_array['picurl'] ? $xtubemyts->htmlSpecialCharsStrip($video_array['picurl']) : 'http://';
 
-        $sform = new \XoopsThemeForm(_MD_XOOPSTUBE_SUBMITCATHEAD, 'storyform', xoops_getenv('PHP_SELF'), 'post', true);
+        $sform = new \XoopsThemeForm(_MD_XOOPSTUBE_SUBMITCATHEAD, 'storyform', xoops_getenv('SCRIPT_NAME'), 'post', true);
         $sform->setExtra('enctype="multipart/form-data"');
 
         Xoopstube\Utility::setNoIndexNoFollow();
@@ -253,7 +254,7 @@ if (true === Xoopstube\Utility::checkGroups($cid, 'XTubeSubPerm')) {
             107 => _MD_XOOPSTUBE_VEOH,
             108 => _MD_XOOPSTUBE_VIMEO,
             109 => _MD_XOOPSTUBE_MEGAVIDEO,
-            200 => _MD_XOOPSTUBE_XOOPSTUBE
+            200 => _MD_XOOPSTUBE_XOOPSTUBE,
         ];
         $vidsource_select = new \XoopsFormSelect(_MD_XOOPSTUBE_VIDSOURCE, 'vidsource', $vidsource);
         $vidsource_select->addOptionArray($vidsource_array);
@@ -293,8 +294,7 @@ if (true === Xoopstube\Utility::checkGroups($cid, 'XTubeSubPerm')) {
         // Video category form
         ob_start();
         $mytree->makeMySelBox('title', 'title', $cid, 0);
-        $sform->addElement(new \XoopsFormLabel(_MD_XOOPSTUBE_CATEGORYC, ob_get_contents()));
-        ob_end_clean();
+        $sform->addElement(new \XoopsFormLabel(_MD_XOOPSTUBE_CATEGORYC, ob_get_clean()));
 
         // Video description form
         //        $editor = xtube_getWysiwygForm( _MD_XOOPSTUBE_DESCRIPTIONC, 'descriptionb', $descriptionb, 10, 50, '');
@@ -326,7 +326,7 @@ if (true === Xoopstube\Utility::checkGroups($cid, 'XTubeSubPerm')) {
             // Insert tags if Tag-module is installed
             if (Xoopstube\Utility::isModuleTagInstalled()) {
                 require_once XOOPS_ROOT_PATH . '/modules/tag/include/formtag.php';
-                $text_tags = new TagFormTag('item_tag', 70, 255, $video_array['item_tag'], 0);
+                $text_tags = new FormTag('item_tag', 70, 255, $video_array['item_tag'], 0);
                 $sform->addElement($text_tags);
             }
         } else {
@@ -359,16 +359,16 @@ if (true === Xoopstube\Utility::checkGroups($cid, 'XTubeSubPerm')) {
         }
         $sform->addElement($option_tray);
 
-        $button_tray = new \XoopsFormElementTray('', '');
-        $button_tray->addElement(new \XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
-        $button_tray->addElement(new \XoopsFormHidden('lid', $lid));
+        $buttonTray = new \XoopsFormElementTray('', '');
+        $buttonTray->addElement(new \XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
+        $buttonTray->addElement(new \XoopsFormHidden('lid', $lid));
 
-        $sform->addElement($button_tray);
+        $sform->addElement($buttonTray);
         $sform->display();
 
         echo '</div></div>';
 
-        include XOOPS_ROOT_PATH . '/footer.php';
+        require_once XOOPS_ROOT_PATH . '/footer.php';
     }
 } else {
     redirect_header('index.php', 2, _MD_XOOPSTUBE_NOPERMISSIONTOPOST);

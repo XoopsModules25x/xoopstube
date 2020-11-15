@@ -2,7 +2,7 @@
     <div align="center"><{$catarray.imageheader}></div>
 <{/if}>
 
-<{if $brokenreport == true}>
+<{if $brokenreport === true}>
     <div style="text-align:left;">
         <h4><{$smarty.const._MD_XOOPSTUBE_RESOURCEREPORTED}></h4>
 

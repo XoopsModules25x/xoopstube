@@ -12,11 +12,12 @@
  * @package         Xoopstube
  * @author          XOOPS Development Team
  * @copyright       2001-2016 XOOPS Project (https://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link            https://xoops.org/
  * @since           1.0.6
  */
 
+use Xmf\Module\Admin;
 use Xmf\Request;
 use XoopsModules\Xoopstube;
 
@@ -27,7 +28,7 @@ global $xtubeImageArray, $xoopsModule;
 $op  = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET'); //cleanRequestVars($_REQUEST, 'op', '');
 $lid = Request::getInt('lid', Request::getInt('lid', 0, 'POST'), 'GET'); //cleanRequestVars($_REQUEST, 'lid', 0);
 
-switch (strtolower($op)) {
+switch (mb_strtolower($op)) {
     case 'updatenotice':
         $ack         = Request::getInt('ack', 0); //cleanRequestVars($_REQUEST, 'ack', 0);
         $con         = Request::getInt('con', 1); //cleanRequestVars($_REQUEST, 'con', 1);
@@ -99,7 +100,6 @@ switch (strtolower($op)) {
         }
         redirect_header('brokenvideo.php?op=default', 1, $update_mess);
         break;
-
     case 'delbrokenvideos':
         $GLOBALS['xoopsDB']->queryF('DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_broken') . ' WHERE lid=' . $lid);
         $GLOBALS['xoopsDB']->queryF('DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE lid=' . $lid);
@@ -107,18 +107,16 @@ switch (strtolower($op)) {
         redirect_header('brokenvideo.php?op=default', 1, _AM_XOOPSTUBE_BROKENFILEDELETED);
 
         break;
-
     case 'ignorebrokenvideos':
         $GLOBALS['xoopsDB']->queryF('DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_broken') . ' WHERE lid=' . $lid);
         redirect_header('brokenvideo.php?op=default', 1, _AM_XOOPSTUBE_BROKEN_FILEIGNORED);
         break;
-
     default:
         $result            = $GLOBALS['xoopsDB']->query('SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_broken') . ' ORDER BY reportid');
         $totalbrokenvideos = $GLOBALS['xoopsDB']->getRowsNum($result);
 
         xoops_cp_header();
-        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject = Admin::getInstance();
         $adminObject->displayNavigation(basename(__FILE__));
 
         echo '
@@ -149,18 +147,18 @@ switch (strtolower($op)) {
         if (0 == $totalbrokenvideos) {
             echo '<tr style="text-align: center;"><td style="text-align: center;" class="head" colspan="8">' . _AM_XOOPSTUBE_BROKEN_NOFILEMATCH . '</td></tr>';
         } else {
-            while (false !== (list($reportid, $lid, $sender, $ip, $date, $confirmed, $acknowledged) = $GLOBALS['xoopsDB']->fetchRow($result))) {
+            while (list($reportid, $lid, $sender, $ip, $date, $confirmed, $acknowledged) = $GLOBALS['xoopsDB']->fetchRow($result)) {
                 $result2 = $GLOBALS['xoopsDB']->query('SELECT cid, title, vidid, submitter FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE lid=' . $lid);
-                list($cid, $videoshowname, $vidid, $submitter) = $GLOBALS['xoopsDB']->fetchRow($result2);
+                [$cid, $videoshowname, $vidid, $submitter] = $GLOBALS['xoopsDB']->fetchRow($result2);
                 $email      = '';
                 $sendername = '';
 
                 if (0 !== $sender) {
                     $result3 = $GLOBALS['xoopsDB']->query('SELECT uname, email FROM ' . $GLOBALS['xoopsDB']->prefix('users') . ' WHERE uid=' . $sender);
-                    list($sendername, $email) = $GLOBALS['xoopsDB']->fetchRow($result3);
+                    [$sendername, $email] = $GLOBALS['xoopsDB']->fetchRow($result3);
                 }
                 $result4 = $GLOBALS['xoopsDB']->query('SELECT uname, email FROM ' . $GLOBALS['xoopsDB']->prefix('users') . '  WHERE uid=' . $sender);
-                list($ownername, $owneremail) = $GLOBALS['xoopsDB']->fetchRow($result4);
+                [$ownername, $owneremail] = $GLOBALS['xoopsDB']->fetchRow($result4);
 
                 if ('' === $ownername) {
                     $ownername = '&nbsp;';

@@ -12,11 +12,12 @@
  * @package         Xoopstube
  * @author          XOOPS Development Team
  * @copyright       2001-2016 XOOPS Project (https://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link            https://xoops.org/
  * @since           1.0.6
  */
 
+use Xmf\Module\Admin;
 use Xmf\Request;
 use XoopsModules\Xoopstube;
 
@@ -26,20 +27,19 @@ $op  = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET'); //cleanR
 $lid = Request::getInt('rid', Request::getInt('rid', 0, 'POST'), 'GET'); //cleanRequestVars($_REQUEST, 'rid', 0);
 $lid = Request::getInt('lid', Request::getInt('lid', 0, 'POST'), 'GET'); //cleanRequestVars($_REQUEST, 'lid', 0);
 
-switch (strtolower($op)) {
+switch (mb_strtolower($op)) {
     case 'delvote':
         $sql    = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_votedata') . ' WHERE ratingid=' . $rid;
         $result = $GLOBALS['xoopsDB']->queryF($sql);
         Xoopstube\Utility::updateRating($lid);
         redirect_header('votedata.php', 1, _AM_XOOPSTUBE_VOTEDELETED);
         break;
-
     case 'main':
     default:
         $start = Request::getInt('start', 0); //cleanRequestVars($_REQUEST, 'start', 0);
         xoops_cp_header();
         //renderAdminMenu( _AM_XOOPSTUBE_VOTE_RATINGINFOMATION );
-        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject = Admin::getInstance();
         $adminObject->displayNavigation(basename(__FILE__));
         $_vote_data = Xoopstube\Utility::getVoteDetails($lid);
 
@@ -91,7 +91,7 @@ switch (strtolower($op)) {
         if (0 == $votes) {
             echo '<tr><td style="text-align: center;" colspan="7" class="head">' . _AM_XOOPSTUBE_VOTE_NOVOTES . '</td></tr>';
         } else {
-            while (false !== (list($ratingid, $lid, $ratinguser, $rating, $ratinghostname, $ratingtimestamp, $title) = $GLOBALS['xoopsDB']->fetchRow($results))) {
+            while (list($ratingid, $lid, $ratinguser, $rating, $ratinghostname, $ratingtimestamp, $title) = $GLOBALS['xoopsDB']->fetchRow($results)) {
                 $formatted_date = Xoopstube\Utility::getTimestamp(formatTimestamp($ratingtimestamp, $GLOBALS['xoopsModuleConfig']['dateformat']));
                 $ratinguname    = \XoopsUser::getUnameFromId($ratinguser);
                 echo '

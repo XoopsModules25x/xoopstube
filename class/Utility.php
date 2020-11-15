@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Xoopstube;
+<?php
+
+namespace XoopsModules\Xoopstube;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -10,10 +12,243 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 
+use Criteria;
+use CriteriaCompo;
+use MyTextSanitizer;
+use WideImage\WideImage;
 use Xmf\Request;
+use XoopsDatabaseFactory;
+use XoopsModule;
 use XoopsModules\Xoopstube;
 use XoopsModules\Xoopstube\Common;
-use WideImage\WideImage;
+use XoopsModules\Xoopstube\Constants;
+use XoopsObject;
+use XoopsPageNav;
+use XoopsTpl;
+use xos_opal_Theme;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+use const _AM_XOOPSTUBE_VIDSOURCE2;
+
+
+use const _AM_XOOPSTUBE_WARNINSTALL1;
+use const _AM_XOOPSTUBE_WARNINSTALL2;
+use const _AM_XOOPSTUBE_WARNINSTALL3;
+use const _AM_XOOPSTUBE_WARNINSTALL4;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+use const ENT_HTML5;
+
+
+
+
+
+
+
 
 /**
  * xoopstube
@@ -31,27 +266,18 @@ use WideImage\WideImage;
  * @copyright (c) Instant Zero
  *
  * Note: You should be able to use it without the need to instantiate it.
- *
  */
-
-// defined('XOOPS_ROOT_PATH') || die('XOOPS Root Path not defined');
 
 //require_once  dirname(__DIR__) . '/include/common.php';
 
 /**
  * Class Utility
  */
-class Utility
+class Utility extends Common\SysUtility
 {
-    use Common\VersionChecks; //checkVerXoops, checkVerPhp Traits
-
-    use Common\ServerStats; // getServerStats Trait
-
-    use Common\FilesManagement; // Files Management Trait
-
     //--------------- Custom module methods -----------------------------
 
-    const MODULE_NAME = 'xoopstube';
+    public const MODULE_NAME = 'xoopstube';
 
     /**
      * Access the only instance of this class
@@ -74,8 +300,8 @@ class Utility
     /**
      * Returns a module's option (with cache)
      *
-     * @param string  $option    module option's name
-     * @param boolean $withCache Do we have to use some cache ?
+     * @param string $option    module option's name
+     * @param bool   $withCache Do we have to use some cache ?
      *
      * @return mixed option's value
      */
@@ -113,13 +339,13 @@ class Utility
     /**
      * Is Xoops 2.3.x ?
      *
-     * @return boolean
+     * @return bool
      */
     public static function isX23()
     {
         $x23 = false;
         $xv  = str_replace('XOOPS ', '', XOOPS_VERSION);
-        if ((int)substr($xv, 2, 1) >= 3) {
+        if ((int)mb_substr($xv, 2, 1) >= 3) {
             $x23 = true;
         }
 
@@ -129,13 +355,13 @@ class Utility
     /**
      * Is Xoops 2.0.x ?
      *
-     * @return boolean
+     * @return bool
      */
     public static function isX20()
     {
         $x20 = false;
         $xv  = str_replace('XOOPS ', '', XOOPS_VERSION);
-        if ('0' == substr($xv, 2, 1)) {
+        if ('0' == mb_substr($xv, 2, 1)) {
             $x20 = true;
         }
 
@@ -145,8 +371,8 @@ class Utility
     /**
      * Create (in a link) a javascript confirmation's box
      *
-     * @param string  $message Message to display
-     * @param boolean $form    Is this a confirmation for a form ?
+     * @param string $message Message to display
+     * @param bool   $form    Is this a confirmation for a form ?
      *
      * @return string the javascript code to insert in the link (or in the form)
      */
@@ -154,9 +380,9 @@ class Utility
     {
         if (!$form) {
             return "onclick=\"javascript:return confirm('" . str_replace("'", ' ', $message) . "')\"";
-        } else {
-            return "onSubmit=\"javascript:return confirm('" . str_replace("'", ' ', $message) . "')\"";
         }
+
+        return "onSubmit=\"javascript:return confirm('" . str_replace("'", ' ', $message) . "')\"";
     }
 
     /**
@@ -200,8 +426,6 @@ class Utility
      * @param string $pageTitle       Page's Title
      * @param string $metaDescription Page's meta description
      * @param string $metaKeywords    Page's meta keywords
-     *
-     * @return void
      */
     public static function setMetas($pageTitle = '', $metaDescription = '', $metaKeywords = '')
     {
@@ -232,8 +456,8 @@ class Utility
      * @param string $subject    Email's subject
      * @param array  $variables  Varirables to give to the template
      *
+     * @return bool Result of the send
      * @internal param string $tpl_name Template's name
-     * @return boolean Result of the send
      */
     public static function sendEmailFromTpl($tplName, $recipients, $subject, $variables)
     {
@@ -251,7 +475,7 @@ class Utility
         if (function_exists('xoops_getMailer')) {
             $xoopsMailer = xoops_getMailer();
         } else {
-            $xoopsMailer =& getMailer();
+            $xoopsMailer = getMailer();
         }
 
         $xoopsMailer->useMail();
@@ -272,7 +496,7 @@ class Utility
         $res = $xoopsMailer->send();
         unset($xoopsMailer);
         $filename = XOOPS_UPLOAD_PATH . '/logmail_' . self::MODULE_NAME . '.php';
-        if (!file_exists($filename)) {
+        if (!is_file($filename)) {
             $fp = @fopen($filename, 'ab');
             if ($fp) {
                 fwrite($fp, "<?php exit(); ?>\n");
@@ -316,7 +540,7 @@ class Utility
             if ('module' === $onetemplate->getVar('tpl_type')) {
                 //  Note, I've been testing all the other methods (like the one of Smarty) and none of them run, that's why I have used this code
                 $files_del = [];
-                $files_del = glob(XOOPS_CACHE_PATH . '/*' . $onetemplate->getVar('tpl_file') . '*');
+                $files_del = glob(XOOPS_CACHE_PATH . '/*' . $onetemplate->getVar('tpl_file') . '*', GLOB_NOSORT);
                 if (count($files_del) > 0 && is_array($files_del)) {
                     foreach ($files_del as $one_file) {
                         if (is_file($one_file)) {
@@ -333,7 +557,7 @@ class Utility
      *
      * @param string $message message to display
      * @param string $url     The place where to go
-     * @param        integer  timeout Time to wait before to redirect
+     * @param mixed  $time
      */
     public static function redirect($message = '', $url = 'index.php', $time = 2)
     {
@@ -392,8 +616,8 @@ class Utility
      *
      * @param $groupId
      *
-     * @internal param int $group_id Group's number
      * @return array Emails list
+     * @internal param int $group_id Group's number
      */
     public static function getEmailsFromGroup($groupId)
     {
@@ -455,15 +679,15 @@ class Utility
     {
         if ('0000-00-00' != $date && '' != xoops_trim($date)) {
             return formatTimestamp(strtotime($date), $format);
-        } else {
-            return '';
         }
+
+        return '';
     }
 
     /**
      * Convert a timestamp to a Mysql date
      *
-     * @param integer $timestamp The timestamp to use
+     * @param int $timestamp The timestamp to use
      *
      * @return string The date in the Mysql format
      */
@@ -487,7 +711,7 @@ class Utility
     /**
      * Convert a timestamp to a Mysql datetime form
      *
-     * @param integer $timestamp The timestamp to use
+     * @param int $timestamp The timestamp to use
      *
      * @return string The date and time in the Mysql format
      */
@@ -499,19 +723,19 @@ class Utility
     /**
      * This function indicates if the current Xoops version needs to add asterisks to required fields in forms
      *
-     * @return boolean Yes = we need to add them, false = no
+     * @return bool Yes = we need to add them, false = no
      */
     public static function needsAsterisk()
     {
         if (self::isX23()) {
             return false;
         }
-        if (false !== stripos(XOOPS_VERSION, 'impresscms')) {
+        if (false !== mb_stripos(XOOPS_VERSION, 'impresscms')) {
             return false;
         }
-        if (false === stripos(XOOPS_VERSION, 'legacy')) {
+        if (false === mb_stripos(XOOPS_VERSION, 'legacy')) {
             $xv = xoops_trim(str_replace('XOOPS ', '', XOOPS_VERSION));
-            if ((int)substr($xv, 4, 2) >= 17) {
+            if ((int)mb_substr($xv, 4, 2) >= 17) {
                 return false;
             }
         }
@@ -524,10 +748,10 @@ class Utility
      *
      * @param \XoopsObject $sform The form to modify
      *
-     * @internal param string $caracter The character to use to mark fields
      * @return \XoopsObject The modified form
+     * @internal param string $caracter The character to use to mark fields
      */
-    public static function &formMarkRequiredFields(\XoopsObject $sform)
+    public static function &formMarkRequiredFields(XoopsObject $sform)
     {
         if (self::needsAsterisk()) {
             $required = [];
@@ -536,10 +760,9 @@ class Utility
             }
             $elements = [];
             $elements = $sform->getElements();
-            $cnt      = count($elements);
-            for ($i = 0; $i < $cnt; ++$i) {
-                if (is_object($elements[$i]) && in_array($elements[$i]->_name, $required)) {
-                    $elements[$i]->_caption .= ' *';
+            foreach ($elements as $iValue) {
+                if (is_object($iValue) && in_array($iValue->_name, $required)) {
+                    $iValue->_caption .= ' *';
                 }
             }
         }
@@ -550,8 +773,8 @@ class Utility
     /**
      * Create an html heading (from h1 to h6)
      *
-     * @param string  $title The text to use
-     * @param integer $level Level to return
+     * @param string $title The text to use
+     * @param int    $level Level to return
      *
      * @return string The heading
      */
@@ -563,16 +786,16 @@ class Utility
     /**
      * Create a unique upload filename
      *
-     * @param string  $folder   The folder where the file will be saved
-     * @param string  $fileName Original filename (coming from the user)
-     * @param boolean $trimName Do we need to create a "short" unique name ?
+     * @param string $folder   The folder where the file will be saved
+     * @param string $fileName Original filename (coming from the user)
+     * @param bool   $trimName Do we need to create a "short" unique name ?
      *
      * @return string The unique filename to use (with its extension)
      */
     public static function createUploadName($folder, $fileName, $trimName = false)
     {
         $workingfolder = $folder;
-        if ('/' !== xoops_substr($workingfolder, strlen($workingfolder) - 1, 1)) {
+        if ('/' !== xoops_substr($workingfolder, mb_strlen($workingfolder) - 1, 1)) {
             $workingfolder .= '/';
         }
         $ext  = basename($fileName);
@@ -581,9 +804,9 @@ class Utility
         $true = true;
         while ($true) {
             $ipbits = explode('.', $_SERVER['REMOTE_ADDR']);
-            list($usec, $sec) = explode(' ', microtime());
-            $usec = (integer)($usec * 65536);
-            $sec  = ((integer)$sec) & 0xFFFF;
+            [$usec, $sec] = explode(' ', microtime());
+            $usec *= 65536;
+            $sec  = ((int)$sec) & 0xFFFF;
 
             if ($trimName) {
                 $uid = sprintf('%06x%04x%04x', ($ipbits[0] << 24) | ($ipbits[1] << 16) | ($ipbits[2] << 8) | $ipbits[3], $sec, $usec);
@@ -872,8 +1095,8 @@ class Utility
     /**
      * Create a title to be used by the url rewriting
      *
-     * @param string  $content The text to use to create the url
-     * @param integer $urw     The lower limit to create words
+     * @param string $content The text to use to create the url
+     * @param int    $urw     The lower limit to create words
      *
      * @return string The text to use for the url
      *                Note, some parts are from Solo's code
@@ -885,7 +1108,7 @@ class Utility
         $content = self::unhtml($content); // First, remove html entities
         $content = strtr($content, $s, $r);
         $content = strip_tags($content);
-        $content = strtolower($content);
+        $content = mb_strtolower($content);
         $content = htmlentities($content, ENT_QUOTES | ENT_HTML5); // TODO: Vérifier
         $content = preg_replace('/&([a-zA-Z])(uml|acute|grave|circ|tilde);/', '$1', $content);
         $content = html_entity_decode($content);
@@ -901,7 +1124,7 @@ class Utility
         $words    = explode(' ', $content);
         $keywords = '';
         foreach ($words as $word) {
-            if (strlen($word) >= $urw) {
+            if (mb_strlen($word) >= $urw) {
                 $keywords .= '-' . trim($word);
             }
         }
@@ -912,8 +1135,8 @@ class Utility
         $keywords = str_replace('---', '-', $keywords);
         $keywords = str_replace('--', '-', $keywords);
         // Supprime un éventuel tiret à la fin de la chaine
-        if ('-' === substr($keywords, strlen($keywords) - 1, 1)) {
-            $keywords = substr($keywords, 0, -1);
+        if ('-' === mb_substr($keywords, mb_strlen($keywords) - 1, 1)) {
+            $keywords = mb_substr($keywords, 0, -1);
         }
 
         return $keywords;
@@ -933,7 +1156,7 @@ class Utility
 
         $tmp = [];
         // Search for the "Minimum keyword length"
-        if (isset($_SESSION['xoopstube_keywords_limit'])) {
+        if (\Xmf\Request::hasVar('xoopstube_keywords_limit', 'SESSION')) {
             $limit = $_SESSION['xoopstube_keywords_limit'];
         } else {
             $configHandler                        = xoops_getHandler('config');
@@ -941,11 +1164,11 @@ class Utility
             $limit                                = $xoopsConfigSearch['keyword_min'];
             $_SESSION['xoopstube_keywords_limit'] = $limit;
         }
-        $myts            = \MyTextSanitizer::getInstance();
+        $myts            = MyTextSanitizer::getInstance();
         $content         = str_replace('<br>', ' ', $content);
         $content         = $myts->undoHtmlSpecialChars($content);
         $content         = strip_tags($content);
-        $content         = strtolower($content);
+        $content         = mb_strtolower($content);
         $search_pattern  = ['&nbsp;', "\t", "\r\n", "\r", "\n", ',', '.', "'", ';', ':', ')', '(', '"', '?', '!', '{', '}', '[', ']', '<', '>', '/', '+', '-', '_', '\\', '*'];
         $replace_pattern = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''];
         $content         = str_replace($search_pattern, $replace_pattern, $content);
@@ -969,40 +1192,35 @@ class Utility
         if ('' !== xoops_trim(self::getModuleOption('metagen_blacklist'))) {
             $metagen_blacklist = str_replace("\r", '', self::getModuleOption('metagen_blacklist'));
             $metablack         = explode("\n", $metagen_blacklist);
-            array_walk($metablack, 'trim');
+            array_walk($metablack, '\trim');
             $keywords = array_diff($keywords, $metablack);
         }
 
         foreach ($keywords as $keyword) {
-            if (strlen($keyword) >= $limit && !is_numeric($keyword)) {
+            if (mb_strlen($keyword) >= $limit && !is_numeric($keyword)) {
                 $tmp[] = $keyword;
             }
         }
         $tmp = array_slice($tmp, 0, $keywordscount);
         if (count($tmp) > 0) {
             return implode(',', $tmp);
-        } else {
-            if (!isset($configHandler) || !is_object($configHandler)) {
-                $configHandler = xoops_getHandler('config');
-            }
-            $xoopsConfigMetaFooter = $configHandler->getConfigsByCat(XOOPS_CONF_METAFOOTER);
-            if (isset($xoopsConfigMetaFooter['meta_keywords'])) {
-                return $xoopsConfigMetaFooter['meta_keywords'];
-            } else {
-                return '';
-            }
         }
+        if (!isset($configHandler) || !is_object($configHandler)) {
+            $configHandler = xoops_getHandler('config');
+        }
+        $xoopsConfigMetaFooter = $configHandler->getConfigsByCat(XOOPS_CONF_METAFOOTER);
+        return $xoopsConfigMetaFooter['meta_keywords'] ?? '';
     }
 
     /**
      * Fonction chargée de gérer l'upload
      *
-     * @param integer $indice L'indice du fichier à télécharger
-     * @param string  $dstpath
-     * @param null    $mimeTypes
-     * @param null    $uploadMaxSize
-     * @param null    $maxWidth
-     * @param null    $maxHeight
+     * @param int    $indice L'indice du fichier à télécharger
+     * @param string $dstpath
+     * @param null   $mimeTypes
+     * @param null   $uploadMaxSize
+     * @param null   $maxWidth
+     * @param null   $maxHeight
      *
      * @return mixed True si l'upload s'est bien déroulé sinon le message d'erreur correspondant
      */
@@ -1012,11 +1230,11 @@ class Utility
         $mimeTypes = null,
         $uploadMaxSize = null,
         $maxWidth = null,
-        $maxHeight = null)
-    {
+        $maxHeight = null
+    ) {
         require_once XOOPS_ROOT_PATH . '/class/uploader.php';
         global $destname;
-        if (isset($_POST['xoops_upload_file'])) {
+        if (\Xmf\Request::hasVar('xoops_upload_file', 'POST')) {
             require_once XOOPS_ROOT_PATH . '/class/uploader.php';
             $fldname = '';
             $fldname = $_FILES[$_POST['xoops_upload_file'][$indice]];
@@ -1025,40 +1243,40 @@ class Utility
                 $destname = self::createUploadName($dstpath, $fldname, true);
                 if (null === $mimeTypes) {
                     $permittedtypes = explode("\n", str_replace("\r", '', self::getModuleOption('mimetypes')));
-                    array_walk($permittedtypes, 'trim');
+                    array_walk($permittedtypes, '\trim');
                 } else {
                     $permittedtypes = $mimeTypes;
                 }
-                $uploadSize = null === $uploadMaxSize ? self::getModuleOption('maxuploadsize') : $uploadMaxSize;
+                $uploadSize = $uploadMaxSize ?? self::getModuleOption('maxuploadsize');
                 $uploader   = new Xoopstube\MediaUploader($dstpath, $permittedtypes, $uploadSize, $maxWidth, $maxHeight);
                 //$uploader->allowUnknownTypes = true;
                 $uploader->setTargetFileName($destname);
                 if ($uploader->fetchMedia($_POST['xoops_upload_file'][$indice])) {
                     if ($uploader->upload()) {
                         return true;
-                    } else {
-                        return _ERRORS . ' ' . htmlentities($uploader->getErrors(), ENT_QUOTES | ENT_HTML5);
                     }
-                } else {
-                    return htmlentities($uploader->getErrors(), ENT_QUOTES | ENT_HTML5);
+
+                    return _ERRORS . ' ' . htmlentities($uploader->getErrors(), ENT_QUOTES | ENT_HTML5);
                 }
-            } else {
-                return false;
+
+                return htmlentities($uploader->getErrors(), ENT_QUOTES | ENT_HTML5);
             }
-        } else {
+
             return false;
         }
+
+        return false;
     }
 
     /**
      * Resize a Picture to some given dimensions (using the wideImage library)
      *
-     * @param string  $src_path      Picture's source
-     * @param string  $dst_path      Picture's destination
-     * @param integer $param_width   Maximum picture's width
-     * @param integer $param_height  Maximum picture's height
-     * @param boolean $keep_original Do we have to keep the original picture ?
-     * @param string  $fit           Resize mode (see the wideImage library for more information)
+     * @param string $src_path      Picture's source
+     * @param string $dst_path      Picture's destination
+     * @param int    $param_width   Maximum picture's width
+     * @param int    $param_height  Maximum picture's height
+     * @param bool   $keep_original Do we have to keep the original picture ?
+     * @param string $fit           Resize mode (see the wideImage library for more information)
      *
      * @return bool
      */
@@ -1068,9 +1286,8 @@ class Utility
         $param_width,
         $param_height,
         $keep_original = false,
-        $fit = 'inside')
-    {
-        //        require_once XOOPSTUBE_PATH . 'class/wideimage/WideImage.inc.php';
+        $fit = 'inside'
+    ) {
         $resize = true;
         if (XOOPSTUBE_DONT_RESIZE_IF_SMALLER) {
             $pictureDimensions = getimagesize($src_path);
@@ -1101,11 +1318,11 @@ class Utility
     /**
      * Ajoute des jours à une date et retourne la nouvelle date au format Date de Mysql
      *
-     * @param int     $duration
-     * @param integer $startingDate Date de départ (timestamp)
+     * @param int $duration
+     * @param int $startingDate Date de départ (timestamp)
      *
-     * @internal param int $durations Durée en jours
      * @return bool|string
+     * @internal param int $durations Durée en jours
      */
     public static function addDaysToDate($duration = 1, $startingDate = 0)
     {
@@ -1136,9 +1353,9 @@ class Utility
                 $workingBreadcrumb[] = "<a href='" . $url . "'>" . $title . '</a>';
             }
             $cnt = count($workingBreadcrumb);
-            for ($i = 0; $i < $cnt; ++$i) {
+            foreach ($workingBreadcrumb as $i => $iValue) {
                 if ($i == $cnt - 1) {
-                    $workingBreadcrumb[$i] = strip_tags($workingBreadcrumb[$i]);
+                    $workingBreadcrumb[$i] = strip_tags($iValue);
                 }
             }
             $breadcrumb = implode($raquo, $workingBreadcrumb);
@@ -1164,7 +1381,7 @@ class Utility
                 $end_tags      = $end_tags[1];
 
                 foreach ($start_tags as $key => $val) {
-                    $posb = array_search($val, $end_tags);
+                    $posb = array_search($val, $end_tags, true);
                     if (is_int($posb)) {
                         unset($end_tags[$posb]);
                     } else {
@@ -1176,8 +1393,8 @@ class Utility
             }
 
             $complete_tags = array_reverse($complete_tags);
-            for ($i = 0, $iMax = count($complete_tags); $i < $iMax; ++$i) {
-                $string .= '</' . $complete_tags[$i] . '>';
+            foreach ($complete_tags as $iValue) {
+                $string .= '</' . $iValue . '>';
             }
         }
 
@@ -1198,18 +1415,18 @@ class Utility
             return '';
         }
 
-        if (strlen($string) > $length) {
-            $length -= strlen($etc);
+        if (mb_strlen($string) > $length) {
+            $length -= mb_strlen($etc);
             if (!$break_words) {
-                $string = preg_replace('/\s+?(\S+)?$/', '', substr($string, 0, $length + 1));
+                $string = preg_replace('/\s+?(\S+)?$/', '', mb_substr($string, 0, $length + 1));
                 $string = preg_replace('/<[^>]*$/', '', $string);
                 $string = self::close_tags($string);
             }
 
             return $string . $etc;
-        } else {
-            return $string;
         }
+
+        return $string;
     }
 
     /**
@@ -1222,7 +1439,7 @@ class Utility
         $ret      = '';
         $infotips = self::getModuleOption('infotips');
         if ($infotips > 0) {
-            $myts = \MyTextSanitizer::getInstance();
+            $myts = MyTextSanitizer::getInstance();
             $ret  = $myts->htmlSpecialChars(xoops_substr(strip_tags($text), 0, $infotips));
         }
 
@@ -1238,8 +1455,8 @@ class Utility
     public static function postIt($datastream, $url)
     {
         $url     = preg_replace('@^http://@i', '', $url);
-        $host    = substr($url, 0, strpos($url, '/'));
-        $uri     = strstr($url, '/');
+        $host    = mb_substr($url, 0, mb_strpos($url, '/'));
+        $uri     = mb_strstr($url, '/');
         $reqbody = '';
         foreach ($datastream as $key => $val) {
             if (!empty($reqbody)) {
@@ -1247,7 +1464,7 @@ class Utility
             }
             $reqbody .= $key . '=' . urlencode($val);
         }
-        $contentlength = strlen($reqbody);
+        $contentlength = mb_strlen($reqbody);
         $reqheader     = "POST $uri HTTP/1.1\r\n" . "Host: $host\n" . "Content-Type: application/x-www-form-urlencoded\r\n" . "Content-Length: $contentlength\r\n\r\n" . "$reqbody\r\n";
 
         return $reqheader;
@@ -1267,13 +1484,12 @@ class Utility
             finfo_close($finfo);
 
             return $mimetype;
-        } else {
-            if (function_exists('mime_content_type')) {
-                return mime_content_type($filename);
-            } else {
-                return '';
-            }
         }
+        if (function_exists('mime_content_type')) {
+            return mime_content_type($filename);
+        }
+
+        return '';
     }
 
     /**
@@ -1285,9 +1501,9 @@ class Utility
     {
         $start             = mktime(0, 1, 0, date('n'), date('j'), date('Y'));
         $end               = mktime(0, 0, 0, date('n'), date('t'), date('Y'));
-        $criteriaThisMonth = new \CriteriaCompo();
-        $criteriaThisMonth->add(new \Criteria('product_submitted', $start, '>='));
-        $criteriaThisMonth->add(new \Criteria('product_submitted', $end, '<='));
+        $criteriaThisMonth = new CriteriaCompo();
+        $criteriaThisMonth->add(new Criteria('product_submitted', $start, '>='));
+        $criteriaThisMonth->add(new Criteria('product_submitted', $end, '<='));
 
         return $criteriaThisMonth;
     }
@@ -1302,13 +1518,13 @@ class Utility
     public static function getUsersFromIds($xoopsUsersIDs)
     {
         $users = [];
-        if (is_array($xoopsUsersIDs) && count($xoopsUsersIDs) > 0) {
+        if ($xoopsUsersIDs && is_array($xoopsUsersIDs)) {
             $xoopsUsersIDs = array_unique($xoopsUsersIDs);
             sort($xoopsUsersIDs);
             if (count($xoopsUsersIDs) > 0) {
                 /** @var \XoopsUserHandler $memberHandler */
                 $memberHandler = xoops_getHandler('user');
-                $criteria      = new \Criteria('uid', '(' . implode(',', $xoopsUsersIDs) . ')', 'IN');
+                $criteria      = new Criteria('uid', '(' . implode(',', $xoopsUsersIDs) . ')', 'IN');
                 $criteria->setSort('uid');
                 $users = $memberHandler->getObjects($criteria, true);
             }
@@ -1320,7 +1536,7 @@ class Utility
     /**
      * Retourne l'ID de l'utilisateur courant (s'il est connecté)
      *
-     * @return integer L'uid ou 0
+     * @return int L'uid ou 0
      */
     public static function getCurrentUserID()
     {
@@ -1346,13 +1562,12 @@ class Utility
 
         if (is_array($buffer) && count($buffer) > 0 && isset($buffer[$uid])) {
             return $buffer[$uid];
+        }
+        if ($uid > 0) {
+            $memberHandler = xoops_getHandler('member');
+            $buffer[$uid]  = $memberHandler->getGroupsByUser($uid, false); // Renvoie un tableau d'ID (de groupes)
         } else {
-            if ($uid > 0) {
-                $memberHandler = xoops_getHandler('member');
-                $buffer[$uid]  = $memberHandler->getGroupsByUser($uid, false); // Renvoie un tableau d'ID (de groupes)
-            } else {
-                $buffer[$uid] = [XOOPS_GROUP_ANONYMOUS];
-            }
+            $buffer[$uid] = [XOOPS_GROUP_ANONYMOUS];
         }
 
         return $buffer[$uid];
@@ -1361,10 +1576,10 @@ class Utility
     /**
      * Indique si l'utilisateur courant fait partie d'une groupe donné (avec gestion de cache)
      *
-     * @param integer $group Groupe recherché
-     * @param int     $uid
+     * @param int $group Groupe recherché
+     * @param int $uid
      *
-     * @return boolean vrai si l'utilisateur fait partie du groupe, faux sinon
+     * @return bool vrai si l'utilisateur fait partie du groupe, faux sinon
      */
     public static function isMemberOfGroup($group = 0, $uid = 0)
     {
@@ -1393,7 +1608,9 @@ class Utility
     public static function prepareFolder($folder)
     {
         if (!is_dir($folder)) {
-            mkdir($folder);
+            if (!mkdir($folder) && !is_dir($folder)) {
+                throw new \RuntimeException(sprintf('Directory "%s" was not created', $folder));
+            }
             file_put_contents($folder . '/index.html', '<script>history.go(-1);</script>');
         }
         //        chmod($folder, 0777);
@@ -1413,27 +1630,25 @@ class Utility
         $newName = self::createUploadName($path, $filename);
         if (copy($path . DIRECTORY_SEPARATOR . $filename, $path . DIRECTORY_SEPARATOR . $newName)) {
             return $newName;
-        } else {
-            return false;
         }
+
+        return false;
     }
-
-
 
     //=================================================================================================================================
 
     /**
      * @param       $name
-     * @param  bool $optional
+     * @param bool  $optional
      * @return bool
      */
     public static function getHandler($name, $optional = false)
     {
         global $handlers, $xoopsModule;
 
-        $name = strtolower(trim($name));
+        $name = mb_strtolower(trim($name));
         if (!isset($handlers[$name])) {
-            if (file_exists($hnd_file = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/class/class_' . $name . '.php')) {
+            if (is_file($hnd_file = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/class/class_' . $name . '.php')) {
                 require_once $hnd_file;
             }
             $class = 'xtube' . ucfirst($name) . 'Handler';
@@ -1445,7 +1660,7 @@ class Utility
             trigger_error('<div>Class <span style="font-weight: bold;">' . $class . '</span> does not exist.</div><div>Handler Name: ' . $name, E_USER_ERROR) . '</div>';
         }
 
-        return isset($handlers[$name]) ? $handlers[$name] : false;
+        return $handlers[$name] ?? false;
     }
 
     /**
@@ -1465,9 +1680,8 @@ class Utility
         if (!$grouppermHandler->checkRight($permType, $cid, $groups, $xoopsModule->getVar('mid'))) {
             if (false === $redirect) {
                 return false;
-            } else {
-                redirect_header('index.php', 3, _NOPERM);
             }
+            redirect_header('index.php', 3, _NOPERM);
         }
 
         return true;
@@ -1520,7 +1734,7 @@ class Utility
             return false;
         }
         $ret['uservotes'] = $GLOBALS['xoopsDB']->getRowsNum($result);
-        while (false !== (list($rating) = $GLOBALS['xoopsDB']->fetchRow($result))) {
+        while (list($rating) = $GLOBALS['xoopsDB']->fetchRow($result)) {
             $ret['useravgrating'] += (int)$rating;
         }
         if ($ret['useravgrating'] > 0) {
@@ -1544,8 +1758,8 @@ class Utility
         $name = null,
         $def = null,
         $strict = false,
-        $lengthcheck = 15)
-    {
+        $lengthcheck = 15
+    ) {
         // Sanitise $_request for further use.  This method gives more control and security.
         // Method is more for functionality rather than beauty at the moment, will correct later.
         unset($array['usercookie'], $array['PHPSESSID']);
@@ -1554,7 +1768,7 @@ class Utility
             $globals = [];
             foreach (array_keys($array) as $k) {
                 $value = strip_tags(trim($array[$k]));
-                if (strlen($value >= $lengthcheck)) {
+                if (mb_strlen($value >= $lengthcheck)) {
                     return null;
                 }
                 if (ctype_digit($value)) {
@@ -1563,7 +1777,7 @@ class Utility
                     if (true === $strict) {
                         $value = preg_replace('/\W/', '', trim($value));
                     }
-                    $value = strtolower((string)$value);
+                    $value = mb_strtolower((string)$value);
                 }
                 $globals[$k] = $value;
             }
@@ -1572,16 +1786,16 @@ class Utility
         }
         if (!isset($array[$name]) || !array_key_exists($name, $array)) {
             return $def;
-        } else {
-            $value = strip_tags(trim($array[$name]));
         }
+        $value = strip_tags(trim($array[$name]));
+
         if (ctype_digit($value)) {
             $value = (int)$value;
         } else {
             if (true === $strict) {
                 $value = preg_replace('/\W/', '', trim($value));
             }
-            $value = strtolower((string)$value);
+            $value = mb_strtolower((string)$value);
         }
 
         return $value;
@@ -1603,9 +1817,6 @@ class Utility
         return $toolbar;
     }
 
-    /**
-     *
-     */
     public static function getServerStatistics()
     {
         global $xoopsModule;
@@ -1640,6 +1851,7 @@ class Utility
     // @param integer $status
     // @param integer $counter
     // @return
+
     /**
      * @param     $time
      * @param int $status
@@ -1695,6 +1907,7 @@ class Utility
     // convertOrderByIn()
     // @param  $orderby
     // @return
+
     /**
      * @param $orderby
      *
@@ -1827,6 +2040,7 @@ class Utility
     // updaterating()
     // @param  $sel_id
     // @return updates rating data in itemtable for a given item
+
     /**
      * @param $sel_id
      */
@@ -1836,7 +2050,7 @@ class Utility
         $voteresult  = $GLOBALS['xoopsDB']->query($query);
         $votesDB     = $GLOBALS['xoopsDB']->getRowsNum($voteresult);
         $totalrating = 0;
-        while (false !== (list($rating) = $GLOBALS['xoopsDB']->fetchRow($voteresult))) {
+        while (list($rating) = $GLOBALS['xoopsDB']->fetchRow($voteresult)) {
             $totalrating += $rating;
         }
         $finalrating = $totalrating / $votesDB;
@@ -1848,6 +2062,7 @@ class Utility
     // totalcategory()
     // @param integer $pid
     // @return
+
     /**
      * @param int $pid
      *
@@ -1861,7 +2076,7 @@ class Utility
         }
         $result     = $GLOBALS['xoopsDB']->query($sql);
         $catlisting = 0;
-        while (false !== (list($cid) = $GLOBALS['xoopsDB']->fetchRow($result))) {
+        while (list($cid) = $GLOBALS['xoopsDB']->fetchRow($result)) {
             if (self::checkGroups($cid)) {
                 ++$catlisting;
             }
@@ -1875,6 +2090,7 @@ class Utility
     // @param integer $get_child
     // @param integer $return_sql
     // @return
+
     /**
      * @param int $sel_id
      * @param int $get_child
@@ -1916,7 +2132,7 @@ class Utility
 
         $arr    = [];
         $result = $GLOBALS['xoopsDB']->query($sql);
-        while (false !== (list($lid, $cid, $published) = $GLOBALS['xoopsDB']->fetchRow($result))) {
+        while (list($lid, $cid, $published) = $GLOBALS['xoopsDB']->fetchRow($result)) {
             if (true === self::checkGroups()) {
                 ++$count;
                 $published_date = ($published > $published_date) ? $published : $published_date;
@@ -1927,7 +2143,7 @@ class Utility
         if (1 == $get_child) {
             $arr  = $mytree->getAllChildId($sel_id);
             $size = count($arr);
-            for ($i = 0, $iMax = count($arr); $i < $iMax; ++$i) {
+            foreach ($arr as $iValue) {
                 $query2 = 'SELECT a.lid, a.published, a.cid FROM '
                           . $GLOBALS['xoopsDB']->prefix('xoopstube_videos')
                           . ' a LEFT JOIN '
@@ -1940,13 +2156,13 @@ class Utility
                           . time()
                           . ') AND offline = 0'
                           . ' AND (b.cid=a.cid OR (a.cid='
-                          . $arr[$i]
+                          . $iValue
                           . ' OR b.cid='
-                          . $arr[$i]
+                          . $iValue
                           . ')) GROUP BY a.lid, a.published, a.cid';
 
                 $result2 = $GLOBALS['xoopsDB']->query($query2);
-                while (false !== (list($lid, $published) = $GLOBALS['xoopsDB']->fetchRow($result2))) {
+                while (list($lid, $published) = $GLOBALS['xoopsDB']->fetchRow($result2)) {
                     if (0 == $published) {
                         continue;
                     }
@@ -1971,7 +2187,7 @@ class Utility
     {
         if ('' === $indeximage) {
             $result = $GLOBALS['xoopsDB']->query('SELECT indeximage, indexheading FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_indexpage'));
-            list($indeximage, $indexheading) = $GLOBALS['xoopsDB']->fetchrow($result);
+            [$indeximage, $indexheading] = $GLOBALS['xoopsDB']->fetchrow($result);
         }
 
         $image = '';
@@ -2001,7 +2217,7 @@ class Utility
         }
         // checks to see if the file is valid else displays default blank image
         if (!is_dir(XOOPS_ROOT_PATH . "/{$imgsource}/{$image}")
-            && file_exists(XOOPS_ROOT_PATH . "/{$imgsource}/{$image}")) {
+            && is_dir(XOOPS_ROOT_PATH . "/{$imgsource}/{$image}")) {
             $showimage .= "<img src='" . XOOPS_URL . "/{$imgsource}/{$image}' border='0' title='" . $alttext . "' alt='" . $alttext . "'></a>";
         } else {
             if ($GLOBALS['xoopsUser'] && $GLOBALS['xoopsUser']->isAdmin($xoopsModule->getVar('mid'))) {
@@ -2058,7 +2274,7 @@ class Utility
      */
     public static function findStringChar($haystack, $needle)
     {
-        return substr($haystack, 0, strpos($haystack, $needle) + 1);
+        return mb_substr($haystack, 0, mb_strpos($haystack, $needle) + 1);
     }
 
     /**
@@ -2073,13 +2289,13 @@ class Utility
     {
         global $xoopsModule;
 
-        $_named_vidid = xoops_getenv('PHP_SELF');
+        $_named_vidid = xoops_getenv('SCRIPT_NAME');
         if ($_named_vidid) {
             $thispage = basename($_named_vidid);
         }
 
         //    $op = (isset($_GET['op'])) ? $op = '?op=' . $_GET['op'] : '';
-        $op = Request::getCmd('op', '', 'GET');
+        $op = Request::getString('op', '', 'GET');
         echo '<h4 style="color: #2F5376;">' . _AM_XOOPSTUBE_MODULE_NAME . '</h4>';
         echo '
         <div style="font-size: 10px; text-align: left; color: #2F5376; padding: 2px 6px; line-height: 18px;">
@@ -2116,7 +2332,7 @@ class Utility
                 _AM_XOOPSTUBE_MUPLOADS  => 'upload.php',
                 _AM_XOOPSTUBE_VUPLOADS  => 'vupload.php',
                 _AM_XOOPSTUBE_MVOTEDATA => 'votedata.php',
-                _AM_XOOPSTUBE_MCOMMENTS => '../../system/admin.php?module=' . $xoopsModule->getVar('mid') . '&status=0&limit=100&fct=comments&selsubmit=Go'
+                _AM_XOOPSTUBE_MCOMMENTS => '../../system/admin.php?module=' . $xoopsModule->getVar('mid') . '&status=0&limit=100&fct=comments&selsubmit=Go',
             ];
         }
 
@@ -2134,7 +2350,7 @@ class Utility
             7  => '7',
             9  => '9',
             11 => '11',
-            13 => '13'
+            13 => '13',
         ];
         // number of rows per menu
         $menurows = count($menu) / $scount;
@@ -2338,14 +2554,14 @@ class Utility
         $allowed_mimetypes = '',
         $redirecturl = 'index.php', //    $num = 0,
         $redirect = 0,
-        $usertype = 1)
-    {
+        $usertype = 1
+    ) {
         global $FILES, $xoopsModule;
 
         $down = [];
         //       require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/class/uploader.php';
-        include __DIR__ . '/uploader.php';
-        //        include_once(XOOPS_ROOT_PATH . '/class/uploader.php');
+        require_once __DIR__ . '/uploader.php';
+        //        require XOOPS_ROOT_PATH . '/class/uploader.php';
 
         if (empty($allowed_mimetypes)) {
             $allowed_mimetypes = xtube_getmime($FILES['userfile']['name'], $usertype);
@@ -2369,8 +2585,8 @@ class Utility
                     redirect_header($redirecturl, 1, _AM_XOOPSTUBE_UPLOADFILE);
                 } else {
                     if (is_file($uploader->savedDestination)) {
-                        $down['url']  = XOOPS_URL . '/' . $uploaddir . '/' . strtolower($uploader->savedFileName);
-                        $down['size'] = filesize(XOOPS_ROOT_PATH . '/' . $uploaddir . '/' . strtolower($uploader->savedFileName));
+                        $down['url']  = XOOPS_URL . '/' . $uploaddir . '/' . mb_strtolower($uploader->savedFileName);
+                        $down['size'] = filesize(XOOPS_ROOT_PATH . '/' . $uploaddir . '/' . mb_strtolower($uploader->savedFileName));
                     }
 
                     return $down;
@@ -2470,24 +2686,21 @@ class Utility
     public static function setPageNavigationCategoryList(
         $pubrowamount,
         $start,
-        $art = 'art',
-        $_this = '',
-        $align)
-    {
+        $art,
+        $_this,
+        $align
+    ) {
         if ($pubrowamount < $GLOBALS['xoopsModuleConfig']['admin_perpage']) {
             return false;
         }
         // Display Page Nav if published is > total display pages amount.
         require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
-        $pagenav = new \XoopsPageNav($pubrowamount, $GLOBALS['xoopsModuleConfig']['admin_perpage'], $start, 'st' . $art, $_this);
+        $pagenav = new XoopsPageNav($pubrowamount, $GLOBALS['xoopsModuleConfig']['admin_perpage'], $start, 'st' . $art, $_this);
         echo '<div style="text-align: ' . $align . '; padding: 8px;">' . $pagenav->renderNav() . '</div>';
 
         return null;
     }
 
-    /**
-     *
-     */
     public static function renderCategoryListFooter()
     {
         echo '<tr style="text-align: center;">
@@ -2584,9 +2797,6 @@ class Utility
         return $result['title'];
     }
 
-    /**
-     *
-     */
     public static function renderVideoListFooter()
     {
         echo '<tr style="text-align: center;">
@@ -2603,14 +2813,14 @@ class Utility
      *
      * @return bool|null
      */
-    public static function setPageNavigationVideoList($pubrowamount, $start, $art = 'art', $_this = '', $align)
+    public static function setPageNavigationVideoList($pubrowamount, $start, $art, $_this, $align)
     {
         if ($pubrowamount < $GLOBALS['xoopsModuleConfig']['admin_perpage']) {
             return false;
         }
         // Display Page Nav if published is > total display pages amount.
         require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
-        $pagenav = new \XoopsPageNav($pubrowamount, $GLOBALS['xoopsModuleConfig']['admin_perpage'], $start, 'st' . $art, $_this);
+        $pagenav = new XoopsPageNav($pubrowamount, $GLOBALS['xoopsModuleConfig']['admin_perpage'], $start, 'st' . $art, $_this);
         echo '<div style="text-align: ' . $align . '; padding: 8px;">' . $pagenav->renderNav() . '</div>';
 
         return null;
@@ -2642,14 +2852,14 @@ class Utility
             "'&(iexcl|#161);'i",
             "'&(cent|#162);'i",
             "'&(pound|#163);'i",
-            "'&(copy|#169);'i"
+            "'&(copy|#169);'i",
         ]; // evaluate as php
 
         $replace = [
             '',
             '',
             '',
-            "\\1",
+            '\\1',
             '"',
             '&',
             '<',
@@ -2658,14 +2868,18 @@ class Utility
             chr(161),
             chr(162),
             chr(163),
-            chr(169)
+            chr(169),
         ];
 
         $text = preg_replace($search, $replace, $document);
 
-        preg_replace_callback('/&#(\d+);/', function ($matches) {
-            return chr($matches[1]);
-        }, $document);
+        preg_replace_callback(
+            '/&#(\d+);/',
+            static function ($matches) {
+                return chr($matches[1]);
+            },
+            $document
+        );
 
         return $text;
     }
@@ -2725,19 +2939,18 @@ class Utility
     public static function getBannerFromBannerId($banner_id)
     {
         ###### Hack by www.stefanosilvestrini.com ######
-        $db      = \XoopsDatabaseFactory::getDatabaseConnection();
+        $db      = XoopsDatabaseFactory::getDatabaseConnection();
         $bresult = $db->query('SELECT COUNT(*) FROM ' . $db->prefix('banner') . ' WHERE bid=' . $banner_id);
-        list($numrows) = $db->fetchRow($bresult);
+        [$numrows] = $db->fetchRow($bresult);
         if ($numrows > 1) {
             --$numrows;
-            mt_srand((double)microtime() * 1000000);
             $bannum = mt_rand(0, $numrows);
         } else {
             $bannum = 0;
         }
         if ($numrows > 0) {
             $bresult = $db->query('SELECT * FROM ' . $db->prefix('banner') . ' WHERE bid=' . $banner_id, 1, $bannum);
-            list($bid, $cid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $date, $htmlbanner, $htmlcode) = $db->fetchRow($bresult);
+            [$bid, $cid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $date, $htmlbanner, $htmlcode] = $db->fetchRow($bresult);
             if ($GLOBALS['xoopsConfig']['my_ip'] == xoops_getenv('REMOTE_ADDR')) {
                 // EMPTY
             } else {
@@ -2754,20 +2967,19 @@ class Utility
                 $bannerobject = $htmlcode;
             } else {
                 $bannerobject = '<div align="center"><a href="' . XOOPS_URL . '/banners.php?op=click&bid=' . $bid . '" target="_blank">';
-                if (false !== stripos($imageurl, '.swf')) {
-                    $bannerobject = $bannerobject
-                                    . '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0" width="468" height="60">'
-                                    . '<param name="movie" value="'
-                                    . $imageurl
-                                    . '"></param>'
-                                    . '<param name="quality" value="high"></param>'
-                                    . '<embed src="'
-                                    . $imageurl
-                                    . '" quality="high" pluginspage="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash" type="application/x-shockwave-flash" width="468" height="60">'
-                                    . '</embed>'
-                                    . '</object>';
+                if (false !== mb_stripos($imageurl, '.swf')) {
+                    $bannerobject .= '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0" width="468" height="60">'
+                                     . '<param name="movie" value="'
+                                     . $imageurl
+                                     . '"></param>'
+                                     . '<param name="quality" value="high"></param>'
+                                     . '<embed src="'
+                                     . $imageurl
+                                     . '" quality="high" pluginspage="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash" type="application/x-shockwave-flash" width="468" height="60">'
+                                     . '</embed>'
+                                     . '</object>';
                 } else {
-                    $bannerobject = $bannerobject . '<img src="' . $imageurl . '" alt="">';
+                    $bannerobject .= '<img src="' . $imageurl . '" alt="">';
                 }
                 $bannerobject .= '</a></div>';
             }
@@ -2786,19 +2998,18 @@ class Utility
     public static function getBannerFromClientId($client_id)
     {
         ###### Hack by www.stefanosilvestrini.com ######
-        $db      = \XoopsDatabaseFactory::getDatabaseConnection();
+        $db      = XoopsDatabaseFactory::getDatabaseConnection();
         $bresult = $db->query('SELECT COUNT(*) FROM ' . $db->prefix('banner') . ' WHERE cid=' . $client_id);
-        list($numrows) = $db->fetchRow($bresult);
+        [$numrows] = $db->fetchRow($bresult);
         if ($numrows > 1) {
             --$numrows;
-            mt_srand((double)microtime() * 1000000);
             $bannum = mt_rand(0, $numrows);
         } else {
             $bannum = 0;
         }
         if ($numrows > 0) {
             $bresult = $db->query('SELECT * FROM ' . $db->prefix('banner') . ' WHERE cid=' . $client_id . ' ORDER BY rand()', 1, $bannum);
-            list($bid, $cid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $date, $htmlbanner, $htmlcode) = $db->fetchRow($bresult);
+            [$bid, $cid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $date, $htmlbanner, $htmlcode] = $db->fetchRow($bresult);
             if ($GLOBALS['xoopsConfig']['my_ip'] == xoops_getenv('REMOTE_ADDR')) {
                 // EMPTY
             } else {
@@ -2815,20 +3026,19 @@ class Utility
                 $bannerobject = $htmlcode;
             } else {
                 $bannerobject = '<div align="center"><a href="' . XOOPS_URL . '/banners.php?op=click&bid=' . $bid . '" target="_blank">';
-                if (false !== stripos($imageurl, '.swf')) {
-                    $bannerobject = $bannerobject
-                                    . '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0" width="468" height="60">'
-                                    . '<param name="movie" value="'
-                                    . $imageurl
-                                    . '"></param>'
-                                    . '<param name="quality" value="high"></param>'
-                                    . '<embed src="'
-                                    . $imageurl
-                                    . '" quality="high" pluginspage="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash" type="application/x-shockwave-flash" width="468" height="60">'
-                                    . '</embed>'
-                                    . '</object>';
+                if (false !== mb_stripos($imageurl, '.swf')) {
+                    $bannerobject .= '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0" width="468" height="60">'
+                                     . '<param name="movie" value="'
+                                     . $imageurl
+                                     . '"></param>'
+                                     . '<param name="quality" value="high"></param>'
+                                     . '<embed src="'
+                                     . $imageurl
+                                     . '" quality="high" pluginspage="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash" type="application/x-shockwave-flash" width="468" height="60">'
+                                     . '</embed>'
+                                     . '</object>';
                 } else {
-                    $bannerobject = $bannerobject . '<img src="' . $imageurl . '" alt="">';
+                    $bannerobject .= '<img src="' . $imageurl . '" alt="">';
                 }
                 $bannerobject .= '</a></div>';
             }
@@ -2839,9 +3049,6 @@ class Utility
         return null;
     }
 
-    /**
-     *
-     */
     public static function setNoIndexNoFollow()
     {
         global $xoopsTpl;
@@ -2922,7 +3129,7 @@ class Utility
             'Sep'       => _XOOPSTUBE_SEP,
             'Oct'       => _XOOPSTUBE_OCT,
             'Nov'       => _XOOPSTUBE_NOV,
-            'Dec'       => _XOOPSTUBE_DEC
+            'Dec'       => _XOOPSTUBE_DEC,
         ];
         $timestamp = strtr($time, $trans);
 
@@ -3004,10 +3211,12 @@ class Utility
      * @param      $fileSource
      * @param null $fileTarget
      */
-    public static function createDirectory($path, $mode = 0777, $fileSource, $fileTarget = null)
+    public static function createDirectory($path, $mode, $fileSource, $fileTarget = null)
     {
         if (!is_dir($path)) {
-            mkdir($path, $mode);
+            if (!mkdir($path, $mode) && !is_dir($path)) {
+                throw new \RuntimeException(sprintf('Directory "%s" was not created', $path));
+            }
             file_put_contents($path . '/index.html', '<script>history.go(-1);</script>');
             if (!empty($fileSource) && !empty($fileTarget)) {
                 @copy($fileSource, $fileTarget);
@@ -3029,14 +3238,15 @@ class Utility
         $counter               = 0;
         $distinctDbLetters_arr = [];
         $sql                   = 'SELECT DISTINCT (UPPER(LEFT(title, 1))) AS letter FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos WHERE expired = 0 AND offline = 0');
-        if ($result = $GLOBALS['xoopsDB']->query($sql)) {
+        $result                = $GLOBALS['xoopsDB']->query($sql);
+        if ($result) {
             while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
                 $distinctDbLetters_arr[] = $row['letter'];
             }
         }
         unset($sql);
 
-        //        while (false !== (list(, $ltr) = each($alphabet))) {
+        //        while (list(, $ltr) = each($alphabet)) {
         foreach ($alphabet as $key => $ltr) {
             if (in_array($ltr, $distinctDbLetters_arr)) {
                 $letterchoice .= '<a class="xoopstube_letters xoopstube_letters_green" href="';
@@ -3064,6 +3274,7 @@ class Utility
 
         $moduleDirName = $xoopsModule->getVar('dirname');
         require_once XOOPS_ROOT_PATH . "/modules/$moduleDirName/class/$moduleDirName.php";
+        /** @var \Xoopstube\Helper $helper */
         $helper = Xoopstube\Helper::getInstance();
 
         $a             = $helper->getHandler('Xoopstube');
@@ -3093,10 +3304,10 @@ class Utility
         // Render output
         if (!isset($GLOBALS['xoTheme']) || !is_object($GLOBALS['xoTheme'])) {
             require_once $GLOBALS['xoops']->path('class/theme.php');
-            $GLOBALS['xoTheme'] = new \xos_opal_Theme();
+            $GLOBALS['xoTheme'] = new xos_opal_Theme();
         }
         require_once $GLOBALS['xoops']->path('class/template.php');
-        $letterschoiceTpl          = new \XoopsTpl();
+        $letterschoiceTpl          = new XoopsTpl();
         $letterschoiceTpl->caching = 0; // Disable cache
         $letterschoiceTpl->assign('alphabet', $alphabet_array);
         $html = $letterschoiceTpl->fetch('db:' . $helper->getModule()->dirname() . '_common_letterschoice.tpl');
@@ -3108,8 +3319,8 @@ class Utility
     /**
      * Recursively sort categories by level and weight
      *
-     * @param integer $pid
-     * @param integer $level
+     * @param int $pid
+     * @param int $level
      *
      * @return array array of arrays: 'pid', 'cid', 'level', 'category' as array
      *
@@ -3118,11 +3329,12 @@ class Utility
      */
     public static function sortCategories($pid = 0, $level = 0)
     {
+        /** @var \Xoopstube\Helper $helper */
         $helper = Xoopstube\Helper::getInstance();
 
         $sorted   = [];
-        $criteria = new \CriteriaCompo();
-        $criteria->add(new \Criteria('pid', $pid));
+        $criteria = new CriteriaCompo();
+        $criteria->add(new Criteria('pid', $pid));
         $criteria->setSort('weight');
         $criteria->setOrder('ASC');
         $subCategoryObjs = $helper->getHandler('Category')->getObjects($criteria);
@@ -3152,6 +3364,7 @@ class Utility
      */
     //    public static function lettersChoice()
     //    {
+    //        /** @var \Xoopstube\Helper $helper */
     //        $helper = Xoopstube\Helper::getInstance();
     //
     //        $criteria = $helper->getHandler('Videos')->getActiveCriteria();
@@ -3196,6 +3409,7 @@ class Utility
      */
     public static function isUserAdmin()
     {
+        /** @var \Xoopstube\Helper $helper */
         $helper = Xoopstube\Helper::getInstance();
 
         static $xtubeIsAdmin;
@@ -3256,15 +3470,15 @@ class Utility
     public static function getCategoryArray()
     {
         global $xoopsDB, $xoopsUser, $xoopsModule;
-        /** @var Xoopstube\Helper $helper */
+        /** @var \Xoopstube\Helper $helper */
         $helper           = Xoopstube\Helper::getInstance();
-        $myts             = \MyTextSanitizer::getInstance();
+        $myts             = MyTextSanitizer::getInstance();
         $groups           = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
         $grouppermHandler = xoops_getHandler('groupperm');
         $block0           = [];
         $count            = 1;
         $resultcat        = $xoopsDB->query('SELECT categoryID, name, total, logourl FROM ' . $xoopsDB->prefix('lxcategories') . ' ORDER BY weight ASC');
-        while (false !== (list($catID, $name, $total, $logourl) = $xoopsDB->fetchRow($resultcat))) {
+        while (list($catID, $name, $total, $logourl) = $xoopsDB->fetchRow($resultcat)) {
             if ($grouppermHandler->checkRight('lexikon_view', $catID, $groups, $xoopsModule->getVar('mid'))) {
                 $catlinks = [];
                 ++$count;
@@ -3273,7 +3487,7 @@ class Utility
                 } else {
                     $logourl = '';
                 }
-                $xoopsModule          = \XoopsModule::getByDirname('lexikon');
+                $xoopsModule          = XoopsModule::getByDirname('lexikon');
                 $catlinks['id']       = (int)$catID;
                 $catlinks['total']    = (int)$total;
                 $catlinks['linktext'] = $myts->htmlSpecialChars($name);
@@ -3371,5 +3585,4 @@ class Utility
 
         return $str;
     }
-
 }
