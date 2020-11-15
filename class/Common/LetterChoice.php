@@ -20,7 +20,6 @@ namespace XoopsModules\Xoopstube\Common;
  * @author      lucio <lucio.rota@gmail.com>
  * @package     xoopstube
  * @since       1.00
- * @version     $Id:$
  *
  * Example:
  * $choicebyletter = new Xoopstube\LetterChoice($objHandler, null, null, range('a', 'z'), 'letter');
@@ -28,11 +27,10 @@ namespace XoopsModules\Xoopstube\Common;
  */
 
 use CriteriaCompo;
-use XoopsModules\Xoopstube;
-use XoopsTpl;
-use xos_opal_Theme;
-
-
+use XoopsModules\Xoopstube\{
+    Helper
+};
+/** @var Helper $helper */
 
 // require_once  dirname(dirname(__DIR__)) . '/include/common.php';
 
@@ -58,16 +56,17 @@ class LetterChoice
     private $url;
     private $extra;
     private $caseSensitive;
-    /**
-     * *#@-
-     * @param mixed      $objHandler
-     * @param null|mixed $criteria
-     * @param null|mixed $field_name
-     * @param mixed      $arg_name
-     * @param null|mixed $url
-     * @param mixed      $extra_arg
-     * @param mixed      $caseSensitive
-     */
+
+//    /**
+//     * *#@-
+//     * @param mixed      $objHandler
+//     * @param null|mixed $criteria
+//     * @param null|mixed $field_name
+//     * @param mixed      $arg_name
+//     * @param null|mixed $url
+//     * @param mixed      $extra_arg
+//     * @param mixed      $caseSensitive
+//     */
 
     /**
      * Constructor
@@ -91,8 +90,7 @@ class LetterChoice
         $extra_arg = '',
         $caseSensitive = false
     ) {
-        /** @var \Xoopstube\Helper $this ->helper */
-        $this->helper     = Xoopstube\Helper::getInstance();
+        $this->helper     = Helper::getInstance();
         $this->objHandler = $objHandler;
         $this->criteria   = $criteria ?? new CriteriaCompo();
         $this->field_name = $field_name ?? $this->objHandler->identifierName;
@@ -142,7 +140,7 @@ class LetterChoice
         $alphabetArray[$letter] = $letter_array;
 
         foreach ($this->alphabet as $letter) {
-            $letter_array = [];
+//            $letter_array = [];
             if (!$this->caseSensitive) {
                 if (isset($countsByLetters[mb_strtoupper($letter)])) {
                     $letter_array['letter'] = $letter;
@@ -174,10 +172,10 @@ class LetterChoice
         // render output
         if (!isset($GLOBALS['xoTheme']) || !is_object($GLOBALS['xoTheme'])) {
             require_once $GLOBALS['xoops']->path('/class/theme.php');
-            $GLOBALS['xoTheme'] = new xos_opal_Theme();
+            $GLOBALS['xoTheme'] = new \xos_opal_Theme();
         }
         require_once $GLOBALS['xoops']->path('/class/template.php');
-        $choiceByLetterTpl          = new XoopsTpl();
+        $choiceByLetterTpl          = new \XoopsTpl();
         $choiceByLetterTpl->caching = 0; // Disable cache
         $choiceByLetterTpl->assign('alphabet', $alphabetArray);
         $ret .= $choiceByLetterTpl->fetch("db:{$this->helper->getDirname()}_letterschoice.tpl");

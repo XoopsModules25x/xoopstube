@@ -42,7 +42,7 @@ $lid = Request::getInt('lid', Request::getInt('lid', 0, 'POST'), 'GET');
  */
 function edit($lid = 0)
 {
-    global $xtubemyts, $mytree, $xtubeImageArray;
+    global $myts, $mytree, $xtubeImageArray;
 
     $sql = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE lid=' . $lid;
     if (!$result = $GLOBALS['xoopsDB']->query($sql)) {
@@ -53,24 +53,24 @@ function edit($lid = 0)
     }
     $video_array  = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
     $directory    = $GLOBALS['xoopsModuleConfig']['videoimgdir'];
-    $lid          = $video_array['lid'] ?: 0;
-    $cid          = $video_array['cid'] ?: 0;
-    $title        = $video_array['title'] ? $xtubemyts->htmlSpecialCharsStrip($video_array['title']) : '';
-    $vidid        = $video_array['vidid'] ? $xtubemyts->htmlSpecialCharsStrip($video_array['vidid']) : '';
-    $picurl       = $video_array['picurl'] ? $xtubemyts->htmlSpecialCharsStrip($video_array['picurl']) : 'http://';
-    $publisher    = $video_array['publisher'] ? $xtubemyts->htmlSpecialCharsStrip($video_array['publisher']) : '';
-    $screenshot   = $video_array['screenshot'] ? $xtubemyts->htmlSpecialCharsStrip($video_array['screenshot']) : '';
-    $descriptionb = $video_array['description'] ? $xtubemyts->htmlSpecialCharsStrip($video_array['description']) : '';
-    $published    = $video_array['published'] ?: time();
-    $expired      = $video_array['expired'] ?: 0;
-    $updated      = $video_array['updated'] ?: 0;
-    $offline      = $video_array['offline'] ?: 0;
-    $vidsource    = $video_array['vidsource'] ?: 0;
-    $ipaddress    = $video_array['ipaddress'] ?: 0;
-    $notifypub    = $video_array['notifypub'] ?: 0;
-    $time         = $video_array['time'] ? $xtubemyts->htmlSpecialCharsStrip($video_array['time']) : '0:00:00';
-    $keywords     = $video_array['keywords'] ? $xtubemyts->htmlSpecialCharsStrip($video_array['keywords']) : '';
-    $item_tag     = $video_array['item_tag'] ? $xtubemyts->htmlSpecialCharsStrip($video_array['item_tag']) : '';
+    $lid          = $video_array['lid'] ?? 0;
+    $cid          = $video_array['cid'] ?? 0;
+    $title        = isset($video_array['title']) ? htmlspecialchars($video_array['title']) : '';
+    $vidid        = isset($video_array['vidid']) ? htmlspecialchars($video_array['vidid']) : '';
+    $picurl       = isset($video_array['picurl']) ? htmlspecialchars($video_array['picurl']) : 'http://';
+    $publisher    = isset($video_array['publisher']) ? htmlspecialchars($video_array['publisher']) : '';
+    $screenshot   = isset($video_array['screenshot']) ? htmlspecialchars($video_array['screenshot']) : '';
+    $descriptionb = isset($video_array['description']) ? htmlspecialchars($video_array['description']) : '';
+    $published    = $video_array['published'] ?? time();
+    $expired      = $video_array['expired'] ?? 0;
+    $updated      = $video_array['updated'] ?? 0;
+    $offline      = $video_array['offline'] ?? 0;
+    $vidsource    = $video_array['vidsource'] ?? 0;
+    $ipaddress    = $video_array['ipaddress'] ?? 0;
+    $notifypub    = $video_array['notifypub'] ?? 0;
+    $time         = isset($video_array['time']) ? htmlspecialchars($video_array['time']) : '0:00:00';
+    $keywords     = isset($video_array['keywords']) ? htmlspecialchars($video_array['keywords']) : '';
+    $item_tag     = isset($video_array['item_tag']) ? htmlspecialchars($video_array['item_tag']) : '';
 
     require_once __DIR__ . '/admin_header.php';
     xoops_cp_header();
@@ -115,11 +115,11 @@ function edit($lid = 0)
 
     $caption = $lid ? _AM_XOOPSTUBE_VIDEO_MODIFYFILE : _AM_XOOPSTUBE_VIDEO_CREATENEWFILE;
 
-    $sform = new XoopsThemeForm($caption, 'storyform', xoops_getenv('SCRIPT_NAME'), 'post', true);
+    $sform = new \XoopsThemeForm($caption, 'storyform', xoops_getenv('SCRIPT_NAME'), 'post', true);
     $sform->setExtra('enctype="multipart / form - data"');
 
     // Video title
-    $sform->addElement(new XoopsFormText(_AM_XOOPSTUBE_VIDEO_TITLE, 'title', 70, 255, $title), true);
+    $sform->addElement(new \XoopsFormText(_AM_XOOPSTUBE_VIDEO_TITLE, 'title', 70, 255, $title), true);
 
     // Video source
     $vidsource_array  = [
@@ -140,40 +140,40 @@ function edit($lid = 0)
         109 => _MD_XOOPSTUBE_MEGAVIDEO,
         200 => _MD_XOOPSTUBE_XOOPSTUBE,
     ]; // #200 is reserved for XoopsTube's internal FLV player
-    $vidsource_select = new XoopsFormSelect(_AM_XOOPSTUBE_VIDSOURCE, 'vidsource', $vidsource);
+    $vidsource_select = new \XoopsFormSelect(_AM_XOOPSTUBE_VIDSOURCE, 'vidsource', $vidsource);
     $vidsource_select->addOptionArray($vidsource_array);
     $sform->addElement($vidsource_select);
 
     // Video code
-    $videocode = new XoopsFormText(_AM_XOOPSTUBE_VIDEO_DLVIDID, 'vidid', 70, 512, $vidid);
+    $videocode = new \XoopsFormText(_AM_XOOPSTUBE_VIDEO_DLVIDID, 'vidid', 70, 512, $vidid);
     $videocode->setDescription('<br><span style="font-size: small;">' . _AM_XOOPSTUBE_VIDEO_DLVIDIDDSC . '</span>');
     $sform->addElement($videocode, true);
     $note = _AM_XOOPSTUBE_VIDEO_DLVIDID_NOTE;
-    $sform->addElement(new XoopsFormLabel('', $note));
+    $sform->addElement(new \XoopsFormLabel('', $note));
 
     // Picture url
-    $picurl = new XoopsFormText(_AM_XOOPSTUBE_VIDEO_PICURL, 'picurl', 70, 255, $picurl);
+    $picurl = new \XoopsFormText(_AM_XOOPSTUBE_VIDEO_PICURL, 'picurl', 70, 255, $picurl);
     $picurl->setDescription('<br><span style="font-weight: normal;font-size: smaller;">' . _AM_XOOPSTUBE_VIDEO_PICURLNOTE . '</span>');
     $sform->addElement($picurl, false);
 
     // Video publisher
-    $sform->addElement(new XoopsFormText(_AM_XOOPSTUBE_VIDEO_PUBLISHER, 'publisher', 70, 255, $publisher), true);
+    $sform->addElement(new \XoopsFormText(_AM_XOOPSTUBE_VIDEO_PUBLISHER, 'publisher', 70, 255, $publisher), true);
 
     // Time form
-    $timeform = new XoopsFormText(_AM_XOOPSTUBE_TIME, 'time', 7, 7, $time);
+    $timeform = new \XoopsFormText(_AM_XOOPSTUBE_TIME, 'time', 7, 7, $time);
     $timeform->setDescription('<span style="font-size: small;">(h:mm:ss)</span>');
     $sform->addElement($timeform, false);
 
     // Category menu
     ob_start();
     $mytree->makeMySelBox('title', 'title', $cid, 0);
-    $sform->addElement(new XoopsFormLabel(_AM_XOOPSTUBE_VIDEO_CATEGORY, ob_get_clean()));
+    $sform->addElement(new \XoopsFormLabel(_AM_XOOPSTUBE_VIDEO_CATEGORY, ob_get_clean()));
 
     // Description form
     //    $editor = xtube_getWysiwygForm( _AM_XOOPSTUBE_VIDEO_DESCRIPTION, 'descriptionb', $descriptionb );
     //    $sform -> addElement( $editor, false );
 
-    $optionsTrayNote = new XoopsFormElementTray(_AM_XOOPSTUBE_VIDEO_DESCRIPTION, '<br>');
+    $optionsTrayNote = new \XoopsFormElementTray(_AM_XOOPSTUBE_VIDEO_DESCRIPTION, '<br>');
     if (class_exists('XoopsFormEditor')) {
         $options['name']   = 'descriptionb';
         $options['value']  = $descriptionb;
@@ -181,94 +181,96 @@ function edit($lid = 0)
         $options['cols']   = '100%';
         $options['width']  = '100%';
         $options['height'] = '200px';
-        $descriptionb      = new XoopsFormEditor('', $GLOBALS['xoopsModuleConfig']['form_options'], $options, $nohtml = false, $onfailure = 'textarea');
+        $descriptionb      = new \XoopsFormEditor('', $GLOBALS['xoopsModuleConfig']['form_options'], $options, $nohtml = false, $onfailure = 'textarea');
         $optionsTrayNote->addElement($descriptionb);
     } else {
-        $descriptionb = new XoopsFormDhtmlTextArea('', 'descriptionb', $item->getVar('descriptionb', 'e'), '100%', '100%');
+        $descriptionb = new \XoopsFormDhtmlTextArea('', 'descriptionb', $item->getVar('descriptionb', 'e'), '100%', '100%');
         $optionsTrayNote->addElement($descriptionb);
     }
 
     $sform->addElement($optionsTrayNote, false);
 
     // Meta keywords form
-    $keywords = new XoopsFormTextArea(_AM_XOOPSTUBE_KEYWORDS, 'keywords', $keywords, 7, 60, false);
+    $keywords = new \XoopsFormTextArea(_AM_XOOPSTUBE_KEYWORDS, 'keywords', $keywords, 7, 60, false);
     $keywords->setDescription("<br><br><br><br><span style='font-size: smaller;'>" . _AM_XOOPSTUBE_KEYWORDS_NOTE . '</span>');
     $sform->addElement($keywords);
 
     // Insert tags if Tag-module is installed
-    if (Utility::isModuleTagInstalled()) {
-        require_once XOOPS_ROOT_PATH . '/modules/tag/include/formtag.php';
-        $text_tags = new FormTag('item_tag', 70, 255, $video_array['item_tag'], 0);
-        $sform->addElement($text_tags);
-    } else {
-        $sform->addElement(new XoopsFormHidden('item_tag', $video_array['item_tag']));
+    if (isset($video_array['item_tag'])) {
+        if (Utility::isModuleTagInstalled()) {
+            require_once XOOPS_ROOT_PATH . '/modules/tag/include/formtag.php';
+            $text_tags = new FormTag('item_tag', 70, 255, $video_array['item_tag'], 0);
+            $sform->addElement($text_tags);
+        } else {
+            $sform->addElement(new \XoopsFormHidden('item_tag', $video_array['item_tag']));
+        }
     }
 
     // Video Publish Date
-    $sform->addElement(new XoopsFormDateTime(_AM_XOOPSTUBE_VIDEO_SETPUBLISHDATE, 'published', $size = 15, $published));
+    $sform->addElement(new \XoopsFormDateTime(_AM_XOOPSTUBE_VIDEO_SETPUBLISHDATE, 'published', $size = 15, $published));
 
     if ($lid) {
-        $sform->addElement(new XoopsFormHidden('was_published', $published));
-        $sform->addElement(new XoopsFormHidden('was_expired', $expired));
+        $sform->addElement(new \XoopsFormHidden('was_published', $published));
+        $sform->addElement(new \XoopsFormHidden('was_expired', $expired));
     }
 
     // Video Expire Date
     $isexpired           = ($expired > time()) ? 1 : 0;
     $expiredates         = ($expired > time()) ? _AM_XOOPSTUBE_VIDEO_EXPIREDATESET . Utility::getTimestamp(formatTimestamp($expired, $GLOBALS['xoopsModuleConfig']['dateformat'])) : _AM_XOOPSTUBE_VIDEO_SETDATETIMEEXPIRE;
     $warning             = ($published > $expired && $expired > time()) ? _AM_XOOPSTUBE_VIDEO_EXPIREWARNING : '';
-    $expiredate_checkbox = new XoopsFormCheckBox('', 'expiredateactivate', $isexpired);
+    $expiredate_checkbox = new \XoopsFormCheckBox('', 'expiredateactivate', $isexpired);
     $expiredate_checkbox->addOption(1, $expiredates . ' <br> <br> ');
 
-    $expiredate_tray = new XoopsFormElementTray(_AM_XOOPSTUBE_VIDEO_EXPIREDATE . $warning, '');
+    $expiredate_tray = new \XoopsFormElementTray(_AM_XOOPSTUBE_VIDEO_EXPIREDATE . $warning, '');
     $expiredate_tray->addElement($expiredate_checkbox);
-    $expiredate_tray->addElement(new XoopsFormDateTime(_AM_XOOPSTUBE_VIDEO_SETEXPIREDATE . ' <br> ', 'expired', 15, $expired));
-    $expiredate_tray->addElement(new XoopsFormRadioYN(_AM_XOOPSTUBE_VIDEO_CLEAREXPIREDATE, 'clearexpire', 0, ' ' . _YES . '', ' ' . _NO . ''));
+    $expiredate_tray->addElement(new \XoopsFormDateTime(_AM_XOOPSTUBE_VIDEO_SETEXPIREDATE . ' <br> ', 'expired', 15, $expired));
+    $expiredate_tray->addElement(new \XoopsFormRadioYN(_AM_XOOPSTUBE_VIDEO_CLEAREXPIREDATE, 'clearexpire', 0, ' ' . _YES . '', ' ' . _NO . ''));
     $sform->addElement($expiredate_tray);
 
     // Set video offline yes/no
-    $videostatus_radio = new XoopsFormRadioYN(_AM_XOOPSTUBE_VIDEO_FILESSTATUS, 'offline', $offline, ' ' . _YES . '', ' ' . _NO . '');
+    $videostatus_radio = new \XoopsFormRadioYN(_AM_XOOPSTUBE_VIDEO_FILESSTATUS, 'offline', $offline, ' ' . _YES . '', ' ' . _NO . '');
     $sform->addElement($videostatus_radio);
 
     // Set video status as updated yes/no
     $up_dated            = (0 == $updated) ? 0 : 1;
-    $video_updated_radio = new XoopsFormRadioYN(_AM_XOOPSTUBE_VIDEO_SETASUPDATED, 'up_dated', $up_dated, ' ' . _YES . '', ' ' . _NO . '');
+    $video_updated_radio = new \XoopsFormRadioYN(_AM_XOOPSTUBE_VIDEO_SETASUPDATED, 'up_dated', $up_dated, ' ' . _YES . '', ' ' . _NO . '');
     $sform->addElement($video_updated_radio);
 
     $result = $GLOBALS['xoopsDB']->query('SELECT COUNT( * ) FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_broken') . ' WHERE lid = ' . $lid);
     [$broken_count] = $GLOBALS['xoopsDB']->fetchRow($result);
     if ($broken_count > 0) {
-        $video_updated_radio = new XoopsFormRadioYN(_AM_XOOPSTUBE_VIDEO_DELEDITMESS, 'delbroken', 1, ' ' . _YES . '', ' ' . _NO . '');
+        $video_updated_radio = new \XoopsFormRadioYN(_AM_XOOPSTUBE_VIDEO_DELEDITMESS, 'delbroken', 1, ' ' . _YES . '', ' ' . _NO . '');
         $sform->addElement($editmess_radio);
     }
 
     if ($lid && 0 == $published) {
         $approved         = (0 == $published) ? 0 : 1;
-        $approve_checkbox = new XoopsFormCheckBox(_AM_XOOPSTUBE_VIDEO_EDITAPPROVE, 'approved', 1);
+        $approve_checkbox = new \XoopsFormCheckBox(_AM_XOOPSTUBE_VIDEO_EDITAPPROVE, 'approved', 1);
         $approve_checkbox->addOption(1, ' ');
         $sform->addElement($approve_checkbox);
     }
 
     if (!$lid) {
-        $buttonTray = new XoopsFormElementTray('', '');
-        $buttonTray->addElement(new XoopsFormHidden('status', 1));
-        $buttonTray->addElement(new XoopsFormHidden('notifypub', $notifypub));
-        $buttonTray->addElement(new XoopsFormHidden('op', 'save'));
-        $buttonTray->addElement(new XoopsFormButton('', '', _AM_XOOPSTUBE_BSAVE, 'submit'));
+        $buttonTray = new \XoopsFormElementTray('', '');
+        $buttonTray->addElement(new \XoopsFormHidden('status', 1));
+        $buttonTray->addElement(new \XoopsFormHidden('notifypub', $notifypub));
+        $buttonTray->addElement(new \XoopsFormHidden('op', 'save'));
+        $buttonTray->addElement(new \XoopsFormButton('', '', _AM_XOOPSTUBE_BSAVE, 'submit'));
         $sform->addElement($buttonTray);
     } else {
-        $buttonTray = new XoopsFormElementTray('', '');
-        $buttonTray->addElement(new XoopsFormHidden('lid', $lid));
-        $buttonTray->addElement(new XoopsFormHidden('status', 2));
-        $hidden = new XoopsFormHidden('op', 'save');
+        $buttonTray = new \XoopsFormElementTray('', '');
+        $buttonTray->addElement(new \XoopsFormHidden('lid', $lid));
+        $buttonTray->addElement(new \XoopsFormHidden('status', 2));
+        $hidden = new \XoopsFormHidden('op', 'save');
         $buttonTray->addElement($hidden);
 
-        $butt_dup = new XoopsFormButton('', '', _AM_XOOPSTUBE_BMODIFY, 'submit');
+        $butt_dup = new \XoopsFormButton('', '', _AM_XOOPSTUBE_BMODIFY, 'submit');
         $butt_dup->setExtra('onclick="this . form . elements . op . value = \'save\'"');
         $buttonTray->addElement($butt_dup);
-        $butt_dupct = new XoopsFormButton('', '', _AM_XOOPSTUBE_BDELETE, 'submit');
+        $butt_dupct = new \XoopsFormButton('', '', _AM_XOOPSTUBE_BDELETE, 'submit');
         $butt_dupct->setExtra('onclick="this.form.elements.op.value=\'delete\'"');
         $buttonTray->addElement($butt_dupct);
-        $butt_dupct2 = new XoopsFormButton('', '', _AM_XOOPSTUBE_BCANCEL, 'submit');
+        $butt_dupct2 = new \XoopsFormButton('', '', _AM_XOOPSTUBE_BCANCEL, 'submit');
         $butt_dupct2->setExtra('onclick="this.form.elements.op.value=\'videosConfigMenu\'"');
         $buttonTray->addElement($butt_dupct2);
         $sform->addElement($buttonTray);
@@ -293,15 +295,15 @@ switch (mb_strtolower($op)) {
         $status    = Request::getInt('status', 2, 'POST'); // (!empty($_POST['status'])) ? $_POST['status'] : 2;
 
         // Get data from form
-        $vidid        = $xtubemyts->addSlashes(Request::getString('vidid', '', 'POST'));
-        $picurl       = ('http://' !== Request::getString('picurl', '', 'POST')) ? $xtubemyts->addSlashes(Request::getString('picurl', '', 'POST')) : '';
-        $title        = $xtubemyts->addSlashes(Request::getString('title', '', 'POST'));
-        $descriptionb = $xtubemyts->addSlashes(Request::getString('descriptionb', '', 'POST'));
-        $time         = $xtubemyts->addSlashes(Request::getString('time', '', 'POST'));
-        $keywords     = $xtubemyts->addSlashes(Request::getString('keywords', '', 'POST'));
-        $item_tag     = $xtubemyts->addSlashes(Request::getString('item_tag', '', 'POST'));
+        $vidid        = $myts->addSlashes(Request::getString('vidid', '', 'POST'));
+        $picurl       = ('http://' !== Request::getString('picurl', '', 'POST')) ? $myts->addSlashes(Request::getString('picurl', '', 'POST')) : '';
+        $title        = $myts->addSlashes(Request::getString('title', '', 'POST'));
+        $descriptionb = $myts->addSlashes(Request::getString('descriptionb', '', 'POST'));
+        $time         = $myts->addSlashes(Request::getString('time', '', 'POST'));
+        $keywords     = $myts->addSlashes(Request::getString('keywords', '', 'POST'));
+        $item_tag     = $myts->addSlashes(Request::getString('item_tag', '', 'POST'));
         $submitter    = $GLOBALS['xoopsUser']->uid();
-        $publisher    = $xtubemyts->addSlashes(Request::getString('publisher', '', 'POST'));
+        $publisher    = $myts->addSlashes(Request::getString('publisher', '', 'POST'));
         $vidsource    = Request::getInt('vidsource', 0, 'POST'); //(!empty($_POST['vidsource'])) ? $_POST['vidsource'] : 0;
         $updated      = Request::getInt('was_published', time(), 'POST');
 
@@ -572,16 +574,16 @@ switch (mb_strtolower($op)) {
         //          </fieldset>';
 
         if ($totalcats > 0) {
-            $sform = new XoopsThemeForm(_AM_XOOPSTUBE_CCATEGORY_MODIFY, 'category', 'category.php');
+            $sform = new \XoopsThemeForm(_AM_XOOPSTUBE_CCATEGORY_MODIFY, 'category', 'category.php');
             ob_start();
             $mytree->makeMySelBox('title', 'title');
-            $sform->addElement(new XoopsFormLabel(_AM_XOOPSTUBE_CCATEGORY_MODIFY_TITLE, ob_get_clean()));
-            $dup_tray = new XoopsFormElementTray('', '');
-            $dup_tray->addElement(new XoopsFormHidden('op', 'modCat'));
-            $butt_dup = new XoopsFormButton('', '', _AM_XOOPSTUBE_BMODIFY, 'submit');
+            $sform->addElement(new \XoopsFormLabel(_AM_XOOPSTUBE_CCATEGORY_MODIFY_TITLE, ob_get_clean()));
+            $dup_tray = new \XoopsFormElementTray('', '');
+            $dup_tray->addElement(new \XoopsFormHidden('op', 'modCat'));
+            $butt_dup = new \XoopsFormButton('', '', _AM_XOOPSTUBE_BMODIFY, 'submit');
             $butt_dup->setExtra('onclick="this.form.elements.op.value=\'modCat\'"');
             $dup_tray->addElement($butt_dup);
-            $butt_dupct = new XoopsFormButton('', '', _AM_XOOPSTUBE_BDELETE, 'submit');
+            $butt_dupct = new \XoopsFormButton('', '', _AM_XOOPSTUBE_BDELETE, 'submit');
             $butt_dupct->setExtra('onclick="this.form.elements.op.value=\'del\'"');
             $dup_tray->addElement($butt_dupct);
             $sform->addElement($dup_tray);

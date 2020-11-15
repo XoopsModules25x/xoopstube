@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="<{$xoopstube_url}>/assets/css/xtubestyle.css">
+<link rel="stylesheet" type="text/css" href="<{$mod_url}>/assets/css/xtubestyle.css">
 <{if $catarray.imageheader != ""}>
     <br>
     <div align="center"><{$catarray.imageheader}></div>
@@ -18,7 +18,7 @@
 <{*-------------Letter Choice End -----------------------------*}>
 
 <div class="even" style="font-size: smaller; font-weight: bold;"><{$category_path}></div><br>
-<{if $subcategories}>
+<{if $subcategories|default:''}>
     <fieldset>
         <legend class="xoopstube_legend"><{$smarty.const._MD_XOOPSTUBE_SUBCATLISTING}></legend>
         <div align="left" style="margin-left: 5px; padding: 0;">
@@ -45,7 +45,7 @@
     <br>
 <{/if}>
 
-<{if $show_videos === true}>
+<{if $show_videos|default:false === true}>
     <div align="center" style="vertical-align: middle; font-size: smaller;">
         <span style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_SORTBY}></span>&nbsp;<{$smarty.const._MD_XOOPSTUBE_TITLE}> (
         <a href="viewcat.php?cid=<{$category_id}>&amp;orderby=titleA">
@@ -80,23 +80,23 @@
     <br>
 <{/if}>
 
-<{if $page_nav === true}>
+<{if $page_nav|default:false === true}>
     <div style="text-align: left;"><{$pagenav}></div>
     <br>
 <{/if}>
 
 <div>
     <!-- Start link loop -->
-    <{section name=i loop=$video}>
+    <{section name=i loop=$video|default:null}>
         <{include file="db:xoopstube_videoload.tpl" video=$video[i]}>
     <{/section}>
     <!-- End link loop -->
 </div>
-<{if $page_nav === true}>
+<{if $page_nav|default:false === true}>
     <div style="text-align: right;"><{$pagenav}></div>
 <{/if}>
 
-<{if $moderate === true}>
+<{if $moderate|default:false === true}>
     <div style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_MODERATOR_OPTIONS}></div>
     <br>
     <div>

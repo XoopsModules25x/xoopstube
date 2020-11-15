@@ -19,7 +19,9 @@
  */
 
 use Xmf\Request;
-use XoopsModules\Xoopstube;
+use XoopsModules\Xoopstube\{
+    Utility
+};
 
 require_once __DIR__ . '/header.php';
 
@@ -78,7 +80,7 @@ switch (mb_strtolower($op)) {
             if (is_object($submit_user) && !empty($submit_user)) {
                 $subdate = formatTimestamp($video_arr['date'], $GLOBALS['xoopsModuleConfig']['dateformat']);
                 $cid     = $video_arr['cid'];
-                $title   = $xtubemyts->htmlSpecialCharsStrip($video_arr['title']);
+                $title   = htmlspecialchars($video_arr['title']);
                 $subject = _MD_XOOPSTUBE_BROKENREPORTED;
 
                 $xoopsMailer = xoops_getMailer();
@@ -109,7 +111,7 @@ switch (mb_strtolower($op)) {
         $GLOBALS['xoopsOption']['template_main'] = 'xoopstube_brokenvideo.tpl';
         require_once XOOPS_ROOT_PATH . '/header.php';
 
-        $catarray['imageheader'] = Xoopstube\Utility::renderImageHeader();
+        $catarray['imageheader'] = Utility::renderImageHeader();
         $xoopsTpl->assign('catarray', $catarray);
 
         $sql       = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE lid=' . $lid;
@@ -120,10 +122,10 @@ switch (mb_strtolower($op)) {
         $broke_arr = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
         xoops_load('XoopsUserUtility');
         if (is_array($broke_arr)) {
-            $broken['title']        = $xtubemyts->htmlSpecialCharsStrip($video_arr['title']);
+            $broken['title']        = htmlspecialchars($video_arr['title']);
             $broken['id']           = $broke_arr['reportid'];
             $broken['reporter']     = \XoopsUserUtility::getUnameFromId($broke_arr['sender']);
-            $broken['date']         = Xoopstube\Utility::getTimestamp(formatTimestamp($broke_arr['date'], $GLOBALS['xoopsModuleConfig']['dateformat']));
+            $broken['date']         = Utility::getTimestamp(formatTimestamp($broke_arr['date'], $GLOBALS['xoopsModuleConfig']['dateformat']));
             $broken['acknowledged'] = (1 == $broke_arr['acknowledged']) ? _YES : _NO;
             $broken['confirmed']    = (1 == $broke_arr['confirmed']) ? _YES : _NO;
             $xoopsTpl->assign('broken', $broken);
@@ -135,9 +137,9 @@ switch (mb_strtolower($op)) {
             }
 
             // file info
-            $video['title']   = $xtubemyts->htmlSpecialCharsStrip($video_arr['title']);
+            $video['title']   = htmlspecialchars($video_arr['title']);
             $time             = ($video_arr['published'] > 0) ? $video_arr['published'] : $link_arr['updated'];
-            $video['updated'] = Xoopstube\Utility::getTimestamp(formatTimestamp($time, $GLOBALS['xoopsModuleConfig']['dateformat']));
+            $video['updated'] = Utility::getTimestamp(formatTimestamp($time, $GLOBALS['xoopsModuleConfig']['dateformat']));
             $is_updated       = (0 !== $video_arr['updated']) ? _MD_XOOPSTUBE_UPDATEDON : _MD_XOOPSTUBE_SUBMITDATE;
 
             $video['publisher'] = \XoopsUserUtility::getUnameFromId($video_arr['submitter']);
@@ -147,7 +149,7 @@ switch (mb_strtolower($op)) {
             $xoopsTpl->assign('video', $video);
         }
 
-        Xoopstube\Utility::setNoIndexNoFollow();
+        Utility::setNoIndexNoFollow();
 
         $xoopsTpl->assign('module_dir', $xoopsModule->getVar('dirname'));
         require_once XOOPS_ROOT_PATH . '/footer.php';

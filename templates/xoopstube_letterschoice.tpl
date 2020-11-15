@@ -1,14 +1,11 @@
 <style type="text/css">
     .button_green {
-        -moz-box-shadow: inset 0 1px 0 0 #d9fbbe;
         -webkit-box-shadow: inset 0 1px 0 0 #d9fbbe;
         box-shadow: inset 0 1px 0 0 #d9fbbe;
-        background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #d9fbbe), color-stop(1, #d9fbbe));
-        background: -moz-linear-gradient(, center top, #a5cc52 5%, #d9fbbe 100%);
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(top, center), color-stop(5%, #a5cc52), to(#d9fbbe));
+        background: linear-gradient(center top, #a5cc52 5%, #d9fbbe 100%);
         filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#d9fbbe', endColorstr='#b8e356');
         background-color: #d9fbbe;
-        -webkit-border-radius: 2px;
-        -moz-border-radius: 2px;
         border-radius: 2px;
         text-indent: 0;
         border: 1px solid #83c41a;
@@ -30,8 +27,8 @@
     }
 
     .button_green:hover {
-        background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #b8e356), color-stop(1, #a5cc52));
-        background: -moz-linear-gradient(, center top, #b8e356 5%, #a5cc52 100%);
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(top, center), color-stop(5%, #b8e356), to(#a5cc52));
+        background: linear-gradient(center top, #b8e356 5%, #a5cc52 100%);
         filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#b8e356', endColorstr='#a5cc52');
         background-color: #86ae47;
     }
@@ -42,12 +39,10 @@
     }
 
     .button_grey {
-        background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf));
-        background: -moz-linear-gradient(, center top, #ededed 5%, #dfdfdf 100%);
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(top, center), color-stop(5%, #ededed), to(#dfdfdf));
+        background: linear-gradient(center top, #ededed 5%, #dfdfdf 100%);
         filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
         background-color: #ededed;
-        -webkit-border-radius: 2px;
-        -moz-border-radius: 2px;
         border-radius: 2px;
         text-indent: 0;
         border: 1px solid #dcdcdc;
@@ -69,8 +64,8 @@
     }
 
     .button_grey:hover {
-        background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed));
-        background: -moz-linear-gradient(, center top, #dfdfdf 5%, #ededed 100%);
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(top, center), color-stop(5%, #dfdfdf), to(#ededed));
+        background: linear-gradient(center top, #dfdfdf 5%, #ededed 100%);
         filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
         background-color: #dfdfdf;
     }

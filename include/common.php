@@ -18,7 +18,12 @@
  * @since           1.0.6
  */
 
-use XoopsModules\Xoopstube;
+use XoopsModules\Xoopstube\{
+    Helper,
+    Utility
+};
+/** @var Helper $helper */
+/** @var Utility $utility */
 
 require_once dirname(__DIR__) . '/preloads/autoloader.php';
 
@@ -26,11 +31,9 @@ $moduleDirName      = basename(dirname(__DIR__));
 $moduleDirNameUpper = mb_strtoupper($moduleDirName); //$capsDirName
 
 /** @var \XoopsDatabase $db */
-/** @var \Xoopstube\Helper $helper */
-/** @var \Xoopstube\Utility $utility */
 $db      = \XoopsDatabaseFactory::getDatabaseConnection();
-$helper  = Xoopstube\Helper::getInstance();
-$utility = new Xoopstube\Utility();
+$helper  = Helper::getInstance();
+$utility = new Utility();
 //$configurator = new Xoopstube\Common\Configurator();
 
 $helper->loadLanguage('common');

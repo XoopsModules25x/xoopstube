@@ -36,12 +36,18 @@ require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
 xoops_loadLanguage('main', $moduleDirName);
 
 //require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/TextSanitizer.php';
-$xtubemyts = new Xoopstube\TextSanitizer(); // MyTextSanitizer object
+$myts = \MyTextSanitizer::getInstance(); // MyTextSanitizer object
 
 if (!isset($GLOBALS['xoTheme']) || !is_object($GLOBALS['xoTheme'])) {
     require_once $GLOBALS['xoops']->path('class/theme.php');
     $GLOBALS['xoTheme'] = new \xos_opal_Theme();
 }
+
+if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof XoopsTpl)) {
+    require $GLOBALS['xoops']->path('class/template.php');
+    $xoopsTpl = new XoopsTpl();
+}
+
 
 //$GLOBALS['xoTheme']->addStylesheet('modules/' . $moduleDirName . '/assets/css/xtubestyle.css');
 

@@ -42,6 +42,8 @@
 .xoopstube_itemTitle a {
     font-size: 130%;
     font-weight: bold;
+    -webkit-font-feature-settings: "c2sc";
+            font-feature-settings: "c2sc";
     font-variant: small-caps;
     color: #ffffff;
     background-color: transparent;

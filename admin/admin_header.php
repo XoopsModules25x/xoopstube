@@ -18,7 +18,9 @@
  */
 
 use XoopsModules\Xoopstube;
-use XoopsModules\Xoopstube\Helper;
+use XoopsModules\Xoopstube\{
+    Helper
+};
 
 require_once dirname(__DIR__, 3) . '/include/cp_header.php';
 //require_once $GLOBALS['xoops']->path('www/class/xoopsformloader.php');
@@ -58,7 +60,7 @@ require_once dirname(__DIR__) . '/include/video.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
-$xtubemyts = new Xoopstube\TextSanitizer(); // MyTextSanitizer object
+$myts = \MyTextSanitizer::getInstance(); // MyTextSanitizer object
 
 $xtubeImageArray = [
     'editimg'     => "<img src='$pathIcon16/edit.png' alt='" . _AM_XOOPSTUBE_ICO_EDIT . "' align='middle'>",

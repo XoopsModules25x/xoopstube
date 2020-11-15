@@ -1314,13 +1314,13 @@ class Utility extends Common\SysUtility
     }
 
     /**
-     * Ajoute des jours à une date et retourne la nouvelle date au format Date de Mysql
+     * Add days to a date and return the new date in Mysql Date format
      *
      * @param int $duration
-     * @param int $startingDate Date de départ (timestamp)
+     * @param int $startingDate Starting date (timestamp)
      *
      * @return bool|string
-     * @internal param int $durations Durée en jours
+     * @internal param int $ Duration in days
      */
     public static function addDaysToDate($duration = 1, $startingDate = 0)
     {
@@ -1333,10 +1333,10 @@ class Utility extends Common\SysUtility
     }
 
     /**
-     * Retourne un breadcrumb en fonction des paramètres passés et en partant (d'office) de la racine du module
+     * Returns a breadcrumb according to the parameters passed and starting (automatically) from the root of the module
      *
-     * @param array  $path  Le chemin complet (excepté la racine) du breadcrumb sous la forme clé=url valeur=titre
-     * @param string $raquo Le séparateur par défaut à utiliser
+     * @param array  $path  The full path (except the root) of the breadcrumb in the form of key = url value = title
+     * @param string $raquo The default separator to use
      *
      * @return string le breadcrumb
      */
@@ -2214,8 +2214,8 @@ class Utility extends Common\SysUtility
             $showimage = '<a href="' . $path . '">';
         }
         // checks to see if the file is valid else displays default blank image
-        if (!is_dir(XOOPS_ROOT_PATH . "/{$imgsource}/{$image}")
-            && is_dir(XOOPS_ROOT_PATH . "/{$imgsource}/{$image}")) {
+        if (is_file(XOOPS_ROOT_PATH . "/{$imgsource}/{$image}")//            && is_dir(XOOPS_ROOT_PATH . "/{$imgsource}/{$image}")
+        ) {
             $showimage .= "<img src='" . XOOPS_URL . "/{$imgsource}/{$image}' border='0' title='" . $alttext . "' alt='" . $alttext . "'></a>";
         } elseif ($GLOBALS['xoopsUser'] && $GLOBALS['xoopsUser']->isAdmin($xoopsModule->getVar('mid'))) {
             $showimage .= '<img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/brokenimg.png" alt="' . _MD_XOOPSTUBE_ISADMINNOTICE . '"></a>';
@@ -2626,8 +2626,8 @@ class Utility extends Common\SysUtility
         $lid = $published['lid'];
         $cid = $published['cid'];
 
-        $title        = '<a href="../singlevideo.php?cid=' . $published['cid'] . '&amp;lid=' . $published['lid'] . '">' . $xtubemyts->htmlSpecialCharsStrip(trim($published['title'])) . '</a>';
-        $maintitle    = urlencode($xtubemyts->htmlSpecialChars(trim($published['title'])));
+        $title        = '<a href="../singlevideo.php?cid=' . $published['cid'] . '&amp;lid=' . $published['lid'] . '">' . htmlspecialcharsStrip(trim($published['title'])) . '</a>';
+        $maintitle    = urlencode(htmlspecialchars(trim($published['title'])));
         $cattitle     = '<a href="../viewcat.php?cid=' . $published['cid'] . '">' . self::getCategoryTitle($published['cid']) . '</a>';
         $submitter    = self::getLinkedUserNameFromId($published['submitter']);
         $returnsource = xtubeReturnSource($published['vidsource']);
@@ -2734,8 +2734,8 @@ class Utility extends Common\SysUtility
         $lid = $published['lid'];
         $cid = $published['cid'];
 
-        $title        = '<a href="../singlevideo.php?cid=' . $published['cid'] . '&amp;lid=' . $published['lid'] . '">' . $xtubemyts->htmlSpecialCharsStrip(trim($published['title'])) . '</a>';
-        $maintitle    = urlencode($xtubemyts->htmlSpecialChars(trim($published['title'])));
+        $title        = '<a href="../singlevideo.php?cid=' . $published['cid'] . '&amp;lid=' . $published['lid'] . '">' . htmlspecialchars(trim($published['title'])) . '</a>';
+        $maintitle    = urlencode(htmlspecialchars(trim($published['title'])));
         $cattitle     = '<a href="../viewcat.php?cid=' . $published['cid'] . '">' . self::getCategoryTitle($published['cid']) . '</a>';
         $submitter    = self::getLinkedUserNameFromId($published['submitter']);
         $returnsource = xtubeReturnSource($published['vidsource']);

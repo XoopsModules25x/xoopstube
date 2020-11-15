@@ -18,7 +18,10 @@
  */
 
 use XoopsModules\Xoopstube;
-use XoopsModules\Xoopstube\Utility;
+use XoopsModules\Xoopstube\{
+    Utility,
+    Tree
+};
 
 /**
  * @param int    $cid
@@ -152,7 +155,7 @@ function getSpotlightVideos($options)
     /** @var \XoopsConfigHandler $configHandler */
     $configHandler     = xoops_getHandler('config');
     $xtubeModuleConfig = $configHandler->getConfigsByCat(0, $xtubeModule->getVar('mid'));
-    $xtubemyts         = \MyTextSanitizer:: getInstance();
+    $myts         = \MyTextSanitizer:: getInstance();
 
     $options[1] = 4;
     $result     = $GLOBALS['xoopsDB']->query(
@@ -170,7 +173,7 @@ function getSpotlightVideos($options)
             exit;
         }
         $videoload = [];
-        $title     = $xtubemyts->htmlSpecialChars($myrow['title']);
+        $title     = htmlspecialchars($myrow['title']);
         if (!XOOPS_USE_MULTIBYTES) {
             if (mb_strlen($myrow['title']) >= $options[2]) {
                 $title = mb_substr($myrow['title'], 0, $options[2] - 1) . '...';
@@ -243,7 +246,7 @@ function showTopVideoBlock($options)
     /** @var \XoopsConfigHandler $configHandler */
     $configHandler     = xoops_getHandler('config');
     $xtubeModuleConfig = $configHandler->getConfigsByCat(0, $xtubeModule->getVar('mid'));
-    $xtubemyts         = \MyTextSanitizer:: getInstance();
+    $myts         = \MyTextSanitizer:: getInstance();
 
     if (isset($options[4]) && ($options[4] > 0)) {
         $result = $GLOBALS['xoopsDB']->query(
@@ -283,7 +286,7 @@ function showTopVideoBlock($options)
         }
 
         $videoload = [];
-        $title     = $xtubemyts->htmlSpecialChars($myrow['title']);
+        $title     = htmlspecialchars($myrow['title']);
         if (!XOOPS_USE_MULTIBYTES) {
             if (mb_strlen($myrow['title']) >= $options[2]) {
                 $title = mb_substr($myrow['title'], 0, $options[2] - 1) . '...';
@@ -317,7 +320,7 @@ function showTopVideoBlock($options)
  */
 function getRandomVideo($options)
 {
-    global $xtubemyts;
+    global $myts;
     $utility       = new Utility();
     $moduleDirName = basename(dirname(__DIR__));
     $block         = [];
@@ -327,7 +330,7 @@ function getRandomVideo($options)
     /** @var \XoopsConfigHandler $configHandler */
     $configHandler     = xoops_getHandler('config');
     $xtubeModuleConfig = $configHandler->getConfigsByCat(0, $xtubeModule->getVar('mid'));
-    $xtubemyts         = \MyTextSanitizer:: getInstance();
+    $myts         = \MyTextSanitizer:: getInstance();
 
     if (isset($options[4]) && ($options[4] > 0)) {
         $result2 = $GLOBALS['xoopsDB']->query(
@@ -356,7 +359,7 @@ function getRandomVideo($options)
             continue;
         }
         $videorandom = [];
-        $title       = $xtubemyts->htmlSpecialChars($myrow['title']);
+        $title       = htmlspecialchars($myrow['title']);
         if (!XOOPS_USE_MULTIBYTES) {
             if (mb_strlen($myrow['title']) >= $options[2]) {
                 $title = mb_substr($myrow['title'], 0, $options[2] - 1) . '...';
@@ -387,7 +390,7 @@ function getRandomVideo($options)
  */
 function getRandomVideoForHorizontalBlock($options)
 {
-    global $xtubemyts;
+    global $myts;
     $moduleDirName = basename(dirname(__DIR__));
     $block         = [];
     /** @var \XoopsModuleHandler $moduleHandler */
@@ -396,7 +399,7 @@ function getRandomVideoForHorizontalBlock($options)
     /** @var \XoopsConfigHandler $configHandler */
     $configHandler     = xoops_getHandler('config');
     $xtubeModuleConfig = $configHandler->getConfigsByCat(0, $xtubeModule->getVar('mid'));
-    $xtubemyts         = \MyTextSanitizer:: getInstance();
+    $myts         = \MyTextSanitizer:: getInstance();
 
     if (isset($options[4]) && ($options[4] > 0)) {
         $result2 = $GLOBALS['xoopsDB']->query(
@@ -425,7 +428,7 @@ function getRandomVideoForHorizontalBlock($options)
             continue;
         }
         $videorandomh            = [];
-        $title                   = $xtubemyts->htmlSpecialChars($myrow['title']);
+        $title                   = htmlspecialchars($myrow['title']);
         $videorandomh['balloon'] = $myrow['title'];
         if (!XOOPS_USE_MULTIBYTES) {
             if (mb_strlen($myrow['title']) >= $options[2]) {
@@ -479,7 +482,7 @@ function editTopVideoBlock($options)
 
     $cat_arr = [];
     require_once XOOPS_ROOT_PATH . '/modules/xoopstube/class/Tree.php';
-    $xt      = new Xoopstube\Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
+    $xt      = new Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
     $cat_arr = $xt->getChildTreeArray(0, 'title');
 
     $form .= '<br>' . _MB_XOOPSTUBE_SELECTCAT . '<br><select name="options[]" multiple="multiple" size="5">';

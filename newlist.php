@@ -19,17 +19,21 @@
  */
 
 use Xmf\Request;
-use XoopsModules\Xoopstube;
-
-require_once __DIR__ . '/header.php';
+use XoopsModules\Xoopstube\{
+    Utility,
+    Tree
+};
 
 $GLOBALS['xoopsOption']['template_main'] = 'xoopstube_newlistindex.tpl';
-require_once XOOPS_ROOT_PATH . '/header.php';
+require_once __DIR__ . '/header.php';
+
+
+//require_once XOOPS_ROOT_PATH . '/header.php';
 $xoTheme->addStylesheet('modules/' . $moduleDirName . '/assets/css/xtubestyle.css');
 
 global $xoopsModule;
 
-$catarray['imageheader'] = Xoopstube\Utility::renderImageHeader();
+$catarray['imageheader'] = Utility::renderImageHeader();
 $xoopsTpl->assign('catarray', $catarray);
 if (!isset($_GET['newvideoshowdays'])) {
     redirect_header('newlist.php?newvideoshowdays=7', 1, '');
@@ -44,19 +48,19 @@ if (Request::hasVar('newvideoshowdays', 'GET')) {
             }
         }
     }
-    $time_cur       = time();
-    $duration       = ($time_cur - (86400 * 30));
-    $duration_week  = ($time_cur - (86400 * 7));
+    $currentTime       = time();
+    $timestamp30daysAgo       = ($currentTime - (86400 * 30));
+    $timestamp7daysAgo  = ($currentTime - (86400 * 7));
     $allmonthvideos = 0;
     $allweekvideos  = 0;
     $result         = $GLOBALS['xoopsDB']->query(
-        'SELECT lid, cid, published, updated FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE (published >= ' . $duration . ' AND published <= ' . $time_cur . ') OR updated >= ' . $duration . ' AND (expired = 0 OR expired > ' . $time_cur . ') AND offline = 0'
+        'SELECT lid, cid, published, updated FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE (published >= ' . $timestamp30daysAgo . ' AND published <= ' . $currentTime . ') OR updated >= ' . $timestamp30daysAgo . ' AND (expired = 0 OR expired > ' . $currentTime . ') AND offline = 0'
     );
 
     while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
         $published = ($myrow['updated'] > 0) ? $myrow['updated'] : $myrow['published'];
         ++$allmonthvideos;
-        if ($published > $duration_week) {
+        if ($published > $timestamp7daysAgo) {
             ++$allweekvideos;
         }
     }
@@ -71,52 +75,62 @@ if (Request::hasVar('newvideoshowdays', 'GET')) {
     $dailyvideos = [];
     for ($i = 0; $i < $newvideoshowdays; ++$i) {
         $key                                 = $newvideoshowdays - $i - 1;
-        $time                                = $time_cur - (86400 * $key);
+        $time                                = $currentTime - (86400 * $key);
         $dailyvideos[$key]['newvideodayRaw'] = $time;
-        $dailyvideos[$key]['newvideoView']   = Xoopstube\Utility::getTimestamp(formatTimestamp($time, $GLOBALS['xoopsModuleConfig']['dateformat']));
+        $dailyvideos[$key]['newvideoView']   = Utility::getTimestamp(formatTimestamp($time, $GLOBALS['xoopsModuleConfig']['dateformat']));
         $dailyvideos[$key]['totalvideos']    = 0;
     }
 }
 
-$duration = ($time_cur - (86400 * ($newvideoshowdays - 1)));
-$result   = $GLOBALS['xoopsDB']->query(
-    'SELECT lid, cid, published, updated FROM '
-    . $GLOBALS['xoopsDB']->prefix('xoopstube_videos')
-    . ' WHERE (published > '
-    . $duration
-    . ' AND published <= '
-    . $time_cur
-    . ') OR (updated >= '
-    . $duration
-    . ' AND updated <= '
-    . $time_cur
-    . ') AND (expired = 0 OR expired > '
-    . $time_cur
-    . ') AND offline = 0'
-);
+$timestamp30daysAgo = ($currentTime - (86400 * ($newvideoshowdays - 1)));
+$sql =     'SELECT lid, cid, published, updated FROM '
+           . $GLOBALS['xoopsDB']->prefix('xoopstube_videos')
+           . ' WHERE (published > '
+           . $timestamp30daysAgo
+           . ' AND published <= '
+           . $currentTime
+           . ') OR (updated >= '
+           . $timestamp30daysAgo
+           . ' AND updated <= '
+           . $currentTime
+           . ') AND (expired = 0 OR expired > '
+           . $currentTime
+           . ') AND offline = 0';
+
+$result   = $GLOBALS['xoopsDB']->query($sql);
+
 while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
-    $published = ($myrow['updated'] > 0) ? date($GLOBALS['xoopsModuleConfig']['dateformat'], $myrow['updated']) : date($GLOBALS['xoopsModuleConfig']['dateformat'], $myrow['published']);
+//    $published = ($myrow['updated'] > 0) ? date($GLOBALS['xoopsModuleConfig']['dateformat'], $myrow['updated']) : date($GLOBALS['xoopsModuleConfig']['dateformat'], $myrow['published']);
+    $published = ($myrow['updated'] > 0) ? $myrow['updated'] : $myrow['published'];
     $d         = date('j', $published);
     $m         = date('m', $published);
     $y         = date('Y', $published);
-    $key       = (int)($time_cur - mktime(0, 0, 0, $m, $d, $y) / 86400);
-    $dailyvideos[$key]['totalvideos']++;
+    $key       = (int)($currentTime - mktime(0, 0, 0, $m, $d, $y) / 86400);
+
+    $key2 = $published; //mb
+
+    if (isset($dailyvideos[$key])) {
+        $dailyvideos[$key]['totalvideos']++;
+    }
 }
 ksort($dailyvideos);
 reset($dailyvideos);
 $xoopsTpl->assign('dailyvideos', $dailyvideos);
+
+$xoopsTpl->assign('mod_url', XOOPS_URL . '/modules/' . $moduleDirName);
+
 unset($dailyvideos);
 
-$mytree = new Xoopstube\Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
+$mytree = new Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
 $sql    = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos');
-$sql    .= 'WHERE (published > 0 AND published <= ' . $time_cur . ')
-         OR (updated > 0 AND updated <= ' . $time_cur . ')
-         AND (expired = 0 OR expired > ' . $time_cur . ')
+$sql    .= ' WHERE (published > 0 AND published <= ' . $currentTime . ')
+         OR (updated > 0 AND updated <= ' . $currentTime . ')
+         AND (expired = 0 OR expired > ' . $currentTime . ')
          AND offline = 0
          ORDER BY ' . $GLOBALS['xoopsModuleConfig']['linkxorder'];
 $result = $GLOBALS['xoopsDB']->query($sql, 10, 0);
 while (false !== ($video_arr = $GLOBALS['xoopsDB']->fetchArray($result))) {
-    require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/include/videoloadinfo.php';
+    require XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/include/videoloadinfo.php';
 }
 
 $xoopsTpl->assign('back', '<a href="javascript:history.go(-1)"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/back.png"></a>');

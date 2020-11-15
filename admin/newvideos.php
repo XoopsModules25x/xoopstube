@@ -19,7 +19,9 @@
 
 use Xmf\Module\Admin;
 use Xmf\Request;
-use XoopsModules\Xoopstube;
+use XoopsModules\Xoopstube\{
+    Utility
+};
 
 require_once __DIR__ . '/admin_header.php';
 
@@ -114,12 +116,12 @@ switch (mb_strtolower($op)) {
             while (false !== ($new = $GLOBALS['xoopsDB']->fetchArray($new_array))) {
                 $lid          = (int)$new['lid'];
                 $rating       = number_format($new['rating'], 2);
-                $title        = $xtubemyts->htmlSpecialCharsStrip($new['title']);
-                $vidid        = urldecode($xtubemyts->htmlSpecialCharsStrip($new['vidid']));
-                $logourl      = $xtubemyts->htmlSpecialCharsStrip($new['screenshot']);
-                $submitter    = Xoopstube\Utility::getLinkedUserNameFromId($new['submitter']);
+                $title        = htmlspecialchars($new['title']);
+                $vidid        = urldecode(htmlspecialchars($new['vidid']));
+                $logourl      = htmlspecialchars($new['screenshot']);
+                $submitter    = Utility::getLinkedUserNameFromId($new['submitter']);
                 $returnsource = xtubeReturnSource($new['vidsource']);
-                $datetime     = Xoopstube\Utility::getTimestamp(formatTimestamp($new['date'], $GLOBALS['xoopsModuleConfig']['dateformatadmin']));
+                $datetime     = Utility::getTimestamp(formatTimestamp($new['date'], $GLOBALS['xoopsModuleConfig']['dateformatadmin']));
 
                 $icon = $new['published'] ? $approved : '<a href="newvideos.php?op=approve&amp;lid=' . $lid . '">' . $xtubeImageArray['approve'] . ' </a>';
                 $icon .= '<a href="main.php?op=edit&amp;lid=' . $lid . '">' . $xtubeImageArray['editimg'] . ' </a>';

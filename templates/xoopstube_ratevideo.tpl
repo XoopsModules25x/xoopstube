@@ -1,11 +1,11 @@
-<link rel="stylesheet" type="text/css" href="<{$smarty.const.xoopstube_url}>/assets/css/xtubestyle.css">
+<link rel="stylesheet" type="text/css" href="<{$mod_url}>/assets/css/xtubestyle.css">
 
 <{if $catarray.imageheader != ""}>
     <br>
     <div class="xoopstube_header"><{$catarray.imageheader}></div>
 <{/if}>
-<div style="padding-bottom: 12px; text-align: center;" class="xoopstube_itemTitle"><{$catarray.letters}></div>
-<div style="padding-bottom: 12px; text-align: center;"><{$catarray.toolbar}></div>
+<div style="padding-bottom: 12px; text-align: center;" class="xoopstube_itemTitle"><{$catarray.letters|default:null}></div>
+<div style="padding-bottom: 12px; text-align: center;"><{$catarray.toolbar|default:null}></div>
 
 <table border="0" cellpadding="1" cellspacing="2" width="80%" align="center">
     <tr>

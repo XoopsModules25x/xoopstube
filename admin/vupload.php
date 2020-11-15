@@ -23,7 +23,10 @@
 
 use Xmf\Module\Admin;
 use Xmf\Request;
-use XoopsModules\Xoopstube;
+use XoopsModules\Xoopstube\{
+    Lists,
+    Utility
+};
 
 require_once __DIR__ . '/admin_header.php';
 
@@ -40,7 +43,7 @@ switch (mb_strtolower($op)) {
                 redirect_header('vupload.php', 2, _AM_XOOPSTUBE_VUPLOAD_VIDEOEXIST);
             }
             $allowed_mimetypes = 'media/aac, media/flv, media/mp3, media/mp4';
-            Xoopstube\Utility::uploadFiles($_FILES, Request::getString('uploadpath', '', 'POST'), $allowed_mimetypes, 'vupload.php', 1, 0);
+            Utility::uploadFiles($_FILES, Request::getString('uploadpath', '', 'POST'), $allowed_mimetypes, 'vupload.php', 1, 0);
             redirect_header('vupload.php', 2, _AM_XOOPSTUBE_VUPLOAD_VIDEOUPLOAD);
         } else {
             redirect_header('vupload.php', 2, _AM_XOOPSTUBE_VUPLOAD_NOVIDEOEXIST);
@@ -100,11 +103,11 @@ switch (mb_strtolower($op)) {
         $iform->setExtra('enctype="multipart/form-data"');
         ob_start();
         $iform->addElement(new \XoopsFormHidden('dir', $rootpath));
-        Xoopstube\Utility::getDirSelectOption($namelist, $dirarray, $namearray);
+        Utility::getDirSelectOption($namelist, $dirarray, $namearray);
         $iform->addElement(new \XoopsFormLabel(_AM_XOOPSTUBE_VUPLOAD_FOLDERSELECTION, ob_get_clean()));
 
     if ($rootpath > 0) {
-            $file_array       = Xoopstube\Lists:: getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $dirarray[$rootpath], $type = 'media');
+            $file_array       = Lists:: getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $dirarray[$rootpath], $type = 'media');
             $indexfile_select = new \XoopsFormSelect('', 'videofile', '');
             $indexfile_select->addOptionArray($file_array);
             $indexfile_select->setExtra("onchange='showImgSelected(\"media\", \"videofile\", \"" . $dirarray[$rootpath] . '", "", "' . XOOPS_URL . "\")'");

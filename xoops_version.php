@@ -22,7 +22,8 @@ use XoopsModules\Xoopstube;
 
 require_once __DIR__ . '/preloads/autoloader.php';
 
-$moduleDirName = basename(__DIR__);
+$moduleDirName      = basename(__DIR__);
+$moduleDirNameUpper = mb_strtoupper($moduleDirName);
 
 // ------------------- Informations ------------------- //
 $modversion = [
@@ -797,6 +798,18 @@ $modversion['config'][] = [
     'default'     => 0,
 ];
 
+/**
+ * Show Developer Tools?
+ */
+$modversion['config'][] = [
+    'name'        => 'displayDeveloperTools',
+    'title'       => 'CO_' . $moduleDirNameUpper . '_' . 'SHOW_DEV_TOOLS',
+    'description' => 'CO_' . $moduleDirNameUpper . '_' . 'SHOW_DEV_TOOLS_DESC',
+    'formtype'    => 'yesno',
+    'valuetype'   => 'int',
+    'default'     => 0,
+];
+
 // ------------------- Notification ------------------- //
 $modversion['config'][] = [
     'name'        => 'notifications',
@@ -885,7 +898,7 @@ $modversion['notification']['event'][] = [
     'title'         => _MI_XOOPSTUBE_GLOBAL_NEWVIDEO_NOTIFY,
     'caption'       => _MI_XOOPSTUBE_GLOBAL_NEWVIDEO_NOTIFYCAP,
     'description'   => _MI_XOOPSTUBE_GLOBAL_NEWVIDEO_NOTIFYDSC,
-    'mail_template' => 'global_newfile_notify',
+    'mail_template' => 'global_newvideo_notify',
     'mail_subject'  => _MI_XOOPSTUBE_GLOBAL_NEWVIDEO_NOTIFYSBJ,
 ];
 

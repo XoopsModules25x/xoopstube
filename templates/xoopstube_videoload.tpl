@@ -1,4 +1,4 @@
-<{if $show_categort_title === true}>
+<{if $show_category_title === true}>
     <div style="margin-bottom: 4px;"><span style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_CATEGORYC}></span><{$video.category}>
     </div>
 <{/if}>

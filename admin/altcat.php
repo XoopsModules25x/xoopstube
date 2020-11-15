@@ -34,7 +34,7 @@ $lid = Request::getInt('lid', Request::getInt('lid', 0, 'POST'), 'GET'); //clean
  */
 function makeTreeCheckTable(Xoopstube\Tree $xt, $itemid, $title, $checks, $order = '')
 {
-    global $xtubemyts;
+    global $myts;
 
     echo '<div style="text-align: left;">';
     echo '<form name="altcat" method="post" action="' . xoops_getenv('SCRIPT_NAME') . '">';
@@ -59,7 +59,7 @@ function makeTreeCheckTable(Xoopstube\Tree $xt, $itemid, $title, $checks, $order
         $arr = $xt->getChildTreeArray($cid, $order);
         foreach ($arr as $cat) {
             $cat['prefix'] = str_replace('.', '-', $cat['prefix']);
-            $catpath       = '&nbsp;' . $cat['prefix'] . '&nbsp;' . $xtubemyts->htmlSpecialCharsStrip($cat[$title]);
+            $catpath       = '&nbsp;' . $cat['prefix'] . '&nbsp;' . htmlspecialchars($cat[$title]);
             $checked       = array_key_exists($cat['cid'], $checks) ? 'checked' : '';
             $disabled      = ($cat['cid'] === Request::getInt('cid', 0, 'GET')) ? "disabled='yes'" : '';
             $level         = mb_substr_count($cat['prefix'], '-') + 1;

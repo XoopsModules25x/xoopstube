@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="<{$xoopstube_url}>assets/css/xtubestyle.css">
+<link rel="stylesheet" type="text/css" href="<{$mod_url}>assets/css/xtubestyle.css">
 <{*<link rel="stylesheet" type="text/css" href="<{$xoops_url}>/modules/<{$module_dir}>/assets/css/xtubestyle.css">*}>
 <{if $catarray.imageheader != ""}>
     <br>
@@ -70,7 +70,7 @@
 <{/if}>
 <div style="padding-bottom: 12px;text-align: <{$catarray.indexfooteralign}>;"><{$catarray.indexfooter}></div>
 
-<{if $showlatest}>
+<{if $showlatest|default:false}>
     <br>
     <br>
     <div class="odd" style="font-size: larger; font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_LATESTLIST}></div>

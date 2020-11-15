@@ -23,7 +23,11 @@ namespace XoopsModules\Xoopstube;
  * @author          trabis <lusopoemas@gmail.com>
  */
 
-use XoopsModules\Xoopstube;
+use XoopsModules\Xoopstube\{
+    Helper
+};
+
+/** @var Helper $this ->helper */
 
 /**
  * Class VideosHandler
@@ -42,8 +46,7 @@ class VideosHandler extends \XoopsPersistableObjectHandler
     public function __construct(\XoopsDatabase $db = null)
     {
         parent::__construct($db, 'xoopstube_videos', Videos::class, 'lid', 'title');
-        /** @var \Xoopstube\Helper $this ->helper */
-        $this->helper = Xoopstube\Helper::getInstance();
+        $this->helper = Helper::getInstance();
     }
 
     /**
