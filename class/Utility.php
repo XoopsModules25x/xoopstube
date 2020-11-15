@@ -393,7 +393,7 @@ class Utility extends Common\SysUtility
     public static function IP()
     {
         $proxy_ip = '';
-        if (\Xmf\Request::hasVar('HTTP_X_FORWARDED_FOR', 'SERVER')) {
+        if (Request::hasVar('HTTP_X_FORWARDED_FOR', 'SERVER')) {
             $proxy_ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
         } elseif (!empty($_SERVER['HTTP_X_FORWARDED'])) {
             $proxy_ip = $_SERVER['HTTP_X_FORWARDED'];
@@ -1154,7 +1154,7 @@ class Utility extends Common\SysUtility
 
         $tmp = [];
         // Search for the "Minimum keyword length"
-        if (\Xmf\Request::hasVar('xoopstube_keywords_limit', 'SESSION')) {
+        if (Request::hasVar('xoopstube_keywords_limit', 'SESSION')) {
             $limit = $_SESSION['xoopstube_keywords_limit'];
         } else {
             $configHandler                        = xoops_getHandler('config');
@@ -1232,7 +1232,7 @@ class Utility extends Common\SysUtility
     ) {
         require_once XOOPS_ROOT_PATH . '/class/uploader.php';
         global $destname;
-        if (\Xmf\Request::hasVar('xoops_upload_file', 'POST')) {
+        if (Request::hasVar('xoops_upload_file', 'POST')) {
             require_once XOOPS_ROOT_PATH . '/class/uploader.php';
             $fldname = '';
             $fldname = $_FILES[$_POST['xoops_upload_file'][$indice]];
