@@ -12,30 +12,51 @@
  * @category        Module
  * @package         Xoopstube
  * @author          XOOPS Development Team
- * @copyright       2001-2016 XOOPS Project (http://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link            http://xoops.org/
+ * @copyright       2001-2016 XOOPS Project (https://xoops.org)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @link            https://xoops.org/
  * @since           1.0.6
  */
 
 use Xmf\Request;
+use XoopsModules\Xoopstube\{
+    Common\LetterChoice,
+    Helper,
+    Tree,
+    Utility,
+    VideosHandler,
+    Thumbnails
+};
 
-include __DIR__ . '/header.php';
+$GLOBALS['xoopsOption']['template_main'] = 'xoopstube_index.tpl';
+
+require_once __DIR__ . '/header.php';
+
+$moduleDirName      = basename(__DIR__);
+$moduleDirNameUpper = mb_strtoupper($moduleDirName);
 
 $start = Request::getInt('start', Request::getInt('start', 0, 'POST'), 'GET');
 
-$GLOBALS['xoopsOption']['template_main'] = 'xoopstube_index.tpl';
-include XOOPS_ROOT_PATH . '/header.php';
 
-$mytree = new XoopstubeTree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
+//$xoTheme->addStylesheet('modules/' . $moduleDirName . '/assets/css/xtubestyle.css');
+
+$xoTheme->addScript(XOOPS_URL . '/browse.php?Frameworks/jquery/jquery.js');
+$xoTheme->addStylesheet(XOOPSTUBE_URL . '/assets/css/module.css');
+
+//$xoopsTpl->assign('mod_url', XOOPSTUBE_URL . '/');
+
+//require_once XOOPS_ROOT_PATH . '/header.php';
+
+$mytree    = new Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
+$myts = \MyTextSanitizer::getInstance(); // MyTextSanitizer object
 
 // Begin Main page Heading etc
 $sql      = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_indexpage');
 $head_arr = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
 
-$catarray['imageheader']      = XoopstubeUtility::xtubeRenderImageHeader($head_arr['indeximage'], $head_arr['indexheading']);
-$catarray['indexheaderalign'] = $xtubemyts->htmlSpecialCharsStrip($head_arr['indexheaderalign']);
-$catarray['indexfooteralign'] = $xtubemyts->htmlSpecialCharsStrip($head_arr['indexfooteralign']);
+$catarray['imageheader']      = Utility::renderImageHeader($head_arr['indeximage'], $head_arr['indexheading']);
+$catarray['indexheaderalign'] = htmlspecialchars($head_arr['indexheaderalign']);
+$catarray['indexfooteralign'] = htmlspecialchars($head_arr['indexfooteralign']);
 
 $html   = $head_arr['nohtml'] ? 0 : 1;
 $smiley = $head_arr['nosmiley'] ? 0 : 1;
@@ -43,11 +64,30 @@ $xcodes = $head_arr['noxcodes'] ? 0 : 1;
 $images = $head_arr['noimages'] ? 0 : 1;
 $breaks = $head_arr['nobreak'] ? 1 : 0;
 
-$catarray['indexheading'] = $xtubemyts->displayTarea($head_arr['indexheading'], $html, $smiley, $xcodes, $images, $breaks);
-$catarray['indexheader']  = $xtubemyts->displayTarea($head_arr['indexheader'], $html, $smiley, $xcodes, $images, $breaks);
-$catarray['indexfooter']  = $xtubemyts->displayTarea($head_arr['indexfooter'], $html, $smiley, $xcodes, $images, $breaks);
-$catarray['letters']      = XoopstubeUtility::xtubeGetLetters();
+$catarray['indexheading'] = $myts->displayTarea($head_arr['indexheading'], $html, $smiley, $xcodes, $images, $breaks);
+$catarray['indexheader']  = $myts->displayTarea($head_arr['indexheader'], $html, $smiley, $xcodes, $images, $breaks);
+$catarray['indexfooter']  = $myts->displayTarea($head_arr['indexfooter'], $html, $smiley, $xcodes, $images, $breaks);
+
+//$catarray['letters']      = Utility::getLetters();
+
+// Letter Choice Start ---------------------------------------
+
+Helper::getInstance()->loadLanguage('common');
+$xoopsTpl->assign('letterChoiceTitle', constant('CO_' . $moduleDirNameUpper . '_' . 'BROWSETOTOPIC'));
+$db             = \XoopsDatabaseFactory::getDatabaseConnection();
+$objHandler     = new VideosHandler($db);
+$choicebyletter = new LetterChoice($objHandler, null, null, range('a', 'z'), 'letter', 'viewcat.php');
+//$choicebyletter = new LetterChoice($objHandler, null, null, range('a', 'z'), 'init', XOOPSTUBE_URL . '/letter.php');
+//render the LetterChoice partial and story as part of the Category array
+//$catarray['letters']  = $choicebyletter->render($alphaCount, $howmanyother);
+
+$catarray['letters'] = $choicebyletter->render();
+
+//now assign it to the Smarty variable
 $xoopsTpl->assign('catarray', $catarray);
+
+// Letter Choice End ------------------------------------
+
 // End main page Headers
 
 $count   = 1;
@@ -55,9 +95,9 @@ $chcount = 0;
 $countin = 0;
 
 // Begin Main page linkload info
-$listings = XoopstubeUtility::xtubeGetTotalItems();
+$listings = Utility::getTotalItems();
 // get total amount of categories
-$total_cat = XoopstubeUtility::xtubeGetTotalCategoryCount();
+$total_cat = Utility::getTotalCategoryCount();
 
 $catsort = $GLOBALS['xoopsModuleConfig']['sortcats'];
 $sql     = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_cat') . ' WHERE pid=0 ORDER BY ' . $catsort;
@@ -65,21 +105,21 @@ $result  = $GLOBALS['xoopsDB']->query($sql);
 while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
     ++$countin;
     $subtotalvideoload = 0;
-    $totalvideoload    = XoopstubeUtility::xtubeGetTotalItems($myrow['cid'], 1);
-    $indicator         = XoopstubeUtility::xtubeIsNewImage($totalvideoload['published']);
-    if (XoopstubeUtility::xtubeCheckGroups($myrow['cid'])) {
-        $title = $xtubemyts->htmlSpecialCharsStrip($myrow['title']);
+    $totalvideoload    = Utility::getTotalItems($myrow['cid'], 1);
+    $indicator         = Utility::isNewImage($totalvideoload['published']);
+    if (Utility::checkGroups($myrow['cid'])) {
+        $title = htmlspecialchars($myrow['title']);
 
-        $arr = array();
+        $arr = [];
         $arr = $mytree->getFirstChild($myrow['cid'], 'title');
 
         $space         = 1;
         $chcount       = 1;
         $subcategories = '';
         foreach ($arr as $ele) {
-            if (true === XoopstubeUtility::xtubeCheckGroups($ele['cid'])) {
-                if ($GLOBALS['xoopsModuleConfig']['subcats'] == 1) {
-                    $chtitle = $xtubemyts->htmlSpecialCharsStrip($ele['title']);
+            if (true === Utility::checkGroups($ele['cid'])) {
+                if (1 == $GLOBALS['xoopsModuleConfig']['subcats']) {
+                    $chtitle = htmlspecialchars($ele['title']);
                     if ($chcount > 5) {
                         $subcategories .= '...';
                         break;
@@ -97,8 +137,8 @@ while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
         // This code is copyright WF-Projects
         // Using this code without our permission or removing this code voids the license agreement
         $_image = $myrow['imgurl'] ? urldecode($myrow['imgurl']) : '';
-        if ($_image !== '' && $GLOBALS['xoopsModuleConfig']['usethumbs']) {
-            $_thumb_image = new XtubeThumbsNails($_image, $GLOBALS['xoopsModuleConfig']['catimage'], 'thumbs');
+        if ('' !== $_image && $GLOBALS['xoopsModuleConfig']['usethumbs']) {
+            $_thumb_image = new Thumbnails($_image, $GLOBALS['xoopsModuleConfig']['catimage'], 'thumbs');
             if ($_thumb_image) {
                 $_thumb_image->setUseThumbs(1);
                 $_thumb_image->setImageType('gd2');
@@ -116,17 +156,20 @@ while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
         }
         // End
 
-        $xoopsTpl->append('categories', array(
-            'image'         => XOOPS_URL . "/$imgurl",
-            'id'            => $myrow['cid'],
-            'title'         => $title,
-            'subcategories' => $subcategories,
-            'totalvideos'   => $totalvideoload['count'],
-            'width'         => $_width,
-            'height'        => $_height,
-            'count'         => $count,
-            'alttext'       => $myrow['description']
-        ));
+        $xoopsTpl->append(
+            'categories',
+            [
+                'image'         => XOOPS_URL . "/$imgurl",
+                'id'            => $myrow['cid'],
+                'title'         => $title,
+                'subcategories' => $subcategories,
+                'totalvideos'   => $totalvideoload['count'],
+                'width'         => $_width,
+                'height'        => $_height,
+                'count'         => $count,
+                'alttext'       => $myrow['description'],
+            ]
+        );
         ++$count;
     }
 }
@@ -144,34 +187,42 @@ $time = time();
 $sql        = $GLOBALS['xoopsDB']->query('SELECT lastvideosyn, lastvideostotal FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_indexpage'));
 $lastvideos = $GLOBALS['xoopsDB']->fetchArray($sql);
 
-if ($lastvideos['lastvideosyn'] == 1 && $lastvideos['lastvideostotal'] > 0) {
-    $result = $GLOBALS['xoopsDB']->query('SELECT COUNT(*) FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE published > 0
+if (1 == $lastvideos['lastvideosyn'] && $lastvideos['lastvideostotal'] > 0) {
+    $result = $GLOBALS['xoopsDB']->query(
+        'SELECT COUNT(*) FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE published > 0
                                 AND published <= ' . $time . '
                                 AND (expired = 0 OR expired > ' . $time . ')
                                 AND offline = 0
-                                ORDER BY published DESC', 0, 0);
-    list($count) = $GLOBALS['xoopsDB']->fetchRow($result);
+                                ORDER BY published DESC',
+        0,
+        0
+    );
+    [$count] = $GLOBALS['xoopsDB']->fetchRow($result);
 
-    $count = (($count > $lastvideos['lastvideostotal']) && ($lastvideos['lastvideostotal'] !== 0)) ? $lastvideos['lastvideostotal'] : $count;
+    $count = (($count > $lastvideos['lastvideostotal']) && (0 !== $lastvideos['lastvideostotal'])) ? $lastvideos['lastvideostotal'] : $count;
     $limit = (($start + $GLOBALS['xoopsModuleConfig']['perpage']) > $count) ? ($count - $start) : $GLOBALS['xoopsModuleConfig']['perpage'];
 
-    $result = $GLOBALS['xoopsDB']->query('SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE published > 0
+    $result = $GLOBALS['xoopsDB']->query(
+        'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE published > 0
                                 AND published <= ' . time() . '
                                 AND (expired = 0 OR expired > ' . time() . ')
                                 AND offline = 0
-                                ORDER BY published DESC', $limit, $start);
+                                ORDER BY published DESC',
+        $limit,
+        $start
+    );
 
     while (false !== ($video_arr = $GLOBALS['xoopsDB']->fetchArray($result))) {
-        if (true === XoopstubeUtility::xtubeCheckGroups($video_arr['cid'])) {
+        if (true === Utility::checkGroups($video_arr['cid'])) {
             $res_type = 0;
             $moderate = 0;
             $cid      = $video_arr['cid'];
-            require XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/include/videoloadinfo.php';
+            require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/include/videoloadinfo.php';
             $xoopsTpl->append('video', $video);
         }
     }
 
-    $pagenav = new XoopsPageNav($count, $GLOBALS['xoopsModuleConfig']['perpage'], $start, 'start');
+    $pagenav = new \XoopsPageNav($count, $GLOBALS['xoopsModuleConfig']['perpage'], $start, 'start');
     $xoopsTpl->assign('pagenav', $pagenav->renderNav());
     $xoopsTpl->assign('showlatest', $lastvideos['lastvideosyn']);
 }
@@ -179,5 +230,7 @@ if ($lastvideos['lastvideosyn'] == 1 && $lastvideos['lastvideostotal'] > 0) {
 $xoopsTpl->assign('cat_columns', $GLOBALS['xoopsModuleConfig']['catcolumns']);
 $xoopsTpl->assign('lang_thereare', sprintf($lang_thereare, $total_cat, $listings['count']));
 $xoopsTpl->assign('module_dir', $xoopsModule->getVar('dirname'));
+$xoopsTpl->assign('mod_url', XOOPSTUBE_URL . '/');
+$xoopsTpl->assign('xoopstube_url', XOOPSTUBE_URL . '/');
 
-include XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';

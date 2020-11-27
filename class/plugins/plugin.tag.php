@@ -9,17 +9,16 @@
  *
  * PHP version 5
  *
- * @category        Module
+ * @param mixed $items
  * @package         Xoopstube
  * @author          XOOPS Development Team
  * @author          Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
- * @copyright       2001-2016 XOOPS Project (http://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link            http://xoops.org/
+ * @copyright       2001-2016 XOOPS Project (https://xoops.org)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @link            https://xoops.org/
  * @since           1.0.6
+ * @category        Module
  */
-
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 /**
  * Get item fields:
@@ -31,12 +30,10 @@
  * uname
  * tags
  *
+ * @return bool
  * @var array $items associative array of items: [modid][catid][itemid]
  *
- * @return boolean
- *
  */
-
 function xoopstube_tag_iteminfo(&$items)
 {
     $moduleDirName = basename(dirname(__DIR__));
@@ -45,9 +42,9 @@ function xoopstube_tag_iteminfo(&$items)
         return false;
     }
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
 
-    $items_id = array();
+    $items_id = [];
 
     foreach (array_keys($items) as $catId) {
         // Some handling here to build the link upon catid
@@ -60,19 +57,24 @@ function xoopstube_tag_iteminfo(&$items)
 
     foreach (array_keys($items) as $catId) {
         foreach (array_keys($items[$catId]) as $item_id) {
-            $sql                     = 'SELECT l.lid, l.cid AS lcid, l.title AS ltitle, l.published, l.cid, l.submitter, l.description, l.item_tag, c.title AS ctitle FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos')
-                . ' l, ' . $GLOBALS['xoopsDB']->prefix('xoopstube_cat') . ' c WHERE l.lid=' . $item_id . ' AND l.cid=c.cid AND l.status>0 ORDER BY l.published DESC';
+            $sql                     = 'SELECT l.lid, l.cid AS lcid, l.title AS ltitle, l.published, l.cid, l.submitter, l.description, l.item_tag, c.title AS ctitle FROM '
+                                       . $GLOBALS['xoopsDB']->prefix('xoopstube_videos')
+                                       . ' l, '
+                                       . $GLOBALS['xoopsDB']->prefix('xoopstube_cat')
+                                       . ' c WHERE l.lid='
+                                       . $item_id
+                                       . ' AND l.cid=c.cid AND l.status>0 ORDER BY l.published DESC';
             $result                  = $GLOBALS['xoopsDB']->query($sql);
             $row                     = $GLOBALS['xoopsDB']->fetchArray($result);
             $lcid                    = $row['lcid'];
-            $items[$catId][$item_id] = array(
+            $items[$catId][$item_id] = [
                 'title'   => $row['ltitle'],
                 'uid'     => $row['submitter'],
                 'link'    => "singlevideo.php?cid=$lcid&amp;lid=$item_id",
                 'time'    => $row['published'],
                 'tags'    => $row['item_tag'],
-                'content' => $row['description']
-            );
+                'content' => $row['description'],
+            ];
         }
     }
 

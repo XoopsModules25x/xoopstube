@@ -3,7 +3,7 @@
         <ol class="breadcrumb">
             <li><a href="index.php"><{$module_dir}></a></li>
             <li><{$smarty.const._MD_XOOPSTUBE_POPULARITY}></li>
-        </ol>        
+        </ol>
     </div>
 </div>
 

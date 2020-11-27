@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="<{$smarty.const.xoopstube_url}>/assets/css/xtubestyle.css" />
+<link rel="stylesheet" type="text/css" href="<{$mod_url}>/assets/css/xtubestyle.css" />
 <{if $video.imageheader != ""}>
     <div class="xoopstube_header"><{$video.imageheader}></div>
 <{/if}>
@@ -41,11 +41,11 @@
             <div style="margin-left: 10px; margin-right: 10px; padding: 4px;" class="xoopstube_description"> <span style="font-size: small;"> <b><{$smarty.const._MD_XOOPSTUBE_RATINGC}></b>&nbsp;<img src="<{$xoops_url}>/modules/<{$video.module_dir}>/assets/images/icon/<{$video.rateimg}>" alt="" align="middle" />&nbsp;&nbsp;(<{$video.votes}>) </span> </div>
             <br>
            <{if $tagbar}>
-	        <div class="xoopstube_rating">
+            <div class="xoopstube_rating">
                  <{include file="db:tag_bar.tpl"}>
                 </div>
-	    <{/if}>
-	    <br>
+        <{/if}>
+        <br>
             </td>
         </tr>
         <tr>
@@ -53,21 +53,21 @@
         </tr>
         <tr>
          <td colspan="2" class="even" style="text-valign: top; text-align: center;">
-		  <div class="even" align="center">
-		   <span style="font-size: small;">[&nbsp;<{if $video.allow_rating}>
-			 <a href="<{$xoops_url}>/modules/<{$video.module_dir}>/ratevideo.php?cid=<{$video.cid}>&amp;lid=<{$video.id}>"><{$smarty.const._MD_XOOPSTUBE_RATETHISFILE}></a> |
-			<{/if}>
-			<a href="<{$xoops_url}>/modules/<{$video.module_dir}>/brokenvideo.php?lid=<{$video.id}>"><{$smarty.const._MD_XOOPSTUBE_REPORTBROKEN}></a> |
-			<{if $video.useradminvideo}>
-			 <a href="<{$xoops_url}>/modules/<{$video.module_dir}>/submit.php?lid=<{$video.id}>"> <{$smarty.const._MD_XOOPSTUBE_MODIFY}></a> |
-			<{/if}>
-			<a href="mailto:?subject=<{$video.mail_subject}>&body=<{$video.mail_body}>" target="_top"><{$smarty.const._MD_XOOPSTUBE_TELLAFRIEND}></a>
+          <div class="even" align="center">
+           <span style="font-size: small;">[&nbsp;<{if $video.allow_rating}>
+             <a href="<{$xoops_url}>/modules/<{$video.module_dir}>/ratevideo.php?cid=<{$video.cid}>&amp;lid=<{$video.id}>"><{$smarty.const._MD_XOOPSTUBE_RATETHISFILE}></a> |
+            <{/if}>
+            <a href="<{$xoops_url}>/modules/<{$video.module_dir}>/brokenvideo.php?lid=<{$video.id}>"><{$smarty.const._MD_XOOPSTUBE_REPORTBROKEN}></a> |
+            <{if $video.useradminvideo}>
+             <a href="<{$xoops_url}>/modules/<{$video.module_dir}>/submit.php?lid=<{$video.id}>"> <{$smarty.const._MD_XOOPSTUBE_MODIFY}></a> |
+            <{/if}>
+            <a href="mailto:?subject=<{$video.mail_subject}>&body=<{$video.mail_body}>" target="_top"><{$smarty.const._MD_XOOPSTUBE_TELLAFRIEND}></a>
                        <{if $video.comment_rules > 0}>
                             | <a href="<{$xoops_url}>/modules/<{$video.module_dir}>/singlevideo.php?cid=<{$video.cid}>&amp;lid=<{$video.id}>"><{$smarty.const._COMMENTS}> (<{$video.comments}>)</a>
                        <{/if}>&nbsp;]
-		   </span>
-		   </div>
-		  </td>
+           </span>
+           </div>
+          </td>
         </tr>
        </table>
   </tr>
@@ -86,11 +86,11 @@
 </div>
 <!-- start comments loop -->
 <{if $comment_mode == "flat"}>
-	<{include file="db:system_comments_flat.tpl"}>
+    <{include file="db:system_comments_flat.tpl"}>
 <{elseif $comment_mode == "thread"}>
-	<{include file="db:system_comments_thread.tpl"}>
+    <{include file="db:system_comments_thread.tpl"}>
 <{elseif $comment_mode == "nest"}>
-	<{include file="db:system_comments_nest.tpl"}>
+    <{include file="db:system_comments_nest.tpl"}>
 <{/if}>
 <!-- end comments loop -->
 <{include file="db:system_notification_select.tpl"}>

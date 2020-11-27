@@ -1,0 +1,382 @@
+xoopstube_broken:
+    options: 'ENGINE=MyISAM DEFAULT CHARSET=utf8'
+    columns:
+        -
+            name: reportid
+            attributes: ' int(5)  NOT NULL auto_increment'
+        -
+            name: lid
+            attributes: ' int(11)  NOT NULL  DEFAULT ''0'' '
+        -
+            name: sender
+            attributes: ' int(11)  NOT NULL  DEFAULT ''0'' '
+        -
+            name: ip
+            attributes: ' varchar(20)  NOT NULL  DEFAULT '''' '
+        -
+            name: date
+            attributes: ' varchar(11)  NOT NULL  DEFAULT ''0'' '
+        -
+            name: confirmed
+            attributes: ' int(1)  NOT NULL  DEFAULT ''0'' '
+        -
+            name: acknowledged
+            attributes: ' int(1)  NOT NULL  DEFAULT ''0'' '
+        -
+            name: title
+            attributes: ' varchar(255)  NOT NULL  DEFAULT '''' '
+    keys:
+        ip:
+            columns: ip
+            unique: false
+        lid:
+            columns: lid
+            unique: false
+        PRIMARY:
+            columns: reportid
+            unique: true
+        sender:
+            columns: sender
+            unique: false
+xoopstube_cat:
+    options: 'ENGINE=MyISAM DEFAULT CHARSET=utf8'
+    columns:
+        -
+            name: cid
+            attributes: ' int(5) unsigned  NOT NULL auto_increment'
+        -
+            name: pid
+            attributes: ' int(5) unsigned  NOT NULL  DEFAULT ''0'' '
+        -
+            name: title
+            attributes: ' varchar(50)  NOT NULL  DEFAULT '''' '
+        -
+            name: imgurl
+            attributes: ' varchar(150)  NOT NULL  DEFAULT '''' '
+        -
+            name: description
+            attributes: ' text  NOT NULL '
+        -
+            name: total
+            attributes: ' int(11)  NOT NULL  DEFAULT ''0'' '
+        -
+            name: spotlighttop
+            attributes: ' int(11)  NOT NULL  DEFAULT ''0'' '
+        -
+            name: spotlighthis
+            attributes: ' int(11)  NOT NULL  DEFAULT ''0'' '
+        -
+            name: nohtml
+            attributes: ' int(1)  NOT NULL  DEFAULT ''0'' '
+        -
+            name: nosmiley
+            attributes: ' int(1)  NOT NULL  DEFAULT ''0'' '
+        -
+            name: noxcodes
+            attributes: ' int(1)  NOT NULL  DEFAULT ''0'' '
+        -
+            name: noimages
+            attributes: ' int(1)  NOT NULL  DEFAULT ''0'' '
+        -
+            name: nobreak
+            attributes: ' int(1)  NOT NULL  DEFAULT ''1'' '
+        -
+            name: weight
+            attributes: ' int(11)  NOT NULL  DEFAULT ''0'' '
+        -
+            name: client_id
+            attributes: ' int(5)  NOT NULL  DEFAULT ''0'' '
+        -
+            name: banner_id
+            attributes: ' int(5)  NOT NULL  DEFAULT ''0'' '
+    keys:
+        pid:
+            columns: pid
+            unique: false
+        PRIMARY:
+            columns: cid
+            unique: true
+xoopstube_videos:
+    options: 'ENGINE=MyISAM DEFAULT CHARSET=utf8'
+    columns:
+        -
+            name: lid
+            attributes: ' int(11) unsigned  NOT NULL auto_increment'
+        -
+            name: cid
+            attributes: ' int(5) unsigned  NOT NULL  DEFAULT ''0'' '
+        -
+            name: title
+            attributes: ' varchar(100)  NOT NULL  DEFAULT '''' '
+        -
+            name: vidid
+            attributes: ' text  NOT NULL '
+        -
+            name: screenshot
+            attributes: ' varchar(255)  NOT NULL  DEFAULT '''' '
+        -
+            name: submitter
+            attributes: ' int(11)  NOT NULL  DEFAULT ''0'' '
+        -
+            name: publisher
+            attributes: ' varchar(255)  NOT NULL  DEFAULT '''' '
+        -
+            name: status
+            attributes: ' tinyint(2)  NOT NULL  DEFAULT ''0'' '
+        -
+            name: date
+            attributes: ' int(10)  NOT NULL  DEFAULT ''0'' '
+        -
+            name: hits
+            attributes: ' int(11) unsigned  NOT NULL  DEFAULT ''0'' '
+        -
+            name: rating
+            attributes: ' double(6,4)  NOT NULL  DEFAULT ''0.0000'' '
+        -
+            name: votes
+            attributes: ' int(11) unsigned  NOT NULL  DEFAULT ''0'' '
+        -
+            name: comments
+            attributes: ' int(11) unsigned  NOT NULL  DEFAULT ''0'' '
+        -
+            name: vidsource
+            attributes: ' int(11) unsigned  NOT NULL  DEFAULT ''0'' '
+        -
+            name: published
+            attributes: ' int(11)  NOT NULL  DEFAULT ''0'' '
+        -
+            name: expired
+            attributes: ' int(10)  NOT NULL  DEFAULT ''0'' '
+        -
+            name: updated
+            attributes: ' int(11)  NOT NULL  DEFAULT ''0'' '
+        -
+            name: offline
+            attributes: ' tinyint(1)  NOT NULL  DEFAULT ''0'' '
+        -
+            name: description
+            attributes: ' longtext  NOT NULL '
+        -
+            name: ipaddress
+            attributes: ' varchar(120)  NOT NULL  DEFAULT ''0'' '
+        -
+            name: notifypub
+            attributes: ' int(1)  NOT NULL  DEFAULT ''0'' '
+        -
+            name: vidrating
+            attributes: ' tinyint(1)  NOT NULL  DEFAULT ''0'' '
+        -
+            name: time
+            attributes: ' varchar(7)  NOT NULL  DEFAULT ''0:00:00'' '
+        -
+            name: keywords
+            attributes: ' varchar(255)  NOT NULL  DEFAULT '''' '
+        -
+            name: item_tag
+            attributes: ' text  NOT NULL '
+        -
+            name: picurl
+            attributes: ' text  NOT NULL '
+    keys:
+        cid:
+            columns: cid
+            unique: false
+        PRIMARY:
+            columns: lid
+            unique: true
+        status:
+            columns: status
+            unique: false
+        title:
+            columns: 'title (40)'
+            unique: false
+xoopstube_mod:
+    options: 'ENGINE=MyISAM DEFAULT CHARSET=utf8'
+    columns:
+        -
+            name: requestid
+            attributes: ' int(11)  NOT NULL auto_increment'
+        -
+            name: lid
+            attributes: ' int(11) unsigned  NOT NULL  DEFAULT ''0'' '
+        -
+            name: cid
+            attributes: ' int(5) unsigned  NOT NULL  DEFAULT ''0'' '
+        -
+            name: title
+            attributes: ' varchar(255)  NOT NULL  DEFAULT '''' '
+        -
+            name: vidid
+            attributes: ' varchar(255)  NOT NULL  DEFAULT '''' '
+        -
+            name: screenshot
+            attributes: ' varchar(255)  NOT NULL  DEFAULT '''' '
+        -
+            name: submitter
+            attributes: ' int(11)  NOT NULL  DEFAULT ''0'' '
+        -
+            name: publisher
+            attributes: ' text  NOT NULL '
+        -
+            name: status
+            attributes: ' tinyint(2)  NOT NULL  DEFAULT ''0'' '
+        -
+            name: date
+            attributes: ' int(10)  NOT NULL  DEFAULT ''0'' '
+        -
+            name: hits
+            attributes: ' int(11) unsigned  NOT NULL  DEFAULT ''0'' '
+        -
+            name: rating
+            attributes: ' double(6,4)  NOT NULL  DEFAULT ''0.0000'' '
+        -
+            name: votes
+            attributes: ' int(11) unsigned  NOT NULL  DEFAULT ''0'' '
+        -
+            name: comments
+            attributes: ' int(11) unsigned  NOT NULL  DEFAULT ''0'' '
+        -
+            name: vidsource
+            attributes: ' int(11) unsigned  NOT NULL  DEFAULT ''0'' '
+        -
+            name: published
+            attributes: ' int(10)  NOT NULL  DEFAULT ''0'' '
+        -
+            name: expired
+            attributes: ' int(10)  NOT NULL  DEFAULT ''0'' '
+        -
+            name: updated
+            attributes: ' int(11)  NOT NULL  DEFAULT ''0'' '
+        -
+            name: offline
+            attributes: ' tinyint(1)  NOT NULL  DEFAULT ''0'' '
+        -
+            name: description
+            attributes: ' text  NOT NULL '
+        -
+            name: modifysubmitter
+            attributes: ' int(11)  NOT NULL  DEFAULT ''0'' '
+        -
+            name: requestdate
+            attributes: ' int(11)  NOT NULL  DEFAULT ''0'' '
+        -
+            name: vidrating
+            attributes: ' tinyint(1)  NOT NULL  DEFAULT ''0'' '
+        -
+            name: time
+            attributes: ' varchar(7)  NOT NULL  DEFAULT ''0:00:00'' '
+        -
+            name: keywords
+            attributes: ' varchar(255)  NOT NULL  DEFAULT '''' '
+        -
+            name: item_tag
+            attributes: ' text  NOT NULL '
+        -
+            name: picurl
+            attributes: ' text  NOT NULL '
+    keys:
+        PRIMARY:
+            columns: requestid
+            unique: true
+xoopstube_votedata:
+    options: 'ENGINE=MyISAM DEFAULT CHARSET=utf8'
+    columns:
+        -
+            name: ratingid
+            attributes: ' int(11) unsigned  NOT NULL auto_increment'
+        -
+            name: lid
+            attributes: ' int(11) unsigned  NOT NULL  DEFAULT ''0'' '
+        -
+            name: ratinguser
+            attributes: ' int(11)  NOT NULL  DEFAULT ''0'' '
+        -
+            name: rating
+            attributes: ' tinyint(3) unsigned  NOT NULL  DEFAULT ''0'' '
+        -
+            name: ratinghostname
+            attributes: ' varchar(60)  NOT NULL  DEFAULT '''' '
+        -
+            name: ratingtimestamp
+            attributes: ' int(10)  NOT NULL  DEFAULT ''0'' '
+        -
+            name: title
+            attributes: ' varchar(255)  NOT NULL  DEFAULT '''' '
+    keys:
+        lid:
+            columns: lid
+            unique: false
+        PRIMARY:
+            columns: ratingid
+            unique: true
+        ratinghostname:
+            columns: ratinghostname
+            unique: false
+        ratinguser:
+            columns: ratinguser
+            unique: false
+xoopstube_indexpage:
+    options: 'ENGINE=MyISAM DEFAULT CHARSET=utf8'
+    columns:
+        -
+            name: indeximage
+            attributes: ' varchar(255)  NOT NULL  DEFAULT ''blank.gif'' '
+        -
+            name: indexheading
+            attributes: ' varchar(255)  NOT NULL  DEFAULT ''XoopsTube'' '
+        -
+            name: indexheader
+            attributes: ' text  NOT NULL '
+        -
+            name: indexfooter
+            attributes: ' text  NOT NULL '
+        -
+            name: nohtml
+            attributes: ' tinyint(8)  NOT NULL  DEFAULT ''1'' '
+        -
+            name: nosmiley
+            attributes: ' tinyint(8)  NOT NULL  DEFAULT ''1'' '
+        -
+            name: noxcodes
+            attributes: ' tinyint(8)  NOT NULL  DEFAULT ''1'' '
+        -
+            name: noimages
+            attributes: ' tinyint(8)  NOT NULL  DEFAULT ''1'' '
+        -
+            name: nobreak
+            attributes: ' tinyint(4)  NOT NULL  DEFAULT ''0'' '
+        -
+            name: indexheaderalign
+            attributes: ' varchar(25)  NOT NULL  DEFAULT ''left'' '
+        -
+            name: indexfooteralign
+            attributes: ' varchar(25)  NOT NULL  DEFAULT ''center'' '
+        -
+            name: lastvideosyn
+            attributes: ' tinyint(1)  NOT NULL  DEFAULT ''0'' '
+        -
+            name: lastvideostotal
+            attributes: ' varchar(5)  NOT NULL  DEFAULT ''5'' '
+    keys:
+        indexfooter:
+            columns: indexfooter
+            unique: false
+        indexheader:
+            columns: indexheader
+            unique: false
+        indexheading:
+            columns: indexheading
+            unique: false
+xoopstube_altcat:
+    options: 'ENGINE=MyISAM DEFAULT CHARSET=utf8'
+    columns:
+        -
+            name: lid
+            attributes: ' int(11) unsigned  NOT NULL  DEFAULT ''0'' '
+        -
+            name: cid
+            attributes: ' int(5) unsigned  NOT NULL  DEFAULT ''0'' '
+    keys:
+        PRIMARY:
+            columns: 'lid, cid'
+            unique: true

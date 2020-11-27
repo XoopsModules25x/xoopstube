@@ -11,51 +11,52 @@
  * @category        Module
  * @package         Xoopstube
  * @author          XOOPS Development Team
- * @copyright       2001-2016 XOOPS Project (http://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link            http://xoops.org/
+ * @copyright       2001-2016 XOOPS Project (https://xoops.org)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @link            https://xoops.org/
  * @since           1.0.6
  */
 
+use Xmf\Module\Admin;
 use Xmf\Request;
+use XoopsModules\Xoopstube;
 
 require_once __DIR__ . '/admin_header.php';
 
-$op  = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'op', '');
-$lid = Request::getInt('rid', Request::getInt('rid', 0, 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'rid', 0);
-$lid = Request::getInt('lid', Request::getInt('lid', 0, 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'lid', 0);
+$op  = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET'); //cleanRequestVars($_REQUEST, 'op', '');
+$lid = Request::getInt('rid', Request::getInt('rid', 0, 'POST'), 'GET'); //cleanRequestVars($_REQUEST, 'rid', 0);
+$lid = Request::getInt('lid', Request::getInt('lid', 0, 'POST'), 'GET'); //cleanRequestVars($_REQUEST, 'lid', 0);
 
-switch (strtolower($op)) {
+switch (mb_strtolower($op)) {
     case 'delvote':
         $sql    = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_votedata') . ' WHERE ratingid=' . $rid;
         $result = $GLOBALS['xoopsDB']->queryF($sql);
-        XoopstubeUtility::xtubeUpdateRating($lid);
+        Xoopstube\Utility::updateRating($lid);
         redirect_header('votedata.php', 1, _AM_XOOPSTUBE_VOTEDELETED);
         break;
-
     case 'main':
     default:
-        $start = Request::getInt('start', 0); //xtubeCleanRequestVars($_REQUEST, 'start', 0);
+        $start = Request::getInt('start', 0); //cleanRequestVars($_REQUEST, 'start', 0);
         xoops_cp_header();
-        //xtubeRenderAdminMenu( _AM_XOOPSTUBE_VOTE_RATINGINFOMATION );
-        $adminObject = \Xmf\Module\Admin::getInstance();
+        //renderAdminMenu( _AM_XOOPSTUBE_VOTE_RATINGINFOMATION );
+        $adminObject = Admin::getInstance();
         $adminObject->displayNavigation(basename(__FILE__));
-        $_vote_data = XoopstubeUtility::xtubeGetVoteDetails($lid);
+        $_vote_data = Xoopstube\Utility::getVoteDetails($lid);
 
         $text_info = '
         <table width="100%">
          <tr>
           <td width="50%" valign="top">
-           <div><b>' . _AM_XOOPSTUBE_VOTE_TOTALRATE . ': </b>' . (int)$_vote_data['rate'] . '</div>
+           <div><b>' . _AM_XOOPSTUBE_VOTE_TOTALRATE . ': </b>' . Request::getInt('rate', 0, 'vote_data') . '</div>
            <div><b>' . _AM_XOOPSTUBE_VOTE_USERAVG . ': </b>' . (int)round($_vote_data['avg_rate'], 2) . '</div>
-           <div><b>' . _AM_XOOPSTUBE_VOTE_MAXRATE . ': </b>' . (int)$_vote_data['min_rate'] . '</div>
-           <div><b>' . _AM_XOOPSTUBE_VOTE_MINRATE . ': </b>' . (int)$_vote_data['max_rate'] . '</div>
+           <div><b>' . _AM_XOOPSTUBE_VOTE_MAXRATE . ': </b>' . Request::getInt('min_rate', 0, 'vote_data') . '</div>
+           <div><b>' . _AM_XOOPSTUBE_VOTE_MINRATE . ': </b>' . Request::getInt('max_rate', 0, 'vote_data') . '</div>
           </td>
           <td>
-           <div><b>' . _AM_XOOPSTUBE_VOTE_MOSTVOTEDTITLE . ': </b>' . (int)$_vote_data['max_title'] . '</div>
-           <div><b>' . _AM_XOOPSTUBE_VOTE_LEASTVOTEDTITLE . ': </b>' . (int)$_vote_data['min_title'] . '</div>
-           <div><b>' . _AM_XOOPSTUBE_VOTE_REGISTERED . ': </b>' . ((int)$_vote_data['rate'] - $_vote_data['null_ratinguser']) . '</div>
-           <div><b>' . _AM_XOOPSTUBE_VOTE_NONREGISTERED . ': </b>' . (int)$_vote_data['null_ratinguser'] . '</div>
+           <div><b>' . _AM_XOOPSTUBE_VOTE_MOSTVOTEDTITLE . ': </b>' . Request::getInt('max_title', 0, 'vote_data') . '</div>
+           <div><b>' . _AM_XOOPSTUBE_VOTE_LEASTVOTEDTITLE . ': </b>' . Request::getInt('min_title', 0, 'vote_data') . '</div>
+           <div><b>' . _AM_XOOPSTUBE_VOTE_REGISTERED . ': </b>' . (Request::getInt('rate', 0, 'vote_data') - $_vote_data['null_ratinguser']) . '</div>
+           <div><b>' . _AM_XOOPSTUBE_VOTE_NONREGISTERED . ': </b>' . Request::getInt('null_ratinguser', 0, 'vote_data') . '</div>
           </td>
          </tr>
         </table>';
@@ -87,11 +88,11 @@ switch (strtolower($op)) {
         $results = $GLOBALS['xoopsDB']->query($sql, $GLOBALS['xoopsModuleConfig']['admin_perpage'], $start);
         $votes   = $GLOBALS['xoopsDB']->getRowsNum($GLOBALS['xoopsDB']->query($sql));
 
-        if ($votes == 0) {
+        if (0 == $votes) {
             echo '<tr><td style="text-align: center;" colspan="7" class="head">' . _AM_XOOPSTUBE_VOTE_NOVOTES . '</td></tr>';
         } else {
-            while (false !== (list($ratingid, $lid, $ratinguser, $rating, $ratinghostname, $ratingtimestamp, $title) = $GLOBALS['xoopsDB']->fetchRow($results))) {
-                $formatted_date = XoopstubeUtility::xtubeGetTimestamp(formatTimestamp($ratingtimestamp, $GLOBALS['xoopsModuleConfig']['dateformat']));
+            while (list($ratingid, $lid, $ratinguser, $rating, $ratinghostname, $ratingtimestamp, $title) = $GLOBALS['xoopsDB']->fetchRow($results)) {
+                $formatted_date = Xoopstube\Utility::getTimestamp(formatTimestamp($ratingtimestamp, $GLOBALS['xoopsModuleConfig']['dateformat']));
                 $ratinguname    = XoopsUser::getUnameFromId($ratinguser);
                 echo '
                     <tr>

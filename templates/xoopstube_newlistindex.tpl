@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="<{$smarty.const.xoopstube_url}>/assets/css/xtubestyle.css"/>
+<link rel="stylesheet" type="text/css" href="<{$mod_url}>/assets/css/xtubestyle.css">
 <{if $catarray.imageheader != ""}>
     <br>
     <div class="xoopstube_header"><{$catarray.imageheader}></div>
@@ -41,12 +41,12 @@
     </tr>
 
 
-    <{if count($dailyvideos) gt 0}>
+    <{if $dailyvideos|is_array && count($dailyvideos) > 0}>
     <!-- Start day loop -->
     <{foreach item=dailyvideo from=$dailyvideos}>
         <tr>
             <td class="odd">
-                <a href="<{$xoops_url}>/modules/<{$module_dir}>/viewcat.php?selectdate=<{$dailyvideo.newvideodayRaw}>"><{$dailyvideo.newvideoView}></a>
+                <a href="<{$xoops_url}>/modules/<{$module_dir}>/viewcat.php?selectdate=<{$dailyvideo.newvideodayRaw|default:''}>"><{$dailyvideo.newvideoView|default:''}></a>
             </td>
             <td class="odd" width="15%" align="center"><{$dailyvideo.totalvideos}></td>
         </tr>
@@ -59,7 +59,7 @@
         <tr>
             <td width="100%">
                 <!-- Start video loop -->
-                <{section name=i loop=$video}>
+                <{section name=i loop=$video|default:null}>
                     <{include file="db:xtube_videoload.tpl" video=$video[i]}>
                 <{/section}>
                 <!-- End video loop -->

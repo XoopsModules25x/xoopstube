@@ -11,58 +11,58 @@
  * @category        Module
  * @package         Xoopstube
  * @author          XOOPS Development Team
- * @copyright       2001-2016 XOOPS Project (http://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link            http://xoops.org/
+ * @copyright       2001-2016 XOOPS Project (https://xoops.org)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @link            https://xoops.org/
  * @since           1.0.6
  */
 
-require_once __DIR__ . '/../../../include/cp_header.php';
+use XoopsModules\Xoopstube;
+use XoopsModules\Xoopstube\{
+    Helper
+};
+
+require_once dirname(__DIR__, 3) . '/include/cp_header.php';
 //require_once $GLOBALS['xoops']->path('www/class/xoopsformloader.php');
 
-//require_once __DIR__ . '/../class/utility.php';
-require_once __DIR__ . '/../include/common.php';
+// require_once  dirname(__DIR__) . '/class/Utility.php';
+require_once dirname(__DIR__) . '/include/common.php';
 
-if (!isset($moduleDirName)) {
-    $moduleDirName = basename(dirname(__DIR__));
-}
-if (false !== ($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName))) {
-} else {
-    $moduleHelper = Xmf\Module\Helper::getHelper('system');
-}
-$adminObject = \Xmf\Module\Admin::getInstance();
+$moduleDirName = basename(dirname(__DIR__));
+$helper      = Helper::getInstance();
+$adminObject = Xmf\Module\Admin::getInstance();
 
-$pathIcon16      = \Xmf\Module\Admin::iconUrl('', 16);
-$pathIcon32      = \Xmf\Module\Admin::iconUrl('', 32);
-$pathModIcon16 = $moduleHelper->getModule()->getInfo('modicons16');
-$pathModIcon32 = $moduleHelper->getModule()->getInfo('modicons32');
+$pathIcon16    = Xmf\Module\Admin::iconUrl('', 16);
+$pathIcon32    = Xmf\Module\Admin::iconUrl('', 32);
+$pathModIcon16 = $helper->getModule()->getInfo('modicons16');
+$pathModIcon32 = $helper->getModule()->getInfo('modicons32');
 
 // Load language files
-$moduleHelper->loadLanguage('admin');
-$moduleHelper->loadLanguage('modinfo');
-$moduleHelper->loadLanguage('main');
+$helper->loadLanguage('admin');
+$helper->loadLanguage('modinfo');
+$helper->loadLanguage('main');
+$helper->loadLanguage('common');
 
-$myts = MyTextSanitizer::getInstance();
+$myts = \MyTextSanitizer::getInstance();
 
-if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof XoopsTpl)) {
+if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof \XoopsTpl)) {
     require_once $GLOBALS['xoops']->path('class/template.php');
-    $xoopsTpl = new XoopsTpl();
+    $xoopsTpl = new \XoopsTpl();
 }
-xoops_load('XoopsRequest');
 
-//include $moduleDirName . '/include/config.php';
-require_once __DIR__ . '/../class/utility.php';
-require_once __DIR__ . '/../include/video.php';
-require_once __DIR__ . '/../class/xoopstube_lists.php';
-require_once __DIR__ . '/../class/myts_extended.php';
-require_once __DIR__ . '/../class/xoopstubetree.php';
+//require_once $moduleDirName . '/config/config.php';
+// require_once  dirname(__DIR__) . '/class/Utility.php';
+require_once dirname(__DIR__) . '/include/video.php';
+// require_once  dirname(__DIR__) . '/class/Lists.php';
+// require_once  dirname(__DIR__) . '/class/TextSanitizer.php';
+// require_once  dirname(__DIR__) . '/class/Tree.php';
 
 require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
-$xtubemyts = new XtubeTextSanitizer(); // MyTextSanitizer object
+$myts = \MyTextSanitizer::getInstance(); // MyTextSanitizer object
 
-$xtubeImageArray = array(
+$xtubeImageArray = [
     'editimg'     => "<img src='$pathIcon16/edit.png' alt='" . _AM_XOOPSTUBE_ICO_EDIT . "' align='middle'>",
     'deleteimg'   => "<img src='$pathIcon16/delete.png' alt='" . _AM_XOOPSTUBE_ICO_DELETE . "' align='middle'>",
     'altcat'      => "<img src='$pathIcon16/folder_add.png' alt='" . _AM_XOOPSTUBE_ALTCAT_CREATEF . "' align='middle'>",
@@ -78,5 +78,5 @@ $xtubeImageArray = array(
     'ack_no'      => "<img src='$pathIcon16/0.png' alt='" . _AM_XOOPSTUBE_ICO_REPORT . "' align='middle'>",
     'con_yes'     => "<img src='$pathIcon16/1.png' alt='" . _AM_XOOPSTUBE_ICO_CONFIRM . "' align='middle'>",
     'con_no'      => "<img src='$pathIcon16/0.png' alt='" . _AM_XOOPSTUBE_ICO_CONBROKEN . "' align='middle'>",
-    'view'        => "<img src='$pathIcon16/search.png' alt='" . _AM_XOOPSTUBE_ICO_VIEW . "' align='middle'>"
-);
+    'view'        => "<img src='$pathIcon16/search.png' alt='" . _AM_XOOPSTUBE_ICO_VIEW . "' align='middle'>",
+];

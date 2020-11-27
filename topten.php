@@ -12,43 +12,48 @@
  * @category        Module
  * @package         Xoopstube
  * @author          XOOPS Development Team
- * @copyright       2001-2016 XOOPS Project (http://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link            http://xoops.org/
+ * @copyright       2001-2016 XOOPS Project (https://xoops.org)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @link            https://xoops.org/
  * @since           1.0.6
  */
 
 use Xmf\Request;
-
-include __DIR__ . '/header.php';
+use XoopsModules\Xoopstube\{
+    Tree,
+    Utility
+};
 
 $GLOBALS['xoopsOption']['template_main'] = 'xoopstube_topten.tpl';
-include XOOPS_ROOT_PATH . '/header.php';
-$xoTheme->addStylesheet('modules/'.$moduleDirName.'/assets/css/xtubestyle.css');
+require_once __DIR__ . '/header.php';
 
-$mytree = new XoopstubeTree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
+//require_once XOOPS_ROOT_PATH . '/header.php';
+$xoTheme->addStylesheet('modules/' . $moduleDirName . '/assets/css/xtubestyle.css');
 
-$action_array = array(
+$mytree = new Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
+
+$action_array = [
     'hit'  => 0,
-    'rate' => 1
-);
-$list_array   = array('hits', 'rating');
-$lang_array   = array(_MD_XOOPSTUBE_HITS, _MD_XOOPSTUBE_RATING);
-$rankings     = array();
+    'rate' => 1,
+];
+$list_array   = ['hits', 'rating'];
+$lang_array   = [_MD_XOOPSTUBE_HITS, _MD_XOOPSTUBE_RATING];
+$rankings     = [];
 
 $sort     = in_array(Request::getString('list', '', 'GET'), $action_array) ? Request::getString('list', '', 'GET') : 'rate';
 $sort_arr = $action_array[$sort];
 $sortDB   = $list_array[$sort_arr];
 
-$catarray['imageheader'] = XoopstubeUtility::xtubeRenderImageHeader();
+$catarray['imageheader'] = Utility::renderImageHeader();
 $xoopsTpl->assign('catarray', $catarray);
+$xoopsTpl->assign('mod_url', XOOPS_URL . '/modules/' . $moduleDirName);
 
-$arr    = array();
+$arr    = [];
 $result = $GLOBALS['xoopsDB']->query('SELECT cid, title, pid FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_cat') . ' WHERE pid=0 ORDER BY ' . $GLOBALS['xoopsModuleConfig']['sortcats']);
 
 $e = 0;
-while (false !== (list($cid, $ctitle) = $GLOBALS['xoopsDB']->fetchRow($result))) {
-    if (true === XoopstubeUtility::xtubeCheckGroups($cid)) {
+while (list($cid, $ctitle) = $GLOBALS['xoopsDB']->fetchRow($result)) {
+    if (true === Utility::checkGroups($cid)) {
         $query      = 'SELECT lid, cid, title, hits, rating, votes FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE published > 0 AND published <= ' . time() . ' AND (expired = 0 OR expired > ' . time() . ') AND offline = 0 AND (cid=' . $cid;
         $arr        = $mytree->getAllChildId($cid);
         $arrayCount = count($arr);
@@ -60,12 +65,12 @@ while (false !== (list($cid, $ctitle) = $GLOBALS['xoopsDB']->fetchRow($result)))
         $filecount = $GLOBALS['xoopsDB']->getRowsNum($result2);
 
         if ($filecount > 0) {
-            $rankings[$e]['title'] = $xtubemyts->htmlSpecialCharsStrip($ctitle);
+            $rankings[$e]['title'] = htmlspecialchars($ctitle);
             $rank                  = 1;
-            while (false !== (list($did, $dcid, $dtitle, $hits, $rating, $votes) = $GLOBALS['xoopsDB']->fetchRow($result2))) {
+            while (list($did, $dcid, $dtitle, $hits, $rating, $votes) = $GLOBALS['xoopsDB']->fetchRow($result2)) {
                 $catpath                = basename($mytree->getPathFromId($dcid, 'title'));
-                $dtitle                 = $xtubemyts->htmlSpecialCharsStrip($dtitle);
-                $rankings[$e]['file'][] = array(
+                $dtitle                 = htmlspecialchars($dtitle);
+                $rankings[$e]['file'][] = [
                     'id'       => $did,
                     'cid'      => $dcid,
                     'rank'     => $rank,
@@ -73,17 +78,18 @@ while (false !== (list($cid, $ctitle) = $GLOBALS['xoopsDB']->fetchRow($result)))
                     'category' => $catpath,
                     'hits'     => $hits,
                     'rating'   => number_format($rating, 2),
-                    'votes'    => $votes
-                );
+                    'votes'    => $votes,
+                ];
                 ++$rank;
             }
             ++$e;
         }
     }
 }
-$xoopsTpl->assign('back', '<a href="javascript:history.go(-1)"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/back.png" /></a>');
+$xoopsTpl->assign('back', '<a href="javascript:history.go(-1)"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/back.png"></a>');
 $xoopsTpl->assign('lang_sortby', $lang_array[$sort_arr]);
 $xoopsTpl->assign('rankings', $rankings);
 $xoopsTpl->assign('module_dir', $xoopsModule->getVar('dirname'));
+$xoopsTpl->assign('mod_url', XOOPS_URL . '/modules/' . $moduleDirName);
 
-include XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';

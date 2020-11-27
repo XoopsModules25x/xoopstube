@@ -1,4 +1,4 @@
-<{if $show_categort_title == true}>
+<{if $show_category_title === true}>
     <div style="margin-bottom: 4px;"><span style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_CATEGORYC}></span><{$video.category}>
     </div>
 <{/if}>
@@ -37,12 +37,12 @@
                     <td colspan="2">&nbsp;</td>
                 </tr>
                 <tr>
-                    <td width="65%" valign="top"> <{if $show_screenshot == true}> <{if $video.screenshot_full != ''}>
+                    <td width="65%" valign="top"> <{if $show_screenshot === true}> <{if $video.screenshot_full != ''}>
 
                         <{/if}> <{/if}>
                         <div style="margin-left: 6px;" align="justify"> &nbsp;
                             <img src="http://sjl-static4.sjl.youtube.com/vi/<{$video.description}>/2.jpg" alt=""
-                                 align="absmiddle"/>&nbsp;<{$video.description}>
+                                 align="absmiddle">&nbsp;<{$video.description}>
                         </div>
                         <div><span style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_DESCRIPTIONC}></span><br>
                             <{$video.description}>
@@ -63,7 +63,7 @@
                             </div>
                             <div>
                                 <span style="font-size: small;"><{$smarty.const._MD_XOOPSTUBE_TIMEB}>&nbsp;</span>
-                                <img src="<{$video.country}>" alt="<{$video.countryname}>" align="middle"/></a></div>
+                                <img src="<{$video.country}>" alt="<{$video.countryname}>" align="middle"></a></div>
 
                         </div>
                         <br>
@@ -72,7 +72,7 @@
                             <span style="font-size: small;">
                                 <span style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_RATINGC}></span>&nbsp;<img
                                         src="<{$xoops_url}>/modules/<{$video.module_dir}>/assets/images/icon/<{$video.rateimg}>"
-                                        alt="" align="middle"/>&nbsp;&nbsp;(<{$video.votes}>)
+                                        alt="" align="middle">&nbsp;&nbsp;(<{$video.votes}>)
                             </span>
                         </div>
                     </td>

@@ -11,105 +11,121 @@
  * @category        Module
  * @package         Xoopstube
  * @author          XOOPS Development Team
- * @copyright       2001-2016 XOOPS Project (http://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link            http://xoops.org/
+ * @copyright       2001-2016 XOOPS Project (https://xoops.org)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @link            https://xoops.org/
  * @since           1.0.6
  */
 
+use Xmf\Module\Admin;
+use XoopsModules\Xoopstube\{
+    Helper
+};
+/** @var Admin $adminObject */
+/** @var Helper $helper */
 
 
-if (!isset($moduleDirName)) {
-    $moduleDirName = basename(dirname(__DIR__));
+include dirname(__DIR__) . '/preloads/autoloader.php';
+
+$moduleDirName = basename(dirname(__DIR__));
+$moduleDirNameUpper = mb_strtoupper($moduleDirName);
+$helper = Helper::getInstance();
+$helper->loadLanguage('common');
+$helper->loadLanguage('feedback');
+
+$pathIcon32 = Admin::menuIconPath('');
+if (is_object($helper->getModule())) {
+    $pathModIcon32 = $helper->getModule()->getInfo('modicons32');
 }
 
-if (false !== ($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName))) {
-} else {
-    $moduleHelper = Xmf\Module\Helper::getHelper('system');
-}
-$adminObject = \Xmf\Module\Admin::getInstance();
-
-$pathIcon32    = \Xmf\Module\Admin::menuIconPath('');
-//$pathModIcon32 = $moduleHelper->getModule()->getInfo('modicons32');
-
-$moduleHelper->loadLanguage('modinfo');
-
-$adminmenu[] = array(
-    'title' => _AM_MODULEADMIN_HOME,
+$adminmenu[] = [
+    'title' => _MI_XOOPSTUBE_HOME,
     'link'  => 'admin/index.php',
-    'icon'  => $pathIcon32 . '/home.png'
-);
+    'icon'  => $pathIcon32 . '/home.png',
+];
 
-$adminmenu[] = array(
+$adminmenu[] = [
     'title' => _MI_XOOPSTUBE_BINDEX,
     'link'  => 'admin/main.php',
-    'icon'  => $pathIcon32 . '/manage.png'
-);
+    'icon'  => $pathIcon32 . '/manage.png',
+];
 
-//++$i;
-//$adminmenu[$i]['title'] = _MI_XOOPSTUBE_MCATEGORY;
-//$adminmenu[$i]['link']  = "admin/category.php";
+//$adminmenu[] = [
+//'title' =>  _MI_XOOPSTUBE_MCATEGORY,
+//'link' =>  "admin/category.php",
 //$adminmenu[$i]["icon"]  = $pathIcon32 . '/category.png';
-//++$i;
-//$adminmenu[$i]['title'] = _MI_XOOPSTUBE_MVIDEOS;
-//$adminmenu[$i]['link']  = "admin/xoopstube.php?op=edit";
-//$adminmenu[$i]["icon"]  = $pathIcon32 . '/marquee.png';
+//];
 
-$adminmenu[] = array(
+//$adminmenu[] = [
+//'title' =>  _MI_XOOPSTUBE_MVIDEOS,
+//'link' => edit",
+//$adminmenu[$i]["icon"]  = $pathIcon32 . '/marquee.png';
+//];
+
+$adminmenu[] = [
     'title' => _MI_XOOPSTUBE_SNEWFILESVAL,
     'link'  => 'admin/newvideos.php',
-    'icon'  => $pathIcon32 . '/add.png'
-);
+    'icon'  => $pathIcon32 . '/add.png',
+];
 
-$adminmenu[] = array(
+$adminmenu[] = [
     'title' => _MI_XOOPSTUBE_SMODREQUEST,
     'link'  => 'admin/modifications.php',
-    'icon'  => $pathIcon32 . '/update.png'
-);
+    'icon'  => $pathIcon32 . '/update.png',
+];
 
-$adminmenu[] = array(
+$adminmenu[] = [
     'title' => _MI_XOOPSTUBE_SBROKENSUBMIT,
     'link'  => 'admin/brokenvideo.php',
-    'icon'  => $pathIcon32 . '/link_break.png'
-);
+    'icon'  => $pathIcon32 . '/link_break.png',
+];
 
-$adminmenu[] = array(
+$adminmenu[] = [
     'title' => _MI_XOOPSTUBE_MUPLOADS,
     'link'  => 'admin/upload.php',
-    'icon'  => $pathIcon32 . '/photo.png'
-);
+    'icon'  => $pathIcon32 . '/photo.png',
+];
 
-$adminmenu[] = array(
+$adminmenu[] = [
     'title' => _MI_XOOPSTUBE_VUPLOADS,
     'link'  => 'admin/vupload.php',
-    'icon'  => $pathIcon32 . '/marquee.png'
-);
+    'icon'  => $pathIcon32 . '/marquee.png',
+];
 
-$adminmenu[] = array(
+$adminmenu[] = [
     'title' => _MI_XOOPSTUBE_PERMISSIONS,
     'link'  => 'admin/permissions.php',
-    'icon'  => $pathIcon32 . '/permissions.png'
-);
+    'icon'  => $pathIcon32 . '/permissions.png',
+];
 
-$adminmenu[] = array(
+$adminmenu[] = [
+    'title' => _MI_XOOPSTUBE_BLOCKADMIN,
+    'link'  => 'admin/blocksadmin.php',
+    'icon'  => $pathIcon32 . '/block.png',
+];
+
+$adminmenu[] = [
     'title' => _MI_XOOPSTUBE_MVOTEDATA,
     'link'  => 'admin/votedata.php',
-    'icon'  => $pathIcon32 . '/poll.png'
-);
+    'icon'  => $pathIcon32 . '/poll.png',
+];
 
-$adminmenu[] = array(
+$adminmenu[] = [
     'title' => _MI_XOOPSTUBE_INDEXPAGE,
     'link'  => 'admin/indexpage.php',
-    'icon'  => $pathIcon32 . '/index.png'
-);
+    'icon'  => $pathIcon32 . '/index.png',
+];
 
-$adminmenu[] = array(
-    'title' => _AM_MODULEADMIN_ABOUT,
+if (is_object($helper->getModule()) && $helper->getConfig('displayDeveloperTools')) {
+    $adminmenu[] = [
+        'title' => constant('CO_' . $moduleDirNameUpper . '_' . 'ADMENU_MIGRATE'),
+        'link' => 'admin/migrate.php',
+        'icon' => $pathIcon32 . '/database_go.png',
+    ];
+}
+
+$adminmenu[] = [
+    'title' => _MI_XOOPSTUBE_ABOUT,
     'link'  => 'admin/about.php',
-    'icon'  => $pathIcon32 . '/about.png'
-);
-
-//++$i;
-//$adminmenu[$i]['title'] = _MI_XOOPSTUBE_BLOCKADMIN;
-//$adminmenu[$i]['link']  = 'admin/blocksadmin.php';
-//$adminmenu[$i]["icon"]  = $pathIcon32 . '/block.png';
+    'icon'  => $pathIcon32 . '/about.png',
+];

@@ -6,7 +6,7 @@
             <{foreach item=video from=$block.videos name=grouploop}>
                 <li>
                     <a href="http://www.youtube.com/watch?v=<{$video.vidid}>" title="<{$video.description}>">
-                        <img src="http://img.youtube.com/vi/<{$video.vidid}>/default.jpg" alt="<{$video.title}>"/>
+                        <img src="http://img.youtube.com/vi/<{$video.vidid}>/default.jpg" alt="<{$video.title}>">
                     </a>
                 </li>
             <{/foreach}>

@@ -12,9 +12,9 @@
  * @category        Module
  * @package         Xoopstube
  * @author          XOOPS Development Team
- * @copyright       2001-2016 XOOPS Project (http://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link            http://xoops.org/
+ * @copyright       2001-2016 XOOPS Project (https://xoops.org)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @link            https://xoops.org/
  * @since           1.0.6
  */
 
@@ -49,6 +49,8 @@ define('_MI_XOOPSTUBE_MUPLOADS', 'Image Upload');
 define('_MI_XOOPSTUBE_PERMISSIONS', 'Permissions');
 define('_MI_XOOPSTUBE_BLOCKADMIN', 'Block Settings');
 define('_MI_XOOPSTUBE_MVOTEDATA', 'Votes');
+define('_MI_XOOPSTUBE_HOME', 'Home');
+define('_MI_XOOPSTUBE_ABOUT', 'About');
 
 // Title of config items
 define('_MI_XOOPSTUBE_POPULAR', 'video Popular Count');
@@ -79,7 +81,7 @@ define('_MI_XOOPSTUBE_SORTCATS', 'Sort categories by:');
 define('_MI_XOOPSTUBE_SORTCATSDSC', 'Select how categories and sub-categories are sorted.');
 
 define('_MI_XOOPSTUBE_SUBCATS', 'Sub-Categories:');
-define('_MI_XOOPSTUBE_SUBCATSDSC', 'Select Yes to display sub-categories. Selecting No will hide sub-categories from the listings');
+define('_MI_XOOPSTUBE_SUBCATSDSC', 'SELECT Yes TO display sub-categories. Selecting NO will hide sub-categories FROM the listings');
 
 define('_MI_XOOPSTUBE_EDITOR', 'Editor to use (admin):');
 define('_MI_XOOPSTUBE_EDITORCHOICE', "Select the editor to use for admin side. If you have a 'simple' install (e.g you use only XOOPS core editor class, provided in the standard xoops core package), then you can just select DHTML and Compact");
@@ -253,7 +255,9 @@ define('_MI_XOOPSTUBE_MODULE_MAILANNOUNCEMENTSDSC', 'Get the latest announcement
 define('_MI_XOOPSTUBE_MODULE_MAILBUGSDSC', 'Bug Tracking and submission mailing list');
 define('_MI_XOOPSTUBE_MODULE_MAILFEATURESDSC', 'Request New Features mailing list.');
 
-define('_MI_XOOPSTUBE_WARNINGTEXT', 'THE SOFTWARE IS PROVIDED BY XOOPS "AS IS" AND "WITH ALL FAULTS."
+define(
+    '_MI_XOOPSTUBE_WARNINGTEXT',
+    'THE SOFTWARE IS PROVIDED BY XOOPS "AS IS" AND "WITH ALL FAULTS."
 XOOPS MAKES NO REPRESENTATIONS OR WARRANTIES OF ANY KIND CONCERNING
 THE QUALITY, SAFETY OR SUITABILITY OF THE SOFTWARE, EITHER EXPRESS OR
 IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED WARRANTIES OF
@@ -263,7 +267,8 @@ ACCURACY OR COMPLETENESS OF ANY STATEMENTS, INFORMATION OR MATERIALS
 CONCERNING THE SOFTWARE THAT IS CONTAINED IN XOOPS WEBSITE. IN NO
 EVENT WILL XOOPS BE LIABLE FOR ANY INDIRECT, PUNITIVE, SPECIAL,
 INCIDENTAL OR CONSEQUENTIAL DAMAGES HOWEVER THEY MAY ARISE AND EVEN IF
-XOOPS HAS BEEN PREVIOUSLY ADVISED OF THE POSSIBILITY OF SUCH DAMAGES..');
+XOOPS HAS BEEN PREVIOUSLY ADVISED OF THE POSSIBILITY OF SUCH DAMAGES..'
+);
 
 define('_MI_XOOPSTUBE_AUTHOR_CREDITSTEXT', 'WF-Projects Team');
 define('_MI_XOOPSTUBE_AUTHOR_BUGFIXES', 'Bug Fix History');
@@ -325,9 +330,9 @@ define('_MI_XOOPSTUBE_SBROKENSUBMIT', 'Broken');
 define('_MI_XOOPSTUBE_BNAME11', 'Spotlight videos');
 
 //define('_MI_XOOPSTUBE_PREFERENCES_DIRECTIORIES', '<span style="font-weight: bold; color: #FF0000; font-size: small;"><b>Directories Setup</span> ');
-define('_MI_XOOPSTUBE_PREFERENCES_DIRECTIORIES', '<span style="font-weight: bold; "><b>Directories Setup</span> ');
-define('_MI_XOOPSTUBE_PREFERENCES_COMMENTS', '<span style="font-weight: bold; "><b>Comments/Notifications</span> ');
-define('_MI_XOOPSTUBE_PREFERENCES_OTHERS', '<span style="font-weight: bold; "><b>Other Preferences</span> ');
+define('_MI_XOOPSTUBE_PREFERENCES_DIRECTIORIES', '<span style="color: #FF0000; font-size: Small;  font-weight: bold;">--- Directories Setup ---</span> ');
+define('_MI_XOOPSTUBE_PREFERENCES_COMMENTS', '<span style="color: #FF0000; font-size: Small;  font-weight: bold;">--- Comments/Notifications ---</span> ');
+define('_MI_XOOPSTUBE_PREFERENCES_OTHERS', '<span style="color: #FF0000; font-size: Small;  font-weight: bold;">--- Other Preferences ---</span> ');
 
 define('_MI_XOOPSTUBE_PREFERENCES_DIRMODE', 'Directory writing permissions');
 define('_MI_XOOPSTUBE_PREFERENCES_DIRMODE_DESC', 'Set the directory writing permissions as defined for Unix (e.g. 0777 is the default for upload directories)');
@@ -349,3 +354,6 @@ define('_MI_XOOPSTUBE_BNAME11_DESC', 'Shows spotlight video');
 //1.07
 define('_MI_XOOPSTUBE_IMAGEASPECT', 'Keep Image Aspect Ratio?');
 define('_MI_XOOPSTUBE_IMAGEASPECTDSC', 'To keep the ration, leave it at 1');
+
+define('_MI_XOOPSTUBE_SHOW_SAMPLE_BUTTON', 'Show Sample Button?');
+define('_MI_XOOPSTUBE_SHOW_SAMPLE_BUTTON_DESC', 'If yes, the "Add Sample Data" button will be visible to the Admin. It is Yes as a default for first installation.');

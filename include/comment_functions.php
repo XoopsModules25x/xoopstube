@@ -8,23 +8,23 @@
  *
  * PHP version 5
  *
- * @category        Module
- * @package         Xoopstube
- * @author          XOOPS Development Team
- * @copyright       2001-2016 XOOPS Project (http://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link            http://xoops.org/
- * @since           1.0.6
- *
  * @param $videoload_id
  * @param $total_num
+ * @author          XOOPS Development Team
+ * @copyright       2001-2016 XOOPS Project (https://xoops.org)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @link            https://xoops.org/
+ * @since           1.0.6
+ *
+ * @category        Module
+ * @package         Xoopstube
  */
 
 // comment callback functions
 
 function xtubeUpdateComment($videoload_id, $total_num)
 {
-    $db  = XoopsDatabaseFactory::getDatabaseConnection();
+    $db  = \XoopsDatabaseFactory::getDatabaseConnection();
     $sql = 'UPDATE ' . $db->prefix('xoopstube_videos') . ' SET comments=' . $total_num . ' WHERE lid=' . $videoload_id;
     $db->query($sql);
 }

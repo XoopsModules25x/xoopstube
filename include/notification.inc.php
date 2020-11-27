@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Module: XoopsTube
  *
@@ -8,20 +9,18 @@
  *
  * PHP version 5
  *
+ * @param $category
+ * @param $item_id
+ * @return bool|null
  * @category        Module
  * @package         Xoopstube
  * @author          XOOPS Development Team
- * @copyright       2001-2016 XOOPS Project (http://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link            http://xoops.org/
+ * @copyright       2001-2016 XOOPS Project (https://xoops.org)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @link            https://xoops.org/
  * @since           1.0.6
  *
- * @param $category
- * @param $item_id
- *
- * @return null
  */
-
 function xtubeNotifyIteminfo($category, $item_id)
 {
     global $xoopsModule;
@@ -29,10 +28,11 @@ function xtubeNotifyIteminfo($category, $item_id)
     $moduleDirName = basename(dirname(__DIR__));
     //    $modulePath = dirname(__DIR__);
 
-    if (empty($xoopsModule) || $xoopsModule->getVar('dirname') !== 'xoopstube') {
-        /** @var XoopsModuleHandler $moduleHandler */
+    if (empty($xoopsModule) || 'xoopstube' !== $xoopsModule->getVar('dirname')) {
+        /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
         $module        = $moduleHandler->getByDirname($moduleDirName);
+        /** @var \XoopsConfigHandler $configHandler */
         $configHandler = xoops_getHandler('config');
         $config        = $configHandler->getConfigsByCat(0, $module->getVar('mid'));
     } else {

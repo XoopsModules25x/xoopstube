@@ -12,28 +12,48 @@
  * @category        Module
  * @package         Xoopstube
  * @author          XOOPS Development Team
- * @copyright       2001-2016 XOOPS Project (http://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link            http://xoops.org/
+ * @copyright       2001-2016 XOOPS Project (https://xoops.org)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @link            https://xoops.org/
  * @since           1.0.6
  */
 
 use Xmf\Request;
+use XoopsModules\Xoopstube\{
+    Utility,
+    Tree
+};
 
-include __DIR__ . '/header.php';
+$GLOBALS['xoopsOption']['template_main'] = 'xoopstube_singlevideo.tpl';
+
+require_once __DIR__ . '/header.php';
 
 $lid = Request::getInt('lid', Request::getInt('lid', '', 'POST'), 'GET');
 $cid = Request::getInt('cid', Request::getInt('cid', '', 'POST'), 'GET');
 
-$sql2 = 'SELECT count(*) FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' a LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('xoopstube_altcat') . ' b' . ' ON b.lid = a.lid' . ' WHERE a.published > 0 AND a.published <= ' . time() . ' AND (a.expired = 0 OR a.expired > ' . time()
-        . ') AND a.offline = 0' . ' AND (b.cid=a.cid OR (a.cid=' . (int)$cid . ' OR b.cid=' . (int)$cid . '))';
-list($count) = $GLOBALS['xoopsDB']->fetchRow($GLOBALS['xoopsDB']->query($sql2));
+$sql2 = 'SELECT count(*) FROM '
+        . $GLOBALS['xoopsDB']->prefix('xoopstube_videos')
+        . ' a LEFT JOIN '
+        . $GLOBALS['xoopsDB']->prefix('xoopstube_altcat')
+        . ' b'
+        . ' ON b.lid = a.lid'
+        . ' WHERE a.published > 0 AND a.published <= '
+        . time()
+        . ' AND (a.expired = 0 OR a.expired > '
+        . time()
+        . ') AND a.offline = 0'
+        . ' AND (b.cid=a.cid OR (a.cid='
+        . $cid
+        . ' OR b.cid='
+        . $cid
+        . '))';
+[$count] = $GLOBALS['xoopsDB']->fetchRow($GLOBALS['xoopsDB']->query($sql2));
 
-if (false === XoopstubeUtility::xtubeCheckGroups($cid) || $count === 0) {
+if (false === Utility::checkGroups($cid) || 0 === $count) {
     redirect_header('index.php', 1, _MD_XOOPSTUBE_MUSTREGFIRST);
 }
 
-$sql       = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE lid=' . (int)$lid . '
+$sql       = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE lid=' . $lid . '
         AND (published > 0 AND published <= ' . time() . ')
         AND (expired = 0 OR expired > ' . time() . ')
         AND offline = 0
@@ -45,26 +65,23 @@ if (!is_array($video_arr)) {
     redirect_header('index.php', 1, _MD_XOOPSTUBE_NOVIDEOLOAD);
 }
 
-$GLOBALS['xoopsOption']['template_main'] = 'xoopstube_singlevideo.tpl';
 
-include XOOPS_ROOT_PATH . '/header.php';
-$xoTheme->addStylesheet('modules/'.$moduleDirName.'/assets/css/xtubestyle.css');
-
-$xoTheme->addStylesheet('modules/'.$moduleDirName.'/assets/css/xtubestyle.css');
+require_once XOOPS_ROOT_PATH . '/header.php';
+$xoTheme->addStylesheet('modules/' . $moduleDirName . '/assets/css/xtubestyle.css');
 
 // tags support
-if (XoopstubeUtility::xtubeIsModuleTagInstalled()) {
+if (Utility::isModuleTagInstalled()) {
     require_once XOOPS_ROOT_PATH . '/modules/tag/include/tagbar.php';
     $xoopsTpl->assign('tagbar', tagBar($video_arr['lid'], 0));
 }
 
-$video['imageheader']  = XoopstubeUtility::xtubeRenderImageHeader();
+$video['imageheader']  = Utility::renderImageHeader();
 $video['id']           = $video_arr['lid'];
 $video['cid']          = $video_arr['cid'];
 $video['vidid']        = $video_arr['vidid'];
-$video['description2'] = $xtubemyts->displayTarea($video_arr['description'], 1, 1, 1, 1, 1);
+$video['description2'] = $myts->displayTarea($video_arr['description'], 1, 1, 1, 1, 1);
 
-$mytree        = new XoopstubeTree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
+$mytree        = new Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
 $pathstring    = '<a href="index.php">' . _MD_XOOPSTUBE_MAIN . '</a>&nbsp;:&nbsp;';
 $pathstring    .= $mytree->getNicePathFromId($cid, 'title', 'viewcat.php?op=');
 $video['path'] = $pathstring;
@@ -78,9 +95,9 @@ $video['sbmarks'] = getSocialBookmarks($video_arr['lid']);
 global $xoopsTpl, $xoTheme;
 
 $maxWords = 100;
-$words    = array();
-$words    = explode(' ', XoopstubeUtility::xtubeConvertHtml2Text($video_arr['description']));
-$newWords = array();
+$words    = [];
+$words    = explode(' ', Utility::convertHtml2Text($video_arr['description']));
+$newWords = [];
 $i        = 0;
 while ($i < $maxWords - 1 && $i < count($words)) {
     if (isset($words[$i])) {
@@ -95,14 +112,14 @@ if (is_object($GLOBALS['xoTheme'])) {
         $GLOBALS['xoTheme']->addMeta('meta', 'keywords', $video_arr['keywords']);
     }
     $GLOBALS['xoTheme']->addMeta('meta', 'title', $video_arr['title']);
-    if ($GLOBALS['xoopsModuleConfig']['usemetadescr'] == 1) {
+    if (1 == $GLOBALS['xoopsModuleConfig']['usemetadescr']) {
         $GLOBALS['xoTheme']->addMeta('meta', 'description', $video_meta_description);
     }
 } else {
     if ($video_arr['keywords']) {
         $xoopsTpl->assign('xoops_meta_keywords', $video_arr['keywords']);
     }
-    if ($GLOBALS['xoopsModuleConfig']['usemetadescr'] == 1) {
+    if (1 == $GLOBALS['xoopsModuleConfig']['usemetadescr']) {
         $GLOBALS['xoTheme']->assign('xoops_meta_description', $video_meta_description);
     }
 }
@@ -113,14 +130,14 @@ $moderate = 0;
 require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/include/videoloadinfo.php';
 
 $xoopsTpl->assign('show_screenshot', false);
-if (isset($GLOBALS['xoopsModuleConfig']['screenshot']) && $GLOBALS['xoopsModuleConfig']['screenshot'] == 1) {
+if (isset($GLOBALS['xoopsModuleConfig']['screenshot']) && 1 == $GLOBALS['xoopsModuleConfig']['screenshot']) {
     $xoopsTpl->assign('shotwidth', $GLOBALS['xoopsModuleConfig']['shotwidth']);
     $xoopsTpl->assign('shotheight', $GLOBALS['xoopsModuleConfig']['shotheight']);
     $xoopsTpl->assign('show_screenshot', true);
 }
 
 if (false === $video['isadmin']) {
-    $count = XoopstubeUtility::xtubeUpdateCounter($lid);
+    $count = Utility::updateCounter($lid);
 }
 
 // Show other author videos
@@ -132,22 +149,22 @@ $sql    = 'SELECT lid, cid, title, published FROM ' . $GLOBALS['xoopsDB']->prefi
 $result = $GLOBALS['xoopsDB']->query($sql, 10, 0);
 
 while (false !== ($arr = $GLOBALS['xoopsDB']->fetchArray($result))) {
-    if (true === XoopstubeUtility::xtubeCheckGroups($arr['cid'])) {
-        $videouid['title']     = $xtubemyts->htmlSpecialCharsStrip($arr['title']);
+    if (true === Utility::checkGroups($arr['cid'])) {
+        $videouid['title']     = htmlspecialchars($arr['title']);
         $videouid['lid']       = $arr['lid'];
         $videouid['cid']       = $arr['cid'];
-        $videouid['published'] = XoopstubeUtility::xtubeGetTimestamp(formatTimestamp($arr['published'], $GLOBALS['xoopsModuleConfig']['dateformat']));
+        $videouid['published'] = Utility::getTimestamp(formatTimestamp($arr['published'], $GLOBALS['xoopsModuleConfig']['dateformat']));
         $xoopsTpl->append('video_uid', $videouid);
     }
 }
 
 // Copyright notice
-if (isset($GLOBALS['xoopsModuleConfig']['copyright']) && $GLOBALS['xoopsModuleConfig']['copyright'] == 1) {
+if (isset($GLOBALS['xoopsModuleConfig']['copyright']) && 1 == $GLOBALS['xoopsModuleConfig']['copyright']) {
     $xoopsTpl->assign('lang_copyright', '' . $video['publisher'] . ' &#0169; ' . _MD_XOOPSTUBE_COPYRIGHT . ' ' . formatTimestamp(time(), 'Y') . ' - ' . XOOPS_URL);
 }
 
 // Show other videos by submitter
-if (isset($GLOBALS['xoopsModuleConfig']['othervideos']) && $GLOBALS['xoopsModuleConfig']['othervideos'] == 1) {
+if (isset($GLOBALS['xoopsModuleConfig']['othervideos']) && 1 == $GLOBALS['xoopsModuleConfig']['othervideos']) {
     $xoopsTpl->assign('other_videos', '<b>' . _MD_XOOPSTUBE_OTHERBYUID . '</b>' . $video['submitter'] . '<br>');
 } else {
     $xoopsTpl->assign('other_videos', '<b>' . _MD_XOOPSTUBE_NOOTHERBYUID . '</b>' . $video['submitter'] . '<br>');
@@ -158,8 +175,9 @@ $video['showsbookmarx']  = $GLOBALS['xoopsModuleConfig']['showsbookmarks'];
 $video['othervideox']    = $GLOBALS['xoopsModuleConfig']['othervideos'];
 $xoopsTpl->assign('video', $video);
 
-$xoopsTpl->assign('back', '<a href="javascript:history.go(-1)"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/back.png" /></a>'); // Displays Back button
+$xoopsTpl->assign('back', '<a href="javascript:history.go(-1)"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/back.png"></a>'); // Displays Back button
 $xoopsTpl->assign('module_dir', $xoopsModule->getVar('dirname'));
+$xoopsTpl->assign('mod_url', XOOPS_URL . '/modules/' . $moduleDirName);
 
 require_once XOOPS_ROOT_PATH . '/include/comment_view.php';
 require_once XOOPS_ROOT_PATH . '/footer.php';

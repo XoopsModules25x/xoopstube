@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Module: XoopsTube
  *
@@ -12,11 +13,10 @@
  * @package         Xoopstube
  * @author          XOOPS Development Team
  * @author          Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
- * @copyright       2001-2016 XOOPS Project (http://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link            http://xoops.org/
+ * @copyright       2001-2016 XOOPS Project (https://xoops.org)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @link            https://xoops.org/
  * @since           1.0.6
  */
-
-include __DIR__ . '/header.php';
-include XOOPS_ROOT_PATH . '/modules/tag/view.tag.php';
+require_once __DIR__ . '/header.php';
+require_once XOOPS_ROOT_PATH . '/modules/tag/view.tag.php';

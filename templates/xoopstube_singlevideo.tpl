@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="<{$smarty.const.xoopstube_url}>/assets/css/xtubestyle.css"/>
+<link rel="stylesheet" type="text/css" href="<{$mod_url}>/assets/css/xtubestyle.css">
 <{if $video.imageheader != ""}>
     <div class="xoopstube_header"><{$video.imageheader}></div>
 <{/if}>
@@ -47,11 +47,11 @@
             <span style="font-size: small;">
                 <span style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_RATINGC}></span>&nbsp;<img
                         src="<{$xoops_url}>/modules/<{$video.module_dir}>/assets/images/icon/<{$video.rateimg}>" alt=""
-                        align="middle"/>&nbsp;&nbsp;(<{$video.votes}>)
+                        align="middle">&nbsp;&nbsp;(<{$video.votes}>)
             </span>
         <{/if}>
 
-        <{if $tagbar}>
+        <{if $tagbar|default:false}>
             <br>
             <span style="font-size: small;"><{include file="db:tag_bar.tpl"}></span>
         <{/if}>
@@ -75,7 +75,7 @@
         <a href="<{$xoops_url}>/modules/<{$video.module_dir}>/brokenvideo.php?lid=<{$video.id}>"><{$smarty.const._MD_XOOPSTUBE_REPORTBROKEN}></a>
         |
         <{if $video.useradminvideo}>
-            <{$video.usermodify}>
+            <{$video.usermodify|default:false}>
         <{/if}>
         <a href="mailto:?subject=<{$video.mail_subject}>&amp;body=<{$video.mail_body}>" target="_top"><{$smarty.const._MD_XOOPSTUBE_TELLAFRIEND}></a>
         <{if $video.comment_rules > 0}>

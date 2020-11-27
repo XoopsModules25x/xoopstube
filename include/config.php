@@ -11,68 +11,81 @@
  * @category        Module
  * @package         Xoopstube
  * @author          XOOPS Development Team
- * @copyright       2001-2016 XOOPS Project (http://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link            http://xoops.org/
+ * @copyright       2001-2016 XOOPS Project (https://xoops.org)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @link            https://xoops.org/
  * @since           1.0.6
  */
 
-// WARNING: ONCE SET DO NOT CHANGE! Improper use will render this module useless and unworkable.
-// Only Change if you know what you are doing.
+/**
+ * @return object
+ */
 
-require_once __DIR__ . '/../../../mainfile.php';
+use Xmf\Module\Admin;
 
-$moduleDirName = basename(dirname(__DIR__));
+$moduleDirName      = basename(dirname(__DIR__));
+$moduleDirNameUpper = mb_strtoupper($moduleDirName);
 
-//These are names of the current tables
+return (object)[
+    'name'           => $moduleDirNameUpper . ' Module Configurator',
+    'paths'          => [
+        'dirname'    => $moduleDirName,
+        'admin'      => XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/admin',
+        'modPath'    => XOOPS_ROOT_PATH . '/modules/' . $moduleDirName,
+        'modUrl'     => XOOPS_URL . '/modules/' . $moduleDirName,
+        'uploadPath' => XOOPS_UPLOAD_PATH . '/' . $moduleDirName,
+        'uploadUrl'  => XOOPS_UPLOAD_URL . '/' . $moduleDirName,
+    ],
+    'uploadFolders'  => [
+        XOOPS_UPLOAD_PATH . '/' . $moduleDirName,
+        XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/category',
+        XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/videos',
+        XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/screenshots',
+        //XOOPS_UPLOAD_PATH . '/flags'
+    ],
+    'copyBlankFiles' => [
+        XOOPS_UPLOAD_PATH . '/' . $moduleDirName,
+        XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/category',
+        XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/videos',
+        XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/screenshots',
+        //XOOPS_UPLOAD_PATH . '/flags'
+    ],
 
-if (!defined('xoopstube_broken')) {
-    define('xoopstube_broken', 'xoopstube_broken');
-}
-if (!defined('xoopstube_cat')) {
-    define('xoopstube_cat', 'xoopstube_cat');
-}
-if (!defined('xoopstube_videos')) {
-    define('xoopstube_videos', 'xoopstube_videos');
-}
-if (!defined('xoopstube_mod')) {
-    define('xoopstube_mod', 'xoopstube_mod');
-}
-if (!defined('xoopstube_votedata')) {
-    define('xoopstube_votedata', 'xoopstube_votedata');
-}
-if (!defined('xoopstube_indexpage')) {
-    define('xoopstube_indexpage', 'xoopstube_indexpage');
-}
-if (!defined('xoopstube_altcat')) {
-    define('xoopstube_altcat', 'xoopstube_altcat');
-}
-if (!defined('xoopstube_url')) {
-    define('xoopstube_url', XOOPS_URL . '/modules/' . $moduleDirName . '/');
-}
+    'copyTestFolders' => [
+        //[
+        //    constant($moduleDirNameUpper . '_PATH') . '/testdata/images',
+        //    XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/images',
+        //]
+    ],
 
-if (!defined('XOOPSTUBE_MODULE_PATH')) {
-    //    define("XOOPSTUBE_DIRNAME", $GLOBALS['xoopsModule']->dirname());
-    define('XOOPSTUBE_DIRNAME', $moduleDirName);
-    define('XOOPSTUBE_PATH', XOOPS_ROOT_PATH . '/modules/' . XOOPSTUBE_DIRNAME);
-    define('XOOPSTUBE_URL', XOOPS_URL . '/modules/' . XOOPSTUBE_DIRNAME);
-    define('XOOPSTUBE_IMAGES_URL', XOOPSTUBE_URL . '/assets/images');
-    define('XOOPSTUBE_ADMIN_URL', XOOPSTUBE_URL . '/admin');
-    define('XOOPSTUBE_ROOT_PATH', XOOPS_ROOT_PATH . '/modules/' . XOOPSTUBE_DIRNAME);
-    define('XOOPSTUBE_AUTHOR_LOGOIMG', XOOPSTUBE_URL . '/assets/images/logo_module.png');
-}
-
-// Define here the place where main upload path
-
-//$moduleUploadsPath = $GLOBALS['xoopsModuleConfig']['uploaddir'];
-
-define('XOOPSTUBE_UPLOAD_URL', XOOPS_UPLOAD_URL . '/' . XOOPSTUBE_DIRNAME); // WITHOUT Trailing slash
-//define("XOOPSTUBE_UPLOAD_PATH", $img_dir); // WITHOUT Trailing slash
-define('XOOPSTUBE_UPLOAD_PATH', XOOPS_UPLOAD_PATH . '/' . XOOPSTUBE_DIRNAME); // WITHOUT Trailing slash
-
-$uploadFolders = array(
-    XOOPSTUBE_UPLOAD_PATH,
-    XOOPSTUBE_UPLOAD_PATH . '/category',
-    XOOPSTUBE_UPLOAD_PATH . '/videos',
-    XOOPSTUBE_UPLOAD_PATH . '/screenshots'
-);
+    'templateFolders' => [
+        '/templates/',
+        '/templates/blocks/',
+        '/templates/admin/',
+    ],
+    'oldFiles'        => [
+        '/class/request.php',
+        '/class/registry.php',
+        '/class/utilities.php',
+        '/class/util.php',
+        // '/include/constants.php',
+        '/include/functions.php',
+        '/ajaxrating.txt',
+    ],
+    'oldFolders'      => [
+        '/images',
+        '/css',
+        '/js',
+        '/tcpdf',
+        '/images',
+    ],
+    'renameTables'    => [//         'XX_archive'     => 'ZZZZ_archive',
+    ],
+    'moduleStats'     => [
+        //            'totalcategories' => $helper->getHandler('Category')->getCategoriesCount(-1),
+        //            'totalitems'      => $helper->getHandler('Item')->getItemsCount(),
+        //            'totalsubmitted'  => $helper->getHandler('Item')->getItemsCount(-1, [Constants::PUBLISHER_STATUS_SUBMITTED]),
+    ],
+    'modCopyright'    => "<a href='https://xoops.org' title='XOOPS Project' target='_blank'>
+                     <img src='" . Admin::iconUrl('xoopsmicrobutton.gif') . "' alt='XOOPS Project'></a>",
+];

@@ -1,0 +1,16 @@
+-
+    ratingid: '1'
+    lid: '2'
+    ratinguser: '1'
+    rating: '9'
+    ratinghostname: '::1'
+    ratingtimestamp: '1605449524'
+    title: 'PHP Programming Language Tutorial - Full Course'
+-
+    ratingid: '2'
+    lid: '3'
+    ratinguser: '1'
+    rating: '9'
+    ratinghostname: '::1'
+    ratingtimestamp: '1605451337'
+    title: 'XOOPS 2.6.0 Development on GitHub: One year in 45 seconds'

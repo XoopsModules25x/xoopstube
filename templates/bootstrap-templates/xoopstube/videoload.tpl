@@ -1,4 +1,4 @@
-<{if $show_categort_title == true}>
+<{if $show_category_title === true}>
 <{$smarty.const._MD_XOOPSTUBE_CATEGORYC}> <{$video.category}>
 <{/if}>
 
@@ -14,7 +14,7 @@
 <{if $video.published > 0 }>
 <a href="<{$xoops_url}>/modules/<{$video.module_dir}>/singlevideo.php?cid=<{$video.cid}>&amp;lid=<{$video.id}>">
     <img src="<{$xoops_url}>/modules/<{$video.module_dir}>/images/icon/play.png"
-         alt="<{$smarty.const._MD_XOOPSTUBE_VIEWDETAILS}>" title="<{$smarty.const._MD_XOOPSTUBE_VIEWDETAILS}>"/>
+         alt="<{$smarty.const._MD_XOOPSTUBE_VIEWDETAILS}>" title="<{$smarty.const._MD_XOOPSTUBE_VIEWDETAILS}>">
 </a>
 <{/if}>
 <{if $video.showsubmitterx}>
@@ -30,7 +30,7 @@
 
 <div class="xoopstube_infoblock">
     <span style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_RATINGC}></span>&nbsp;<img
-        src="<{$xoops_url}>/modules/<{$video.module_dir}>/images/icon/<{$video.rateimg}>" alt="" align="middle"/>&nbsp;&nbsp;(<{$video.votes}>)
+        src="<{$xoops_url}>/modules/<{$video.module_dir}>/images/icon/<{$video.rateimg}>" alt="" align="middle">&nbsp;&nbsp;(<{$video.votes}>)
 </div>
 <{/if}>
 </div>

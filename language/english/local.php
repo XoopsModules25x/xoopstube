@@ -12,12 +12,11 @@
  * @category        Module
  * @package         Xoopstube
  * @author          XOOPS Development Team
- * @copyright       2001-2016 XOOPS Project (http://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link            http://xoops.org/
+ * @copyright       2001-2016 XOOPS Project (https://xoops.org)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @link            https://xoops.org/
  * @since           1.0.6
  */
-
 define('_XOOPSTUBE_MONDAY', 'Monday');
 define('_XOOPSTUBE_TUESDAY', 'Tuesday');
 define('_XOOPSTUBE_WEDNESDAY', 'Wednesday');

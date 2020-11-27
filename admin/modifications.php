@@ -11,109 +11,108 @@
  * @category        Module
  * @package         Xoopstube
  * @author          XOOPS Development Team
- * @copyright       2001-2016 XOOPS Project (http://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link            http://xoops.org/
+ * @copyright       2001-2016 XOOPS Project (https://xoops.org)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @link            https://xoops.org/
  * @since           1.0.6
  */
+
+use Xmf\Module\Admin;
 use Xmf\Request;
+use XoopsModules\Xoopstube\{
+    Tree,
+    Utility
+};
 
 require_once __DIR__ . '/admin_header.php';
 
-global $xoopstubetree;
+//global $xoopstubetree;
 
-$op        = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'op', '');
-$requestid = Request::getInt('requestid', Request::getInt('requestid', 0, 'POST'), 'GET'); //xtubeCleanRequestVars($_REQUEST, 'requestid', 0);
+$op        = Request::getCmd('op', Request::getCmd('op', '', 'POST'), 'GET'); //cleanRequestVars($_REQUEST, 'op', '');
+$requestid = Request::getInt('requestid', Request::getInt('requestid', 0, 'POST'), 'GET'); //cleanRequestVars($_REQUEST, 'requestid', 0);
 
-switch (strtolower($op)) {
+switch (mb_strtolower($op)) {
     case 'listmodreqshow':
 
         xoops_cp_header();
-        //    xtubeRenderAdminMenu(_AM_XOOPSTUBE_MOD_MODREQUESTS);
+        //    renderAdminMenu(_AM_XOOPSTUBE_MOD_MODREQUESTS);
 
-        $sql       = 'SELECT modifysubmitter, requestid, lid, cid, title, vidid, submitter, publisher, vidsource, description, time, keywords, item_tag, picurl FROM '
-                     . $GLOBALS['xoopsDB']->prefix('xoopstube_mod')
-                     . ' WHERE requestid='
-                     . $requestid;
+        $sql       = 'SELECT modifysubmitter, requestid, lid, cid, title, vidid, submitter, publisher, vidsource, description, time, keywords, item_tag, picurl FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_mod') . ' WHERE requestid=' . $requestid;
         $mod_array = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
         unset($sql);
 
-        $sql        = 'SELECT submitter, lid, cid, title, vidid, submitter, publisher, vidsource, description, time, keywords, item_tag, picurl FROM '
-                      . $GLOBALS['xoopsDB']->prefix('xoopstube_videos')
-                      . ' WHERE lid='
-                      . $mod_array['lid'];
+        $sql        = 'SELECT submitter, lid, cid, title, vidid, submitter, publisher, vidsource, description, time, keywords, item_tag, picurl FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE lid=' . $mod_array['lid'];
         $orig_array = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
         unset($sql);
 
-        $orig_user      = new XoopsUser($orig_array['submitter']);
-        $submittername  = XoopstubeUtility::xtubeGetLinkedUserNameFromId($orig_array['submitter']);
+        $orig_user      = new \XoopsUser($orig_array['submitter']);
+        $submittername  = Utility::getLinkedUserNameFromId($orig_array['submitter']);
         $submitteremail = $orig_user::getUnameFromId('email');
 
         echo '<div><b>' . _AM_XOOPSTUBE_MOD_MODPOSTER . '</b> ' . $submittername . '</div>';
-        $not_allowed = array('lid', 'submitter', 'requestid', 'modifysubmitter');
-        $sform       = new XoopsThemeForm(_AM_XOOPSTUBE_MOD_ORIGINAL, 'storyform', 'index.php');
+        $not_allowed = ['lid', 'submitter', 'requestid', 'modifysubmitter'];
+        $sform       = new \XoopsThemeForm(_AM_XOOPSTUBE_MOD_ORIGINAL, 'storyform', 'index.php');
         foreach ($orig_array as $key => $content) {
             if (in_array($key, $not_allowed)) {
                 continue;
             }
-            $lang_def = constant('_AM_XOOPSTUBE_MOD_' . strtoupper($key));
+            $lang_def = constant('_AM_XOOPSTUBE_MOD_' . mb_strtoupper($key));
 
-            if ($key === 'cid') {
+            if ('cid' === $key) {
                 $sql     = 'SELECT title FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_cat') . ' WHERE cid=' . $content;
                 $row     = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
                 $content = $row['title'];
             }
 
-            if ($key === 'vidsource') {
+            if ('vidsource' === $key) {
                 require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/include/video.php';
                 $content = xtubeReturnSource($content);
             }
-            $sform->addElement(new XoopsFormLabel($lang_def, $content));
+            $sform->addElement(new \XoopsFormLabel($lang_def, $content));
         }
         $sform->display();
 
-        $orig_user      = new XoopsUser($mod_array['modifysubmitter']);
-        $submittername  = XoopstubeUtility::xtubeGetLinkedUserNameFromId($mod_array['modifysubmitter']);
+        $orig_user      = new \XoopsUser($mod_array['modifysubmitter']);
+        $submittername  = Utility::getLinkedUserNameFromId($mod_array['modifysubmitter']);
         $submitteremail = $orig_user::getUnameFromId('email');
 
         echo '<div><b>' . _AM_XOOPSTUBE_MOD_MODIFYSUBMITTER . '</b> ' . $submittername . '</div>';
-        $sform = new XoopsThemeForm(_AM_XOOPSTUBE_MOD_PROPOSED, 'storyform', 'modifications.php');
+        $sform = new \XoopsThemeForm(_AM_XOOPSTUBE_MOD_PROPOSED, 'storyform', 'modifications.php');
         foreach ($mod_array as $key => $content) {
             if (in_array($key, $not_allowed)) {
                 continue;
             }
-            $lang_def = constant('_AM_XOOPSTUBE_MOD_' . strtoupper($key));
+            $lang_def = constant('_AM_XOOPSTUBE_MOD_' . mb_strtoupper($key));
 
-            if ($key === 'cid') {
+            if ('cid' === $key) {
                 $sql     = 'SELECT title FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_cat') . ' WHERE cid=' . $content;
                 $row     = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
                 $content = $row['title'];
             }
 
-            if ($key === 'vidsource') {
+            if ('vidsource' === $key) {
                 require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/include/video.php';
                 $content = xtubeReturnSource($content);
             }
-            $sform->addElement(new XoopsFormLabel($lang_def, $content));
+            $sform->addElement(new \XoopsFormLabel($lang_def, $content));
         }
-        $button_tray = new XoopsFormElementTray('', '');
-        $button_tray->addElement(new XoopsFormHidden('requestid', $requestid));
-        $button_tray->addElement(new XoopsFormHidden('lid', $mod_array['requestid']));
-        $hidden = new XoopsFormHidden('op', 'changemodreq');
-        $button_tray->addElement($hidden);
+        $buttonTray = new \XoopsFormElementTray('', '');
+        $buttonTray->addElement(new \XoopsFormHidden('requestid', $requestid));
+        $buttonTray->addElement(new \XoopsFormHidden('lid', $mod_array['requestid']));
+        $hidden = new \XoopsFormHidden('op', 'changemodreq');
+        $buttonTray->addElement($hidden);
         if ($mod_array) {
-            $butt_dup = new XoopsFormButton('', '', _AM_XOOPSTUBE_BAPPROVE, 'submit');
+            $butt_dup = new \XoopsFormButton('', '', _AM_XOOPSTUBE_BAPPROVE, 'submit');
             $butt_dup->setExtra('onclick="this.form.elements.op.value=\'changemodreq\'"');
-            $button_tray->addElement($butt_dup);
+            $buttonTray->addElement($butt_dup);
         }
-        $butt_dupct2 = new XoopsFormButton('', '', _AM_XOOPSTUBE_BIGNORE, 'submit');
+        $butt_dupct2 = new \XoopsFormButton('', '', _AM_XOOPSTUBE_BIGNORE, 'submit');
         $butt_dupct2->setExtra('onclick="this.form.elements.op.value=\'ignoremodreq\'"');
-        $button_tray->addElement($butt_dupct2);
-        $sform->addElement($button_tray);
+        $buttonTray->addElement($butt_dupct2);
+        $sform->addElement($buttonTray);
         $sform->display();
         xoops_cp_footer();
         break;
-
     case 'changemodreq':
         $sql         = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_mod') . ' WHERE requestid=' . $requestid;
         $video_array = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
@@ -134,31 +133,32 @@ switch (strtolower($op)) {
         $time         = $video_array['time'];
         $updated      = time();
 
-        $GLOBALS['xoopsDB']->query('UPDATE ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos')
-                                   . " SET cid = $cid, title='$title', vidid='$vidid', screenshot='', publisher='$publisher', vidsource='$vidsource', description='$descriptionb', time='$time', keywords='$keywords', item_tag='$item_tag', picurl='$picurl', updated='$updated' WHERE lid = "
-                                   . $lid);
+        $GLOBALS['xoopsDB']->query(
+            'UPDATE '
+            . $GLOBALS['xoopsDB']->prefix('xoopstube_videos')
+            . " SET cid = $cid, title='$title', vidid='$vidid', screenshot='', publisher='$publisher', vidsource='$vidsource', description='$descriptionb', time='$time', keywords='$keywords', item_tag='$item_tag', picurl='$picurl', updated='$updated' WHERE lid = "
+            . $lid
+        );
         $sql    = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_mod') . ' WHERE requestid=' . $requestid;
         $result = $GLOBALS['xoopsDB']->query($sql);
         redirect_header('index.php', 1, _AM_XOOPSTUBE_MOD_REQUPDATED);
         break;
-
     case 'ignoremodreq':
         $sql = sprintf('DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_mod') . ' WHERE requestid=' . $requestid);
         $GLOBALS['xoopsDB']->query($sql);
         redirect_header('index.php', 1, _AM_XOOPSTUBE_MOD_REQDELETED);
         break;
-
     case 'main':
     default:
 
         $start            = Request::getInt('start', 0, 'GET');
-        $xoopstubetree    = new XoopstubeTree($GLOBALS['xoopsDB']->prefix('xoopstube_mod'), 'requestid', 0);
+        $xoopstubetree    = new Tree($GLOBALS['xoopsDB']->prefix('xoopstube_mod'), 'requestid', 0);
         $sql              = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_mod') . ' ORDER BY requestdate DESC';
         $result           = $GLOBALS['xoopsDB']->query($sql, $GLOBALS['xoopsModuleConfig']['admin_perpage'], $start);
         $totalmodrequests = $GLOBALS['xoopsDB']->getRowsNum($GLOBALS['xoopsDB']->query($sql));
 
         xoops_cp_header();
-        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject = Admin::getInstance();
         $adminObject->displayNavigation(basename(__FILE__));
 
         echo '<fieldset style="border: #E8E8E8 1px solid;">
@@ -180,8 +180,8 @@ switch (strtolower($op)) {
                 $path        = str_replace('/', '', $path);
                 $path        = str_replace(':', '', trim($path));
                 $title       = trim($path);
-                $submitter   = XoopstubeUtility::xtubeGetLinkedUserNameFromId($video_arr['modifysubmitter']);
-                $requestdate = XoopstubeUtility::xtubeGetTimestamp(formatTimestamp($video_arr['requestdate'], $GLOBALS['xoopsModuleConfig']['dateformatadmin']));
+                $submitter   = Utility::getLinkedUserNameFromId($video_arr['modifysubmitter']);
+                $requestdate = Utility::getTimestamp(formatTimestamp($video_arr['requestdate'], $GLOBALS['xoopsModuleConfig']['dateformatadmin']));
 
                 echo '<tr style="text-align: center;">';
                 echo '<td class="head">' . $video_arr['requestid'] . '</td>';
@@ -198,7 +198,7 @@ switch (strtolower($op)) {
 
         require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
         //        $page = ( $totalmodrequests > $GLOBALS['xoopsModuleConfig']['admin_perpage'] ) ? _AM_xtube_MINDEX_PAGE : '';
-        $pagenav = new XoopsPageNav($totalmodrequests, $GLOBALS['xoopsModuleConfig']['admin_perpage'], $start, 'start');
+        $pagenav = new \XoopsPageNav($totalmodrequests, $GLOBALS['xoopsModuleConfig']['admin_perpage'], $start, 'start');
         echo "<div style='text-align: right; padding: 8px;'>" . $pagenav->renderNav() . '</div>';
         require_once __DIR__ . '/admin_footer.php';
 }

@@ -11,35 +11,40 @@
  * @category        Module
  * @package         Xoopstube
  * @author          XOOPS Development Team
- * @copyright       2001-2016 XOOPS Project (http://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link            http://xoops.org/
+ * @copyright       2001-2016 XOOPS Project (https://xoops.org)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @link            https://xoops.org/
  * @since           1.0.6
  */
 
+use Xmf\Module\Admin;
 use Xmf\Request;
+use Xmf\Yaml;
+use XoopsModules\Xoopstube\{
+    Utility
+};
 
 require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
-$adminObject  = \Xmf\Module\Admin::getInstance();
+$adminObject = Admin::getInstance();
 
-$start     = Request::getInt('start', 0, 'POST');// xtubeCleanRequestVars($_REQUEST, 'start', 0);
-$start1    = Request::getInt('start1', 0, 'POST');// xtubeCleanRequestVars($_REQUEST, 'start1', 0);
-$start2    = Request::getInt('start2', 0, 'POST');// xtubeCleanRequestVars($_REQUEST, 'start2', 0);
-$start3    = Request::getInt('start3', 0, 'POST');// xtubeCleanRequestVars($_REQUEST, 'start3', 0);
-$start4    = Request::getInt('start4', 0, 'POST');// xtubeCleanRequestVars($_REQUEST, 'start4', 0);
-$start5    = Request::getInt('start5', 0, 'POST');// xtubeCleanRequestVars($_REQUEST, 'start5', 0);
-$totalcats = XoopstubeUtility::xtubeGetTotalCategoryCount();
+$start     = Request::getInt('start', 0, 'POST'); // cleanRequestVars($_REQUEST, 'start', 0);
+$start1    = Request::getInt('start1', 0, 'POST'); // cleanRequestVars($_REQUEST, 'start1', 0);
+$start2    = Request::getInt('start2', 0, 'POST'); // cleanRequestVars($_REQUEST, 'start2', 0);
+$start3    = Request::getInt('start3', 0, 'POST'); // cleanRequestVars($_REQUEST, 'start3', 0);
+$start4    = Request::getInt('start4', 0, 'POST'); // cleanRequestVars($_REQUEST, 'start4', 0);
+$start5    = Request::getInt('start5', 0, 'POST'); // cleanRequestVars($_REQUEST, 'start5', 0);
+$totalcats = Utility::getTotalCategoryCount();
 
 $result = $GLOBALS['xoopsDB']->query('SELECT COUNT(*) FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_broken'));
-list($totalbrokenvideos) = $GLOBALS['xoopsDB']->fetchRow($result);
+[$totalbrokenvideos] = $GLOBALS['xoopsDB']->fetchRow($result);
 $result2 = $GLOBALS['xoopsDB']->query('SELECT COUNT(*) FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_mod'));
-list($totalmodrequests) = $GLOBALS['xoopsDB']->fetchRow($result2);
+[$totalmodrequests] = $GLOBALS['xoopsDB']->fetchRow($result2);
 $result3 = $GLOBALS['xoopsDB']->query('SELECT COUNT(*) FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE published = 0');
-list($totalnewvideos) = $GLOBALS['xoopsDB']->fetchRow($result3);
+[$totalnewvideos] = $GLOBALS['xoopsDB']->fetchRow($result3);
 $result4 = $GLOBALS['xoopsDB']->query('SELECT COUNT(*) FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE published > 0');
-list($totalvideos) = $GLOBALS['xoopsDB']->fetchRow($result4);
+[$totalvideos] = $GLOBALS['xoopsDB']->fetchRow($result4);
 
 //$xxx='<a href="brokenvideo.php">' . _AM_XOOPSTUBE_SBROKENSUBMIT . '</a><b>';
 
@@ -68,8 +73,7 @@ if ($totalmodrequests > 0) {
 }
 
 if ($totalbrokenvideos > 0) {
-    $adminObject->addInfoBoxLine(sprintf('<infolabel>' . '<a href="brokenvideo.php">' . _AM_XOOPSTUBE_SBROKENSUBMIT . '</a><b>' . '</infolabel><infotext>',
-                                $totalbrokenvideos . '</infotext>'), '', 'Red');
+    $adminObject->addInfoBoxLine(sprintf('<infolabel>' . '<a href="brokenvideo.php">' . _AM_XOOPSTUBE_SBROKENSUBMIT . '</a><b>' . '</infolabel><infotext>', $totalbrokenvideos . '</infotext>'), '', 'Red');
 } else {
     $adminObject->addInfoBoxLine(sprintf('<infolabel>' . _AM_XOOPSTUBE_SBROKENSUBMIT . '</infolabel><infotext>', $totalbrokenvideos . '</infotext>'), '', 'Red');
 }
@@ -77,27 +81,57 @@ if ($totalbrokenvideos > 0) {
 //------ create directories ---------------
 /*
 $folderMode = $GLOBALS['xoopsModuleConfig']['dirmode'];
-//require_once __DIR__ . '/../class/utility.php';
+// require_once  dirname(__DIR__) . '/class/Utility.php';
 foreach (array_keys($uploadFolders) as $i) {
-    XoopstubeUtility::prepareFolder($uploadFolders[$i], $folderMode);
+    Utility::prepareFolder($uploadFolders[$i], $folderMode);
     $adminObject->addConfigBoxLine($uploadFolders[$i], 'folder');
     //    $adminObject->addConfigBoxLine(array($uploadFolders[$i], $folderMode), 'chmod');
 }
 */
 
-require_once __DIR__ . '/../testdata/index.php';
-$adminObject->addItemButton(_AM_XOOPSTUBE_ADD_SAMPLEDATA, '__DIR__ . /../../testdata/index.php?op=load', 'add');
+//require_once  dirname(__DIR__) . '/testdata/index.php';
+//$adminObject->addItemButton(_AM_XOOPSTUBE_ADD_SAMPLEDATA, './../testdata/index.php?op=load', 'add');
 
 $adminObject->displayNavigation(basename(__FILE__));
-$adminObject->displayButton('left', '');
+
+//check for latest release
+//$newRelease = $utility::checkVerModule($helper);
+//if (!empty($newRelease)) {
+//    $adminObject->addItemButton($newRelease[0], $newRelease[1], 'download', 'style="color : Red"');
+//}
+
+//------------- Test Data ----------------------------
+
+if ($helper->getConfig('displaySampleButton')) {
+    $yamlFile            = dirname(__DIR__) . '/config/admin.yml';
+    $config              = loadAdminConfig($yamlFile);
+    $displaySampleButton = $config['displaySampleButton'];
+
+    if (1 == $displaySampleButton) {
+        xoops_loadLanguage('admin/modulesadmin', 'system');
+        require_once dirname(__DIR__) . '/testdata/index.php';
+
+        $adminObject->addItemButton(constant('CO_' . $moduleDirNameUpper . '_' . 'ADD_SAMPLEDATA'), '__DIR__ . /../../testdata/index.php?op=load', 'add');
+        $adminObject->addItemButton(constant('CO_' . $moduleDirNameUpper . '_' . 'SAVE_SAMPLEDATA'), '__DIR__ . /../../testdata/index.php?op=save', 'add');
+        //    $adminObject->addItemButton(constant('CO_' . $moduleDirNameUpper . '_' . 'EXPORT_SCHEMA'), '__DIR__ . /../../testdata/index.php?op=exportschema', 'add');
+        $adminObject->addItemButton(constant('CO_' . $moduleDirNameUpper . '_' . 'HIDE_SAMPLEDATA_BUTTONS'), '?op=hide_buttons', 'delete');
+    } else {
+        $adminObject->addItemButton(constant('CO_' . $moduleDirNameUpper . '_' . 'SHOW_SAMPLEDATA_BUTTONS'), '?op=show_buttons', 'add');
+        $displaySampleButton = $config['displaySampleButton'];
+    }
+    $adminObject->displayButton('left', '');
+}
+
+//------------- End Test Data ----------------------------
+
 $adminObject->displayIndex();
 
 /*
 //------ check directories ---------------
-require_once __DIR__ . '/../include/directorychecker.php';
+require_once  dirname(__DIR__) . '/include/directorychecker.php';
 
 $adminObject->addConfigBoxLine('');
-$redirectFile = $_SERVER['PHP_SELF'];
+$redirectFile = $_SERVER['SCRIPT_NAME'];
 
 $languageConstants = array(
     _AM_XOOPSTUBE_AVAILABLE,
@@ -128,8 +162,52 @@ $adminObject->addConfigBoxLine(DirectoryChecker::getDirectoryStatus($path, 0777,
 //echo wfd_serverstats();
 //---------------------------
 
-xtubeFileChecks();
+fileChecks();
 
 */
 
-require_once __DIR__ . '/admin_footer.php';
+
+/**
+ * @param $yamlFile
+ * @return array|bool
+ */
+function loadAdminConfig($yamlFile)
+{
+    $config = Yaml::readWrapped($yamlFile); // work with phpmyadmin YAML dumps
+    return $config;
+}
+
+/**
+ * @param $yamlFile
+ */
+function hideButtons($yamlFile)
+{
+    $app['displaySampleButton'] = 0;
+    Yaml::save($app, $yamlFile);
+    redirect_header('index.php', 0, '');
+}
+
+/**
+ * @param $yamlFile
+ */
+function showButtons($yamlFile)
+{
+    $app['displaySampleButton'] = 1;
+    Yaml::save($app, $yamlFile);
+    redirect_header('index.php', 0, '');
+}
+
+$op = Request::getString('op', 0, 'GET');
+
+switch ($op) {
+    case 'hide_buttons':
+        hideButtons($yamlFile);
+        break;
+    case 'show_buttons':
+        showButtons($yamlFile);
+        break;
+}
+
+echo $utility::getServerStats();
+
+require __DIR__ . '/admin_footer.php';

@@ -12,12 +12,11 @@
  * @category        Module
  * @package         Xoopstube
  * @author          XOOPS Development Team
- * @copyright       2001-2016 XOOPS Project (http://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link            http://xoops.org/
+ * @copyright       2001-2016 XOOPS Project (https://xoops.org)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @link            https://xoops.org/
  * @since           1.0.6
  */
-
 define('_AM_XOOPSTUBE_WARNINSTALL1', "<span style='font-weight: bold;'>WARNING:</span> <span style='text-decoration: underline;'>Directory</span> %s exists on your server.<br>Please remove this directory for security reasons.");
 define('_AM_XOOPSTUBE_WARNINSTALL2', "<span style='font-weight: bold;'>WARNING:</span> <span style='text-decoration: underline;'>File</span> %s exists on your server.<br>Please remove this directory for security reasons.");
 define('_AM_XOOPSTUBE_WARNINSTALL3', "<span style='font-weight: bold;'>WARNING:</span> <span style='text-decoration: underline;'>Folder</span> %s does not exists on your server.<br>This folder is required by XoopsTube.");
@@ -115,8 +114,10 @@ define('_AM_XOOPSTUBE_IPAGE_CRIGHT', 'Align Right');
  * Permissions defines
  */
 define('_AM_XOOPSTUBE_PERM_MANAGEMENT', 'Permissions Management');
-define('_AM_XOOPSTUBE_PERM_PERMSNOTE',
-       "<div><span style='font-weight: bold;'>NOTE:</span> Please be aware that even if you've set correct viewing permissions here, a group might not see the articles or blocks if you don't also grant that group permissions to access the module. To do that, go to <span style='font-weight: bold;'>System admin > Groups</span>, choose the appropriate group and click the checkboxes to grant its members the access.</div>");
+define(
+    '_AM_XOOPSTUBE_PERM_PERMSNOTE',
+    "<div><span style='font-weight: bold;'>NOTE:</span> Please be aware that even if you've set correct viewing permissions here, a group might not see the articles or blocks if you don't also grant that group permissions to access the module. To do that, go to <span style='font-weight: bold;'>System admin > Groups</span>, choose the appropriate group and click the checkboxes to grant its members the access.</div>"
+);
 define('_AM_XOOPSTUBE_PERM_CPERMISSIONS', 'Category Permissions');
 define('_AM_XOOPSTUBE_PERM_CSELECTPERMISSIONS', 'Select categories that each group is allowed to view');
 define('_AM_XOOPSTUBE_PERM_CNOCATEGORY', "Cannot set permission's: No Categories's have been created yet!");
@@ -252,7 +253,9 @@ define('_AM_XOOPSTUBE_VIDEO_MODIFYFILE', 'Modify Video Information');
 define('_AM_XOOPSTUBE_VIDEO_CREATENEWFILE', 'Create New Video');
 define('_AM_XOOPSTUBE_VIDEO_TITLE', 'Video Title: ');
 define('_AM_XOOPSTUBE_VIDEO_DLVIDID', 'Video id-code: ');
-define('_AM_XOOPSTUBE_VIDEO_DLVIDID_NOTE', "
+define(
+    '_AM_XOOPSTUBE_VIDEO_DLVIDID_NOTE',
+    "
 <span style='font-size: small;'><span style='font-weight: bold;'>YouTube:</span> http://www.youtube.com/watch?v=<span style='color: #FF0000;'>IsOtq-qCqZ4</span><br>
 <span style='font-weight: bold;'>MetaCafe:</span> http://www.metacafe.com/watch/<span style='color: #FF0000;'>191543/sperm_whale_encounters_underwater_robot</span>/<br>
 <span style='font-weight: bold;'>SPIKE/ifilm:</span> http://www.ifilm.com/video/<span style='color: #FF0000;'>2718605</span><br>
@@ -268,7 +271,8 @@ define('_AM_XOOPSTUBE_VIDEO_DLVIDID_NOTE', "
 <span style='font-weight: bold;'>Vimeo:</span> http://www.vimeo.com/<span style='color: #FF0000;'>2246499</span><br>
 <span style='font-weight: bold;'>Megavideo:</span> http://www.megavideo.com/?v=<span style='color: #FF0000;'>J6YSRE0T</span><br>
 <span style='font-weight: bold;'>Viddler:</span> http://www.viddler.com/player/<span style='color: #FF0000;'>d32d2b94</span>/ (see embed code)<br>
-<span style='font-weight: bold;'>XoopsTube: </span><span style='color: #FF0000;'>Take over from above selection menu</span></span>");
+<span style='font-weight: bold;'>XoopsTube: </span><span style='color: #FF0000;'>Take over from above selection menu</span></span>"
+);
 define('_AM_XOOPSTUBE_VIDEO_PICURL', 'Picture url: ');
 define('_AM_XOOPSTUBE_VIDEO_PICURLNOTE', 'Picture url when source is: Google Video, MySpace TV, DailyMotion, Blip.tv, ClipFish, LiveLeak, Veoh, Vimeo, Megavideo or Maktoob');
 define('_AM_XOOPSTUBE_VIDEO_DESCRIPTION', 'Video Description: ');
@@ -394,10 +398,13 @@ define('_AM_XOOPSTUBE_RES_NAMEF', 'Resource name:');
 define('_AM_XOOPSTUBE_RES_DESCF', 'Resource description:');
 define('_AM_XOOPSTUBE_RES_URLF', 'Resource URL:');
 define('_AM_XOOPSTUBE_RES_ITEMIDF', 'Resource Item ID:');
-define('_AM_XOOPSTUBE_RES_INFOTEXT', '<ul><li>New resources can be added, edited or removed easily via this form.</li>
+define(
+    '_AM_XOOPSTUBE_RES_INFOTEXT',
+    '<ul><li>New resources can be added, edited or removed easily via this form.</li>
     <li>List all resources linked to a video</li>
     <li>Modify resource name and description</li></ul>
-    ');
+    '
+);
 define('_AM_XOOPSTUBE_LISTBROKEN', 'Displays Videos that are possibly broken. NB: These results may not be accurate and should be taken as a rough guide.<br><br>Please check the video does exist first before any action taken.<br><br>');
 define('_AM_XOOPSTUBE_PINGTIMES', 'Displays the first estimated round ping time to each video.<br><br>NB: These results may not be accurate and should be taken as a rough guide.<br><br>');
 
@@ -548,7 +555,7 @@ define('_AM_XOOPSTUBE_TOGGLE', 'Toggle Value ');
 _MD_XOOPSTUBE_COUNTRYLTOH
 _MD_XOOPSTUBE_COUNTRYHTOL
 
-//xoopstube\admin\blockform.php
+//Xoopstube\admin\blockform.php
 _AM_NAME
 _AM_BLKTYPE
 _AM_SBLEFT
@@ -593,5 +600,5 @@ define('_AM_XOOPSTUBE_PERMSET', 'The permission has been set');
 define('_AM_XOOPSTUBE_PERMNOTSET', 'The permission can not be set');
 define('_AM_XOOPSTUBE_VIDEO_EXPIREWARNING', 'The publishing date is after expiration date!!!');
 
-define('_AM_XOOPSTUBE_ADD_SAMPLEDATA', 'Add Sample Data (will delete ALL current data)');
+define('_AM_XOOPSTUBE_ADD_SAMPLEDATA', 'Import Sample Data (will delete ALL current data)');
 define('_AM_XOOPSTUBE_SAMPLEDATA_SUCCESS', 'Sample Date uploaded successfully');
