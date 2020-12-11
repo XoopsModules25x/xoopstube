@@ -35,12 +35,14 @@ return (object)[
     'uploadFolders'  => [
         XOOPS_UPLOAD_PATH . '/' . $moduleDirName,
         XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/category',
+        XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/videos',
         XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/screenshots',
         //XOOPS_UPLOAD_PATH . '/flags'
     ],
     'copyBlankFiles' => [
         XOOPS_UPLOAD_PATH . '/' . $moduleDirName,
         XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/category',
+        XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/videos',
         XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/screenshots',
         //XOOPS_UPLOAD_PATH . '/flags'
     ],
@@ -50,15 +52,11 @@ return (object)[
             XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/testdata/uploads',
             XOOPS_UPLOAD_PATH . '/' . $moduleDirName,
         ],
-        //            [
-        //                XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/testdata/thumbs',
-        //                XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/thumbs',
-        //            ],
     ],
 
     'templateFolders' => [
         '/templates/',
-        //            '/templates/blocks/',
+        '/templates/blocks/',
         //            '/templates/admin/'
     ],
     'oldFiles'        => [
@@ -75,6 +73,7 @@ return (object)[
         '/css',
         '/js',
         '/tcpdf',
+        '/images',
     ],
 
     'renameTables' => [//         'XX_archive'     => 'ZZZZ_archive',

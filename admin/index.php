@@ -21,8 +21,15 @@ use Xmf\Module\Admin;
 use Xmf\Request;
 use Xmf\Yaml;
 use XoopsModules\Xoopstube\{
+    Common\Configurator,
+    Common\DirectoryChecker,
+    Helper,
     Utility
 };
+
+/** @var Admin $adminObject */
+/** @var Helper $helper */
+/** @var Utility $utility */
 
 require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
@@ -88,6 +95,17 @@ foreach (array_keys($uploadFolders) as $i) {
     //    $adminObject->addConfigBoxLine(array($uploadFolders[$i], $folderMode), 'chmod');
 }
 */
+
+$adminObject->addConfigBoxLine('');
+$redirectFile = $_SERVER['SCRIPT_NAME'];
+
+$configurator  = new Configurator();
+$uploadFolders = $configurator->uploadFolders;
+
+foreach (array_keys($uploadFolders) as $i) {
+    $adminObject->addConfigBoxLine(DirectoryChecker::getDirectoryStatus($uploadFolders[$i], 0777, $redirectFile));
+}
+
 
 //require_once  dirname(__DIR__) . '/testdata/index.php';
 //$adminObject->addItemButton(_AM_XOOPSTUBE_ADD_SAMPLEDATA, './../testdata/index.php?op=load', 'add');
