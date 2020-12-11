@@ -1438,7 +1438,7 @@ class Utility extends Common\SysUtility
         $infotips = self::getModuleOption('infotips');
         if ($infotips > 0) {
             $myts = MyTextSanitizer::getInstance();
-            $ret  = $myts->htmlSpecialChars(xoops_substr(strip_tags($text), 0, $infotips));
+            $ret  = htmlspecialchars(xoops_substr(strip_tags($text), 0, $infotips));
         }
 
         return $ret;
@@ -2556,7 +2556,7 @@ class Utility extends Common\SysUtility
 
         $down = [];
         //       require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/class/uploader.php';
-        require_once __DIR__ . '/uploader.php';
+        //        require_once __DIR__ . '/uploader.php';
         //        require XOOPS_ROOT_PATH . '/class/uploader.php';
 
         if (empty($allowed_mimetypes)) {
@@ -2825,7 +2825,7 @@ class Utility extends Common\SysUtility
      *
      * @return mixed
      */
-    public static function convertHtml2Text($document)
+    public static function convertHtml2text($document)
     {
         // PHP Manual:: function preg_replace
         // $document should contain an HTML document.
@@ -3477,14 +3477,14 @@ class Utility extends Common\SysUtility
                 $catlinks = [];
                 ++$count;
                 if ($logourl && 'http://' !== $logourl) {
-                    $logourl = $myts->htmlSpecialChars($logourl);
+                    $logourl = htmlspecialchars($logourl);
                 } else {
                     $logourl = '';
                 }
                 $xoopsModule          = XoopsModule::getByDirname('lexikon');
                 $catlinks['id']       = (int)$catID;
                 $catlinks['total']    = (int)$total;
-                $catlinks['linktext'] = $myts->htmlSpecialChars($name);
+                $catlinks['linktext'] = htmlspecialchars($name);
                 $catlinks['image']    = $logourl;
                 $catlinks['count']    = $count;
 
