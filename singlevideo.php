@@ -96,7 +96,7 @@ global $xoopsTpl, $xoTheme;
 
 $maxWords = 100;
 $words    = [];
-$words    = explode(' ', Utility::convertHtml2Text($video_arr['description']));
+$words    = explode(' ', Utility::convertHtml2text($video_arr['description']));
 $newWords = [];
 $i        = 0;
 while ($i < $maxWords - 1 && $i < count($words)) {

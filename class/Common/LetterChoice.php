@@ -26,7 +26,6 @@ namespace XoopsModules\Xoopstube\Common;
  * echo $choicebyletter->render();
  */
 
-use CriteriaCompo;
 use XoopsModules\Xoopstube\{
     Helper
 };
@@ -42,7 +41,7 @@ class LetterChoice
     /**
      * @access public
      */
-    public $helper = null;
+    public $helper;
     /**
      * *#@+
      *
@@ -92,7 +91,7 @@ class LetterChoice
     ) {
         $this->helper     = Helper::getInstance();
         $this->objHandler = $objHandler;
-        $this->criteria   = $criteria ?? new CriteriaCompo();
+        $this->criteria   = $criteria ?? new \CriteriaCompo();
         $this->field_name = $field_name ?? $this->objHandler->identifierName;
         //        $this->alphabet   = (count($alphabet) > 0) ? $alphabet : range('a', 'z'); // is there a way to get locale alphabet?
         //        $this->alphabet       = getLocalAlphabet();
@@ -114,12 +113,12 @@ class LetterChoice
      */
     public function render($alphaCount = null, $howmanyother = null)
     {
-        $moduleDirName      = basename(dirname(__DIR__, 2));
+        $moduleDirName      = \basename(dirname(__DIR__, 2));
         $moduleDirNameUpper = mb_strtoupper($moduleDirName);
-        xoops_loadLanguage('common', $moduleDirName);
-        xoops_loadLanguage('alphabet', $moduleDirName);
-        $all   = constant('CO_' . $moduleDirNameUpper . '_ALL');
-        $other = constant('CO_' . $moduleDirNameUpper . '_OTHER');
+        \xoops_loadLanguage('common', $moduleDirName);
+        \xoops_loadLanguage('alphabet', $moduleDirName);
+        $all   = \constant('CO_' . $moduleDirNameUpper . '_ALL');
+        $other = \constant('CO_' . $moduleDirNameUpper . '_OTHER');
 
         $ret = '';
 

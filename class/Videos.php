@@ -27,11 +27,6 @@ use XoopsModules\Xoopstube;
 use XoopsObject;
 
 
-
-
-
-
-
 /**
  * Class Videos
  */
@@ -105,8 +100,8 @@ class Videos extends XoopsObject
     }
 
     /**
-     * @param null $name
-     * @param null $value
+     * @param null|string $name
+     * @param mixed $value
      *
      * @return mixed
      */

@@ -196,6 +196,9 @@ class FileList
         return $this->filelist;
     }
 
+    /**
+     * @return null
+     */
     public function value()
     {
         return $this->value;
