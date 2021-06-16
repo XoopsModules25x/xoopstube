@@ -23,6 +23,7 @@ use Xmf\Yaml;
 use XoopsModules\Xoopstube\{
     Common\Configurator,
     Common\DirectoryChecker,
+    Common\TestdataButtons,
     Helper,
     Utility
 };
@@ -108,7 +109,7 @@ foreach (array_keys($uploadFolders) as $i) {
 
 
 //require_once  dirname(__DIR__) . '/testdata/index.php';
-//$adminObject->addItemButton(_AM_XOOPSTUBE_ADD_SAMPLEDATA, './../testdata/index.php?op=load', 'add');
+//$adminObject->addItemButton(_AM_XOOPSTUBE_LOAD_SAMPLEDATA, './../testdata/index.php?op=load', 'add');
 
 $adminObject->displayNavigation(basename(__FILE__));
 
@@ -118,114 +119,25 @@ $adminObject->displayNavigation(basename(__FILE__));
 //    $adminObject->addItemButton($newRelease[0], $newRelease[1], 'download', 'style="color : Red"');
 //}
 
-//------------- Test Data ----------------------------
-
+//------------- Test Data Buttons ----------------------------
 if ($helper->getConfig('displaySampleButton')) {
-    $yamlFile            = dirname(__DIR__) . '/config/admin.yml';
-    $config              = loadAdminConfig($yamlFile);
-    $displaySampleButton = $config['displaySampleButton'];
-
-    if (1 == $displaySampleButton) {
-        xoops_loadLanguage('admin/modulesadmin', 'system');
-        require_once dirname(__DIR__) . '/testdata/index.php';
-
-        $adminObject->addItemButton(constant('CO_' . $moduleDirNameUpper . '_' . 'ADD_SAMPLEDATA'), '__DIR__ . /../../testdata/index.php?op=load', 'add');
-        $adminObject->addItemButton(constant('CO_' . $moduleDirNameUpper . '_' . 'SAVE_SAMPLEDATA'), '__DIR__ . /../../testdata/index.php?op=save', 'add');
-        //    $adminObject->addItemButton(constant('CO_' . $moduleDirNameUpper . '_' . 'EXPORT_SCHEMA'), '__DIR__ . /../../testdata/index.php?op=exportschema', 'add');
-        $adminObject->addItemButton(constant('CO_' . $moduleDirNameUpper . '_' . 'HIDE_SAMPLEDATA_BUTTONS'), '?op=hide_buttons', 'delete');
-    } else {
-        $adminObject->addItemButton(constant('CO_' . $moduleDirNameUpper . '_' . 'SHOW_SAMPLEDATA_BUTTONS'), '?op=show_buttons', 'add');
-        $displaySampleButton = $config['displaySampleButton'];
-    }
+    TestdataButtons::loadButtonConfig($adminObject);
     $adminObject->displayButton('left', '');
 }
-
-//------------- End Test Data ----------------------------
-
-$adminObject->displayIndex();
-
-/*
-//------ check directories ---------------
-require_once  dirname(__DIR__) . '/include/directorychecker.php';
-
-$adminObject->addConfigBoxLine('');
-$redirectFile = $_SERVER['SCRIPT_NAME'];
-
-$languageConstants = array(
-    _AM_XOOPSTUBE_AVAILABLE,
-    _AM_XOOPSTUBE_NOTAVAILABLE,
-    _AM_XOOPSTUBE_CREATETHEDIR,
-    _AM_XOOPSTUBE_NOTWRITABLE,
-    _AM_XOOPSTUBE_SETMPERM,
-    _AM_XOOPSTUBE_DIRCREATED,
-    _AM_XOOPSTUBE_DIRNOTCREATED,
-    _AM_XOOPSTUBE_PERMSET,
-    _AM_XOOPSTUBE_PERMNOTSET
-);
-
-$path = $GLOBALS['xoopsModuleConfig']['uploaddir'] . '/';
-$adminObject->addConfigBoxLine(DirectoryChecker::getDirectoryStatus($path, 0777, $languageConstants, $redirectFile));
-
-$path = XOOPS_ROOT_PATH . '/' . $GLOBALS['xoopsModuleConfig']['screenshots'] . '/';
-$adminObject->addConfigBoxLine(DirectoryChecker::getDirectoryStatus($path, 0777, $languageConstants, $redirectFile));
-
-$path = XOOPS_ROOT_PATH . '/' . $GLOBALS['xoopsModuleConfig']['catimage'] . '/';
-$adminObject->addConfigBoxLine(DirectoryChecker::getDirectoryStatus($path, 0777, $languageConstants, $redirectFile));
-
-$path = XOOPS_ROOT_PATH . '/' . $GLOBALS['xoopsModuleConfig']['mainimagedir'] . '/';
-$adminObject->addConfigBoxLine(DirectoryChecker::getDirectoryStatus($path, 0777, $languageConstants, $redirectFile));
-
-//$adminObject->displayNavigation(basename(__FILE__));
-//$adminObject->displayIndex();
-//echo wfd_serverstats();
-//---------------------------
-
-fileChecks();
-
-*/
-
-
-/**
- * @param $yamlFile
- * @return array|bool
- */
-function loadAdminConfig($yamlFile)
-{
-    $config = Yaml::readWrapped($yamlFile); // work with phpmyadmin YAML dumps
-    return $config;
-}
-
-/**
- * @param $yamlFile
- */
-function hideButtons($yamlFile)
-{
-    $app['displaySampleButton'] = 0;
-    Yaml::save($app, $yamlFile);
-    redirect_header('index.php', 0, '');
-}
-
-/**
- * @param $yamlFile
- */
-function showButtons($yamlFile)
-{
-    $app['displaySampleButton'] = 1;
-    Yaml::save($app, $yamlFile);
-    redirect_header('index.php', 0, '');
-}
-
 $op = Request::getString('op', 0, 'GET');
-
 switch ($op) {
     case 'hide_buttons':
-        hideButtons($yamlFile);
+        TestdataButtons::hideButtons();
         break;
     case 'show_buttons':
-        showButtons($yamlFile);
+        TestdataButtons::showButtons();
         break;
 }
+//------------- End Test Data Buttons ----------------------------
 
+
+$adminObject->displayIndex();
 echo $utility::getServerStats();
 
-require __DIR__ . '/admin_footer.php';
+//codeDump(__FILE__);
+require_once __DIR__ . '/admin_footer.php';
