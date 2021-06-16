@@ -19,14 +19,14 @@
  */
 
 use Xmf\Request;
-use XoopsModules\Xoopstube\{
-    Common\LetterChoice,
+use XoopsModules\Xoopstube\{Common\LetterChoice,
     Helper,
     Thumbnails,
     Tree,
     Utility,
     VideosHandler
 };
+
 /** @var Helper $helper */
 
 $GLOBALS['xoopsOption']['template_main'] = 'xoopstube_viewcat.tpl';
@@ -50,7 +50,6 @@ if (is_array($arr) > 0 && !$list && !$selectdate) {
         redirect_header('index.php', 1, _MD_XOOPSTUBE_MUSTREGFIRST);
     }
 }
-
 
 //require_once XOOPS_ROOT_PATH . '/header.php';
 
@@ -84,7 +83,7 @@ $xoopsTpl->assign('catarray', $catarray);
 Helper::getInstance()->loadLanguage('common');
 $xoopsTpl->assign('letterChoiceTitle', constant('CO_' . $moduleDirNameUpper . '_' . 'BROWSETOTOPIC'));
 $db             = \XoopsDatabaseFactory::getDatabaseConnection();
-$videosHandler     = $helper->getHandler('Videos'); //new VideosHandler($db);
+$videosHandler  = $helper->getHandler('Videos'); //new VideosHandler($db);
 $choicebyletter = new LetterChoice($videosHandler, null, null, range('a', 'z'), 'letter');
 //$choicebyletter = new LetterChoice($videosHandler, null, null, range('a', 'z'), 'init', XOOPSTUBE_URL . '/letter.php');
 $catarray['letters'] = $choicebyletter->render();
@@ -192,15 +191,15 @@ if (is_array($arr) > 0 && !$list && !$selectdate) {
 }
 
 // Show Description for Category listing
-$sql         = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_cat') . ' WHERE cid=' . $cid;
-$head_arr    = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
-$html        = isset($head_arr['nohtml']) ? 0 : 1;
-$smiley      = isset($head_arr['nosmiley']) ? 0 : 1;
-$xcodes      = isset($head_arr['noxcodes']) ? 0 : 1;
-$images      = isset($head_arr['noimages']) ? 0 : 1;
-$breaks      = isset($head_arr['nobreak']) ? 1 : 0;
+$sql             = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_cat') . ' WHERE cid=' . $cid;
+$head_arr        = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
+$html            = isset($head_arr['nohtml']) ? 0 : 1;
+$smiley          = isset($head_arr['nosmiley']) ? 0 : 1;
+$xcodes          = isset($head_arr['noxcodes']) ? 0 : 1;
+$images          = isset($head_arr['noimages']) ? 0 : 1;
+$breaks          = isset($head_arr['nobreak']) ? 1 : 0;
 $tempDescription = isset($head_arr['description']) ? $head_arr['description'] : '';
-$description = &$myts->displayTarea($tempDescription, $html, $smiley, $xcodes, $images, $breaks);
+$description     = &$myts->displayTarea($tempDescription, $html, $smiley, $xcodes, $images, $breaks);
 $xoopsTpl->assign('description', $description);
 /** @var \XoopsModuleHandler $moduleHandler */
 $moduleHandler = xoops_getHandler('module');
@@ -211,9 +210,9 @@ if (isset($head_arr['title']) && $head_arr['title'] !== '') {
     $xoopsTpl->assign('xoops_pagetitle', $versioninfo->getInfo('name'));
 }
 
-if (isset($head_arr['client_id']) &&  (int)$head_arr['client_id'] > 0) {
+if (isset($head_arr['client_id']) && (int)$head_arr['client_id'] > 0) {
     $catarray['imageheader'] = Utility::getBannerFromClientId($head_arr['client_id']);
-} elseif (isset($head_arr['banner_id']) &&  (int)$head_arr['banner_id'] > 0) {
+} elseif (isset($head_arr['banner_id']) && (int)$head_arr['banner_id'] > 0) {
     $catarray['imageheader'] = Utility::getBannerFromBannerId($head_arr['banner_id']);
 } else {
     $catarray['imageheader'] = Utility::renderImageHeader();
@@ -260,9 +259,8 @@ if ($selectdate) {
     $sql    = 'SELECT DISTINCT a.* FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' a LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('xoopstube_altcat') . ' b ON b.lid=a.lid ' . $query . ' ORDER BY ' . $orderby;
     $result = $GLOBALS['xoopsDB']->query($sql, $GLOBALS['xoopsModuleConfig']['perpage'], $start);
 
-
-//    $sql2 = 'SELECT COUNT(*) FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' a LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('xoopstube_altcat') . ' b ON b.lid=a.lid ' . $query;
-//    [$count] = $GLOBALS['xoopsDB']->fetchRow($GLOBALS['xoopsDB']->query($sql2));
+    //    $sql2 = 'SELECT COUNT(*) FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' a LEFT JOIN ' . $GLOBALS['xoopsDB']->prefix('xoopstube_altcat') . ' b ON b.lid=a.lid ' . $query;
+    //    [$count] = $GLOBALS['xoopsDB']->fetchRow($GLOBALS['xoopsDB']->query($sql2));
 
     $count = $result->num_rows;
 

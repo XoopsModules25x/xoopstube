@@ -29,7 +29,7 @@ use XoopsModules\Xoopstube;
  */
 function xtubeShowBannerB($options)
 {
-    $moduleDirName = basename(dirname(__DIR__));
+    $moduleDirName = \basename(\dirname(__DIR__));
 
     $block = [];
     $time  = time();

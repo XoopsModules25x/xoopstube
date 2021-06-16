@@ -36,7 +36,7 @@
  */
 function xoopstube_tag_iteminfo(&$items)
 {
-    $moduleDirName = basename(dirname(__DIR__));
+    $moduleDirName = \basename(\dirname(__DIR__));
 
     if (empty($items) || !is_array($items)) {
         return false;

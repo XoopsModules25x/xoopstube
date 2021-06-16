@@ -179,5 +179,5 @@ $xoopsTpl->assign('back', '<a href="javascript:history.go(-1)"><img src="' . XOO
 $xoopsTpl->assign('module_dir', $xoopsModule->getVar('dirname'));
 $xoopsTpl->assign('mod_url', XOOPS_URL . '/modules/' . $moduleDirName);
 
-require_once XOOPS_ROOT_PATH . '/include/comment_view.php';
+require XOOPS_ROOT_PATH . '/include/comment_view.php';
 require_once XOOPS_ROOT_PATH . '/footer.php';

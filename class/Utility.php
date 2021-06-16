@@ -3082,7 +3082,7 @@ class Utility extends Common\SysUtility
      */
     public static function getTimestamp($time)
     {
-        $moduleDirName = basename(dirname(__DIR__));
+        $moduleDirName = \basename(\dirname(__DIR__));
         xoops_loadLanguage('local', $moduleDirName);
 
         $trans     = [
@@ -3273,7 +3273,7 @@ class Utility extends Common\SysUtility
 
         $a             = $helper->getHandler('Xoopstube');
         $b             = $a->getActiveCriteria();
-        $moduleDirName = basename(dirname(__DIR__));
+        $moduleDirName = \basename(\dirname(__DIR__));
 
         $criteria = $helper->getHandler('Xoopstube')->getActiveCriteria();
         $criteria->setGroupby('UPPER(LEFT(title,1))');

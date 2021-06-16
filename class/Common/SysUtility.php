@@ -197,7 +197,7 @@ class SysUtility
      *
      * @return bool
      */
-    public function fieldExists($fieldname, $table)
+    public static function fieldExists($fieldname, $table)
     {
         global $xoopsDB;
         $result = $xoopsDB->queryF("SHOW COLUMNS FROM   $table LIKE '$fieldname'");
@@ -216,17 +216,35 @@ class SysUtility
     {
         $new_id = false;
         $table  = $GLOBALS['xoopsDB']->prefix($tableName);
-        // copy content of the record you wish to clone
-        $tempTable = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query("SELECT * FROM $table WHERE $id_field='$id' "), MYSQLI_ASSOC) or exit('Could not select record');
+        // copy content of the record you wish to clone 
+        $sql       = "SELECT * FROM $table WHERE $id_field='$id' ";
+        $tempTable = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql), MYSQLI_ASSOC);
+        if (!$tempTable) {
+            exit($GLOBALS['xoopsDB']->error());
+        }
         // set the auto-incremented id's value to blank.
         unset($tempTable[$id_field]);
-        // insert cloned copy of the original  record
-        $result = $GLOBALS['xoopsDB']->queryF("INSERT INTO $table (" . implode(', ', array_keys($tempTable)) . ") VALUES ('" . implode("', '", array_values($tempTable)) . "')") or exit ($GLOBALS['xoopsDB']->error());
-
-        if ($result) {
-            // Return the new id
-            $new_id = $GLOBALS['xoopsDB']->getInsertId();
+        // insert cloned copy of the original  record 
+        $sql    = "INSERT INTO $table (" . implode(', ', array_keys($tempTable)) . ") VALUES ('" . implode("', '", array_values($tempTable)) . "')";
+        $result = $GLOBALS['xoopsDB']->queryF($sql);
+        if (!$result) {
+            exit($GLOBALS['xoopsDB']->error());
         }
+        // Return the new id
+        $new_id = $GLOBALS['xoopsDB']->getInsertId();
+
         return $new_id;
+    }
+
+    /**
+     * @param string $tablename
+     *
+     * @return bool
+     */
+    public static function tableExists($tablename)
+    {
+        $result = $GLOBALS['xoopsDB']->queryF("SHOW TABLES LIKE '$tablename'");
+
+        return ($GLOBALS['xoopsDB']->getRowsNum($result) > 0) ? true : false;
     }
 }

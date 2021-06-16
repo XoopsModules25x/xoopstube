@@ -31,7 +31,7 @@ use XoopsModules\Xoopstube\{
 };
 /** @var Helper $helper */
 
-// require_once  dirname(dirname(__DIR__)) . '/include/common.php';
+// require_once \dirname(__DIR__, 2) . '/include/common.php';
 
 /**
  * Class LetterChoice
@@ -95,7 +95,7 @@ class LetterChoice
         $this->field_name = $field_name ?? $this->objHandler->identifierName;
         //        $this->alphabet   = (count($alphabet) > 0) ? $alphabet : range('a', 'z'); // is there a way to get locale alphabet?
         //        $this->alphabet       = getLocalAlphabet();
-        $this->alphabet = require_once dirname(__DIR__, 2) . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/alphabet.php';
+        $this->alphabet = require_once \dirname(__DIR__, 2) . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/alphabet.php';
         $this->arg_name = $arg_name;
         $this->url      = $url ?? $_SERVER['SCRIPT_NAME'];
         if ('' !== $extra_arg && ('&amp;' !== mb_substr($extra_arg, -5) || '&' !== mb_substr($extra_arg, -1))) {
@@ -113,7 +113,7 @@ class LetterChoice
      */
     public function render($alphaCount = null, $howmanyother = null)
     {
-        $moduleDirName      = \basename(dirname(__DIR__, 2));
+        $moduleDirName      = \basename(\dirname(__DIR__, 2));
         $moduleDirNameUpper = mb_strtoupper($moduleDirName);
         \xoops_loadLanguage('common', $moduleDirName);
         \xoops_loadLanguage('alphabet', $moduleDirName);

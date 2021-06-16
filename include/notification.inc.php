@@ -25,7 +25,7 @@ function xtubeNotifyIteminfo($category, $item_id)
 {
     global $xoopsModule;
 
-    $moduleDirName = basename(dirname(__DIR__));
+    $moduleDirName = \basename(\dirname(__DIR__));
     //    $modulePath = dirname(__DIR__);
 
     if (empty($xoopsModule) || 'xoopstube' !== $xoopsModule->getVar('dirname')) {

@@ -27,7 +27,7 @@ use XoopsModules\Xoopstube\{
 
 require_once dirname(__DIR__) . '/preloads/autoloader.php';
 
-$moduleDirName      = basename(dirname(__DIR__));
+$moduleDirName      = \basename(\dirname(__DIR__));
 $moduleDirNameUpper = mb_strtoupper($moduleDirName); //$capsDirName
 
 /** @var \XoopsDatabase $db */

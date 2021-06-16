@@ -10,10 +10,8 @@
  */
 
 /**
- * @copyright    XOOPS Project https://xoops.org/
+ * @copyright    XOOPS Project (https://xoops.org)
  * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
- * @package
- * @since
  * @author     XOOPS Development Team
  */
 

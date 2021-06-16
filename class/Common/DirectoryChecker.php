@@ -16,7 +16,7 @@ namespace XoopsModules\Xoopstube\Common;
  * Xoopstube module
  *
  * @copyright       XOOPS Project (https://xoops.org)
- * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author          Xoops Development Team
  */
 
@@ -26,7 +26,7 @@ use XoopsModules\Xoopstube;
 //defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
 
 require_once dirname(dirname(dirname(dirname(__DIR__)))) . '/mainfile.php';
-$moduleDirName      = basename(dirname(dirname(__DIR__)));
+$moduleDirName      = \basename(\dirname(__DIR__, 2));
 $moduleDirNameUpper = mb_strtoupper($moduleDirName);
 xoops_loadLanguage('directorychecker', $moduleDirName);
 
@@ -53,7 +53,7 @@ class DirectoryChecker
         if (null === $redirectFile) {
             $redirectFile = $_SERVER['SCRIPT_NAME'];
         }
-        $moduleDirName      = basename(dirname(dirname(__DIR__)));
+        $moduleDirName      = \basename(\dirname(__DIR__, 2));
         $moduleDirNameUpper = mb_strtoupper($moduleDirName);
         if (!@is_dir($path)) {
             $path_status = "<img src='$pathIcon16/0.png' >";

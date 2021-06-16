@@ -32,7 +32,7 @@ use XoopsModules\Xoopstube\{
  */
 function checkBlockGroups($cid = 0, $permType = 'XTubeCatPerm', $redirect = false)
 {
-    $moduleDirName = basename(dirname(__DIR__));
+    $moduleDirName = \basename(\dirname(__DIR__));
     $groups        = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
     /** @var \XoopsGroupPermHandler $grouppermHandler */
     $grouppermHandler = xoops_getHandler('groupperm');
@@ -59,7 +59,7 @@ function checkBlockGroups($cid = 0, $permType = 'XTubeCatPerm', $redirect = fals
  */
 function xtubeCheckBlockGroups($cid = 0, $permType = 'XTubeCatPerm', $redirect = false)
 {
-    $moduleDirName = basename(dirname(__DIR__));
+    $moduleDirName = \basename(\dirname(__DIR__));
     $groups        = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
     /** @var \XoopsModuleHandler $moduleHandler */
     $moduleHandler = xoops_getHandler('module');
@@ -238,7 +238,7 @@ function getSpotlightVideos($options)
  */
 function showTopVideoBlock($options)
 {
-    $moduleDirName = basename(dirname(__DIR__));
+    $moduleDirName = \basename(\dirname(__DIR__));
     $block         = [];
     /** @var \XoopsModuleHandler $moduleHandler */
     $moduleHandler = xoops_getHandler('module');
@@ -322,7 +322,7 @@ function getRandomVideo($options)
 {
     global $myts;
     $utility       = new Utility();
-    $moduleDirName = basename(dirname(__DIR__));
+    $moduleDirName = \basename(\dirname(__DIR__));
     $block         = [];
     /** @var \XoopsModuleHandler $moduleHandler */
     $moduleHandler = xoops_getHandler('module');
@@ -391,7 +391,7 @@ function getRandomVideo($options)
 function getRandomVideoForHorizontalBlock($options)
 {
     global $myts;
-    $moduleDirName = basename(dirname(__DIR__));
+    $moduleDirName = \basename(\dirname(__DIR__));
     $block         = [];
     /** @var \XoopsModuleHandler $moduleHandler */
     $moduleHandler = xoops_getHandler('module');
