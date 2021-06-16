@@ -46,7 +46,7 @@ $modversion = [
 
     'manual'              => 'link to manual file',
     'manual_file'         => XOOPS_URL . "/modules/{$moduleDirName}/docs/install.txt",
-    'min_php'             => '7.2',
+    'min_php'             => '7.3',
     'min_xoops'           => '2.5.10',
     'min_admin'           => '1.2',
     'min_db'              => ['mysql' => '5.5'],
@@ -94,7 +94,7 @@ $modversion['tables'] = [
     $moduleDirName . '_altcat',
 ];
 
-// ------------------- blocks ------------------- //
+// ------------------- Blocks ------------------- //
 $modversion['blocks'][] = [
     'file'        => $moduleDirName . '_top.php',
     'name'        => _MI_XOOPSTUBE_BNAME1,
@@ -265,49 +265,16 @@ $modversion['comments']['callback']['approve'] = 'xtubeApproveComment';
 $modversion['comments']['callback']['update']  = 'xtubeUpdateComment';
 
 // ------------------- Templates ------------------- //
-$modversion['templates'][] = [
-    'file'        => $modversion['dirname'] . '_brokenvideo.tpl',
-    'description' => '',
-];
-
-$modversion['templates'][] = [
-    'file'        => $modversion['dirname'] . '_videoload.tpl',
-    'description' => '',
-];
-
-$modversion['templates'][] = [
-    'file'        => $modversion['dirname'] . '_index.tpl',
-    'description' => '',
-];
-
-$modversion['templates'][] = [
-    'file'        => $modversion['dirname'] . '_ratevideo.tpl',
-    'description' => '',
-];
-
-$modversion['templates'][] = [
-    'file'        => $modversion['dirname'] . '_singlevideo.tpl',
-    'description' => '',
-];
-
-$modversion['templates'][] = [
-    'file'        => $modversion['dirname'] . '_topten.tpl',
-    'description' => '',
-];
-
-$modversion['templates'][] = [
-    'file'        => $modversion['dirname'] . '_viewcat.tpl',
-    'description' => '',
-];
-
-$modversion['templates'][] = [
-    'file'        => $modversion['dirname'] . '_newlistindex.tpl',
-    'description' => '',
-];
-
-$modversion['templates'][] = [
-    'file'        => $modversion['dirname'] . '_letterschoice.tpl',
-    'description' => '',
+$modversion['templates'] = [
+    ['file' => $modversion['dirname'] . '_brokenvideo.tpl', 'description' => ''],
+    ['file' => $modversion['dirname'] . '_videoload.tpl', 'description' => ''],
+    ['file' => $modversion['dirname'] . '_index.tpl', 'description' => ''],
+    ['file' => $modversion['dirname'] . '_ratevideo.tpl', 'description' => ''],
+    ['file' => $modversion['dirname'] . '_singlevideo.tpl', 'description' => ''],
+    ['file' => $modversion['dirname'] . '_topten.tpl', 'description' => ''],
+    ['file' => $modversion['dirname'] . '_viewcat.tpl', 'description' => ''],
+    ['file' => $modversion['dirname'] . '_newlistindex.tpl', 'description' => ''],
+    ['file' => $modversion['dirname'] . '_letterschoice.tpl', 'description' => ''],
 ];
 
 // ------------------- Config ------------------- //
@@ -795,7 +762,7 @@ $modversion['config'][] = [
     'description' => '_MI_XOOPSTUBE_SHOW_SAMPLE_BUTTON_DESC',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => 0,
+    'default'     => 1,
 ];
 
 /**
