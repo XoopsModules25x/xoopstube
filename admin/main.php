@@ -462,8 +462,8 @@ switch (mb_strtolower($op)) {
 
                 return false;
             }
-            [$lid, $title] = $GLOBALS['xoopsDB']->fetchrow($result);
-            $item_tag = $result['item_tag'];
+
+            [$lid, $title, $item_tag, $vidid] = $GLOBALS['xoopsDB']->fetchrow($result);
 
             xoops_cp_header();
             //renderAdminMenu( _AM_XOOPSTUBE_BINDEX );
