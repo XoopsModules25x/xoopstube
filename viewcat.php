@@ -198,7 +198,7 @@ $smiley          = isset($head_arr['nosmiley']) ? 0 : 1;
 $xcodes          = isset($head_arr['noxcodes']) ? 0 : 1;
 $images          = isset($head_arr['noimages']) ? 0 : 1;
 $breaks          = isset($head_arr['nobreak']) ? 1 : 0;
-$tempDescription = isset($head_arr['description']) ? $head_arr['description'] : '';
+$tempDescription = $head_arr['description'] ?? '';
 $description     = &$myts->displayTarea($tempDescription, $html, $smiley, $xcodes, $images, $breaks);
 $xoopsTpl->assign('description', $description);
 /** @var \XoopsModuleHandler $moduleHandler */
