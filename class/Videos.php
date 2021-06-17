@@ -77,7 +77,7 @@ class Videos extends XoopsObject
 
     /**
      * @param null $name
-     * @return mixed|null |null
+     * @return mixed|null
      */
     public function getConfig($name = null)
     {
