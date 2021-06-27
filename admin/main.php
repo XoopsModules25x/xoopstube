@@ -513,9 +513,9 @@ switch (mb_strtolower($op)) {
             $h  = null === $xx;
             //            $e = empty(Request::getInt('offline', '', 'GET'));
             $offline = Request::getInt('offline', 0, 'GET');
-            if (0 !== $offline) {
+//            if (0 != $offline) {
                 xtubeToggleOffline($lid, $offline);
-            }
+//            }
         }
         break;
     case 'delvote':

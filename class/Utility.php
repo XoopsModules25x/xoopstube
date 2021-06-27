@@ -2743,15 +2743,14 @@ class Utility extends Common\SysUtility
         $publish      = ($published['published'] > 0) ? self::getTimestamp(formatTimestamp($published['published'], $GLOBALS['xoopsModuleConfig']['dateformatadmin'])) : 'Not Published';
         $expires      = $published['expired'] ? self::getTimestamp(formatTimestamp($published['expired'], $GLOBALS['xoopsModuleConfig']['dateformatadmin'])) : _AM_XOOPSTUBE_MINDEX_NOTSET;
 
-        if ((($published['expired'] && $published['expired'] > time()) || 0 === $published['expired'])
-            && ($published['published'] && $published['published'] < time())
-            && 0 === $published['offline']) {
-            //        $published_status = $xtubeImageArray['online'];
-            $published_status = '<a href="main.php?op=toggle&amp;lid=' . $lid . '&amp;offline=' . $published['offline'] . '"><img src="' . $pathIcon16 . '/1.png' . '"></a>';
-        } elseif (($published['expired'] && $published['expired'] < time()) && 0 === $published['offline']) {
+        if ((($published['expired'] && (int)$published['expired'] > time()) || 0 === (int)$published['expired'])
+            && ($published['published'] && (int)$published['published'] < time())
+            && 0 === (int)$published['offline']) {
+            $published_status = '<a href="main.php?op=toggle&amp;lid=' . $lid . '&amp;offline=' . (int)$published['offline'] . '"><img src="' . $pathIcon16 . '/1.png' . '"></a>';
+        } elseif (($published['expired'] && (int)$published['expired'] < time()) && 0 === (int)$published['offline']) {
             $published_status = $xtubeImageArray['expired'];
         } else {
-            $published_status = (0 === $published['published']) ? '<a href="newvideos.php">' . $xtubeImageArray['offline'] . '</a>' : '<a href="main.php?op=toggle&amp;lid=' . $lid . '&amp;offline=' . $published['offline'] . '"><img src="' . $pathIcon16 . '/0.png' . '"></a>';
+            $published_status = (0 === (int)$published['published']) ? '<a href="newvideos.php">' . $xtubeImageArray['offline'] . '</a>' : '<a href="main.php?op=toggle&amp;lid=' . $lid . '&amp;offline=' . $published['offline'] . '"><img src="' . $pathIcon16 . '/0.png' . '"></a>';
         }
 
         if (200 == $published['vidsource']) {
