@@ -17,5 +17,5 @@
  * @link            https://xoops.org/
  * @since           1.0.6
  */
-require_once dirname(__DIR__, 2) . '/mainfile.php';
-require_once XOOPS_ROOT_PATH . '/include/comment_delete.php';
+require_once \dirname(__DIR__, 2) . '/mainfile.php';
+require XOOPS_ROOT_PATH . '/include/comment_delete.php';

@@ -219,7 +219,7 @@ if ($xoopsUser) {
 }
 // Meta data
 if (0 == $publishedwords) {
-    $meta_description = xoops_substr($utility::convertHtml2Text($eachentry['definition']), 0, 150);
+    $meta_description = xoops_substr($utility::convertHtml2text($eachentry['definition']), 0, 150);
     if (1 == $helper->getConfig('multicats')) {
         $utility::extractKeywords($xoopsModule->name() . ' ,' . $eachentry['term'] . ', ' . $meta_description);
         $utility::getMetaDescription(htmlspecialchars($xoopsModule->name()) . ' ' . $eachentry['catname'] . ' ' . $eachentry['term']);

@@ -1438,7 +1438,7 @@ class Utility extends Common\SysUtility
         $infotips = self::getModuleOption('infotips');
         if ($infotips > 0) {
             $myts = MyTextSanitizer::getInstance();
-            $ret  = $myts->htmlSpecialChars(xoops_substr(strip_tags($text), 0, $infotips));
+            $ret  = htmlspecialchars(xoops_substr(strip_tags($text), 0, $infotips));
         }
 
         return $ret;
@@ -2556,7 +2556,7 @@ class Utility extends Common\SysUtility
 
         $down = [];
         //       require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/class/uploader.php';
-        require_once __DIR__ . '/uploader.php';
+        //        require_once __DIR__ . '/uploader.php';
         //        require XOOPS_ROOT_PATH . '/class/uploader.php';
 
         if (empty($allowed_mimetypes)) {
@@ -2743,15 +2743,14 @@ class Utility extends Common\SysUtility
         $publish      = ($published['published'] > 0) ? self::getTimestamp(formatTimestamp($published['published'], $GLOBALS['xoopsModuleConfig']['dateformatadmin'])) : 'Not Published';
         $expires      = $published['expired'] ? self::getTimestamp(formatTimestamp($published['expired'], $GLOBALS['xoopsModuleConfig']['dateformatadmin'])) : _AM_XOOPSTUBE_MINDEX_NOTSET;
 
-        if ((($published['expired'] && $published['expired'] > time()) || 0 === $published['expired'])
-            && ($published['published'] && $published['published'] < time())
-            && 0 === $published['offline']) {
-            //        $published_status = $xtubeImageArray['online'];
-            $published_status = '<a href="main.php?op=toggle&amp;lid=' . $lid . '&amp;offline=' . $published['offline'] . '"><img src="' . $pathIcon16 . '/1.png' . '"></a>';
-        } elseif (($published['expired'] && $published['expired'] < time()) && 0 === $published['offline']) {
+        if ((($published['expired'] && (int)$published['expired'] > time()) || 0 === (int)$published['expired'])
+            && ($published['published'] && (int)$published['published'] < time())
+            && 0 === (int)$published['offline']) {
+            $published_status = '<a href="main.php?op=toggle&amp;lid=' . $lid . '&amp;offline=' . (int)$published['offline'] . '"><img src="' . $pathIcon16 . '/1.png' . '"></a>';
+        } elseif (($published['expired'] && (int)$published['expired'] < time()) && 0 === (int)$published['offline']) {
             $published_status = $xtubeImageArray['expired'];
         } else {
-            $published_status = (0 === $published['published']) ? '<a href="newvideos.php">' . $xtubeImageArray['offline'] . '</a>' : '<a href="main.php?op=toggle&amp;lid=' . $lid . '&amp;offline=' . $published['offline'] . '"><img src="' . $pathIcon16 . '/0.png' . '"></a>';
+            $published_status = (0 === (int)$published['published']) ? '<a href="newvideos.php">' . $xtubeImageArray['offline'] . '</a>' : '<a href="main.php?op=toggle&amp;lid=' . $lid . '&amp;offline=' . $published['offline'] . '"><img src="' . $pathIcon16 . '/0.png' . '"></a>';
         }
 
         if (200 == $published['vidsource']) {
@@ -2825,7 +2824,7 @@ class Utility extends Common\SysUtility
      *
      * @return mixed
      */
-    public static function convertHtml2Text($document)
+    public static function convertHtml2text($document)
     {
         // PHP Manual:: function preg_replace
         // $document should contain an HTML document.
@@ -3082,7 +3081,7 @@ class Utility extends Common\SysUtility
      */
     public static function getTimestamp($time)
     {
-        $moduleDirName = basename(dirname(__DIR__));
+        $moduleDirName = \basename(\dirname(__DIR__));
         xoops_loadLanguage('local', $moduleDirName);
 
         $trans     = [
@@ -3273,7 +3272,7 @@ class Utility extends Common\SysUtility
 
         $a             = $helper->getHandler('Xoopstube');
         $b             = $a->getActiveCriteria();
-        $moduleDirName = basename(dirname(__DIR__));
+        $moduleDirName = \basename(\dirname(__DIR__));
 
         $criteria = $helper->getHandler('Xoopstube')->getActiveCriteria();
         $criteria->setGroupby('UPPER(LEFT(title,1))');
@@ -3477,14 +3476,14 @@ class Utility extends Common\SysUtility
                 $catlinks = [];
                 ++$count;
                 if ($logourl && 'http://' !== $logourl) {
-                    $logourl = $myts->htmlSpecialChars($logourl);
+                    $logourl = htmlspecialchars($logourl);
                 } else {
                     $logourl = '';
                 }
                 $xoopsModule          = XoopsModule::getByDirname('lexikon');
                 $catlinks['id']       = (int)$catID;
                 $catlinks['total']    = (int)$total;
-                $catlinks['linktext'] = $myts->htmlSpecialChars($name);
+                $catlinks['linktext'] = htmlspecialchars($name);
                 $catlinks['image']    = $logourl;
                 $catlinks['count']    = $count;
 

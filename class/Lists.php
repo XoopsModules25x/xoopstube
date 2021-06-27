@@ -175,6 +175,9 @@ class Lists
         return $filelist;
     }
 
+    /**
+     * @return null
+     */
     public function value()
     {
         return $this->value;

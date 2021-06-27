@@ -245,7 +245,7 @@ class Thumbnails
                         $src_file_im = \escapeshellarg($this->_source_image);
                         $new_file_im = \escapeshellarg($this->_save_image);
                     }
-                    $magick_command = $GLOBALS['xoopsModuleConfig']['path_magick'] . '/convert -quality {$GLOBALS["xoopsModuleConfig"]["imagequality"]} -antialias -sample {$newWidth}x{$newHeight} {$src_file_im} +profile "*" ' . \str_replace('\\', '/', $new_file_im) . '';
+                    $magick_command = $GLOBALS['xoopsModuleConfig']['path_magick'] . '/convert -auto-orient -quality {$GLOBALS["xoopsModuleConfig"]["imagequality"]} -antialias -sample {$newWidth}x{$newHeight} {$src_file_im} +profile "*" ' . \str_replace('\\', '/', $new_file_im) . '';
                     \passthru($magick_command);
 
                     return $this->_source_url . "/{$this->_img_savepath}/{$savefile}";

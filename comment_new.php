@@ -20,7 +20,7 @@
 
 use Xmf\Request;
 
-require_once dirname(__DIR__, 2) . '/mainfile.php';
+require_once \dirname(__DIR__, 2) . '/mainfile.php';
 $com_itemid = Request::getInt('com_itemid', 0, 'GET');
 if ($com_itemid > 0) {
     // Get file title
@@ -28,5 +28,5 @@ if ($com_itemid > 0) {
     $result         = $GLOBALS['xoopsDB']->query($sql);
     $row            = $GLOBALS['xoopsDB']->fetchArray($result);
     $com_replytitle = $row['title'];
-    require_once XOOPS_ROOT_PATH . '/include/comment_new.php';
+    require XOOPS_ROOT_PATH . '/include/comment_new.php';
 }

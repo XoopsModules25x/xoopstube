@@ -1,3 +1,12 @@
+<h5>1.08 Beta 2       [2020-12-11]</h5>  Dev: XOOPS 2.5.11, PHP 7.4.13, PHP 8.0
+<hr>
+- comment out require_once __DIR__ . '/uploader.php'; (SebT34/Zyspec)
+- code reformatting, cosmetics (mamba)
+- fix Cannot use object of type mysqli_result as array (oswaldo/zyspec)
+- min PHP: 7.3 (mamba)
+- fix toggle offline (oswaldo/mamba)
+
+
 <h5>1.08 Beta 1       [2020-11-15]</h5>  Dev: XOOPS 2.5.11, PHP 7.4.12, PHP 8.0 RC 4
 <hr>
 - renamed 'PHP_SELF' to 'SCRIPT_NAME' (mamba)

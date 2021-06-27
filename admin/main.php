@@ -462,8 +462,8 @@ switch (mb_strtolower($op)) {
 
                 return false;
             }
-            [$lid, $title] = $GLOBALS['xoopsDB']->fetchrow($result);
-            $item_tag = $result['item_tag'];
+
+            [$lid, $title, $item_tag, $vidid] = $GLOBALS['xoopsDB']->fetchrow($result);
 
             xoops_cp_header();
             //renderAdminMenu( _AM_XOOPSTUBE_BINDEX );
@@ -513,9 +513,9 @@ switch (mb_strtolower($op)) {
             $h  = null === $xx;
             //            $e = empty(Request::getInt('offline', '', 'GET'));
             $offline = Request::getInt('offline', 0, 'GET');
-            if (0 !== $offline) {
+//            if (0 != $offline) {
                 xtubeToggleOffline($lid, $offline);
-            }
+//            }
         }
         break;
     case 'delvote':

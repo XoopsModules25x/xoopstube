@@ -20,7 +20,7 @@
 use Xmf\Request;
 use XoopsModules\Xoopstube;
 
-require __DIR__ . '/admin_header.php';
+require_once __DIR__ . '/admin_header.php';
 
 if (!is_object($GLOBALS['xoopsUser']) || !is_object($xoopsModule)
     || !$GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
@@ -412,7 +412,10 @@ if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
         $myblock->setVar('visible', $visible);
         $myblock->setVar('side', $side);
         $myblock->setVar('bcachetime', $bcachetime);
-        $myblock->store();
+        //        $myblock->store();
+        /** @var \XoopsBlockHandler $blockHandler */
+        $blockHandler = xoops_getHandler('block');
+        return $blockHandler->insert($myblock);
     }
 
     /**
@@ -482,7 +485,10 @@ if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
         $myblock->setVar('visible', $bvisible);
         $myblock->setVar('side', $bside);
         $myblock->setVar('bcachetime', $bcachetime);
-        $myblock->store();
+        //        $myblock->store();
+        /** @var \XoopsBlockHandler $blockHandler */
+        $blockHandler = xoops_getHandler('block');
+        return $blockHandler->insert($myblock);
 
         if (!empty($bmodule) && count($bmodule) > 0) {
             $sql = sprintf('DELETE FROM `%s` WHERE block_id = %u', $GLOBALS['xoopsDB']->prefix('block_module_link'), $bid);

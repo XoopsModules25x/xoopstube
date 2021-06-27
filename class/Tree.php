@@ -73,14 +73,11 @@ class Tree
             $sql .= " ORDER BY $order";
         }
         $result = $this->db->query($sql);
-        $count  = $this->db->getRowsNum($result);
-        if (0 == $count) {
-            return $arr;
+        if ($result) {
+            while (false !== ($myrow = $this->db->fetchArray($result))) {
+                $arr[] = $myrow;
+            }
         }
-        while (false !== ($myrow = $this->db->fetchArray($result))) {
-            $arr[] = $myrow;
-        }
-
         return $arr;
     }
 

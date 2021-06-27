@@ -27,11 +27,6 @@ use XoopsModules\Xoopstube;
 use XoopsObject;
 
 
-
-
-
-
-
 /**
  * Class Videos
  */
@@ -50,7 +45,7 @@ class Videos extends XoopsObject
     protected function __construct($debug)
     {
         $this->debug   = $debug;
-        $moduleDirName = basename(dirname(__DIR__));
+        $moduleDirName = \basename(\dirname(__DIR__));
         parent::__construct($moduleDirName);
     }
 
@@ -82,7 +77,7 @@ class Videos extends XoopsObject
 
     /**
      * @param null $name
-     * @return mixed|null |null
+     * @return mixed|null
      */
     public function getConfig($name = null)
     {
@@ -105,8 +100,8 @@ class Videos extends XoopsObject
     }
 
     /**
-     * @param null $name
-     * @param null $value
+     * @param null|string $name
+     * @param mixed $value
      *
      * @return mixed
      */
