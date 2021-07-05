@@ -338,7 +338,7 @@ switch (mb_strtolower($op)) {
         $expiredate = strtotime(Request::getArray('expired', [], 'POST')['date']) + Request::getArray('expired', [], 'POST')['time'];
         //        }
 
-        if (Request::hasVar('clearexpire', 'POST')) {
+        if (1 === Request::getInt('clearexpire', 0, 'POST')) {
             $expiredate = '0';
         }
 
