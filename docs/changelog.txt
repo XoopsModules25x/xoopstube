@@ -1,4 +1,4 @@
-<h5>1.08 Beta 3       [NOT RELEASED]</h5>  Dev: XOOPS 2.5.11, PHP 7.4.20, PHP 8.0.7
+<h5>1.08 RC-1       [NOT RELEASED]</h5>  Dev: XOOPS 2.5.11, PHP 7.4.21, PHP 8.0.8
 <hr>
 - fix setting expiration date (mamba)
 
