@@ -59,7 +59,7 @@ class FileList
         $this->size      = (int)$size;
 
         $pathToCheck = XOOPS_ROOT_PATH . "/{$path}";
-        if (!\is_dir($pathToCheck) && !mkdir($pathToCheck, 0777) && !is_dir($pathToCheck)) {
+        if (!\is_dir($pathToCheck) && !\mkdir($pathToCheck, 0777) && !\is_dir($pathToCheck)) {
             /** @var \XoopsLogger $logger */
             $logger = \XoopsLogger::getInstance();
             $logger->handleError(\E_USER_WARNING, $pathToCheck . \_AM_XOOPSTUBE_DOESNOTEXIST, __FILE__, __LINE__);

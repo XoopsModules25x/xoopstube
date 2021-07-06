@@ -94,7 +94,7 @@ class Videos extends XoopsObject
 
             return null;
         }
-        $this->addLog("Getting config '{$name}' : " . print_r($this->config[$name], true));
+        $this->addLog("Getting config '{$name}' : " . \print_r($this->config[$name], true));
 
         return $this->config[$name];
     }
@@ -134,11 +134,11 @@ class Videos extends XoopsObject
     public function initModule()
     {
         global $xoopsModule;
-        if (isset($xoopsModule) && is_object($xoopsModule) && $xoopsModule->getVar('dirname') === $this->dirname) {
+        if (isset($xoopsModule) && \is_object($xoopsModule) && $xoopsModule->getVar('dirname') === $this->dirname) {
             $this->module = $xoopsModule;
         } else {
             /** @var \XoopsModuleHandler $moduleHandler */
-            $moduleHandler = xoops_getHandler('module');
+            $moduleHandler = \xoops_getHandler('module');
             $this->module  = $moduleHandler->getByDirname($this->dirname);
         }
         $this->addLog('INIT MODULE');
@@ -148,7 +148,7 @@ class Videos extends XoopsObject
     {
         $this->addLog('INIT CONFIG');
         /** @var \XoopsConfigHandler $configHandler */
-        $configHandler   = xoops_getHandler('config');
+        $configHandler   = \xoops_getHandler('config');
         $this->config = $configHandler->getConfigsByCat(0, $this->getModule()->getVar('mid'));
     }
 
@@ -158,7 +158,7 @@ class Videos extends XoopsObject
     public function initHandler($name)
     {
         $this->addLog('INIT ' . $name . ' HANDLER');
-        $this->handler[$name . 'Handler'] = xoops_getModuleHandler($name, $this->dirname);
+        $this->handler[$name . 'Handler'] = \xoops_getModuleHandler($name, $this->dirname);
     }
 
     /**
@@ -166,7 +166,7 @@ class Videos extends XoopsObject
      */
     public function addLog($log)
     {
-        if ($this->debug && is_object($GLOBALS['xoopsLogger'])) {
+        if ($this->debug && \is_object($GLOBALS['xoopsLogger'])) {
             $GLOBALS['xoopsLogger']->addExtra($this->module->name(), $log);
         }
     }
