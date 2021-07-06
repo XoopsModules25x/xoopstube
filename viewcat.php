@@ -204,7 +204,7 @@ $xoopsTpl->assign('description', $description);
 /** @var \XoopsModuleHandler $moduleHandler */
 $moduleHandler = xoops_getHandler('module');
 $versioninfo   = $moduleHandler->get($xoopsModule->getVar('mid'));
-if (isset($head_arr['title']) && $head_arr['title'] !== '') {
+if (isset($head_arr['title']) && '' !== $head_arr['title']) {
     $xoopsTpl->assign('xoops_pagetitle', $versioninfo->getInfo('name') . ':&nbsp;' . $head_arr['title']);
 } else {
     $xoopsTpl->assign('xoops_pagetitle', $versioninfo->getInfo('name'));
