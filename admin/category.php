@@ -70,9 +70,9 @@ function createCategory($cid = 0)
     if ($cid > 0) {
         $sql          = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_cat') . ' WHERE cid=' . (int)$cid;
         $cat_arr      = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
-        $title        = htmlspecialchars($cat_arr['title']);
-        $imgurl       = htmlspecialchars($cat_arr['imgurl']);
-        $description  = htmlspecialchars($cat_arr['description']);
+        $title        = htmlspecialchars($cat_arr['title'], ENT_QUOTES | ENT_HTML5);
+        $imgurl       = htmlspecialchars($cat_arr['imgurl'], ENT_QUOTES | ENT_HTML5);
+        $description  = htmlspecialchars($cat_arr['description'], ENT_QUOTES | ENT_HTML5);
         $nohtml       = (int)$cat_arr['nohtml'];
         $nosmiley     = (int)$cat_arr['nosmiley'];
         $noxcodes     = (int)$cat_arr['noxcodes'];

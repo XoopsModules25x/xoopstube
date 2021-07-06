@@ -34,7 +34,7 @@ function getSocialBookmarks($lid)
 
 //    $myts           = new Xoopstube\TextSanitizer();
     $sbmark_arr          = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query('SELECT lid, title FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE lid=' . (int)$lid));
-    $sbmark_arr['title'] = htmlspecialchars($sbmark_arr['title']);
+    $sbmark_arr['title'] = htmlspecialchars($sbmark_arr['title'], ENT_QUOTES | ENT_HTML5);
     $sbmark_arr['link']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/singlevideo.php?lid=' . (int)$lid;
 
     //Definitions for social bookmarks

@@ -80,7 +80,7 @@ switch (mb_strtolower($op)) {
             if (is_object($submit_user) && !empty($submit_user)) {
                 $subdate = formatTimestamp($video_arr['date'], $GLOBALS['xoopsModuleConfig']['dateformat']);
                 $cid     = $video_arr['cid'];
-                $title   = htmlspecialchars($video_arr['title']);
+                $title   = htmlspecialchars($video_arr['title'], ENT_QUOTES | ENT_HTML5);
                 $subject = _MD_XOOPSTUBE_BROKENREPORTED;
 
                 $xoopsMailer = xoops_getMailer();
@@ -122,7 +122,7 @@ switch (mb_strtolower($op)) {
         $broke_arr = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
         xoops_load('XoopsUserUtility');
         if (is_array($broke_arr)) {
-            $broken['title']        = htmlspecialchars($video_arr['title']);
+            $broken['title']        = htmlspecialchars($video_arr['title'], ENT_QUOTES | ENT_HTML5);
             $broken['id']           = $broke_arr['reportid'];
             $broken['reporter']     = \XoopsUserUtility::getUnameFromId($broke_arr['sender']);
             $broken['date']         = Utility::getTimestamp(formatTimestamp($broke_arr['date'], $GLOBALS['xoopsModuleConfig']['dateformat']));
@@ -137,7 +137,7 @@ switch (mb_strtolower($op)) {
             }
 
             // file info
-            $video['title']   = htmlspecialchars($video_arr['title']);
+            $video['title']   = htmlspecialchars($video_arr['title'], ENT_QUOTES | ENT_HTML5);
             $time             = ($video_arr['published'] > 0) ? $video_arr['published'] : $link_arr['updated'];
             $video['updated'] = Utility::getTimestamp(formatTimestamp($time, $GLOBALS['xoopsModuleConfig']['dateformat']));
             $is_updated       = (0 !== $video_arr['updated']) ? _MD_XOOPSTUBE_UPDATEDON : _MD_XOOPSTUBE_SUBMITDATE;

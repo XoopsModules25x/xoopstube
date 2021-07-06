@@ -1224,7 +1224,7 @@ class Utility extends Common\SysUtility
         $infotips = self::getModuleOption('infotips');
         if ($infotips > 0) {
             $myts = MyTextSanitizer::getInstance();
-            $ret  = \htmlspecialchars(\xoops_substr(\strip_tags($text), 0, $infotips));
+            $ret  = htmlspecialchars(xoops_substr(strip_tags($text), 0, $infotips), ENT_QUOTES | ENT_HTML5);
         }
 
         return $ret;
@@ -2413,7 +2413,7 @@ class Utility extends Common\SysUtility
         $cid = $published['cid'];
 
         $title        = '<a href="../singlevideo.php?cid=' . $published['cid'] . '&amp;lid=' . $published['lid'] . '">' . htmlspecialcharsStrip(\trim($published['title'])) . '</a>';
-        $maintitle    = \urlencode(\htmlspecialchars(\trim($published['title'])));
+        $maintitle    = \urlencode(htmlspecialchars(trim($published['title']), ENT_QUOTES | ENT_HTML5));
         $cattitle     = '<a href="../viewcat.php?cid=' . $published['cid'] . '">' . self::getCategoryTitle($published['cid']) . '</a>';
         $submitter    = self::getLinkedUserNameFromId($published['submitter']);
         $returnsource = \xtubeReturnSource($published['vidsource']);
@@ -2520,8 +2520,8 @@ class Utility extends Common\SysUtility
         $lid = $published['lid'];
         $cid = $published['cid'];
 
-        $title        = '<a href="../singlevideo.php?cid=' . $published['cid'] . '&amp;lid=' . $published['lid'] . '">' . \htmlspecialchars(\trim($published['title'])) . '</a>';
-        $maintitle    = \urlencode(\htmlspecialchars(\trim($published['title'])));
+        $title        = '<a href="../singlevideo.php?cid=' . $published['cid'] . '&amp;lid=' . $published['lid'] . '">' . htmlspecialchars(trim($published['title']), ENT_QUOTES | ENT_HTML5) . '</a>';
+        $maintitle    = \urlencode(htmlspecialchars(trim($published['title']), ENT_QUOTES | ENT_HTML5));
         $cattitle     = '<a href="../viewcat.php?cid=' . $published['cid'] . '">' . self::getCategoryTitle($published['cid']) . '</a>';
         $submitter    = self::getLinkedUserNameFromId($published['submitter']);
         $returnsource = \xtubeReturnSource($published['vidsource']);
@@ -3262,14 +3262,14 @@ class Utility extends Common\SysUtility
                 $catlinks = [];
                 ++$count;
                 if ($logourl && 'http://' !== $logourl) {
-                    $logourl = \htmlspecialchars($logourl);
+                    $logourl = htmlspecialchars($logourl, ENT_QUOTES | ENT_HTML5);
                 } else {
                     $logourl = '';
                 }
                 $xoopsModule          = XoopsModule::getByDirname('lexikon');
                 $catlinks['id']       = (int)$catID;
                 $catlinks['total']    = (int)$total;
-                $catlinks['linktext'] = \htmlspecialchars($name);
+                $catlinks['linktext'] = htmlspecialchars($name, ENT_QUOTES | ENT_HTML5);
                 $catlinks['image']    = $logourl;
                 $catlinks['count']    = $count;
 

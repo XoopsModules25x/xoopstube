@@ -55,12 +55,12 @@ function edit($lid = 0)
     $directory    = $GLOBALS['xoopsModuleConfig']['videoimgdir'];
     $lid          = $video_array['lid'] ?? 0;
     $cid          = $video_array['cid'] ?? 0;
-    $title        = isset($video_array['title']) ? htmlspecialchars($video_array['title']) : '';
-    $vidid        = isset($video_array['vidid']) ? htmlspecialchars($video_array['vidid']) : '';
-    $picurl       = isset($video_array['picurl']) ? htmlspecialchars($video_array['picurl']) : 'http://';
-    $publisher    = isset($video_array['publisher']) ? htmlspecialchars($video_array['publisher']) : '';
-    $screenshot   = isset($video_array['screenshot']) ? htmlspecialchars($video_array['screenshot']) : '';
-    $descriptionb = isset($video_array['description']) ? htmlspecialchars($video_array['description']) : '';
+    $title        = isset($video_array['title']) ? htmlspecialchars($video_array['title'], ENT_QUOTES | ENT_HTML5) : '';
+    $vidid        = isset($video_array['vidid']) ? htmlspecialchars($video_array['vidid'], ENT_QUOTES | ENT_HTML5) : '';
+    $picurl       = isset($video_array['picurl']) ? htmlspecialchars($video_array['picurl'], ENT_QUOTES | ENT_HTML5) : 'http://';
+    $publisher    = isset($video_array['publisher']) ? htmlspecialchars($video_array['publisher'], ENT_QUOTES | ENT_HTML5) : '';
+    $screenshot   = isset($video_array['screenshot']) ? htmlspecialchars($video_array['screenshot'], ENT_QUOTES | ENT_HTML5) : '';
+    $descriptionb = isset($video_array['description']) ? htmlspecialchars($video_array['description'], ENT_QUOTES | ENT_HTML5) : '';
     $published    = $video_array['published'] ?? time();
     $expired      = $video_array['expired'] ?? 0;
     $updated      = $video_array['updated'] ?? 0;
@@ -68,9 +68,9 @@ function edit($lid = 0)
     $vidsource    = $video_array['vidsource'] ?? 0;
     $ipaddress    = $video_array['ipaddress'] ?? 0;
     $notifypub    = $video_array['notifypub'] ?? 0;
-    $time         = isset($video_array['time']) ? htmlspecialchars($video_array['time']) : '0:00:00';
-    $keywords     = isset($video_array['keywords']) ? htmlspecialchars($video_array['keywords']) : '';
-    $item_tag     = isset($video_array['item_tag']) ? htmlspecialchars($video_array['item_tag']) : '';
+    $time         = isset($video_array['time']) ? htmlspecialchars($video_array['time'], ENT_QUOTES | ENT_HTML5) : '0:00:00';
+    $keywords     = isset($video_array['keywords']) ? htmlspecialchars($video_array['keywords'], ENT_QUOTES | ENT_HTML5) : '';
+    $item_tag     = isset($video_array['item_tag']) ? htmlspecialchars($video_array['item_tag'], ENT_QUOTES | ENT_HTML5) : '';
 
     require_once __DIR__ . '/admin_header.php';
     xoops_cp_header();

@@ -150,7 +150,7 @@ $result = $GLOBALS['xoopsDB']->query($sql, 10, 0);
 
 while (false !== ($arr = $GLOBALS['xoopsDB']->fetchArray($result))) {
     if (true === Utility::checkGroups($arr['cid'])) {
-        $videouid['title']     = htmlspecialchars($arr['title']);
+        $videouid['title']     = htmlspecialchars($arr['title'], ENT_QUOTES | ENT_HTML5);
         $videouid['lid']       = $arr['lid'];
         $videouid['cid']       = $arr['cid'];
         $videouid['published'] = Utility::getTimestamp(formatTimestamp($arr['published'], $GLOBALS['xoopsModuleConfig']['dateformat']));

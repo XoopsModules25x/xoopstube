@@ -138,7 +138,7 @@ if (is_array($arr) > 0 && !$list && !$selectdate) {
                     $infercategories .= ', ';
                 }
 
-                $infercategories .= '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewcat.php?cid=' . $sub_ele['cid'] . '">' . htmlspecialchars($sub_ele['title']) . '</a> (' . $hassubitems['count'] . ')';
+                $infercategories .= '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewcat.php?cid=' . $sub_ele['cid'] . '">' . htmlspecialchars($sub_ele['title'], ENT_QUOTES | ENT_HTML5) . '</a> (' . $hassubitems['count'] . ')';
                 ++$space;
                 ++$chcount;
             }
@@ -175,7 +175,7 @@ if (is_array($arr) > 0 && !$list && !$selectdate) {
         $xoopsTpl->append(
             'subcategories',
             [
-                'title'           => htmlspecialchars($ele['title']),
+                'title'           => htmlspecialchars($ele['title'], ENT_QUOTES | ENT_HTML5),
                 'id'              => $ele['cid'],
                 'image'           => XOOPS_URL . "/$imgurl",
                 'width'           => $_width,

@@ -65,11 +65,11 @@ while (list($cid, $ctitle) = $GLOBALS['xoopsDB']->fetchRow($result)) {
         $filecount = $GLOBALS['xoopsDB']->getRowsNum($result2);
 
         if ($filecount > 0) {
-            $rankings[$e]['title'] = htmlspecialchars($ctitle);
+            $rankings[$e]['title'] = htmlspecialchars($ctitle, ENT_QUOTES | ENT_HTML5);
             $rank                  = 1;
             while (list($did, $dcid, $dtitle, $hits, $rating, $votes) = $GLOBALS['xoopsDB']->fetchRow($result2)) {
                 $catpath                = basename($mytree->getPathFromId($dcid, 'title'));
-                $dtitle                 = htmlspecialchars($dtitle);
+                $dtitle                 = htmlspecialchars($dtitle, ENT_QUOTES | ENT_HTML5);
                 $rankings[$e]['file'][] = [
                     'id'       => $did,
                     'cid'      => $dcid,

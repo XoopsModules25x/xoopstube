@@ -173,7 +173,7 @@ function getSpotlightVideos($options)
             exit;
         }
         $videoload = [];
-        $title     = htmlspecialchars($myrow['title']);
+        $title     = htmlspecialchars($myrow['title'], ENT_QUOTES | ENT_HTML5);
         if (!XOOPS_USE_MULTIBYTES) {
             if (mb_strlen($myrow['title']) >= $options[2]) {
                 $title = mb_substr($myrow['title'], 0, $options[2] - 1) . '...';
@@ -286,7 +286,7 @@ function showTopVideoBlock($options)
         }
 
         $videoload = [];
-        $title     = htmlspecialchars($myrow['title']);
+        $title     = htmlspecialchars($myrow['title'], ENT_QUOTES | ENT_HTML5);
         if (!XOOPS_USE_MULTIBYTES) {
             if (mb_strlen($myrow['title']) >= $options[2]) {
                 $title = mb_substr($myrow['title'], 0, $options[2] - 1) . '...';
@@ -359,7 +359,7 @@ function getRandomVideo($options)
             continue;
         }
         $videorandom = [];
-        $title       = htmlspecialchars($myrow['title']);
+        $title       = htmlspecialchars($myrow['title'], ENT_QUOTES | ENT_HTML5);
         if (!XOOPS_USE_MULTIBYTES) {
             if (mb_strlen($myrow['title']) >= $options[2]) {
                 $title = mb_substr($myrow['title'], 0, $options[2] - 1) . '...';
@@ -428,7 +428,7 @@ function getRandomVideoForHorizontalBlock($options)
             continue;
         }
         $videorandomh            = [];
-        $title                   = htmlspecialchars($myrow['title']);
+        $title                   = htmlspecialchars($myrow['title'], ENT_QUOTES | ENT_HTML5);
         $videorandomh['balloon'] = $myrow['title'];
         if (!XOOPS_USE_MULTIBYTES) {
             if (mb_strlen($myrow['title']) >= $options[2]) {
