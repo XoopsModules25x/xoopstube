@@ -137,6 +137,7 @@ class Videos extends XoopsObject
         if (isset($xoopsModule) && is_object($xoopsModule) && $xoopsModule->getVar('dirname') === $this->dirname) {
             $this->module = $xoopsModule;
         } else {
+            /** @var \XoopsModuleHandler $moduleHandler */
             $moduleHandler = xoops_getHandler('module');
             $this->module  = $moduleHandler->getByDirname($this->dirname);
         }
@@ -146,8 +147,9 @@ class Videos extends XoopsObject
     public function initConfig()
     {
         $this->addLog('INIT CONFIG');
-        $hModConfig   = xoops_getHandler('config');
-        $this->config = $hModConfig->getConfigsByCat(0, $this->getModule()->getVar('mid'));
+        /** @var \XoopsConfigHandler $configHandler */
+        $configHandler   = xoops_getHandler('config');
+        $this->config = $configHandler->getConfigsByCat(0, $this->getModule()->getVar('mid'));
     }
 
     /**

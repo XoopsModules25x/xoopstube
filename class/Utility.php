@@ -27,228 +27,12 @@ use XoopsPageNav;
 use XoopsTpl;
 use xos_opal_Theme;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 use const _AM_XOOPSTUBE_VIDSOURCE2;
-
-
 use const _AM_XOOPSTUBE_WARNINSTALL1;
 use const _AM_XOOPSTUBE_WARNINSTALL2;
 use const _AM_XOOPSTUBE_WARNINSTALL3;
 use const _AM_XOOPSTUBE_WARNINSTALL4;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 use const ENT_HTML5;
-
-
-
-
-
-
-
 
 /**
  * xoopstube
@@ -323,6 +107,7 @@ class Utility extends Common\SysUtility
             /** @var \XoopsModuleHandler $moduleHandler */
             $moduleHandler = xoops_getHandler('module');
             $module        = $moduleHandler->getByDirname($repmodule);
+            /** @var \XoopsConfigHandler $configHandler */
             $configHandler = xoops_getHandler('config');
             if ($module) {
                 $moduleConfig = $configHandler->getConfigsByCat(0, $module->getVar('mid'));
@@ -1204,6 +989,7 @@ class Utility extends Common\SysUtility
             return implode(',', $tmp);
         }
         if (!isset($configHandler) || !is_object($configHandler)) {
+            /** @var \XoopsConfigHandler $configHandler */
             $configHandler = xoops_getHandler('config');
         }
         $xoopsConfigMetaFooter = $configHandler->getConfigsByCat(XOOPS_CONF_METAFOOTER);

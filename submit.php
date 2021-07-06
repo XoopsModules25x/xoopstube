@@ -25,6 +25,8 @@ use XoopsModules\Xoopstube\{
     Tree
 };
 
+/** @var \XoopsNotificationHandler $notificationHandler */
+
 require_once __DIR__ . '/header.php';
 require_once XOOPS_ROOT_PATH . '/header.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
@@ -103,7 +105,6 @@ if (true === Utility::checkGroups($cid, 'XTubeSubPerm')) {
             }
 
             // Notify of new link (anywhere) and new link in category
-            /** @var \XoopsNotificationHandler $notificationHandler */
             $notificationHandler = xoops_getHandler('notification');
 
             $tags               = [];

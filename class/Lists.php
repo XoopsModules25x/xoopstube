@@ -58,7 +58,7 @@ class Lists
         $suffix = ''
     ) {
         $this->value       = $value;
-        $this->selection   = $selected;
+        $this->selected   = $selected;
         $this->path        = $path;
         $this->size        = (int)$size;
         $this->emptyselect = $emptyselect ? 0 : 1;

@@ -23,9 +23,6 @@ namespace XoopsModules\Xoopstube;
  * @author          trabis <lusopoemas@gmail.com>
  */
 
-use XoopsModules\Xoopstube\{
-    Helper
-};
 
 /** @var Helper $this ->helper */
 
@@ -56,6 +53,7 @@ class VideosHandler extends \XoopsPersistableObjectHandler
      */
     public function getActiveCriteria()
     {
+        /** @var \XoopsGroupPermHandler $grouppermHandler */
         $grouppermHandler = \xoops_getHandler('groupperm');
 
         $criteria = new \CriteriaCompo(new \Criteria('offline', false));

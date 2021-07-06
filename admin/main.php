@@ -385,7 +385,7 @@ switch (mb_strtolower($op)) {
             $row                   = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
             $tags['CATEGORY_NAME'] = $row['title'];
             $tags['CATEGORY_URL']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewcat.php?cid=' . $cid;
-            /** @var \XoopsNotificationHandler $notificationHandler */
+            /** @var XoopsNotificationHandler $notificationHandler */
             $notificationHandler = xoops_getHandler('notification');
             $notificationHandler->triggerEvent('global', 0, 'new_video', $tags);
             $notificationHandler->triggerEvent('category', $cid, 'new_video', $tags);

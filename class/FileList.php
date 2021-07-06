@@ -55,7 +55,7 @@ class FileList
     public function __construct($path = 'uploads', $value = null, $selected = '', $size = 1)
     {
         $this->value     = $value;
-        $this->selection = $selected;
+        $this->selected = $selected;
         $this->size      = (int)$size;
 
         $pathToCheck = XOOPS_ROOT_PATH . "/{$path}";

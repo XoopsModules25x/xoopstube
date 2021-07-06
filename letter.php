@@ -129,7 +129,7 @@ if (!$init) {
     $xoopsTpl->assign('pagetype', '0');
     $xoopsTpl->assign('pageinitial', _MD_LEXIKON_ALL);
 
-    $utility::createPageTitle(htmlspecialchars(_MD_LEXIKON_BROWSELETTER . ' - ' . _MD_LEXIKON_ALL));
+    $utility::createPageTitle(htmlspecialchars(_MD_LEXIKON_BROWSELETTER . ' - ' . _MD_LEXIKON_ALL, ENT_QUOTES | ENT_HTML5));
 } else {    // $init does exist
     $pagetype = 1;
     // There IS an initial letter, so we want to show just that letter's terms

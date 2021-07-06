@@ -94,7 +94,7 @@ switch (mb_strtolower($op)) {
                 $xoopsMailer->assign('X_UNAME', $submit_user->getVar('uname'));
                 $xoopsMailer->assign('SITENAME', $GLOBALS['xoopsConfig']['sitename']);
                 $xoopsMailer->assign('X_ADMINMAIL', $GLOBALS['xoopsConfig']['adminmail']);
-                $xoopsMailer->assign('X_SITEvidid', XOOPS_VIDID . '/');
+                $xoopsMailer->assign('X_SITEvidid', _AM_XOOPSTUBE_MOD_VIDID . '/');
                 $xoopsMailer->assign('X_TITLE', $title);
                 $xoopsMailer->assign('X_SUB_DATE', $subdate);
                 $xoopsMailer->assign('X_VIDEOLOAD', XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/singlevideo.php?cid=' . $cid . '&amp;lid=' . $lid);
