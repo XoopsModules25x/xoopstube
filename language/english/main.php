@@ -133,7 +133,7 @@ define('_MD_XOOPSTUBE_2WEEKS', '2 Weeks');
 define('_MD_XOOPSTUBE_30DAYS', '30 Days');
 define('_MD_XOOPSTUBE_SHOW', 'Show');
 define('_MD_XOOPSTUBE_DAYS', 'days');
-define('_MD_XOOPSTUBE_NEWlinks', 'New videos');
+define('_MD_XOOPSTUBE_NEWLINKS', 'New videos');
 define('_MD_XOOPSTUBE_TOTALNEWVIDEOS', 'Total new videos');
 define('_MD_XOOPSTUBE_DTOTALFORLAST', 'Total new videos for last');
 define('_MD_XOOPSTUBE_AGREE', 'I Agree');

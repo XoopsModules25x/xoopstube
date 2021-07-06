@@ -559,7 +559,7 @@ class Utility extends Common\SysUtility
      * @param string $title The text to use
      * @param int    $level Level to return
      *
-     * @return string The heading
+     * @return void The heading
      */
     public static function htitle($title = '', $level = 1)
     {
@@ -1006,7 +1006,7 @@ class Utility extends Common\SysUtility
      * @param null   $maxWidth
      * @param null   $maxHeight
      *
-     * @return mixed True si l'upload s'est bien déroulé sinon le message d'erreur correspondant
+     * @return bool|string True si l'upload s'est bien déroulé sinon le message d'erreur correspondant
      */
     public static function uploadFile(
         $indice,
@@ -1191,7 +1191,7 @@ class Utility extends Common\SysUtility
      * @param string $etc
      * @param bool   $break_words
      *
-     * @return mixed|string
+     * @return string
      */
     public static function truncate_tagsafe($string, $length = 80, $etc = '...', $break_words = false)
     {
@@ -1406,7 +1406,7 @@ class Utility extends Common\SysUtility
      * @param string $path     The file's path
      * @param string $filename The filename
      *
-     * @return mixed If the copy succeed, the new filename else false
+     * @return false|string If the copy succeed, the new filename else false
      * @since 2.1
      */
     public static function duplicateFile($path, $filename)
@@ -2016,7 +2016,7 @@ class Utility extends Common\SysUtility
     /**
      * @param $published
      *
-     * @return mixed
+     * @return array
      */
     public static function isNewImage($published)
     {
@@ -2608,7 +2608,7 @@ class Utility extends Common\SysUtility
     /**
      * @param $document
      *
-     * @return mixed
+     * @return array|string|string[]|null
      */
     public static function convertHtml2text($document)
     {

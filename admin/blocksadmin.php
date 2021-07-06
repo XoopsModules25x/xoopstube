@@ -403,6 +403,7 @@ if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
      * @param bool   $visible
      * @param        $side
      * @param int    $bcachetime
+     * @return bool
      */
     function xtubeSetOrder($bid, $title, $weight, $visible, $side, $bcachetime)
     {
