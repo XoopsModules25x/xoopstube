@@ -19,9 +19,10 @@ use WideImage\WideImage;
 use Xmf\Request;
 use XoopsDatabaseFactory;
 use XoopsModule;
-use XoopsModules\Xoopstube;
-use XoopsModules\Xoopstube\Common;
-use XoopsModules\Xoopstube\Constants;
+use XoopsModules\Xoopstube\{
+    Common,
+    Helper
+};
 use XoopsObject;
 use XoopsPageNav;
 use XoopsTpl;
@@ -942,6 +943,7 @@ class Utility extends Common\SysUtility
         if (Request::hasVar('xoopstube_keywords_limit', 'SESSION')) {
             $limit = $_SESSION['xoopstube_keywords_limit'];
         } else {
+            /** @var \XoopsConfigHandler $configHandler */
             $configHandler                        = \xoops_getHandler('config');
             $xoopsConfigSearch                    = $configHandler->getConfigsByCat(\XOOPS_CONF_SEARCH);
             $limit                                = $xoopsConfigSearch['keyword_min'];
@@ -2346,7 +2348,7 @@ class Utility extends Common\SysUtility
         //        require XOOPS_ROOT_PATH . '/class/uploader.php';
 
         if (empty($allowed_mimetypes)) {
-            $allowed_mimetypes = xtube_getmime($FILES['userfile']['name'], $usertype);
+            $allowed_mimetypes = Utility::getMimeType($FILES['userfile']['name'], $usertype);
         }
         $upload_dir = XOOPS_ROOT_PATH . '/' . $uploaddir . '/';
 
@@ -2407,12 +2409,14 @@ class Utility extends Common\SysUtility
      */
     public static function renderCategoryListBody($published)
     {
-        global $xtubemyts, $xtubeImageArray;
+        global  $xtubeImageArray;
+
+        $xtubemyts = new XoopsTube\TextSanitizer();
 
         $lid = $published['lid'];
         $cid = $published['cid'];
 
-        $title        = '<a href="../singlevideo.php?cid=' . $published['cid'] . '&amp;lid=' . $published['lid'] . '">' . htmlspecialcharsStrip(\trim($published['title'])) . '</a>';
+        $title        = '<a href="../singlevideo.php?cid=' . $published['cid'] . '&amp;lid=' . $published['lid'] . '">' . $xtubemyts->htmlspecialcharsStrip(\trim($published['title'])) . '</a>';
         $maintitle    = \urlencode(htmlspecialchars(trim($published['title']), ENT_QUOTES | ENT_HTML5));
         $cattitle     = '<a href="../viewcat.php?cid=' . $published['cid'] . '">' . self::getCategoryTitle($published['cid']) . '</a>';
         $submitter    = self::getLinkedUserNameFromId($published['submitter']);
@@ -2515,12 +2519,14 @@ class Utility extends Common\SysUtility
      */
     public static function renderVideoListBody($published)
     {
-        global $xtubemyts, $xtubeImageArray, $pathIcon16;
+        global $xtubeImageArray, $pathIcon16;
+
+        $xtubemyts = new XoopsTube\TextSanitizer();
 
         $lid = $published['lid'];
         $cid = $published['cid'];
 
-        $title        = '<a href="../singlevideo.php?cid=' . $published['cid'] . '&amp;lid=' . $published['lid'] . '">' . htmlspecialchars(trim($published['title']), ENT_QUOTES | ENT_HTML5) . '</a>';
+        $title        = '<a href="../singlevideo.php?cid=' . $published['cid'] . '&amp;lid=' . $published['lid'] . '">' . $xtubemyts->htmlspecialchars(trim($published['title']), ENT_QUOTES | ENT_HTML5) . '</a>';
         $maintitle    = \urlencode(htmlspecialchars(trim($published['title']), ENT_QUOTES | ENT_HTML5));
         $cattitle     = '<a href="../viewcat.php?cid=' . $published['cid'] . '">' . self::getCategoryTitle($published['cid']) . '</a>';
         $submitter    = self::getLinkedUserNameFromId($published['submitter']);
@@ -3053,8 +3059,8 @@ class Utility extends Common\SysUtility
 
         $moduleDirName = $xoopsModule->getVar('dirname');
         require_once XOOPS_ROOT_PATH . "/modules/$moduleDirName/class/$moduleDirName.php";
-        /** @var \Xoopstube\Helper $helper */
-        $helper = Xoopstube\Helper::getInstance();
+        /** @var Helper $helper */
+        $helper = Helper::getInstance();
 
         $a             = $helper->getHandler('Xoopstube');
         $b             = $a->getActiveCriteria();
@@ -3108,8 +3114,8 @@ class Utility extends Common\SysUtility
      */
     public static function sortCategories($pid = 0, $level = 0)
     {
-        /** @var \Xoopstube\Helper $helper */
-        $helper = Xoopstube\Helper::getInstance();
+        /** @var Helper $helper */
+        $helper = Helper::getInstance();
 
         $sorted   = [];
         $criteria = new CriteriaCompo();
@@ -3143,8 +3149,8 @@ class Utility extends Common\SysUtility
      */
     //    public static function lettersChoice()
     //    {
-    //        /** @var \Xoopstube\Helper $helper */
-    //        $helper = Xoopstube\Helper::getInstance();
+    //        /** @var Helper $helper */
+    //        $helper = Helper::getInstance();
     //
     //        $criteria = $helper->getHandler('Videos')->getActiveCriteria();
     //        $criteria->setGroupby('UPPER(LEFT(title,1))');
@@ -3188,8 +3194,8 @@ class Utility extends Common\SysUtility
      */
     public static function isUserAdmin()
     {
-        /** @var \Xoopstube\Helper $helper */
-        $helper = Xoopstube\Helper::getInstance();
+        /** @var Helper $helper */
+        $helper = Helper::getInstance();
 
         static $xtubeIsAdmin;
 
@@ -3249,8 +3255,8 @@ class Utility extends Common\SysUtility
     public static function getCategoryArray()
     {
         global $xoopsDB, $xoopsUser, $xoopsModule;
-        /** @var \Xoopstube\Helper $helper */
-        $helper           = Xoopstube\Helper::getInstance();
+        /** @var Helper $helper */
+        $helper           = Helper::getInstance();
         $myts             = MyTextSanitizer::getInstance();
         $groups           = \is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
         $grouppermHandler = \xoops_getHandler('groupperm');
