@@ -22,7 +22,7 @@ namespace XoopsModules\Xoopstube\Common;
  * @since       1.00
  *
  * Example:
- * $choicebyletter = new Xoopstube\LetterChoice($objHandler, null, null, range('a', 'z'), 'letter');
+ * $choicebyletter = new LetterChoice($objHandler, null, null, range('a', 'z'), 'letter');
  * echo $choicebyletter->render();
  */
 

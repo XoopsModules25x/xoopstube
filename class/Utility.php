@@ -20,8 +20,7 @@ use Xmf\Request;
 use XoopsDatabaseFactory;
 use XoopsModule;
 use XoopsModules\Xoopstube\{
-    Common,
-    Helper
+    Common
 };
 use XoopsObject;
 use XoopsPageNav;
@@ -1034,7 +1033,7 @@ class Utility extends Common\SysUtility
                     $permittedtypes = $mimeTypes;
                 }
                 $uploadSize = $uploadMaxSize ?? self::getModuleOption('maxuploadsize');
-                $uploader   = new Xoopstube\MediaUploader($dstpath, $permittedtypes, $uploadSize, $maxWidth, $maxHeight);
+                $uploader   = new MediaUploader($dstpath, $permittedtypes, $uploadSize, $maxWidth, $maxHeight);
                 //$uploader->allowUnknownTypes = true;
                 $uploader->setTargetFileName($destname);
                 if ($uploader->fetchMedia($_POST['xoops_upload_file'][$indice])) {
@@ -2357,7 +2356,7 @@ class Utility extends Common\SysUtility
         $maxfilewidth  = $GLOBALS['xoopsModuleConfig']['maximgwidth'];
         $maxfileheight = $GLOBALS['xoopsModuleConfig']['maximgheight'];
 
-        $uploader = new Xoopstube\MediaUploader($upload_dir, $allowed_mimetypes, $maxfilesize, $maxfilewidth, $maxfileheight);
+        $uploader = new MediaUploader($upload_dir, $allowed_mimetypes, $maxfilesize, $maxfilewidth, $maxfileheight);
         $uploader->noAdminSizeCheck(1);
         //if ($uploader->fetchMedia(Request::getArray('xoops_upload_file[0]', array(), 'POST'))) {
         if ($uploader->fetchMedia(Request::getArray('xoops_upload_file', '', 'POST')[0])) {
@@ -2411,7 +2410,7 @@ class Utility extends Common\SysUtility
     {
         global  $xtubeImageArray;
 
-        $xtubemyts = new XoopsTube\TextSanitizer();
+        $xtubemyts = new TextSanitizer();
 
         $lid = $published['lid'];
         $cid = $published['cid'];
@@ -2521,7 +2520,7 @@ class Utility extends Common\SysUtility
     {
         global $xtubeImageArray, $pathIcon16;
 
-        $xtubemyts = new XoopsTube\TextSanitizer();
+        $xtubemyts = new TextSanitizer();
 
         $lid = $published['lid'];
         $cid = $published['cid'];
@@ -3058,15 +3057,15 @@ class Utility extends Common\SysUtility
         global $xoopsModule;
 
         $moduleDirName = $xoopsModule->getVar('dirname');
-        require_once XOOPS_ROOT_PATH . "/modules/$moduleDirName/class/$moduleDirName.php";
+//        require_once XOOPS_ROOT_PATH . "/modules/$moduleDirName/class/$moduleDirName.php";
         /** @var Helper $helper */
         $helper = Helper::getInstance();
 
-        $a             = $helper->getHandler('Xoopstube');
+        $a             = $helper->getHandler('Videos');
         $b             = $a->getActiveCriteria();
         $moduleDirName = \basename(\dirname(__DIR__));
 
-        $criteria = $helper->getHandler('Xoopstube')->getActiveCriteria();
+        $criteria = $helper->getHandler('Videos')->getActiveCriteria();
         $criteria->setGroupby('UPPER(LEFT(title,1))');
         $countsByLetters = $helper->getHandler($moduleDirName)->getCounts($criteria);
         // Fill alphabet array
