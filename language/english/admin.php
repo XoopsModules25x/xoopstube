@@ -293,7 +293,7 @@ define('_AM_XOOPSTUBE_VIDEO_SETNEWPUBLISHDATE', "<span style='font-weight: bold;
 define('_AM_XOOPSTUBE_VIDEO_SETPUBDATESETS', "<span style='font-weight: bold;'>Publish Date Set: </span><br>Publishes On Date:");
 define('_AM_XOOPSTUBE_VIDEO_EXPIREDATESET', ' Expire date set: ');
 define('_AM_XOOPSTUBE_VIDEO_SETEXPIREDATE', "<span style='font-weight: bold;'>Set Expire Date: </span>");
-define('_AM_XOOPSTUBE_VIDEO_DELEDITMESS', "Delete Broken Report?<br><br><span style='font-weight: normal;'>When you choose <span style='font-weight: bold;'>YES</span> the Broken Report will automatically deleted and you confirm that the video now works again.</span>");
+define('_AM_XOOPSTUBE_VIDEO_DELEDITMESS', "Delete Broken Report?<br><br><span style='font-weight: normal;'>When you choose <span style='font-weight: bold;'>YES</span> the Broken Report will be automatically deleted and you confirm that the video now works again.</span>");
 define('_AM_XOOPSTUBE_VIDEO_MUSTBEVALID', 'Screenshot image must be a valid image under %s directory (ex. shot.gif). This screenshot is used for XoopsTube internal flv player only.');
 define('_AM_XOOPSTUBE_VIDEO_EDITAPPROVE', 'Approve video:');
 define('_AM_XOOPSTUBE_VIDEO_NEWFILEUPLOAD', 'New Video Created and Database Updated Successfully');

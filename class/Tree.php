@@ -191,7 +191,7 @@ class Tree
 
     //makes a nicely ordered selection box
     //$preset_id is used to specify a preselected item
-    //set $none to 1 to add a option with value 0
+    //set $none to 1 to add an option with value 0
 
     /**
      * @param        $title

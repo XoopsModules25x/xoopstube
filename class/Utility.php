@@ -554,7 +554,7 @@ class Utility extends Common\SysUtility
     }
 
     /**
-     * Create an html heading (from h1 to h6)
+     * Create a html heading (from h1 to h6)
      *
      * @param string $title The text to use
      * @param int    $level Level to return

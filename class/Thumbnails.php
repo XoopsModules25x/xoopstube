@@ -160,7 +160,7 @@ class Thumbnails
             $this->img_aspect = (int)$img_aspect;
         }
 
-        // Return false if we are not using thumb nails
+        // Return false if we are not using thumbnails
         if (!$this->useThumbs()) {
             return $this->_source_url . '/' . $this->_imgName;
         }
