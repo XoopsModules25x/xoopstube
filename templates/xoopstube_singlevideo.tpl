@@ -97,7 +97,7 @@
     <{/foreach}>
 <{/if}>
 <br><br>
-<div align="center"><{$lang_copyright}></div>
+<div align="center"><{$lang_copyright|default:''}></div>
 <div style="text-align: center; padding: 3px; margin:3px;">
     <{$commentsnav}> <{$lang_notice}>
 </div>
