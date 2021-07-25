@@ -175,20 +175,20 @@ switch (mb_strtolower($op)) {
         echo '<th>' . _AM_XOOPSTUBE_MINDEX_ACTION . '</th>';
         echo '</tr>';
         if ($totalmodrequests > 0) {
-            while (false !== ($video_arr = $GLOBALS['xoopsDB']->fetchArray($result))) {
-                $path        = $xoopstubetree->getNicePathFromId($video_arr['requestid'], 'title', 'modifications.php?op=listmodreqshow&requestid');
+            while (false !== ($videoArray = $GLOBALS['xoopsDB']->fetchArray($result))) {
+                $path        = $xoopstubetree->getNicePathFromId($videoArray['requestid'], 'title', 'modifications.php?op=listmodreqshow&requestid');
                 $path        = str_replace('/', '', $path);
                 $path        = str_replace(':', '', trim($path));
                 $title       = trim($path);
-                $submitter   = Utility::getLinkedUserNameFromId($video_arr['modifysubmitter']);
-                $requestdate = Utility::getTimestamp(formatTimestamp($video_arr['requestdate'], $GLOBALS['xoopsModuleConfig']['dateformatadmin']));
+                $submitter   = Utility::getLinkedUserNameFromId($videoArray['modifysubmitter']);
+                $requestdate = Utility::getTimestamp(formatTimestamp($videoArray['requestdate'], $GLOBALS['xoopsModuleConfig']['dateformatadmin']));
 
                 echo '<tr style="text-align: center;">';
-                echo '<td class="head">' . $video_arr['requestid'] . '</td>';
+                echo '<td class="head">' . $videoArray['requestid'] . '</td>';
                 echo '<td class="even" style="text-align: left;">' . $title . '</td>';
                 echo '<td class="even">' . $submitter . '</td>';
                 echo '<td class="even">' . $requestdate . '</td>';
-                echo '<td class="even"><a href="modifications.php?op=listmodreqshow&amp;requestid=' . $video_arr['requestid'] . '">' . $xtubeImageArray['view'] . '</a></td>';
+                echo '<td class="even"><a href="modifications.php?op=listmodreqshow&amp;requestid=' . $videoArray['requestid'] . '">' . $xtubeImageArray['view'] . '</a></td>';
                 echo '</tr>';
             }
         } else {

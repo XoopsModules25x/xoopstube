@@ -274,14 +274,14 @@ $pagenav = new \XoopsPageNav($count, $GLOBALS['xoopsModuleConfig']['perpage'], $
 if ($count > 0) {
     $moderate = 0;
 
-    while (false !== ($video_arr = $GLOBALS['xoopsDB']->fetchArray($result))) {
-        if (true === Utility::checkGroups($video_arr['cid'])) {
+    while (false !== ($videoArray = $GLOBALS['xoopsDB']->fetchArray($result))) {
+        if (true === Utility::checkGroups($videoArray['cid'])) {
             require XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/include/videoloadinfo.php';
             $xoopsTpl->append('video', $video);
         }
     }
 
-    unset($video_arr);
+    unset($videoArray);
 
     // Show order box
     $xoopsTpl->assign('show_videos', false);

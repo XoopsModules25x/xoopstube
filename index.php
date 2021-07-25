@@ -212,11 +212,11 @@ if (1 == $lastvideos['lastvideosyn'] && $lastvideos['lastvideostotal'] > 0) {
         $start
     );
 
-    while (false !== ($video_arr = $GLOBALS['xoopsDB']->fetchArray($result))) {
-        if (true === Utility::checkGroups($video_arr['cid'])) {
+    while (false !== ($videoArray = $GLOBALS['xoopsDB']->fetchArray($result))) {
+        if (true === Utility::checkGroups($videoArray['cid'])) {
             $res_type = 0;
             $moderate = 0;
-            $cid      = $video_arr['cid'];
+            $cid      = $videoArray['cid'];
             require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/include/videoloadinfo.php';
             $xoopsTpl->append('video', $video);
         }

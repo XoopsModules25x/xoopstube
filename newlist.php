@@ -129,7 +129,7 @@ $sql    .= ' WHERE (published > 0 AND published <= ' . $currentTime . ')
          AND offline = 0
          ORDER BY ' . $GLOBALS['xoopsModuleConfig']['linkxorder'];
 $result = $GLOBALS['xoopsDB']->query($sql, 10, 0);
-while (false !== ($video_arr = $GLOBALS['xoopsDB']->fetchArray($result))) {
+while (false !== ($videoArray = $GLOBALS['xoopsDB']->fetchArray($result))) {
     require XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/include/videoloadinfo.php';
 }
 
