@@ -1212,7 +1212,7 @@ class Utility extends Common\SysUtility
         $infotips = self::getModuleOption('infotips');
         if ($infotips > 0) {
             $myts = \MyTextSanitizer::getInstance();
-            $ret  = htmlspecialchars(xoops_substr(strip_tags($text), 0, $infotips), ENT_QUOTES | \ENT_HTML5);
+            $ret  = \htmlspecialchars(\xoops_substr(\strip_tags($text), 0, $infotips), \ENT_QUOTES | \ENT_HTML5);
         }
 
         return $ret;
@@ -2208,21 +2208,21 @@ class Utility extends Common\SysUtility
 
         $path1_t = XOOPS_ROOT_PATH . '/' . $GLOBALS['xoopsModuleConfig']['mainimagedir'] . '/thumbs';
         if (!\is_dir($path1_t)) {
-            \xoops_error(\sprintf(_AM_XOOPSTUBE_WARNINSTALL3, $path1_t));
+            \xoops_error(\sprintf(\_AM_XOOPSTUBE_WARNINSTALL3, $path1_t));
             echo '<br>';
         }
         if (!\is_writable($path1_t)) {
-            \xoops_error(\sprintf(_AM_XOOPSTUBE_WARNINSTALL4, $path1_t));
+            \xoops_error(\sprintf(\_AM_XOOPSTUBE_WARNINSTALL4, $path1_t));
             echo '<br>';
         }
 
         $path2 = XOOPS_ROOT_PATH . '/' . $GLOBALS['xoopsModuleConfig']['videoimgdir'];
         if (!\is_dir($path2)) {
-            \xoops_error(\sprintf(_AM_XOOPSTUBE_WARNINSTALL3, $path2));
+            \xoops_error(\sprintf(\_AM_XOOPSTUBE_WARNINSTALL3, $path2));
             echo '<br>';
         }
         if (!\is_writable($path2)) {
-            \xoops_error(\sprintf(_AM_XOOPSTUBE_WARNINSTALL4, $path2));
+            \xoops_error(\sprintf(\_AM_XOOPSTUBE_WARNINSTALL4, $path2));
             echo '<br>';
         }
 
@@ -2234,31 +2234,31 @@ class Utility extends Common\SysUtility
 
         $path3 = XOOPS_ROOT_PATH . '/' . $GLOBALS['xoopsModuleConfig']['catimage'];
         if (!\is_dir($path3)) {
-            \xoops_error(\sprintf(_AM_XOOPSTUBE_WARNINSTALL3, $path3));
+            \xoops_error(\sprintf(\_AM_XOOPSTUBE_WARNINSTALL3, $path3));
             echo '<br>';
         }
         if (!\is_writable($path3)) {
-            \xoops_error(\sprintf(_AM_XOOPSTUBE_WARNINSTALL4, $path3));
+            \xoops_error(\sprintf(\_AM_XOOPSTUBE_WARNINSTALL4, $path3));
             echo '<br>';
         }
 
         $path3_t = XOOPS_ROOT_PATH . '/' . $GLOBALS['xoopsModuleConfig']['catimage'] . '/thumbs';
         if (!\is_dir($path3_t)) {
-            \xoops_error(\sprintf(_AM_XOOPSTUBE_WARNINSTALL3, $path3_t));
+            \xoops_error(\sprintf(\_AM_XOOPSTUBE_WARNINSTALL3, $path3_t));
             echo '<br>';
         }
         if (!\is_writable($path3_t)) {
-            \xoops_error(\sprintf(_AM_XOOPSTUBE_WARNINSTALL4, $path3_t));
+            \xoops_error(\sprintf(\_AM_XOOPSTUBE_WARNINSTALL4, $path3_t));
             echo '<br>';
         }
 
         $path4 = XOOPS_ROOT_PATH . '/' . $GLOBALS['xoopsModuleConfig']['videodir'];
         if (!\is_dir($path4)) {
-            \xoops_error(\sprintf(_AM_XOOPSTUBE_WARNINSTALL3, $path4));
+            \xoops_error(\sprintf(\_AM_XOOPSTUBE_WARNINSTALL3, $path4));
             echo '<br>';
         }
         if (!\is_writable($path4)) {
-            \xoops_error(\sprintf(_AM_XOOPSTUBE_WARNINSTALL4, $path4));
+            \xoops_error(\sprintf(\_AM_XOOPSTUBE_WARNINSTALL4, $path4));
             echo '<br>';
         }
 
@@ -2403,7 +2403,7 @@ class Utility extends Common\SysUtility
         $cid = $published['cid'];
 
         $title        = '<a href="../singlevideo.php?cid=' . $published['cid'] . '&amp;lid=' . $published['lid'] . '">' . $xtubemyts->htmlSpecialCharsStrip(\trim($published['title'])) . '</a>';
-        $maintitle    = \urlencode(htmlspecialchars(trim($published['title']), \ENT_QUOTES | \ENT_HTML5));
+        $maintitle    = \urlencode(\htmlspecialchars(\trim($published['title']), \ENT_QUOTES | \ENT_HTML5));
         $cattitle     = '<a href="../viewcat.php?cid=' . $published['cid'] . '">' . self::getCategoryTitle($published['cid']) . '</a>';
         $submitter    = self::getLinkedUserNameFromId($published['submitter']);
         $returnsource = \xtubeReturnSource($published['vidsource']);
@@ -2512,8 +2512,8 @@ class Utility extends Common\SysUtility
         $lid = $published['lid'];
         $cid = $published['cid'];
 
-        $title        = '<a href="../singlevideo.php?cid=' . $published['cid'] . '&amp;lid=' . $published['lid'] . '">' . $xtubemyts->htmlSpecialChars(trim($published['title']), \ENT_QUOTES | \ENT_HTML5) . '</a>';
-        $maintitle    = \urlencode(htmlspecialchars(trim($published['title']), \ENT_QUOTES | \ENT_HTML5));
+        $title        = '<a href="../singlevideo.php?cid=' . $published['cid'] . '&amp;lid=' . $published['lid'] . '">' . $xtubemyts->htmlSpecialChars(\trim($published['title']), \ENT_QUOTES | \ENT_HTML5) . '</a>';
+        $maintitle    = \urlencode(\htmlspecialchars(\trim($published['title']), \ENT_QUOTES | \ENT_HTML5));
         $cattitle     = '<a href="../viewcat.php?cid=' . $published['cid'] . '">' . self::getCategoryTitle($published['cid']) . '</a>';
         $submitter    = self::getLinkedUserNameFromId($published['submitter']);
         $returnsource = \xtubeReturnSource($published['vidsource']);
@@ -3256,14 +3256,14 @@ class Utility extends Common\SysUtility
                 $catlinks = [];
                 ++$count;
                 if ($logourl && 'http://' !== $logourl) {
-                    $logourl = htmlspecialchars($logourl, \ENT_QUOTES | \ENT_HTML5);
+                    $logourl = \htmlspecialchars($logourl, \ENT_QUOTES | \ENT_HTML5);
                 } else {
                     $logourl = '';
                 }
                 $xoopsModule          = XoopsModule::getByDirname('lexikon');
                 $catlinks['id']       = (int)$catID;
                 $catlinks['total']    = (int)$total;
-                $catlinks['linktext'] = htmlspecialchars($name, \ENT_QUOTES | \ENT_HTML5);
+                $catlinks['linktext'] = \htmlspecialchars($name, \ENT_QUOTES | \ENT_HTML5);
                 $catlinks['image']    = $logourl;
                 $catlinks['count']    = $count;
 
