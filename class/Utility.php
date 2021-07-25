@@ -1450,7 +1450,7 @@ class Utility extends Common\SysUtility
         /** @var \XoopsGroupPermHandler $grouppermHandler */
         $grouppermHandler = \xoops_getHandler('groupperm');
         if (!$grouppermHandler->checkRight($permType, $cid, $groups, $xoopsModule->getVar('mid'))) {
-            if (false === $redirect) {
+            if (!$redirect) {
                 return false;
             }
             \redirect_header('index.php', 3, _NOPERM);
@@ -1546,7 +1546,7 @@ class Utility extends Common\SysUtility
                 if (ctype_digit($value)) {
                     $value = (int)$value;
                 } else {
-                    if (true === $strict) {
+                    if ($strict) {
                         $value = \preg_replace('/\W/', '', \trim($value));
                     }
                     $value = mb_strtolower((string)$value);
@@ -1564,7 +1564,7 @@ class Utility extends Common\SysUtility
         if (ctype_digit($value)) {
             $value = (int)$value;
         } else {
-            if (true === $strict) {
+            if ($strict) {
                 $value = \preg_replace('/\W/', '', \trim($value));
             }
             $value = mb_strtolower((string)$value);
@@ -1581,7 +1581,7 @@ class Utility extends Common\SysUtility
     public static function renderToolbar($cid = 0)
     {
         $toolbar = '[ ';
-        if (true === self::checkGroups($cid, 'XTubeSubPerm')) {
+        if (self::checkGroups($cid, 'XTubeSubPerm')) {
             $toolbar .= '<a href="submit.php?cid=' . $cid . '">' . \_MD_XOOPSTUBE_SUBMITVIDEO . '</a> | ';
         }
         $toolbar .= '<a href="newlist.php?newvideoshowdays=7">' . \_MD_XOOPSTUBE_LATESTLIST . '</a> | <a href="topten.php?list=hit">' . \_MD_XOOPSTUBE_POPULARITY . '</a> | <a href="topten.php?list=rate">' . \_MD_XOOPSTUBE_TOPRATED . '</a> ]';
@@ -1905,7 +1905,7 @@ class Utility extends Common\SysUtility
         $arr    = [];
         $result = $GLOBALS['xoopsDB']->query($sql);
         while (list($lid, $cid, $published) = $GLOBALS['xoopsDB']->fetchRow($result)) {
-            if (true === self::checkGroups()) {
+            if (self::checkGroups()) {
                 ++$count;
                 $published_date = ($published > $published_date) ? $published : $published_date;
             }

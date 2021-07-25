@@ -37,7 +37,7 @@ function xtubeCheckSearchGroups($cid = 0, $permType = 'XTubeCatPerm', $redirect 
     $module        = $moduleHandler->getByDirname($moduleDirName);
 
     if (!$grouppermHandler->checkRight($permType, $cid, $groups, $module->getVar('mid'))) {
-        if (false === $redirect) {
+        if (!$redirect) {
             return false;
         }
         redirect_header('index.php', 3, _NOPERM);
