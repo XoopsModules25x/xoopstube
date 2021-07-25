@@ -12,27 +12,12 @@ namespace XoopsModules\Xoopstube;
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 
-use Criteria;
-use CriteriaCompo;
-use MyTextSanitizer;
 use WideImage\WideImage;
 use Xmf\Request;
-use XoopsDatabaseFactory;
-use XoopsModule;
 use XoopsModules\Xoopstube\{
-    Common
+    Common,
+    Helper
 };
-use XoopsObject;
-use XoopsPageNav;
-use XoopsTpl;
-use xos_opal_Theme;
-
-use const _AM_XOOPSTUBE_VIDSOURCE2;
-use const _AM_XOOPSTUBE_WARNINSTALL1;
-use const _AM_XOOPSTUBE_WARNINSTALL2;
-use const _AM_XOOPSTUBE_WARNINSTALL3;
-use const _AM_XOOPSTUBE_WARNINSTALL4;
-use const ENT_HTML5;
 
 /**
  * xoopstube
@@ -892,7 +877,7 @@ class Utility extends Common\SysUtility
         $content = strtr($content, $s, $r);
         $content = \strip_tags($content);
         $content = mb_strtolower($content);
-        $content = \htmlentities($content, \ENT_QUOTES | ENT_HTML5); // TODO: Vérifier
+        $content = \htmlentities($content, \ENT_QUOTES | \ENT_HTML5); // TODO: Vérifier
         $content = \preg_replace('/&([a-zA-Z])(uml|acute|grave|circ|tilde);/', '$1', $content);
         $content = \html_entity_decode($content);
         $content = \str_ireplace('quot', ' ', $content);
@@ -948,7 +933,7 @@ class Utility extends Common\SysUtility
             $limit                                = $xoopsConfigSearch['keyword_min'];
             $_SESSION['xoopstube_keywords_limit'] = $limit;
         }
-        $myts            = MyTextSanitizer::getInstance();
+        $myts            = \MyTextSanitizer::getInstance();
         $content         = \str_replace('<br>', ' ', $content);
         $content         = $myts->undoHtmlSpecialChars($content);
         $content         = \strip_tags($content);
@@ -1041,10 +1026,10 @@ class Utility extends Common\SysUtility
                         return true;
                     }
 
-                    return _ERRORS . ' ' . \htmlentities($uploader->getErrors(), \ENT_QUOTES | ENT_HTML5);
+                    return _ERRORS . ' ' . \htmlentities($uploader->getErrors(), \ENT_QUOTES | \ENT_HTML5);
                 }
 
-                return \htmlentities($uploader->getErrors(), \ENT_QUOTES | ENT_HTML5);
+                return \htmlentities($uploader->getErrors(), \ENT_QUOTES | \ENT_HTML5);
             }
 
             return false;
@@ -1224,8 +1209,8 @@ class Utility extends Common\SysUtility
         $ret      = '';
         $infotips = self::getModuleOption('infotips');
         if ($infotips > 0) {
-            $myts = MyTextSanitizer::getInstance();
-            $ret  = htmlspecialchars(xoops_substr(strip_tags($text), 0, $infotips), ENT_QUOTES | ENT_HTML5);
+            $myts = \MyTextSanitizer::getInstance();
+            $ret  = htmlspecialchars(xoops_substr(strip_tags($text), 0, $infotips), ENT_QUOTES | \ENT_HTML5);
         }
 
         return $ret;
@@ -1286,9 +1271,9 @@ class Utility extends Common\SysUtility
     {
         $start             = \mktime(0, 1, 0, \date('n'), \date('j'), \date('Y'));
         $end               = \mktime(0, 0, 0, \date('n'), \date('t'), \date('Y'));
-        $criteriaThisMonth = new CriteriaCompo();
-        $criteriaThisMonth->add(new Criteria('product_submitted', $start, '>='));
-        $criteriaThisMonth->add(new Criteria('product_submitted', $end, '<='));
+        $criteriaThisMonth = new \CriteriaCompo();
+        $criteriaThisMonth->add(new \Criteria('product_submitted', $start, '>='));
+        $criteriaThisMonth->add(new \Criteria('product_submitted', $end, '<='));
 
         return $criteriaThisMonth;
     }
@@ -1309,7 +1294,7 @@ class Utility extends Common\SysUtility
             if (\count($xoopsUsersIDs) > 0) {
                 /** @var \XoopsUserHandler $memberHandler */
                 $memberHandler = \xoops_getHandler('user');
-                $criteria      = new Criteria('uid', '(' . \implode(',', $xoopsUsersIDs) . ')', 'IN');
+                $criteria      = new \Criteria('uid', '(' . \implode(',', $xoopsUsersIDs) . ')', 'IN');
                 $criteria->setSort('uid');
                 $users = $memberHandler->getObjects($criteria, true);
             }
@@ -2199,23 +2184,23 @@ class Utility extends Common\SysUtility
         }
         // ###### Output warn messages for security ######
         if (\is_dir(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/update/')) {
-            \xoops_error(\sprintf(_AM_XOOPSTUBE_WARNINSTALL1, XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/update/'));
+            \xoops_error(\sprintf(\_AM_XOOPSTUBE_WARNINSTALL1, XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/update/'));
             echo '<br>';
         }
 
         $_file = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/update.php';
         if (\file_exists($_file)) {
-            \xoops_error(\sprintf(_AM_XOOPSTUBE_WARNINSTALL2, XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/update.php'));
+            \xoops_error(\sprintf(\_AM_XOOPSTUBE_WARNINSTALL2, XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/update.php'));
             echo '<br>';
         }
 
         $path1 = XOOPS_ROOT_PATH . '/' . $GLOBALS['xoopsModuleConfig']['mainimagedir'];
         if (!\is_dir($path1)) {
-            \xoops_error(\sprintf(_AM_XOOPSTUBE_WARNINSTALL3, $path1));
+            \xoops_error(\sprintf(\_AM_XOOPSTUBE_WARNINSTALL3, $path1));
             echo '<br>';
         }
         if (!\is_writable($path1)) {
-            \xoops_error(\sprintf(_AM_XOOPSTUBE_WARNINSTALL4, $path1));
+            \xoops_error(\sprintf(\_AM_XOOPSTUBE_WARNINSTALL4, $path1));
             echo '<br>';
         }
 
@@ -2416,7 +2401,7 @@ class Utility extends Common\SysUtility
         $cid = $published['cid'];
 
         $title        = '<a href="../singlevideo.php?cid=' . $published['cid'] . '&amp;lid=' . $published['lid'] . '">' . $xtubemyts->htmlspecialcharsStrip(\trim($published['title'])) . '</a>';
-        $maintitle    = \urlencode(htmlspecialchars(trim($published['title']), ENT_QUOTES | ENT_HTML5));
+        $maintitle    = \urlencode(htmlspecialchars(trim($published['title']), \ENT_QUOTES | \ENT_HTML5));
         $cattitle     = '<a href="../viewcat.php?cid=' . $published['cid'] . '">' . self::getCategoryTitle($published['cid']) . '</a>';
         $submitter    = self::getLinkedUserNameFromId($published['submitter']);
         $returnsource = \xtubeReturnSource($published['vidsource']);
@@ -2478,7 +2463,7 @@ class Utility extends Common\SysUtility
         }
         // Display Page Nav if published is > total display pages amount.
         require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
-        $pagenav = new XoopsPageNav($pubrowamount, $GLOBALS['xoopsModuleConfig']['admin_perpage'], $start, 'st' . $art, $_this);
+        $pagenav = new \XoopsPageNav($pubrowamount, $GLOBALS['xoopsModuleConfig']['admin_perpage'], $start, 'st' . $art, $_this);
         echo '<div style="text-align: ' . $align . '; padding: 8px;">' . $pagenav->renderNav() . '</div>';
 
         return null;
@@ -2502,7 +2487,7 @@ class Utility extends Common\SysUtility
         <tr>
             <th style="text-align: center; font-size: smaller;">' . \_AM_XOOPSTUBE_MINDEX_ID . '</th>
             <th style=" font-size: smaller;"><b>' . \_AM_XOOPSTUBE_MINDEX_TITLE . '</th>
-            <th style="text-align: center; font-size: smaller;">' . _AM_XOOPSTUBE_VIDSOURCE2 . '</th>
+            <th style="text-align: center; font-size: smaller;">' . \_AM_XOOPSTUBE_VIDSOURCE2 . '</th>
             <th style="text-align: center; font-size: smaller;">' . \_AM_XOOPSTUBE_CATTITLE . '</th>
             <th style="text-align: center; font-size: smaller;">' . \_AM_XOOPSTUBE_MINDEX_POSTER . '</th>
             <th style="text-align: center; font-size: smaller;">' . \_AM_XOOPSTUBE_MINDEX_PUBLISH . '</th>
@@ -2525,8 +2510,8 @@ class Utility extends Common\SysUtility
         $lid = $published['lid'];
         $cid = $published['cid'];
 
-        $title        = '<a href="../singlevideo.php?cid=' . $published['cid'] . '&amp;lid=' . $published['lid'] . '">' . $xtubemyts->htmlspecialchars(trim($published['title']), ENT_QUOTES | ENT_HTML5) . '</a>';
-        $maintitle    = \urlencode(htmlspecialchars(trim($published['title']), ENT_QUOTES | ENT_HTML5));
+        $title        = '<a href="../singlevideo.php?cid=' . $published['cid'] . '&amp;lid=' . $published['lid'] . '">' . $xtubemyts->htmlspecialchars(trim($published['title']), \ENT_QUOTES | \ENT_HTML5) . '</a>';
+        $maintitle    = \urlencode(htmlspecialchars(trim($published['title']), \ENT_QUOTES | \ENT_HTML5));
         $cattitle     = '<a href="../viewcat.php?cid=' . $published['cid'] . '">' . self::getCategoryTitle($published['cid']) . '</a>';
         $submitter    = self::getLinkedUserNameFromId($published['submitter']);
         $returnsource = \xtubeReturnSource($published['vidsource']);
@@ -2604,7 +2589,7 @@ class Utility extends Common\SysUtility
         }
         // Display Page Nav if published is > total display pages amount.
         require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
-        $pagenav = new XoopsPageNav($pubrowamount, $GLOBALS['xoopsModuleConfig']['admin_perpage'], $start, 'st' . $art, $_this);
+        $pagenav = new \XoopsPageNav($pubrowamount, $GLOBALS['xoopsModuleConfig']['admin_perpage'], $start, 'st' . $art, $_this);
         echo '<div style="text-align: ' . $align . '; padding: 8px;">' . $pagenav->renderNav() . '</div>';
 
         return null;
@@ -3088,10 +3073,10 @@ class Utility extends Common\SysUtility
         // Render output
         if (!isset($GLOBALS['xoTheme']) || !\is_object($GLOBALS['xoTheme'])) {
             require_once $GLOBALS['xoops']->path('class/theme.php');
-            $GLOBALS['xoTheme'] = new xos_opal_Theme();
+            $GLOBALS['xoTheme'] = new \xos_opal_Theme();
         }
         require_once $GLOBALS['xoops']->path('class/template.php');
-        $letterschoiceTpl          = new XoopsTpl();
+        $letterschoiceTpl          = new \XoopsTpl();
         $letterschoiceTpl->caching = 0; // Disable cache
         $letterschoiceTpl->assign('alphabet', $alphabet_array);
         $html = $letterschoiceTpl->fetch('db:' . $helper->getModule()->dirname() . '_common_letterschoice.tpl');
@@ -3117,8 +3102,8 @@ class Utility extends Common\SysUtility
         $helper = Helper::getInstance();
 
         $sorted   = [];
-        $criteria = new CriteriaCompo();
-        $criteria->add(new Criteria('pid', $pid));
+        $criteria = new \CriteriaCompo();
+        $criteria->add(new \Criteria('pid', $pid));
         $criteria->setSort('weight');
         $criteria->setOrder('ASC');
         $subCategoryObjs = $helper->getHandler('Category')->getObjects($criteria);
@@ -3256,7 +3241,7 @@ class Utility extends Common\SysUtility
         global $xoopsDB, $xoopsUser, $xoopsModule;
         /** @var Helper $helper */
         $helper           = Helper::getInstance();
-        $myts             = MyTextSanitizer::getInstance();
+        $myts             = \MyTextSanitizer::getInstance();
         $groups           = \is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
         $grouppermHandler = \xoops_getHandler('groupperm');
         $block0           = [];
@@ -3267,14 +3252,14 @@ class Utility extends Common\SysUtility
                 $catlinks = [];
                 ++$count;
                 if ($logourl && 'http://' !== $logourl) {
-                    $logourl = htmlspecialchars($logourl, ENT_QUOTES | ENT_HTML5);
+                    $logourl = htmlspecialchars($logourl, \ENT_QUOTES | \ENT_HTML5);
                 } else {
                     $logourl = '';
                 }
                 $xoopsModule          = XoopsModule::getByDirname('lexikon');
                 $catlinks['id']       = (int)$catID;
                 $catlinks['total']    = (int)$total;
-                $catlinks['linktext'] = htmlspecialchars($name, ENT_QUOTES | ENT_HTML5);
+                $catlinks['linktext'] = htmlspecialchars($name, \ENT_QUOTES | \ENT_HTML5);
                 $catlinks['image']    = $logourl;
                 $catlinks['count']    = $count;
 

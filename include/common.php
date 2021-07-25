@@ -55,6 +55,8 @@ if (!defined($moduleDirNameUpper . '_CONSTANTS_DEFINED')) {
     define($moduleDirNameUpper . '_UPLOAD_URL', XOOPS_UPLOAD_URL . '/' . $moduleDirName); // WITHOUT Trailing slash
     define($moduleDirNameUpper . '_UPLOAD_PATH', XOOPS_UPLOAD_PATH . '/' . $moduleDirName); // WITHOUT Trailing slash
     define($moduleDirNameUpper . '_CONSTANTS_DEFINED', 1);
+    // Do we resize pictures when they are smaller than defined dimensions  ?
+    define($moduleDirNameUpper . '_DONT_RESIZE_IF_SMALLER', true);
 }
 
 $pathIcon16 = Xmf\Module\Admin::iconUrl('', 16);
