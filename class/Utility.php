@@ -519,7 +519,7 @@ class Utility extends Common\SysUtility
      * @return \XoopsObject The modified form
      * @internal param string $caracter The character to use to mark fields
      */
-    public static function &formMarkRequiredFields(XoopsObject $sform)
+    public static function &formMarkRequiredFields(\XoopsObject $sform)
     {
         if (self::needsAsterisk()) {
             $required = [];
@@ -2332,7 +2332,7 @@ class Utility extends Common\SysUtility
         //        require XOOPS_ROOT_PATH . '/class/uploader.php';
 
         if (empty($allowed_mimetypes)) {
-            $allowed_mimetypes = Utility::getMimeType($FILES['userfile']['name'], $usertype);
+            $allowed_mimetypes = self::getMimeType($FILES['userfile']['name'], $usertype);
         }
         $upload_dir = XOOPS_ROOT_PATH . '/' . $uploaddir . '/';
 
@@ -3049,7 +3049,6 @@ class Utility extends Common\SysUtility
 
         $moduleDirName = $xoopsModule->getVar('dirname');
 //        require_once XOOPS_ROOT_PATH . "/modules/$moduleDirName/class/$moduleDirName.php";
-        /** @var Helper $helper */
         $helper = Helper::getInstance();
 
         $a             = $helper->getHandler('Videos');
@@ -3104,7 +3103,6 @@ class Utility extends Common\SysUtility
      */
     public static function sortCategories($pid = 0, $level = 0)
     {
-        /** @var Helper $helper */
         $helper = Helper::getInstance();
 
         $sorted   = [];
@@ -3184,7 +3182,6 @@ class Utility extends Common\SysUtility
      */
     public static function isUserAdmin()
     {
-        /** @var Helper $helper */
         $helper = Helper::getInstance();
 
         static $xtubeIsAdmin;
@@ -3245,7 +3242,6 @@ class Utility extends Common\SysUtility
     public static function getCategoryArray()
     {
         global $xoopsDB, $xoopsUser, $xoopsModule;
-        /** @var Helper $helper */
         $helper           = Helper::getInstance();
         $myts             = \MyTextSanitizer::getInstance();
         $groups           = \is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
