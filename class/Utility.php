@@ -2708,7 +2708,7 @@ class Utility extends Common\SysUtility
     public static function getBannerFromBannerId($banner_id)
     {
         ###### Hack by www.stefanosilvestrini.com ######
-        $db      = XoopsDatabaseFactory::getDatabaseConnection();
+        $db      = \XoopsDatabaseFactory::getDatabaseConnection();
         $bresult = $db->query('SELECT COUNT(*) FROM ' . $db->prefix('banner') . ' WHERE bid=' . $banner_id);
         [$numrows] = $db->fetchRow($bresult);
         if ($numrows > 1) {
@@ -2767,7 +2767,7 @@ class Utility extends Common\SysUtility
     public static function getBannerFromClientId($client_id)
     {
         ###### Hack by www.stefanosilvestrini.com ######
-        $db      = XoopsDatabaseFactory::getDatabaseConnection();
+        $db      = \XoopsDatabaseFactory::getDatabaseConnection();
         $bresult = $db->query('SELECT COUNT(*) FROM ' . $db->prefix('banner') . ' WHERE cid=' . $client_id);
         [$numrows] = $db->fetchRow($bresult);
         if ($numrows > 1) {
