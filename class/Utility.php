@@ -2713,7 +2713,10 @@ class Utility extends Common\SysUtility
         [$numrows] = $db->fetchRow($bresult);
         if ($numrows > 1) {
             --$numrows;
-            $bannum = \random_int(0, $numrows);
+            try {
+                $bannum = \random_int(0, $numrows);
+            } catch (\Exception $e) {
+            }            
         } else {
             $bannum = 0;
         }
@@ -2772,7 +2775,10 @@ class Utility extends Common\SysUtility
         [$numrows] = $db->fetchRow($bresult);
         if ($numrows > 1) {
             --$numrows;
-            $bannum = \random_int(0, $numrows);
+            try {
+                $bannum = \random_int(0, $numrows);
+            } catch (\Exception $e) {
+            }
         } else {
             $bannum = 0;
         }
