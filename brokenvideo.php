@@ -77,7 +77,7 @@ switch (mb_strtolower($op)) {
             /** @var \XoopsMemberHandler $memberHandler */
             $memberHandler = xoops_getHandler('member');
             $submit_user   = $memberHandler->getUser($videoArray['submitter']);
-            if (is_object($submit_user) && !empty($submit_user)) {
+            if (is_object($submit_user) && null !== $submit_user) {
                 $subdate = formatTimestamp($videoArray['date'], $GLOBALS['xoopsModuleConfig']['dateformat']);
                 $cid     = $videoArray['cid'];
                 $title   = htmlspecialchars($videoArray['title'], ENT_QUOTES | ENT_HTML5);
