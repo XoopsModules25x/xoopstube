@@ -85,8 +85,8 @@ switch (mb_strtolower($op)) {
 
                 $xoopsMailer = xoops_getMailer();
                 $xoopsMailer->useMail();
-                $template_dir = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/mail_template';
-                $xoopsMailer->setTemplateDir($template_dir);
+                $templateDir = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/mail_template';
+                $xoopsMailer->setTemplateDir($templateDir);
                 $xoopsMailer->setTemplate('videobroken_notify.tpl');
                 $xoopsMailer->setToEmails($submit_user->getVar('email'));
                 $xoopsMailer->setFromEmail($GLOBALS['xoopsConfig']['adminmail']);
