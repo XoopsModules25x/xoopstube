@@ -119,15 +119,15 @@ switch (mb_strtolower($op)) {
         unset($sql);
 
         $sql       = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_broken') . ' WHERE lid=' . $lid;
-        $broke_arr = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
+        $brokeArray = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
         xoops_load('XoopsUserUtility');
-        if (is_array($broke_arr)) {
+        if (is_array($brokeArray)) {
             $broken['title']        = htmlspecialchars($videoArray['title'], ENT_QUOTES | ENT_HTML5);
-            $broken['id']           = $broke_arr['reportid'];
-            $broken['reporter']     = \XoopsUserUtility::getUnameFromId($broke_arr['sender']);
-            $broken['date']         = Utility::getTimestamp(formatTimestamp($broke_arr['date'], $GLOBALS['xoopsModuleConfig']['dateformat']));
-            $broken['acknowledged'] = (1 == $broke_arr['acknowledged']) ? _YES : _NO;
-            $broken['confirmed']    = (1 == $broke_arr['confirmed']) ? _YES : _NO;
+            $broken['id']           = $brokeArray['reportid'];
+            $broken['reporter']     = \XoopsUserUtility::getUnameFromId($brokeArray['sender']);
+            $broken['date']         = Utility::getTimestamp(formatTimestamp($brokeArray['date'], $GLOBALS['xoopsModuleConfig']['dateformat']));
+            $broken['acknowledged'] = (1 == $brokeArray['acknowledged']) ? _YES : _NO;
+            $broken['confirmed']    = (1 == $brokeArray['confirmed']) ? _YES : _NO;
             $xoopsTpl->assign('broken', $broken);
             $xoopsTpl->assign('brokenreport', true);
         } else {
