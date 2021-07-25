@@ -3260,7 +3260,7 @@ class Utility extends Common\SysUtility
                 } else {
                     $logourl = '';
                 }
-                $xoopsModule          = XoopsModule::getByDirname('lexikon');
+                $xoopsModule          = \XoopsModule::getByDirname('lexikon');
                 $catlinks['id']       = (int)$catID;
                 $catlinks['total']    = (int)$total;
                 $catlinks['linktext'] = \htmlspecialchars($name, \ENT_QUOTES | \ENT_HTML5);
