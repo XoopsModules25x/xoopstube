@@ -502,6 +502,8 @@ if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
         $myblock->setVar('visible', $bvisible);
         $myblock->setVar('side', $bside);
         $myblock->setVar('bcachetime', $bcachetime);
+        $myblock->setVar('module', $bmodule);
+        $myblock->setVar('groups', $groups);
         $helper = Helper::getInstance();
         $helper->loadLanguage('common');
         //update block options
