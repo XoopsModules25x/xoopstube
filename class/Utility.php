@@ -409,7 +409,9 @@ class Utility extends Common\SysUtility
         if (\is_object($xoopsUser)) {
             if (\in_array(XOOPS_GROUP_ADMIN, $xoopsUser->getGroups())) {
                 return true;
-            } elseif (isset($xoopsModule) && $xoopsUser->isAdmin($xoopsModule->getVar('mid'))) {
+            }
+
+            if (isset($xoopsModule) && $xoopsUser->isAdmin($xoopsModule->getVar('mid'))) {
                 return true;
             }
         }
