@@ -140,12 +140,12 @@ switch (mb_strtolower($op)) {
             $video['title']   = htmlspecialchars($videoArray['title'], ENT_QUOTES | ENT_HTML5);
             $time             = ($videoArray['published'] > 0) ? $videoArray['published'] : $link_arr['updated'];
             $video['updated'] = Utility::getTimestamp(formatTimestamp($time, $GLOBALS['xoopsModuleConfig']['dateformat']));
-            $is_updated       = (0 !== $videoArray['updated']) ? _MD_XOOPSTUBE_UPDATEDON : _MD_XOOPSTUBE_SUBMITDATE;
+            $isUpdated       = (0 !== $videoArray['updated']) ? _MD_XOOPSTUBE_UPDATEDON : _MD_XOOPSTUBE_SUBMITDATE;
 
             $video['publisher'] = \XoopsUserUtility::getUnameFromId($videoArray['submitter']);
 
             $xoopsTpl->assign('video_id', $lid);
-            $xoopsTpl->assign('lang_subdate', $is_updated);
+            $xoopsTpl->assign('lang_subdate', $isUpdated);
             $xoopsTpl->assign('video', $video);
         }
 

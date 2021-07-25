@@ -56,12 +56,12 @@ $video['publisher']  = xtubeGetVideoPublisher($videoArray['vidid'], $videoArray[
 
 if (empty($moderate)) {
     $time       = (0 !== $videoArray['updated']) ? $videoArray['updated'] : $videoArray['published'];
-    $is_updated = (0 !== $videoArray['updated']) ? _MD_XOOPSTUBE_UPDATEDON : _MD_XOOPSTUBE_PUBLISHDATE;
-    $xoopsTpl->assign('lang_subdate', $is_updated);
+    $isUpdated = (0 !== $videoArray['updated']) ? _MD_XOOPSTUBE_UPDATEDON : _MD_XOOPSTUBE_PUBLISHDATE;
+    $xoopsTpl->assign('lang_subdate', $isUpdated);
 } else {
     $time       = $videoArray['date'];
-    $is_updated = _MD_XOOPSTUBE_SUBMITDATE;
-    $xoopsTpl->assign('lang_subdate', $is_updated);
+    $isUpdated = _MD_XOOPSTUBE_SUBMITDATE;
+    $xoopsTpl->assign('lang_subdate', $isUpdated);
 }
 $pathIcon16          = Admin::iconUrl('', 16);
 $video['adminvideo'] = '';
