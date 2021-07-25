@@ -486,10 +486,10 @@ function editTopVideoBlock($options)
     $cat_arr = $xt->getChildTreeArray(0, 'title');
 
     $form .= '<br>' . _MB_XOOPSTUBE_SELECTCAT . '<br><select name="options[]" multiple="multiple" size="5">';
-    $form = false === array_search(0, $options, true) ? $form . '<option value="0">' . _MB_XOOPSTUBE_ALLCAT . '</option>' : $form . '<option value="0" selected="selected">' . _MB_XOOPSTUBE_ALLCAT . '</option>';
+    $form = !in_array(0, $options, true) ? $form . '<option value="0">' . _MB_XOOPSTUBE_ALLCAT . '</option>' : $form . '<option value="0" selected="selected">' . _MB_XOOPSTUBE_ALLCAT . '</option>';
 
     foreach ($cat_arr as $catlist) {
-        if (false === array_search($catlist, $options, true)) {
+        if (!in_array($catlist, $options, true)) {
             $form .= '<option value="' . $catlist['cid'] . '">' . $catlist['title'] . '</option>';
         } else {
             $form .= '<option value="' . $catlist['cid'] . '" selected="selected">' . $catlist['title'] . '</option>';
