@@ -179,7 +179,7 @@ class Utility extends Common\SysUtility
             $proxy_ip = $_SERVER['HTTP_COMING_FROM'];
         }
         $regs = [];
-        //if (!empty($proxy_ip) && $is_ip = ereg('^([0-9]{1,3}\.){3,3}[0-9]{1,3}', $proxy_ip, $regs) && count($regs) > 0) {
+        //if (!empty($proxy_ip) && $is_ip = ereg('^(\d{1,3}\.){3,3}\d{1,3}', $proxy_ip, $regs) && count($regs) > 0) {
         if (!empty($proxy_ip) && \filter_var($proxy_ip, \FILTER_VALIDATE_IP) && \count($regs) > 0) {
             $the_IP = $regs[0];
         } else {
