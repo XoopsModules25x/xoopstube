@@ -2400,7 +2400,7 @@ class Utility extends Common\SysUtility
         $lid = $published['lid'];
         $cid = $published['cid'];
 
-        $title        = '<a href="../singlevideo.php?cid=' . $published['cid'] . '&amp;lid=' . $published['lid'] . '">' . $xtubemyts->htmlspecialcharsStrip(\trim($published['title'])) . '</a>';
+        $title        = '<a href="../singlevideo.php?cid=' . $published['cid'] . '&amp;lid=' . $published['lid'] . '">' . $xtubemyts->htmlSpecialCharsStrip(\trim($published['title'])) . '</a>';
         $maintitle    = \urlencode(htmlspecialchars(trim($published['title']), \ENT_QUOTES | \ENT_HTML5));
         $cattitle     = '<a href="../viewcat.php?cid=' . $published['cid'] . '">' . self::getCategoryTitle($published['cid']) . '</a>';
         $submitter    = self::getLinkedUserNameFromId($published['submitter']);
@@ -2510,7 +2510,7 @@ class Utility extends Common\SysUtility
         $lid = $published['lid'];
         $cid = $published['cid'];
 
-        $title        = '<a href="../singlevideo.php?cid=' . $published['cid'] . '&amp;lid=' . $published['lid'] . '">' . $xtubemyts->htmlspecialchars(trim($published['title']), \ENT_QUOTES | \ENT_HTML5) . '</a>';
+        $title        = '<a href="../singlevideo.php?cid=' . $published['cid'] . '&amp;lid=' . $published['lid'] . '">' . $xtubemyts->htmlSpecialChars(trim($published['title']), \ENT_QUOTES | \ENT_HTML5) . '</a>';
         $maintitle    = \urlencode(htmlspecialchars(trim($published['title']), \ENT_QUOTES | \ENT_HTML5));
         $cattitle     = '<a href="../viewcat.php?cid=' . $published['cid'] . '">' . self::getCategoryTitle($published['cid']) . '</a>';
         $submitter    = self::getLinkedUserNameFromId($published['submitter']);
