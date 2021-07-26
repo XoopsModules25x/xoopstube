@@ -256,21 +256,21 @@ define('_AM_XOOPSTUBE_VIDEO_DLVIDID', 'Video id-code: ');
 define(
     '_AM_XOOPSTUBE_VIDEO_DLVIDID_NOTE',
     "
-<span style='font-size: small;'><span style='font-weight: bold;'>YouTube:</span> http://www.youtube.com/watch?v=<span style='color: #FF0000;'>IsOtq-qCqZ4</span><br>
-<span style='font-weight: bold;'>MetaCafe:</span> http://www.metacafe.com/watch/<span style='color: #FF0000;'>191543/sperm_whale_encounters_underwater_robot</span>/<br>
-<span style='font-weight: bold;'>SPIKE/ifilm:</span> http://www.ifilm.com/video/<span style='color: #FF0000;'>2718605</span><br>
-<span style='font-weight: bold;'>Photobucket:</span> http://i39.photobucket.com/albums/<span style='color: #FF0000;'>e168/vailtom/th_BigSquid</span>.jpg<br>
-<span style='font-weight: bold;'>Google Video:</span> http://video.google.com/videoplay?docid=<span style='color: #FF0000;'>4761076111111865377</span>&q=rov&total=913&start=...<br>
-<span style='font-weight: bold;'>MySpace TV:</span> http://vids.myspace.com/index.cfm?fuseaction=vids.individual&videoid=<span style='color: #FF0000;'>13171141</span><br>
-<span style='font-weight: bold;'>DailyMotion:</span> http://www.dailymotion.com/video/<span style='color: #FF0000;'>x40bhg</span>_blondesecretary_fun<br>
-<span style='font-weight: bold;'>Blip.tv </span>embed code<span style='font-weight: bold;'>:</span> http://blip.tv/play/<span style='color: #FF0000;'>Abe6EwA</span> ...<br>
-<span style='font-weight: bold;'>ClipFish:</span> http://www.clipfish.de/player.php?videoid=<span style='color: #FF0000;'>MTg1NTYyfDM1Ng</span>%3D%3D<br>
-<span style='font-weight: bold;'>LiveLeak:</span> http://www.liveleak.com/view?i=<span style='color: #FF0000;'>a59_1205566630</span><br>
-<span style='font-weight: bold;'>Maktoob:</span> file=http://<span style='color: #FF0000;'>m003.maktoob.com/files/23/42/95531c25b690e48a3d69966b6a33b8d2/video/131102</span>.flv (from embed-code)<br>
-<span style='font-weight: bold;'>Veoh:</span> http://www.veoh.com/videos/<span style='color: #FF0000;'>v15069875yApCz7r3</span>?jsonParams=...<br>
-<span style='font-weight: bold;'>Vimeo:</span> http://www.vimeo.com/<span style='color: #FF0000;'>2246499</span><br>
-<span style='font-weight: bold;'>Megavideo:</span> http://www.megavideo.com/?v=<span style='color: #FF0000;'>J6YSRE0T</span><br>
-<span style='font-weight: bold;'>Viddler:</span> http://www.viddler.com/player/<span style='color: #FF0000;'>d32d2b94</span>/ (see embed code)<br>
+<span style='font-size: small;'><span style='font-weight: bold;'>YouTube:</span> https://www.youtube.com/watch?v=<span style='color: #FF0000;'>IsOtq-qCqZ4</span><br>
+<span style='font-weight: bold;'>MetaCafe:</span> https://www.metacafe.com/watch/<span style='color: #FF0000;'>191543/sperm_whale_encounters_underwater_robot</span>/<br>
+<span style='font-weight: bold;'>SPIKE/ifilm:</span> https://www.ifilm.com/video/<span style='color: #FF0000;'>2718605</span><br>
+<span style='font-weight: bold;'>Photobucket:</span> https://i39.photobucket.com/albums/<span style='color: #FF0000;'>e168/vailtom/th_BigSquid</span>.jpg<br>
+<span style='font-weight: bold;'>Google Video:</span> https://video.google.com/videoplay?docid=<span style='color: #FF0000;'>4761076111111865377</span>&q=rov&total=913&start=...<br>
+<span style='font-weight: bold;'>MySpace TV:</span> https://vids.myspace.com/index.cfm?fuseaction=vids.individual&videoid=<span style='color: #FF0000;'>13171141</span><br>
+<span style='font-weight: bold;'>DailyMotion:</span> https://www.dailymotion.com/video/<span style='color: #FF0000;'>x40bhg</span>_blondesecretary_fun<br>
+<span style='font-weight: bold;'>Blip.tv </span>embed code<span style='font-weight: bold;'>:</span> https://blip.tv/play/<span style='color: #FF0000;'>Abe6EwA</span> ...<br>
+<span style='font-weight: bold;'>ClipFish:</span> https://www.clipfish.de/player.php?videoid=<span style='color: #FF0000;'>MTg1NTYyfDM1Ng</span>%3D%3D<br>
+<span style='font-weight: bold;'>LiveLeak:</span> https://www.liveleak.com/view?i=<span style='color: #FF0000;'>a59_1205566630</span><br>
+<span style='font-weight: bold;'>Maktoob:</span> file=https://<span style='color: #FF0000;'>m003.maktoob.com/files/23/42/95531c25b690e48a3d69966b6a33b8d2/video/131102</span>.flv (from embed-code)<br>
+<span style='font-weight: bold;'>Veoh:</span> https://www.veoh.com/videos/<span style='color: #FF0000;'>v15069875yApCz7r3</span>?jsonParams=...<br>
+<span style='font-weight: bold;'>Vimeo:</span> https://www.vimeo.com/<span style='color: #FF0000;'>2246499</span><br>
+<span style='font-weight: bold;'>Megavideo:</span> https://www.megavideo.com/?v=<span style='color: #FF0000;'>J6YSRE0T</span><br>
+<span style='font-weight: bold;'>Viddler:</span> https://www.viddler.com/player/<span style='color: #FF0000;'>d32d2b94</span>/ (see embed code)<br>
 <span style='font-weight: bold;'>XoopsTube: </span><span style='color: #FF0000;'>Take over from above selection menu</span></span>"
 );
 define('_AM_XOOPSTUBE_VIDEO_PICURL', 'Picture url: ');

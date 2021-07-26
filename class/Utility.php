@@ -23,7 +23,7 @@ use XoopsModules\Xoopstube\{
  * xoopstube
  *
  * @copyright   XOOPS Project (https://xoops.org)
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license     https://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
@@ -516,19 +516,19 @@ class Utility extends Common\SysUtility
     /**
      * Mark the mandatory fields of a form with a star
      *
-     * @param \XoopsObject $sform The form to modify
+     * @param \XoopsForm $sform The form to modify
      *
-     * @return \XoopsObject The modified form
+     * @return \XoopsForm The modified form
      * @internal param string $caracter The character to use to mark fields
      */
-    public static function &formMarkRequiredFields(\XoopsObject $sform)
+    public static function &formMarkRequiredFields(\XoopsForm $sform)
     {
         if (self::needsAsterisk()) {
             $required = [];
+            $elements = [];
             foreach ($sform->getRequired() as $item) {
                 $required[] = $item->_name;
             }
-            $elements = [];
             $elements = $sform->getElements();
             foreach ($elements as $iValue) {
                 if (\is_object($iValue) && \in_array($iValue->_name, $required)) {
@@ -2742,14 +2742,14 @@ class Utility extends Common\SysUtility
             } else {
                 $bannerobject = '<div align="center"><a href="' . XOOPS_URL . '/banners.php?op=click&bid=' . $bid . '" target="_blank">';
                 if (false !== mb_stripos($imageurl, '.swf')) {
-                    $bannerobject .= '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0" width="468" height="60">'
+                    $bannerobject .= '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="https://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0" width="468" height="60">'
                                      . '<param name="movie" value="'
                                      . $imageurl
                                      . '"></param>'
                                      . '<param name="quality" value="high"></param>'
                                      . '<embed src="'
                                      . $imageurl
-                                     . '" quality="high" pluginspage="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash" type="application/x-shockwave-flash" width="468" height="60">'
+                                     . '" quality="high" pluginspage="https://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash" type="application/x-shockwave-flash" width="468" height="60">'
                                      . '</embed>'
                                      . '</object>';
                 } else {
@@ -2804,14 +2804,14 @@ class Utility extends Common\SysUtility
             } else {
                 $bannerobject = '<div align="center"><a href="' . XOOPS_URL . '/banners.php?op=click&bid=' . $bid . '" target="_blank">';
                 if (false !== mb_stripos($imageurl, '.swf')) {
-                    $bannerobject .= '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0" width="468" height="60">'
+                    $bannerobject .= '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="https://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0" width="468" height="60">'
                                      . '<param name="movie" value="'
                                      . $imageurl
                                      . '"></param>'
                                      . '<param name="quality" value="high"></param>'
                                      . '<embed src="'
                                      . $imageurl
-                                     . '" quality="high" pluginspage="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash" type="application/x-shockwave-flash" width="468" height="60">'
+                                     . '" quality="high" pluginspage="https://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash" type="application/x-shockwave-flash" width="468" height="60">'
                                      . '</embed>'
                                      . '</object>';
                 } else {
@@ -3255,7 +3255,7 @@ class Utility extends Common\SysUtility
             if ($grouppermHandler->checkRight('lexikon_view', $catID, $groups, $xoopsModule->getVar('mid'))) {
                 $catlinks = [];
                 ++$count;
-                if ($logourl && 'http://' !== $logourl) {
+                if ($logourl && 'https://' !== $logourl) {
                     $logourl = \htmlspecialchars($logourl, \ENT_QUOTES | \ENT_HTML5);
                 } else {
                     $logourl = '';
@@ -3341,7 +3341,7 @@ class Utility extends Common\SysUtility
 
     /**
      * chr() with unicode support
-     * I found this on this site http://en.php.net/chr
+     * I found this on this site https://en.php.net/chr
      * don't take credit for this.
      * @param $initials
      * @return string

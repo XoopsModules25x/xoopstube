@@ -1,6 +1,6 @@
 This directory contains tests cases to be used with Selenium IDE, an extension for Firefox:
 
-http://seleniumhq.org/projects/ide/
+https://seleniumhq.org/projects/ide/
 
 The tests have been created on XOOPS 2.5.6 on a local host (WAMP Server).
 

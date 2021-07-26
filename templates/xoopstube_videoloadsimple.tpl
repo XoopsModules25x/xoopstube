@@ -41,7 +41,7 @@
 
                         <{/if}> <{/if}>
                         <div style="margin-left: 6px;" align="justify"> &nbsp;
-                            <img src="http://sjl-static4.sjl.youtube.com/vi/<{$video.description}>/2.jpg" alt=""
+                            <img src="https://sjl-static4.sjl.youtube.com/vi/<{$video.description}>/2.jpg" alt=""
                                  align="absmiddle">&nbsp;<{$video.description}>
                         </div>
                         <div><span style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_DESCRIPTIONC}></span><br>

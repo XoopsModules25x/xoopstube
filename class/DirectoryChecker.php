@@ -98,7 +98,7 @@ class DirectoryChecker
     public static function createDirectory($target, $mode = 0777)
     {
         $target = \str_replace('..', '', $target);
-        // http://www.php.net/manual/en/function.mkdir.php
+        // https://www.php.net/manual/en/function.mkdir.php
         /*
                 $dirs = [];
 

@@ -105,7 +105,7 @@ class DirectoryChecker
     {
         $target = \str_replace('..', '', $target);
 
-        // http://www.php.net/manual/en/function.mkdir.php
+        // https://www.php.net/manual/en/function.mkdir.php
         return \is_dir($target) || (self::createDirectory(\dirname($target), $mode) && !\mkdir($target, $mode) && !\is_dir($target));
     }
 

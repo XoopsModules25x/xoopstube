@@ -507,18 +507,15 @@ if ($GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
         $helper = Helper::getInstance();
         $helper->loadLanguage('common');
         //update block options
-        if (isset($options)) {
-            $optionsCount = count($options);
-            if ($optionsCount > 0) {
+        if (is_array($options) && count($options) > 0) {
                 //Convert array values to comma-separated
-                for ($i = 0; $i < $optionsCount; ++$i) {
-                    if (is_array($options[$i])) {
-                        $options[$i] = implode(',', $options[$i]);
+                foreach ($options as $i => $iValue) {
+                    if (is_array($iValue)) {
+                        $options[$i] = implode(',', $iValue);
                     }
                 }
                 $options = implode('|', $options);
                 $myblock->setVar('options', $options);
-            }
         }
         //        $myblock->store();
         /** @var \XoopsBlockHandler $blockHandler */

@@ -16,7 +16,7 @@ namespace XoopsModules\Xoopstube\Common;
  * LetterChoice class
  *
  * @copyright   XOOPS Project (https://xoops.org)
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license     https://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      lucio <lucio.rota@gmail.com>
  * @package     xoopstube
  * @since       1.00

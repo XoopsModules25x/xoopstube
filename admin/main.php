@@ -57,7 +57,7 @@ function edit($lid = 0)
     $cid          = $video_array['cid'] ?? 0;
     $title        = isset($video_array['title']) ? htmlspecialchars($video_array['title'], ENT_QUOTES | ENT_HTML5) : '';
     $vidid        = isset($video_array['vidid']) ? htmlspecialchars($video_array['vidid'], ENT_QUOTES | ENT_HTML5) : '';
-    $picurl       = isset($video_array['picurl']) ? htmlspecialchars($video_array['picurl'], ENT_QUOTES | ENT_HTML5) : 'http://';
+    $picurl       = isset($video_array['picurl']) ? htmlspecialchars($video_array['picurl'], ENT_QUOTES | ENT_HTML5) : 'https://';
     $publisher    = isset($video_array['publisher']) ? htmlspecialchars($video_array['publisher'], ENT_QUOTES | ENT_HTML5) : '';
     $screenshot   = isset($video_array['screenshot']) ? htmlspecialchars($video_array['screenshot'], ENT_QUOTES | ENT_HTML5) : '';
     $descriptionb = isset($video_array['description']) ? htmlspecialchars($video_array['description'], ENT_QUOTES | ENT_HTML5) : '';
@@ -296,7 +296,7 @@ switch (mb_strtolower($op)) {
 
         // Get data from form
         $vidid        = $myts->addSlashes(Request::getString('vidid', '', 'POST'));
-        $picurl       = ('http://' !== Request::getString('picurl', '', 'POST')) ? $myts->addSlashes(Request::getString('picurl', '', 'POST')) : '';
+        $picurl       = ('https://' !== Request::getString('picurl', '', 'POST')) ? $myts->addSlashes(Request::getString('picurl', '', 'POST')) : '';
         $title        = $myts->addSlashes(Request::getString('title', '', 'POST'));
         $descriptionb = $myts->addSlashes(Request::getString('descriptionb', '', 'POST'));
         $time         = $myts->addSlashes(Request::getString('time', '', 'POST'));
