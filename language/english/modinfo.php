@@ -99,7 +99,7 @@ define('_MI_XOOPSTUBE_USESHOTS', 'Display Screenshot Images?');
 define('_MI_XOOPSTUBE_USESHOTSDSC', 'Select yes to display screenshot images for each video item');
 
 define('_MI_XOOPSTUBE_USETHUMBS', 'Use Thumbnails:');
-define('_MI_XOOPSTUBE_USETHUMBSDSC', "Supported link types: JPG, GIF, PNG.<div style='padding-top: 8px;'>XoopsTube will use thumb nails for images. Set to 'No' to use orginal image if the server does not support this option.</div>");
+define('_MI_XOOPSTUBE_USETHUMBSDSC', "Supported link types: JPG, GIF, PNG.<div style='padding-top: 8px;'>XoopsTube will use thumbnails for images. Set to 'No' to use orginal image if the server does not support this option.</div>");
 
 define('_MI_XOOPSTUBE_IMGUPDATE', 'Update Thumbnails?');
 define('_MI_XOOPSTUBE_IMGUPDATEDSC', 'If selected Thumbnail images will be updated at each page render, otherwise the first thumbnail image will be used regardless. <br><br>');

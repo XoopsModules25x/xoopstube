@@ -1,4 +1,10 @@
-<h5>1.08 Beta 2       [2020-12-11]</h5>  Dev: XOOPS 2.5.11, PHP 7.4.13, PHP 8.0
+<h5>1.08 RC-1       [2021-07-25]</h5>  Dev: XOOPS 2.5.11, PHP 7.4.21, PHP 8.0.8
+<hr>
+- fix setting expiration date (mamba)
+- various cosmetics (mamba)
+- fix https:// issues (oswaldo/mamba)
+
+<h5>1.08 Beta 2       [2021-06-27]</h5>  Dev: XOOPS 2.5.11, PHP 7.4.20, PHP 8.0.7
 <hr>
 - comment out require_once __DIR__ . '/uploader.php'; (SebT34/Zyspec)
 - code reformatting, cosmetics (mamba)

@@ -34,6 +34,6 @@ define('_MB_XOOPSTUBE_CLICKS', 'Clicks');
 define('_MB_XOOPSTUBE_CATTITLE', 'Category');
 define('_MB_XOOPSTUBE_UNLIMIT', 'Unlimited');
 define('_MB_XOOPSTUBE_DATEFORMAT', 'Date format');
-define('_MB_XOOPSTUBE_DATEFORMATMANUAL', 'See <a href="http://jp.php.net/manual/en/function.date.php" target="_blank">PHP manual</a>');
+define('_MB_XOOPSTUBE_DATEFORMATMANUAL', 'See <a href="https://jp.php.net/manual/en/function.date.php" target="_blank">PHP manual</a>');
 define('_MB_XOOPSTUBE_ALLCAT', 'All categories');
 define('_MB_XOOPSTUBE_SELECTCAT', 'Display the videos of:');

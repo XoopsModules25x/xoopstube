@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @see http://www.php-fig.org/psr/psr-4/examples/
+ * @see https://www.php-fig.org/psr/psr-4/examples/
  */
 spl_autoload_register(
     static function ($class) {

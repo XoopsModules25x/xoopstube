@@ -26,11 +26,8 @@ $moduleDirName = basename(__DIR__);
 $modulePath    = __DIR__;
 
 require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/include/common.php';
-//require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/Utility.php';
 require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/include/video.php';
 require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/sbookmarks.php';
-//require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/Thumbnails.php';
-//require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/Tree.php';
 require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
 
 xoops_loadLanguage('main', $moduleDirName);

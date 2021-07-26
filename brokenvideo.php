@@ -71,22 +71,22 @@ switch (mb_strtolower($op)) {
 
             // Send email to the owner of the linkload stating that it is broken
             $sql       = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE lid=' . $lid . ' AND published > 0 AND published <= ' . time() . ' AND (expired = 0 OR expired > ' . time() . ')';
-            $video_arr = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
+            $videoArray = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
             unset($sql);
 
             /** @var \XoopsMemberHandler $memberHandler */
             $memberHandler = xoops_getHandler('member');
-            $submit_user   = $memberHandler->getUser($video_arr['submitter']);
-            if (is_object($submit_user) && !empty($submit_user)) {
-                $subdate = formatTimestamp($video_arr['date'], $GLOBALS['xoopsModuleConfig']['dateformat']);
-                $cid     = $video_arr['cid'];
-                $title   = htmlspecialchars($video_arr['title']);
+            $submit_user   = $memberHandler->getUser($videoArray['submitter']);
+            if (is_object($submit_user) && null !== $submit_user) {
+                $subdate = formatTimestamp($videoArray['date'], $GLOBALS['xoopsModuleConfig']['dateformat']);
+                $cid     = $videoArray['cid'];
+                $title   = htmlspecialchars($videoArray['title'], ENT_QUOTES | ENT_HTML5);
                 $subject = _MD_XOOPSTUBE_BROKENREPORTED;
 
                 $xoopsMailer = xoops_getMailer();
                 $xoopsMailer->useMail();
-                $template_dir = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/mail_template';
-                $xoopsMailer->setTemplateDir($template_dir);
+                $templateDir = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/mail_template';
+                $xoopsMailer->setTemplateDir($templateDir);
                 $xoopsMailer->setTemplate('videobroken_notify.tpl');
                 $xoopsMailer->setToEmails($submit_user->getVar('email'));
                 $xoopsMailer->setFromEmail($GLOBALS['xoopsConfig']['adminmail']);
@@ -94,7 +94,7 @@ switch (mb_strtolower($op)) {
                 $xoopsMailer->assign('X_UNAME', $submit_user->getVar('uname'));
                 $xoopsMailer->assign('SITENAME', $GLOBALS['xoopsConfig']['sitename']);
                 $xoopsMailer->assign('X_ADMINMAIL', $GLOBALS['xoopsConfig']['adminmail']);
-                $xoopsMailer->assign('X_SITEvidid', XOOPS_VIDID . '/');
+                $xoopsMailer->assign('X_SITEvidid', _AM_XOOPSTUBE_MOD_VIDID . '/');
                 $xoopsMailer->assign('X_TITLE', $title);
                 $xoopsMailer->assign('X_SUB_DATE', $subdate);
                 $xoopsMailer->assign('X_VIDEOLOAD', XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/singlevideo.php?cid=' . $cid . '&amp;lid=' . $lid);
@@ -115,37 +115,37 @@ switch (mb_strtolower($op)) {
         $xoopsTpl->assign('catarray', $catarray);
 
         $sql       = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE lid=' . $lid;
-        $video_arr = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
+        $videoArray = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
         unset($sql);
 
         $sql       = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_broken') . ' WHERE lid=' . $lid;
-        $broke_arr = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
+        $brokeArray = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query($sql));
         xoops_load('XoopsUserUtility');
-        if (is_array($broke_arr)) {
-            $broken['title']        = htmlspecialchars($video_arr['title']);
-            $broken['id']           = $broke_arr['reportid'];
-            $broken['reporter']     = \XoopsUserUtility::getUnameFromId($broke_arr['sender']);
-            $broken['date']         = Utility::getTimestamp(formatTimestamp($broke_arr['date'], $GLOBALS['xoopsModuleConfig']['dateformat']));
-            $broken['acknowledged'] = (1 == $broke_arr['acknowledged']) ? _YES : _NO;
-            $broken['confirmed']    = (1 == $broke_arr['confirmed']) ? _YES : _NO;
+        if (is_array($brokeArray)) {
+            $broken['title']        = htmlspecialchars($videoArray['title'], ENT_QUOTES | ENT_HTML5);
+            $broken['id']           = $brokeArray['reportid'];
+            $broken['reporter']     = \XoopsUserUtility::getUnameFromId($brokeArray['sender']);
+            $broken['date']         = Utility::getTimestamp(formatTimestamp($brokeArray['date'], $GLOBALS['xoopsModuleConfig']['dateformat']));
+            $broken['acknowledged'] = (1 == $brokeArray['acknowledged']) ? _YES : _NO;
+            $broken['confirmed']    = (1 == $brokeArray['confirmed']) ? _YES : _NO;
             $xoopsTpl->assign('broken', $broken);
             $xoopsTpl->assign('brokenreport', true);
         } else {
-            if (!is_array($video_arr) || empty($video_arr)) {
+            if (!is_array($videoArray) || empty($videoArray)) {
                 $ratemessage = _MD_XOOPSTUBE_THISFILEDOESNOTEXIST;
                 redirect_header('singlevideo.php?cid=' . (int)$cid . '&amp;lid=' . $lid, 0, $ratemessage);
             }
 
             // file info
-            $video['title']   = htmlspecialchars($video_arr['title']);
-            $time             = ($video_arr['published'] > 0) ? $video_arr['published'] : $link_arr['updated'];
+            $video['title']   = htmlspecialchars($videoArray['title'], ENT_QUOTES | ENT_HTML5);
+            $time             = ($videoArray['published'] > 0) ? $videoArray['published'] : $link_arr['updated'];
             $video['updated'] = Utility::getTimestamp(formatTimestamp($time, $GLOBALS['xoopsModuleConfig']['dateformat']));
-            $is_updated       = (0 !== $video_arr['updated']) ? _MD_XOOPSTUBE_UPDATEDON : _MD_XOOPSTUBE_SUBMITDATE;
+            $isUpdated       = (0 !== $videoArray['updated']) ? _MD_XOOPSTUBE_UPDATEDON : _MD_XOOPSTUBE_SUBMITDATE;
 
-            $video['publisher'] = \XoopsUserUtility::getUnameFromId($video_arr['submitter']);
+            $video['publisher'] = \XoopsUserUtility::getUnameFromId($videoArray['submitter']);
 
             $xoopsTpl->assign('video_id', $lid);
-            $xoopsTpl->assign('lang_subdate', $is_updated);
+            $xoopsTpl->assign('lang_subdate', $isUpdated);
             $xoopsTpl->assign('video', $video);
         }
 

@@ -59,9 +59,9 @@ $sql       = 'SELECT * FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') 
         AND offline = 0
         AND cid > 0';
 $result    = $GLOBALS['xoopsDB']->query($sql);
-$video_arr = $GLOBALS['xoopsDB']->fetchArray($result);
+$videoArray = $GLOBALS['xoopsDB']->fetchArray($result);
 
-if (!is_array($video_arr)) {
+if (!is_array($videoArray)) {
     redirect_header('index.php', 1, _MD_XOOPSTUBE_NOVIDEOLOAD);
 }
 
@@ -72,31 +72,31 @@ $xoTheme->addStylesheet('modules/' . $moduleDirName . '/assets/css/xtubestyle.cs
 // tags support
 if (Utility::isModuleTagInstalled()) {
     require_once XOOPS_ROOT_PATH . '/modules/tag/include/tagbar.php';
-    $xoopsTpl->assign('tagbar', tagBar($video_arr['lid'], 0));
+    $xoopsTpl->assign('tagbar', tagBar($videoArray['lid'], 0));
 }
 
 $video['imageheader']  = Utility::renderImageHeader();
-$video['id']           = $video_arr['lid'];
-$video['cid']          = $video_arr['cid'];
-$video['vidid']        = $video_arr['vidid'];
-$video['description2'] = $myts->displayTarea($video_arr['description'], 1, 1, 1, 1, 1);
+$video['id']           = $videoArray['lid'];
+$video['cid']          = $videoArray['cid'];
+$video['vidid']        = $videoArray['vidid'];
+$video['description2'] = $myts->displayTarea($videoArray['description'], 1, 1, 1, 1, 1);
 
 $mytree        = new Tree($GLOBALS['xoopsDB']->prefix('xoopstube_cat'), 'cid', 'pid');
 $pathstring    = '<a href="index.php">' . _MD_XOOPSTUBE_MAIN . '</a>&nbsp;:&nbsp;';
 $pathstring    .= $mytree->getNicePathFromId($cid, 'title', 'viewcat.php?op=');
 $video['path'] = $pathstring;
 // Get video from source
-$video['showvideo'] = xtubeShowVideo($video_arr['vidid'], $video_arr['vidsource'], $video_arr['screenshot'], $video_arr['picurl']);
+$video['showvideo'] = xtubeShowVideo($videoArray['vidid'], $videoArray['vidsource'], $videoArray['screenshot'], $videoArray['picurl']);
 
 // Get Social Bookmarks
-$video['sbmarks'] = getSocialBookmarks($video_arr['lid']);
+$video['sbmarks'] = getSocialBookmarks($videoArray['lid']);
 
 // Start of meta tags
 global $xoopsTpl, $xoTheme;
 
 $maxWords = 100;
 $words    = [];
-$words    = explode(' ', Utility::convertHtml2text($video_arr['description']));
+$words    = explode(' ', Utility::convertHtml2text($videoArray['description']));
 $newWords = [];
 $i        = 0;
 while ($i < $maxWords - 1 && $i < count($words)) {
@@ -108,22 +108,22 @@ while ($i < $maxWords - 1 && $i < count($words)) {
 $video_meta_description = implode(' ', $newWords);
 
 if (is_object($GLOBALS['xoTheme'])) {
-    if ($video_arr['keywords']) {
-        $GLOBALS['xoTheme']->addMeta('meta', 'keywords', $video_arr['keywords']);
+    if ($videoArray['keywords']) {
+        $GLOBALS['xoTheme']->addMeta('meta', 'keywords', $videoArray['keywords']);
     }
-    $GLOBALS['xoTheme']->addMeta('meta', 'title', $video_arr['title']);
+    $GLOBALS['xoTheme']->addMeta('meta', 'title', $videoArray['title']);
     if (1 == $GLOBALS['xoopsModuleConfig']['usemetadescr']) {
         $GLOBALS['xoTheme']->addMeta('meta', 'description', $video_meta_description);
     }
 } else {
-    if ($video_arr['keywords']) {
-        $xoopsTpl->assign('xoops_meta_keywords', $video_arr['keywords']);
+    if ($videoArray['keywords']) {
+        $xoopsTpl->assign('xoops_meta_keywords', $videoArray['keywords']);
     }
     if (1 == $GLOBALS['xoopsModuleConfig']['usemetadescr']) {
         $GLOBALS['xoTheme']->assign('xoops_meta_description', $video_meta_description);
     }
 }
-$xoopsTpl->assign('xoops_pagetitle', $video_arr['title']);
+$xoopsTpl->assign('xoops_pagetitle', $videoArray['title']);
 // End of meta tags
 
 $moderate = 0;
@@ -142,15 +142,15 @@ if (false === $video['isadmin']) {
 
 // Show other author videos
 $sql    = 'SELECT lid, cid, title, published FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . '
-        WHERE submitter=' . $video_arr['submitter'] . '
-        AND lid <> ' . $video_arr['lid'] . '
+        WHERE submitter=' . $videoArray['submitter'] . '
+        AND lid <> ' . $videoArray['lid'] . '
         AND published > 0 AND published <= ' . time() . ' AND (expired = 0 OR expired > ' . time() . ')
         AND offline = 0 ORDER BY published DESC';
 $result = $GLOBALS['xoopsDB']->query($sql, 10, 0);
 
 while (false !== ($arr = $GLOBALS['xoopsDB']->fetchArray($result))) {
     if (true === Utility::checkGroups($arr['cid'])) {
-        $videouid['title']     = htmlspecialchars($arr['title']);
+        $videouid['title']     = htmlspecialchars($arr['title'], ENT_QUOTES | ENT_HTML5);
         $videouid['lid']       = $arr['lid'];
         $videouid['cid']       = $arr['cid'];
         $videouid['published'] = Utility::getTimestamp(formatTimestamp($arr['published'], $GLOBALS['xoopsModuleConfig']['dateformat']));

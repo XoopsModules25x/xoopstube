@@ -16,13 +16,13 @@ namespace XoopsModules\Xoopstube\Common;
  * LetterChoice class
  *
  * @copyright   XOOPS Project (https://xoops.org)
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license     https://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      lucio <lucio.rota@gmail.com>
  * @package     xoopstube
  * @since       1.00
  *
  * Example:
- * $choicebyletter = new Xoopstube\LetterChoice($objHandler, null, null, range('a', 'z'), 'letter');
+ * $choicebyletter = new LetterChoice($objHandler, null, null, range('a', 'z'), 'letter');
  * echo $choicebyletter->render();
  */
 
@@ -95,7 +95,7 @@ class LetterChoice
         $this->field_name = $field_name ?? $this->objHandler->identifierName;
         //        $this->alphabet   = (count($alphabet) > 0) ? $alphabet : range('a', 'z'); // is there a way to get locale alphabet?
         //        $this->alphabet       = getLocalAlphabet();
-        $this->alphabet = require_once \dirname(__DIR__, 2) . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/alphabet.php';
+        $this->alphabet = require \dirname(__DIR__, 2) . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/alphabet.php';
         $this->arg_name = $arg_name;
         $this->url      = $url ?? $_SERVER['SCRIPT_NAME'];
         if ('' !== $extra_arg && ('&amp;' !== mb_substr($extra_arg, -5) || '&' !== mb_substr($extra_arg, -1))) {
@@ -169,7 +169,7 @@ class LetterChoice
         $alphabetArray[$letter] = $letter_array;
 
         // render output
-        if (!isset($GLOBALS['xoTheme']) || !is_object($GLOBALS['xoTheme'])) {
+        if (!isset($GLOBALS['xoTheme']) || !\is_object($GLOBALS['xoTheme'])) {
             require_once $GLOBALS['xoops']->path('/class/theme.php');
             $GLOBALS['xoTheme'] = new \xos_opal_Theme();
         }

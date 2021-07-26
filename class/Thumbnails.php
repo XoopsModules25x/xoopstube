@@ -89,7 +89,7 @@ class Thumbnails
         $path_to_check = XOOPS_ROOT_PATH . "/$img_path/$img_savepath";
 
         if (!\is_dir($path_to_check)) {
-            if (!mkdir($path_to_check, 0777) && !is_dir($path_to_check)) {
+            if (!\mkdir($path_to_check, 0777) && !\is_dir($path_to_check)) {
                 return false;
             }
         }
@@ -160,7 +160,7 @@ class Thumbnails
             $this->img_aspect = (int)$img_aspect;
         }
 
-        // Return false if we are not using thumb nails
+        // Return false if we are not using thumbnails
         if (!$this->useThumbs()) {
             return $this->_source_url . '/' . $this->_imgName;
         }

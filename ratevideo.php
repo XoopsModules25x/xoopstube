@@ -125,7 +125,7 @@ if (!empty(Request::getString('submit', ''))) {
         [
             'id'    => $lid,
             'cid'   => $cid,
-            'title' => htmlspecialchars($title),
+            'title' => htmlspecialchars($title, ENT_QUOTES | ENT_HTML5),
         ]
     );
 

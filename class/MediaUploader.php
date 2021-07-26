@@ -100,7 +100,9 @@ class MediaUploader
             $this->setErrors(\_AM_XOOPSTUBE_READWRITEERROR);
 
             return false;
-        } elseif (\is_array($_FILES[$media_name]['name']) && isset($index)) {
+        }
+
+        if (\is_array($_FILES[$media_name]['name']) && isset($index)) {
             $index              = (int)$index;
             $this->mediaName    = $_FILES[$media_name]['name'][$index];
             $this->mediaType    = $_FILES[$media_name]['type'][$index];

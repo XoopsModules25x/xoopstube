@@ -28,8 +28,8 @@ $moduleDirNameUpper = mb_strtoupper($moduleDirName);
 // ------------------- Informations ------------------- //
 $modversion = [
     'version'             => 1.08,
-    'module_status'       => 'Beta 2',
-    'release_date'        => '2020/11/15',
+    'module_status'       => 'RC-1',
+    'release_date'        => '2021/07/25',
     'name'                => _MI_XOOPSTUBE_NAME,
     'description'         => _MI_XOOPSTUBE_DESC,
     'official'            => 1, //1 indicates supported by XOOPS Dev Team, 0 means 3rd party supported

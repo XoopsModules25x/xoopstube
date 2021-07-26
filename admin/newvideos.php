@@ -116,9 +116,9 @@ switch (mb_strtolower($op)) {
             while (false !== ($new = $GLOBALS['xoopsDB']->fetchArray($new_array))) {
                 $lid          = (int)$new['lid'];
                 $rating       = number_format($new['rating'], 2);
-                $title        = htmlspecialchars($new['title']);
-                $vidid        = urldecode(htmlspecialchars($new['vidid']));
-                $logourl      = htmlspecialchars($new['screenshot']);
+                $title        = htmlspecialchars($new['title'], ENT_QUOTES | ENT_HTML5);
+                $vidid        = urldecode(htmlspecialchars($new['vidid'], ENT_QUOTES | ENT_HTML5));
+                $logourl      = htmlspecialchars($new['screenshot'], ENT_QUOTES | ENT_HTML5);
                 $submitter    = Utility::getLinkedUserNameFromId($new['submitter']);
                 $returnsource = xtubeReturnSource($new['vidsource']);
                 $datetime     = Utility::getTimestamp(formatTimestamp($new['date'], $GLOBALS['xoopsModuleConfig']['dateformatadmin']));

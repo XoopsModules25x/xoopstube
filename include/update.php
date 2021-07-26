@@ -14,7 +14,7 @@
  * @author          XOOPS Development Team
  * @copyright       2001-2013 The XOOPS Project
  * @license         GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
- * @link            http://sourceforge.net/projects/xoops/
+ * @link            https://sourceforge.net/projects/xoops/
  * @since           1.0.6
  */
 

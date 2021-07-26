@@ -33,17 +33,17 @@ function getSocialBookmarks($lid)
     global $xoopsModule;
 
 //    $myts           = new Xoopstube\TextSanitizer();
-    $sbmark_arr          = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query('SELECT lid, title FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE lid=' . (int)$lid));
-    $sbmark_arr['title'] = htmlspecialchars($sbmark_arr['title']);
-    $sbmark_arr['link']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/singlevideo.php?lid=' . (int)$lid;
+    $sbmarkArray          = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query('SELECT lid, title FROM ' . $GLOBALS['xoopsDB']->prefix('xoopstube_videos') . ' WHERE lid=' . (int)$lid));
+    $sbmarkArray['title'] = htmlspecialchars($sbmarkArray['title'], ENT_QUOTES | ENT_HTML5);
+    $sbmarkArray['link']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/singlevideo.php?lid=' . (int)$lid;
 
     //Definitions for social bookmarks
 
     //Backflip
-    $sbmarks['blackflip'] = '<a href="http://www.backflip.com/add_page_pop.ihtml?url='
-                            . $sbmark_arr['link']
+    $sbmarks['blackflip'] = '<a href="https://www.backflip.com/add_page_pop.ihtml?url='
+                            . $sbmarkArray['link']
                             . '&title='
-                            . $sbmark_arr['title']
+                            . $sbmarkArray['title']
                             . '"'
                             . ' target="_blank"><img border="0" src="'
                             . XOOPS_URL
@@ -56,10 +56,10 @@ function getSocialBookmarks($lid)
                             . 'BackFlip"></a>';
 
     //Bibsonomy
-    $sbmark['bibsonomy'] = '<a href="http://www.bibsonomy.org/ShowBookmarkEntry?c=b&jump=yes&url='
-                           . $sbmark_arr['link']
+    $sbmark['bibsonomy'] = '<a href="https://www.bibsonomy.org/ShowBookmarkEntry?c=b&jump=yes&url='
+                           . $sbmarkArray['link']
                            . '&description='
-                           . $sbmark_arr['title']
+                           . $sbmarkArray['title']
                            . '"'
                            . ' target="_blank"><img border="0" src="'
                            . XOOPS_URL
@@ -72,10 +72,10 @@ function getSocialBookmarks($lid)
                            . 'Bibsonomy"></a>';
 
     //BlinkList
-    $sbmarks['blinklist'] = '<a href="http://www.blinklist.com/index.php?Action=Blink/addblink.php&Quick=true&url='
-                            . $sbmark_arr['link']
+    $sbmarks['blinklist'] = '<a href="https://www.blinklist.com/index.php?Action=Blink/addblink.php&Quick=true&url='
+                            . $sbmarkArray['link']
                             . '&Title='
-                            . $sbmark_arr['title']
+                            . $sbmarkArray['title']
                             . '&Pop=yes" target="_blank"><img border="0" src="'
                             . XOOPS_URL
                             . '/modules/'
@@ -87,10 +87,10 @@ function getSocialBookmarks($lid)
                             . 'BlinkList"></a>';
 
     //Blogmark
-    $sbmark['blogmark'] = '<a href="http://blogmarks.net/my/new.php?title='
-                          . $sbmark_arr['title']
+    $sbmark['blogmark'] = '<a href="https://blogmarks.net/my/new.php?title='
+                          . $sbmarkArray['title']
                           . '&url='
-                          . $sbmark_arr['link']
+                          . $sbmarkArray['link']
                           . '"'
                           . ' target="_blank"><img border="0" src="'
                           . XOOPS_URL
@@ -103,10 +103,10 @@ function getSocialBookmarks($lid)
                           . 'BlogMarks"></a>';
 
     //CiteUlike
-    $sbmark['citeulike'] = '<a href="http://www.citeulike.org/posturl?url='
-                           . $sbmark_arr['link']
+    $sbmark['citeulike'] = '<a href="https://www.citeulike.org/posturl?url='
+                           . $sbmarkArray['link']
                            . '&title='
-                           . $sbmark_arr['title']
+                           . $sbmarkArray['title']
                            . '"'
                            . ' target="_blank"><img border="0" src="'
                            . XOOPS_URL
@@ -119,10 +119,10 @@ function getSocialBookmarks($lid)
                            . 'CiteUlike"></a>';
 
     //Connotea
-    $sbmarks['connotea'] = '<a href="http://www.connotea.org/add?continue=return&uri='
-                           . $sbmark_arr['link']
+    $sbmarks['connotea'] = '<a href="https://www.connotea.org/add?continue=return&uri='
+                           . $sbmarkArray['link']
                            . '&title='
-                           . $sbmark_arr['title']
+                           . $sbmarkArray['title']
                            . '"'
                            . ' target="_blank"><img border="0" src="'
                            . XOOPS_URL
@@ -135,10 +135,10 @@ function getSocialBookmarks($lid)
                            . 'Connotea"></a>';
 
     //del.icio.us
-    $sbmarks['delicio'] = '<a href="http://del.icio.us/post?v=4&noui&jump=close&url='
-                          . $sbmark_arr['link']
+    $sbmarks['delicio'] = '<a href="https://del.icio.us/post?v=4&noui&jump=close&url='
+                          . $sbmarkArray['link']
                           . '&title='
-                          . $sbmark_arr['title']
+                          . $sbmarkArray['title']
                           . '"'
                           . ' target="_blank"><img border="0" src="'
                           . XOOPS_URL
@@ -151,10 +151,10 @@ function getSocialBookmarks($lid)
                           . 'del.icio.us"></a>';
 
     //Digg
-    $sbmarks['digg'] = '<a href="http://digg.com/submit?phase=2&url='
-                       . $sbmark_arr['link']
+    $sbmarks['digg'] = '<a href="https://digg.com/submit?phase=2&url='
+                       . $sbmarkArray['link']
                        . '&title='
-                       . $sbmark_arr['title']
+                       . $sbmarkArray['title']
                        . '"'
                        . ' target="_blank"><img border="0" src="'
                        . XOOPS_URL
@@ -167,10 +167,10 @@ function getSocialBookmarks($lid)
                        . 'Digg"></a>';
 
     //Diigo
-    $sbmarks['diigo'] = '<a href="http://www.diigo.com/post?url='
-                        . $sbmark_arr['link']
+    $sbmarks['diigo'] = '<a href="https://www.diigo.com/post?url='
+                        . $sbmarkArray['link']
                         . '&title='
-                        . $sbmark_arr['title']
+                        . $sbmarkArray['title']
                         . '"'
                         . ' target="_blank"><img border="0" src="'
                         . XOOPS_URL
@@ -183,10 +183,10 @@ function getSocialBookmarks($lid)
                         . 'Diigo"></a>';
 
     //DZone
-    $sbmarks['dzone'] = '<a href="http://www.dzone.com/links/add.html?url='
-                        . $sbmark_arr['link']
+    $sbmarks['dzone'] = '<a href="https://www.dzone.com/links/add.html?url='
+                        . $sbmarkArray['link']
                         . '&title='
-                        . $sbmark_arr['title']
+                        . $sbmarkArray['title']
                         . '"'
                         . ' target="_blank"><img border="0" src="'
                         . XOOPS_URL
@@ -199,10 +199,10 @@ function getSocialBookmarks($lid)
                         . 'DZone"></a>';
 
     //Earthlink
-    $sbmarks['earthlink'] = '<a href="http://myfavorites.earthlink.net/my/add_favorite?v=1&url='
-                            . $sbmark_arr['link']
+    $sbmarks['earthlink'] = '<a href="https://myfavorites.earthlink.net/my/add_favorite?v=1&url='
+                            . $sbmarkArray['link']
                             . '&title='
-                            . $sbmark_arr['title']
+                            . $sbmarkArray['title']
                             . '"'
                             . ' target="_blank"><img border="0" src="'
                             . XOOPS_URL
@@ -215,10 +215,10 @@ function getSocialBookmarks($lid)
                             . 'EarthLink MyFavorites"></a>';
 
     //EatMyHamster
-    $sbmarks['eatmyhamster'] = '<a href="http://www.eatmyhamster.com/post?u='
-                               . $sbmark_arr['link']
+    $sbmarks['eatmyhamster'] = '<a href="https://www.eatmyhamster.com/post?u='
+                               . $sbmarkArray['link']
                                . '&h='
-                               . $sbmark_arr['title']
+                               . $sbmarkArray['title']
                                . '"'
                                . ' target="_blank"><img border="0" src="'
                                . XOOPS_URL
@@ -231,10 +231,10 @@ function getSocialBookmarks($lid)
                                . 'EatMyHamster"></a>';
 
     //FaceBook
-    $sbmarks['facebook'] = '<a href="http://www.facebook.com/sharer.php?u='
-                           . $sbmark_arr['link']
+    $sbmarks['facebook'] = '<a href="https://www.facebook.com/sharer.php?u='
+                           . $sbmarkArray['link']
                            . '&title='
-                           . $sbmark_arr['title']
+                           . $sbmarkArray['title']
                            . '"'
                            . ' target="_blank"> <img border="0" src="'
                            . XOOPS_URL
@@ -247,10 +247,10 @@ function getSocialBookmarks($lid)
                            . 'Facebook"></a>';
 
     //Fantacular
-    $sbmarks['fantacular'] = '<a href="http://fantacular.com/add.asp?url='
-                             . $sbmark_arr['link']
+    $sbmarks['fantacular'] = '<a href="https://fantacular.com/add.asp?url='
+                             . $sbmarkArray['link']
                              . '&title='
-                             . $sbmark_arr['title']
+                             . $sbmarkArray['title']
                              . '"'
                              . ' target="_blank"><img border="0" src="'
                              . XOOPS_URL
@@ -263,10 +263,10 @@ function getSocialBookmarks($lid)
                              . 'Fantacular"></a>';
 
     //Fark
-    $sbmarks['fark'] = '<a href="http://cgi.fark.com/cgi/fark/edit.pl?new_url='
-                       . $sbmark_arr['link']
+    $sbmarks['fark'] = '<a href="https://cgi.fark.com/cgi/fark/edit.pl?new_url='
+                       . $sbmarkArray['link']
                        . '&new_comment='
-                       . $sbmark_arr['title']
+                       . $sbmarkArray['title']
                        . '"'
                        . ' target="_blank"><img border="0" src="'
                        . XOOPS_URL
@@ -279,10 +279,10 @@ function getSocialBookmarks($lid)
                        . 'Fark"></a>';
 
     //FeedMarker
-    $sbmarks['feedmarker'] = '<a href="http://www.feedmarker.com/admin.php?do=bookmarklet_mark&url='
-                             . $sbmark_arr['link']
+    $sbmarks['feedmarker'] = '<a href="https://www.feedmarker.com/admin.php?do=bookmarklet_mark&url='
+                             . $sbmarkArray['link']
                              . '&title='
-                             . $sbmark_arr['title']
+                             . $sbmarkArray['title']
                              . '"'
                              . ' target="_blank"><img border="0" src="'
                              . XOOPS_URL
@@ -295,10 +295,10 @@ function getSocialBookmarks($lid)
                              . 'FeedMarker"></a>';
 
     //FeedMeLinks
-    $sbmarks['feedmelinks'] = '<a href="http://feedmelinks.com/categorize?from=toolbar&op=submit&name='
-                              . $sbmark_arr['title']
+    $sbmarks['feedmelinks'] = '<a href="https://feedmelinks.com/categorize?from=toolbar&op=submit&name='
+                              . $sbmarkArray['title']
                               . '&url='
-                              . $sbmark_arr['link']
+                              . $sbmarkArray['link']
                               . '"'
                               . ' target="_blank"><img border="0" src="'
                               . XOOPS_URL
@@ -311,10 +311,10 @@ function getSocialBookmarks($lid)
                               . 'FeedMeLinks"></a>';
 
     //Furl
-    $sbmarks['furl'] = '<a href="http://www.furl.net/storeIt.jsp?t='
-                       . $sbmark_arr['title']
+    $sbmarks['furl'] = '<a href="https://www.furl.net/storeIt.jsp?t='
+                       . $sbmarkArray['title']
                        . '&u='
-                       . $sbmark_arr['link']
+                       . $sbmarkArray['link']
                        . '"'
                        . ' target="_blank"><img border="0" src="'
                        . XOOPS_URL
@@ -327,10 +327,10 @@ function getSocialBookmarks($lid)
                        . 'Furl"></a>';
 
     //Google
-    $sbmarks['google'] = '<a href="http://www.google.com/bookmarks/mark?op=edit&output=popup&bkmk='
-                         . $sbmark_arr['link']
+    $sbmarks['google'] = '<a href="https://www.google.com/bookmarks/mark?op=edit&output=popup&bkmk='
+                         . $sbmarkArray['link']
                          . '&title='
-                         . $sbmark_arr['title']
+                         . $sbmarkArray['title']
                          . '"'
                          . ' target="_blank"><img border="0" src="'
                          . XOOPS_URL
@@ -343,10 +343,10 @@ function getSocialBookmarks($lid)
                          . 'Google"></a>';
 
     //Gravee
-    $sbmarks['gravee'] = '<a href="http://www.gravee.com/account/bookmarkpop?u='
-                         . $sbmark_arr['link']
+    $sbmarks['gravee'] = '<a href="https://www.gravee.com/account/bookmarkpop?u='
+                         . $sbmarkArray['link']
                          . '&t='
-                         . $sbmark_arr['title']
+                         . $sbmarkArray['title']
                          . '"'
                          . ' target="_blank"><img border="0" src="'
                          . XOOPS_URL
@@ -359,10 +359,10 @@ function getSocialBookmarks($lid)
                          . 'Gravee"></a>';
 
     //igooi
-    $sbmarks['igooi'] = '<a href="http://www.igooi.com/addnewitem.aspx?self=1&noui=yes&jump=close&url='
-                        . $sbmark_arr['link']
+    $sbmarks['igooi'] = '<a href="https://www.igooi.com/addnewitem.aspx?self=1&noui=yes&jump=close&url='
+                        . $sbmarkArray['link']
                         . '&title='
-                        . $sbmark_arr['title']
+                        . $sbmarkArray['title']
                         . '"'
                         . ' target="_blank"><img border="0" src="'
                         . XOOPS_URL
@@ -375,10 +375,10 @@ function getSocialBookmarks($lid)
                         . 'igooi"></a>';
 
     //iTalkNews
-    $sbmarks['italknews'] = '<a href="http://italknews.com/member/write_link.php?content='
-                            . $sbmark_arr['link']
+    $sbmarks['italknews'] = '<a href="https://italknews.com/member/write_link.php?content='
+                            . $sbmarkArray['link']
                             . '&headline='
-                            . $sbmark_arr['title']
+                            . $sbmarkArray['title']
                             . '"'
                             . ' target="_blank"><img border="0" src="'
                             . XOOPS_URL
@@ -391,8 +391,8 @@ function getSocialBookmarks($lid)
                             . 'iTalkNews"></a>';
 
     //Jookster
-    $sbmarks['jookster'] = '<a href="http://www.jookster.com/JookThis.aspx?url='
-                           . $sbmark_arr['link']
+    $sbmarks['jookster'] = '<a href="https://www.jookster.com/JookThis.aspx?url='
+                           . $sbmarkArray['link']
                            . '"'
                            . 'target="_blank"><img border="0" src="'
                            . XOOPS_URL
@@ -405,8 +405,8 @@ function getSocialBookmarks($lid)
                            . 'Jookster"></a>';
 
     //Kinja
-    $sbmarks['kinja'] = '<a href="http://kinja.com/id.knj?url='
-                        . $sbmark_arr['link']
+    $sbmarks['kinja'] = '<a href="https://kinja.com/id.knj?url='
+                        . $sbmarkArray['link']
                         . '"'
                         . 'target="_blank"><img border="0" src="'
                         . XOOPS_URL
@@ -419,10 +419,10 @@ function getSocialBookmarks($lid)
                         . 'Kinja"></a>';
 
     //Linkagogo
-    $sbmarks['linkagogo'] = '<a href="http://www.linkagogo.com/go/AddNoPopup?title='
-                            . $sbmark_arr['title']
+    $sbmarks['linkagogo'] = '<a href="https://www.linkagogo.com/go/AddNoPopup?title='
+                            . $sbmarkArray['title']
                             . '&url='
-                            . $sbmark_arr['link']
+                            . $sbmarkArray['link']
                             . '"'
                             . 'target="_blank"><img border="0" src="'
                             . XOOPS_URL
@@ -435,10 +435,10 @@ function getSocialBookmarks($lid)
                             . 'Linkagogo"></a>';
 
     //LinkRoll
-    $sbmarks['linkroll'] = '<a href="http://linkroll.com/insert.php?url='
-                           . $sbmark_arr['link']
+    $sbmarks['linkroll'] = '<a href="https://linkroll.com/insert.php?url='
+                           . $sbmarkArray['link']
                            . '&title='
-                           . $sbmark_arr['title']
+                           . $sbmarkArray['title']
                            . '"'
                            . ' target="_blank"><img border="0" src="'
                            . XOOPS_URL
@@ -451,10 +451,10 @@ function getSocialBookmarks($lid)
                            . 'LinkRoll"></a>';
 
     //linuxquestions.org
-    $sbmarks['linuxquestions'] = '<a href="http://bookmarks.linuxquestions.org/linux/post?uri='
-                                 . $sbmark_arr['link']
+    $sbmarks['linuxquestions'] = '<a href="https://bookmarks.linuxquestions.org/linux/post?uri='
+                                 . $sbmarkArray['link']
                                  . '&title='
-                                 . $sbmark_arr['title']
+                                 . $sbmarkArray['title']
                                  . '&when_done=go_back"'
                                  . 'target="_blank"><img border="0" src="'
                                  . XOOPS_URL
@@ -467,10 +467,10 @@ function getSocialBookmarks($lid)
                                  . 'linuxquestions.org"></a>';
 
     //LookMarks
-    $sbmarks['lookmarks'] = '<a href="http://www.lookmarks.com/AddLinkFrame.aspx?url='
-                            . $sbmark_arr['link']
+    $sbmarks['lookmarks'] = '<a href="https://www.lookmarks.com/AddLinkFrame.aspx?url='
+                            . $sbmarkArray['link']
                             . '&Title='
-                            . $sbmark_arr['title']
+                            . $sbmarkArray['title']
                             . '"'
                             . ' target="_blank"><img border="0" src="'
                             . XOOPS_URL
@@ -483,8 +483,8 @@ function getSocialBookmarks($lid)
                             . 'LookMarks"></a>';
 
     //Lycos
-    $sbmarks['lycos'] = '<a href="http://iq.lycos.co.uk/lili/my/add?url='
-                        . $sbmark_arr['link']
+    $sbmarks['lycos'] = '<a href="https://iq.lycos.co.uk/lili/my/add?url='
+                        . $sbmarkArray['link']
                         . '"'
                         . ' target="_blank"><img border="0" src="'
                         . XOOPS_URL
@@ -498,9 +498,9 @@ function getSocialBookmarks($lid)
 
     //Windows Live
     $sbmarks['live'] = '<a href="https://favorites.live.com/quickadd.aspx?marklet=1&mkt=en-us&title='
-                       . $sbmark_arr['title']
+                       . $sbmarkArray['title']
                        . '&url='
-                       . $sbmark_arr['link']
+                       . $sbmarkArray['link']
                        . '&top=1'
                        . '"'
                        . 'target="_blank"><img border="0" src="'
@@ -514,10 +514,10 @@ function getSocialBookmarks($lid)
                        . 'Windows Live"></a>';
 
     //Magnolia
-    $sbmarks['magnolia'] = '<a href="http://ma.gnolia.com/bookmarklet/add?url='
-                           . $sbmark_arr['link']
+    $sbmarks['magnolia'] = '<a href="https://ma.gnolia.com/bookmarklet/add?url='
+                           . $sbmarkArray['link']
                            . '&title='
-                           . $sbmark_arr['title']
+                           . $sbmarkArray['title']
                            . '"'
                            . ' target="_blank"><img border="0" src="'
                            . XOOPS_URL
@@ -530,10 +530,10 @@ function getSocialBookmarks($lid)
                            . 'Ma.gnolia"></a>';
 
     //Markabboo
-    $sbmarks['markabboo'] = '<a href="http://www.markaboo.com/resources/new?url='
-                            . $sbmark_arr['link']
+    $sbmarks['markabboo'] = '<a href="https://www.markaboo.com/resources/new?url='
+                            . $sbmarkArray['link']
                             . '&title='
-                            . $sbmark_arr['title']
+                            . $sbmarkArray['title']
                             . '"'
                             . ' target="_blank"><img border="0" src="'
                             . XOOPS_URL
@@ -546,10 +546,10 @@ function getSocialBookmarks($lid)
                             . 'Markabboo"></a>';
 
     //Netscape
-    $sbmarks['netscape'] = '<a href="http://www.netscape.com/submit/?U='
-                           . $sbmark_arr['link']
+    $sbmarks['netscape'] = '<a href="https://www.netscape.com/submit/?U='
+                           . $sbmarkArray['link']
                            . '&T='
-                           . $sbmark_arr['title']
+                           . $sbmarkArray['title']
                            . '"'
                            . ' target="_blank"><img border="0" src="'
                            . XOOPS_URL
@@ -562,10 +562,10 @@ function getSocialBookmarks($lid)
                            . 'Netscape"></a>';
 
     //Netvouz
-    $sbmarks['netvouz'] = '<a href="http://www.netvouz.com/action/submitBookmark?url='
-                          . $sbmark_arr['link']
+    $sbmarks['netvouz'] = '<a href="https://www.netvouz.com/action/submitBookmark?url='
+                          . $sbmarkArray['link']
                           . '&title='
-                          . $sbmark_arr['title']
+                          . $sbmarkArray['title']
                           . '&popup=no"'
                           . ' target="_blank"><img border="0" src="'
                           . XOOPS_URL
@@ -578,10 +578,10 @@ function getSocialBookmarks($lid)
                           . 'Netvouz"></a>';
 
     //Newsvine
-    $sbmarks['newsvine'] = '<a href="http://www.newsvine.com/_tools/seed&save?u='
-                           . $sbmark_arr['link']
+    $sbmarks['newsvine'] = '<a href="https://www.newsvine.com/_tools/seed&save?u='
+                           . $sbmarkArray['link']
                            . '&h='
-                           . $sbmark_arr['title']
+                           . $sbmarkArray['title']
                            . '"'
                            . ' target="_blank"><img border="0" src="'
                            . XOOPS_URL
@@ -594,10 +594,10 @@ function getSocialBookmarks($lid)
                            . 'Newsvine"></a>';
 
     //Ning
-    $sbmarks['ning'] = '<a href="http://bookmarks.ning.com/addItem.php?url='
-                       . $sbmark_arr['link']
+    $sbmarks['ning'] = '<a href="https://bookmarks.ning.com/addItem.php?url='
+                       . $sbmarkArray['link']
                        . '&title='
-                       . $sbmark_arr['title']
+                       . $sbmarkArray['title']
                        . '"'
                        . ' target="_blank"><img border="0" src="'
                        . XOOPS_URL
@@ -610,10 +610,10 @@ function getSocialBookmarks($lid)
                        . 'Ning"></a>';
 
     //NowPublic
-    $sbmarks['nowpublic'] = '<a href="http://view.nowpublic.com/?src='
-                            . $sbmark_arr['link']
+    $sbmarks['nowpublic'] = '<a href="https://view.nowpublic.com/?src='
+                            . $sbmarkArray['link']
                             . '&t='
-                            . $sbmark_arr['title']
+                            . $sbmarkArray['title']
                             . '"'
                             . ' target="_blank"><img border="0" src="'
                             . XOOPS_URL
@@ -626,10 +626,10 @@ function getSocialBookmarks($lid)
                             . 'NowPublic"></a>';
 
     //RawSugar
-    $sbmarks['rawsugar'] = '<a href="http://www.rawsugar.com/pages/tagger.faces?turl='
-                           . $sbmark_arr['link']
+    $sbmarks['rawsugar'] = '<a href="https://www.rawsugar.com/pages/tagger.faces?turl='
+                           . $sbmarkArray['link']
                            . '&tttl='
-                           . $sbmark_arr['title']
+                           . $sbmarkArray['title']
                            . '"'
                            . ' target="_blank"><img border="0" src="'
                            . XOOPS_URL
@@ -642,10 +642,10 @@ function getSocialBookmarks($lid)
                            . 'RawSugar"></a>';
 
     //Reddit
-    $sbmarks['reddit'] = '<a href="http://reddit.com/submit?url='
-                         . $sbmark_arr['link']
+    $sbmarks['reddit'] = '<a href="https://reddit.com/submit?url='
+                         . $sbmarkArray['link']
                          . '&title='
-                         . $sbmark_arr['title']
+                         . $sbmarkArray['title']
                          . '"'
                          . ' target="_blank"><img border="0" src="'
                          . XOOPS_URL
@@ -658,10 +658,10 @@ function getSocialBookmarks($lid)
                          . 'reddit"></a>';
 
     //Riffs
-    $sbmarks['riffs'] = '<a href="http://www.riffs.com/item.cgi?section=init_url&url='
-                        . $sbmark_arr['link']
+    $sbmarks['riffs'] = '<a href="https://www.riffs.com/item.cgi?section=init_url&url='
+                        . $sbmarkArray['link']
                         . '&name='
-                        . $sbmark_arr['title']
+                        . $sbmarkArray['title']
                         . '"'
                         . ' target="_blank"><img border="0" src="'
                         . XOOPS_URL
@@ -674,10 +674,10 @@ function getSocialBookmarks($lid)
                         . 'Riffs"></a>';
 
     //Rojo
-    $sbmarks['rojo'] = '<a href="http://www.rojo.com/submit/?title='
-                       . $sbmark_arr['title']
+    $sbmarks['rojo'] = '<a href="https://www.rojo.com/submit/?title='
+                       . $sbmarkArray['title']
                        . '&url='
-                       . $sbmark_arr['link']
+                       . $sbmarkArray['link']
                        . '"'
                        . ' target="_blank"><img border="0" src="'
                        . XOOPS_URL
@@ -690,10 +690,10 @@ function getSocialBookmarks($lid)
                        . 'Rojo"></a>';
 
     //Shadows
-    $sbmarks['shadow'] = '<a href="http://www.shadows.com/features/tcr.htm?title='
-                         . $sbmark_arr['title']
+    $sbmarks['shadow'] = '<a href="https://www.shadows.com/features/tcr.htm?title='
+                         . $sbmarkArray['title']
                          . '&url='
-                         . $sbmark_arr['link']
+                         . $sbmarkArray['link']
                          . '"'
                          . ' target="_blank"><img border="0" src="'
                          . XOOPS_URL
@@ -707,21 +707,21 @@ function getSocialBookmarks($lid)
 
     //Simpy
     //    $sbmarks['simpy']
-    //        = '<a href="http://simpy.com/simpy/LinkAdd.do?title=' . $sbmark_arr['title'] . '&href=' . $sbmark_arr['link']
+    //        = '<a href="https://simpy.com/simpy/LinkAdd.do?title=' . $sbmarkArray['title'] . '&href=' . $sbmarkArray['link']
     //          . '"' . ' target="_blank"><img border="0" src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname')
     //          . '/assets/images/sbookmarks/simpy.png" align="middle" title="' . _MD_XOOPSTUBE_ADDTO . 'Simpy" alt="'
     //          . _MD_XOOPSTUBE_ADDTO . 'Simpy"></a>';
 
     //Spurl
     //    $sbmarks['spurl']
-    //        = '<a href="http://www.spurl.net/spurl.php?url=' . $sbmark_arr['link'] . '&title=' . $sbmark_arr['title'] . '"'
+    //        = '<a href="https://www.spurl.net/spurl.php?url=' . $sbmarkArray['link'] . '&title=' . $sbmarkArray['title'] . '"'
     //          . ' target="_blank"><img border="0" src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname')
     //          . '/assets/images/sbookmarks/spurl.png" align="middle" title="' . _MD_XOOPSTUBE_ADDTO . 'Spurl" alt="'
     //          . _MD_XOOPSTUBE_ADDTO . 'Spurl"></a>';
 
     //Squidoo
-    $sbmarks['squidoo'] = '<a href="http://www.squidoo.com/lensmaster/bookmark?'
-                          . $sbmark_arr['link']
+    $sbmarks['squidoo'] = '<a href="https://www.squidoo.com/lensmaster/bookmark?'
+                          . $sbmarkArray['link']
                           . '"'
                           . ' target="_blank"><img border="0" src="'
                           . XOOPS_URL
@@ -734,10 +734,10 @@ function getSocialBookmarks($lid)
                           . 'Squidoo"></a>';
 
     //StumbleUpon
-    $sbmarks['stumble'] = '<a href="http://www.stumbleupon.com/submit?url='
-                          . $sbmark_arr['link']
+    $sbmarks['stumble'] = '<a href="https://www.stumbleupon.com/submit?url='
+                          . $sbmarkArray['link']
                           . '&title='
-                          . $sbmark_arr['title']
+                          . $sbmarkArray['title']
                           . '"'
                           . ' target="_blank"><img border="0" src="'
                           . XOOPS_URL
@@ -750,10 +750,10 @@ function getSocialBookmarks($lid)
                           . 'StumbleUpon"></a>';
 
     //tagtooga
-    $sbmarks['tagtooga'] = '<a href="http://www.tagtooga.com/tapp/db.exe?c=jsEntryForm&b=fx&title='
-                           . $sbmark_arr['title']
+    $sbmarks['tagtooga'] = '<a href="https://www.tagtooga.com/tapp/db.exe?c=jsEntryForm&b=fx&title='
+                           . $sbmarkArray['title']
                            . '&url='
-                           . $sbmark_arr['link']
+                           . $sbmarkArray['link']
                            . '"'
                            . ' target="_blank"><img border="0" src="'
                            . XOOPS_URL
@@ -766,9 +766,9 @@ function getSocialBookmarks($lid)
                            . 'tagtooga"></a>';
 
     //Technorati
-    $sbmarks['techno'] = '<a="http://www.technorati.com/faves?add='
-                         . $sbmark_arr['link']
-                         . $sbmark_arr['title']
+    $sbmarks['techno'] = '<a="https://www.technorati.com/faves?add='
+                         . $sbmarkArray['link']
+                         . $sbmarkArray['title']
                          . '"'
                          . ' target="_blank"><img border="0" src="'
                          . XOOPS_URL
@@ -782,16 +782,16 @@ function getSocialBookmarks($lid)
 
     //Wink
     //    $sbmarks['wink']
-    //        = '<a href="http://www.wink.com/_/tag?url=' . $sbmark_arr['link'] . '&doctitle=' . $sbmark_arr['title'] . '"'
+    //        = '<a href="https://www.wink.com/_/tag?url=' . $sbmarkArray['link'] . '&doctitle=' . $sbmarkArray['title'] . '"'
     //          . ' target="_blank"><img border="0" src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname')
     //          . '/assets/images/sbookmarks/wink.png" align="middle" title="' . _MD_XOOPSTUBE_ADDTO . 'Wink" alt="'
     //          . _MD_XOOPSTUBE_ADDTO . 'Wink"></a>';
 
     // Yahoo
-    $sbmarks['yahoo'] = '<a href="http://myweb2.search.yahoo.com/myresults/bookmarklet?t='
-                        . $sbmark_arr['title']
+    $sbmarks['yahoo'] = '<a href="https://myweb2.search.yahoo.com/myresults/bookmarklet?t='
+                        . $sbmarkArray['title']
                         . '&u='
-                        . $sbmark_arr['link']
+                        . $sbmarkArray['link']
                         . '"'
                         . ' target="_blank"><img border="0" src="'
                         . XOOPS_URL
@@ -804,7 +804,7 @@ function getSocialBookmarks($lid)
                         . 'Yahoo MyWeb"></a>';
 
     //Information
-    $sbmarks['info'] = '<a href="http://en.wikipedia.org/wiki/Social_bookmarking" target="_blank"><img border="0" src="'
+    $sbmarks['info'] = '<a href="https://en.wikipedia.org/wiki/Social_bookmarking" target="_blank"><img border="0" src="'
                        . XOOPS_URL
                        . '/modules/'
                        . $xoopsModule->getVar('dirname')

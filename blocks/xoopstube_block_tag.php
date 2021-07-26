@@ -27,7 +27,7 @@ use XoopsModules\Xoopstube\{
 
 /**
  * @param $options
- * @return array|null
+ * @return array|null|bool
  */
 function xtubeShowTagBlockCloud($options)
 {

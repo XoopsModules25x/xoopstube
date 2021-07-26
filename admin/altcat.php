@@ -59,7 +59,7 @@ function makeTreeCheckTable(Xoopstube\Tree $xt, $itemid, $title, $checks, $order
         $arr = $xt->getChildTreeArray($cid, $order);
         foreach ($arr as $cat) {
             $cat['prefix'] = str_replace('.', '-', $cat['prefix']);
-            $catpath       = '&nbsp;' . $cat['prefix'] . '&nbsp;' . htmlspecialchars($cat[$title]);
+            $catpath       = '&nbsp;' . $cat['prefix'] . '&nbsp;' . htmlspecialchars($cat[$title], ENT_QUOTES | ENT_HTML5);
             $checked       = array_key_exists($cat['cid'], $checks) ? 'checked' : '';
             $disabled      = ($cat['cid'] === Request::getInt('cid', 0, 'GET')) ? "disabled='yes'" : '';
             $level         = mb_substr_count($cat['prefix'], '-') + 1;

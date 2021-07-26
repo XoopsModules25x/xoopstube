@@ -24,7 +24,7 @@ namespace XoopsModules\Xoopstube;
 
 use Xmf\Request;
 
-require_once dirname(__DIR__, 3) . '/mainfile.php';
+require_once \dirname(__DIR__, 3) . '/mainfile.php';
 
 /**
  * Class DirectoryChecker
@@ -98,7 +98,7 @@ class DirectoryChecker
     public static function createDirectory($target, $mode = 0777)
     {
         $target = \str_replace('..', '', $target);
-        // http://www.php.net/manual/en/function.mkdir.php
+        // https://www.php.net/manual/en/function.mkdir.php
         /*
                 $dirs = [];
 
@@ -115,7 +115,7 @@ class DirectoryChecker
 
         */
 
-        return \is_dir($target) || (self::createDirectory(\dirname($target), $mode) && !mkdir($target, $mode) && !is_dir($target));
+        return \is_dir($target) || (self::createDirectory(\dirname($target), $mode) && !\mkdir($target, $mode) && !\is_dir($target));
     }
 
     /**

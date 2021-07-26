@@ -138,7 +138,7 @@ if (is_array($arr) > 0 && !$list && !$selectdate) {
                     $infercategories .= ', ';
                 }
 
-                $infercategories .= '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewcat.php?cid=' . $sub_ele['cid'] . '">' . htmlspecialchars($sub_ele['title']) . '</a> (' . $hassubitems['count'] . ')';
+                $infercategories .= '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewcat.php?cid=' . $sub_ele['cid'] . '">' . htmlspecialchars($sub_ele['title'], ENT_QUOTES | ENT_HTML5) . '</a> (' . $hassubitems['count'] . ')';
                 ++$space;
                 ++$chcount;
             }
@@ -175,7 +175,7 @@ if (is_array($arr) > 0 && !$list && !$selectdate) {
         $xoopsTpl->append(
             'subcategories',
             [
-                'title'           => htmlspecialchars($ele['title']),
+                'title'           => htmlspecialchars($ele['title'], ENT_QUOTES | ENT_HTML5),
                 'id'              => $ele['cid'],
                 'image'           => XOOPS_URL . "/$imgurl",
                 'width'           => $_width,
@@ -204,7 +204,7 @@ $xoopsTpl->assign('description', $description);
 /** @var \XoopsModuleHandler $moduleHandler */
 $moduleHandler = xoops_getHandler('module');
 $versioninfo   = $moduleHandler->get($xoopsModule->getVar('mid'));
-if (isset($head_arr['title']) && $head_arr['title'] !== '') {
+if (isset($head_arr['title']) && '' !== $head_arr['title']) {
     $xoopsTpl->assign('xoops_pagetitle', $versioninfo->getInfo('name') . ':&nbsp;' . $head_arr['title']);
 } else {
     $xoopsTpl->assign('xoops_pagetitle', $versioninfo->getInfo('name'));
@@ -274,14 +274,14 @@ $pagenav = new \XoopsPageNav($count, $GLOBALS['xoopsModuleConfig']['perpage'], $
 if ($count > 0) {
     $moderate = 0;
 
-    while (false !== ($video_arr = $GLOBALS['xoopsDB']->fetchArray($result))) {
-        if (true === Utility::checkGroups($video_arr['cid'])) {
+    while (false !== ($videoArray = $GLOBALS['xoopsDB']->fetchArray($result))) {
+        if (true === Utility::checkGroups($videoArray['cid'])) {
             require XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/include/videoloadinfo.php';
             $xoopsTpl->append('video', $video);
         }
     }
 
-    unset($video_arr);
+    unset($videoArray);
 
     // Show order box
     $xoopsTpl->assign('show_videos', false);

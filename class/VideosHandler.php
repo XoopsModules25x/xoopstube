@@ -15,17 +15,14 @@ namespace XoopsModules\Xoopstube;
 /**
  *  Xoopstube class
  *
- * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
- * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright       The XUUPS Project https://sourceforge.net/projects/xuups/
+ * @license         https://www.fsf.org/copyleft/gpl.html GNU public license
  * @package         Xoopstube
  * @subpackage      Utils
  * @since           1.0
  * @author          trabis <lusopoemas@gmail.com>
  */
 
-use XoopsModules\Xoopstube\{
-    Helper
-};
 
 /** @var Helper $this ->helper */
 
@@ -56,6 +53,7 @@ class VideosHandler extends \XoopsPersistableObjectHandler
      */
     public function getActiveCriteria()
     {
+        /** @var \XoopsGroupPermHandler $grouppermHandler */
         $grouppermHandler = \xoops_getHandler('groupperm');
 
         $criteria = new \CriteriaCompo(new \Criteria('offline', false));
