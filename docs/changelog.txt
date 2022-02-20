@@ -1,4 +1,4 @@
-<h5>1.8.0 RC-2       [2022-02-20]</h5>  Dev: XOOPS 2.5.11, PHP 7.4.27, PHP 8.0.16
+<h5>1.8.0 RC-3       [2022-02-20]</h5>  Dev: XOOPS 2.5.11, PHP 7.4.27, PHP 8.0.16
 <hr>
 - index.html in /preloads (mamba)
 

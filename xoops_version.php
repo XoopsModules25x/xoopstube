@@ -28,7 +28,7 @@ $moduleDirNameUpper = mb_strtoupper($moduleDirName);
 // ------------------- Informations ------------------- //
 $modversion = [
     'version'             => '1.8.0',
-    'module_status'       => 'RC-2',
+    'module_status'       => 'RC-3',
     'release_date'        => '2022/02/20',
     'name'                => _MI_XOOPSTUBE_NAME,
     'description'         => _MI_XOOPSTUBE_DESC,
